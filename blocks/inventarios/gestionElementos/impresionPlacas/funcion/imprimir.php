@@ -182,6 +182,8 @@ class RegistradorOrden {
 				
 				$num = $numeroTotal - (39 * $numeroVeces);
 				
+				$SemaforoConstarSalto = false;
+				
 				$i = 1;
 				foreach ( $arregloposiciones as $numero ) {
 					
@@ -208,13 +210,13 @@ class RegistradorOrden {
 						}
 						
 						if (array_key_exists ( $i, $PLACASTOTALES ) == false) {
-						
+							
 							if ($POSICIONES [$i] == true) {
-								echo "stiv<br>";
+								
 								$contenidoPagina .= "<td style='width:33.31%; height: 64px;text-align=center;border-spacing: 11px;'> </td><br>";
 							}
 							
-							$j = 1;
+							$j = 0;
 							foreach ( $PLACASFALTANTES as $numero ) {
 								
 								$PLACASTOTALES [$j] = $numero;
@@ -222,40 +224,57 @@ class RegistradorOrden {
 							}
 							
 							foreach ( $PLACASFALTANTES as $placaSencilla ) {
+// 								echo $contadorSaltoLinea;exit;
+								if ($SemaforoConstarSalto == true) {
+									
+									$contadorSaltoLinea ++;
+								}
 								
 								if ($contadorSaltoLinea == 1) {
 									$contenidoPagina .= "<tr>";
 								}
-								
-								$contenidoPagina .= $placaSencilla;
-								
-								echo $contadorSaltoLinea."<br>";
-								
-								if ($contadorSaltoLinea == 3) {
+								if ($contadorSaltoLinea != 3) {
 									
-									$contenidoPagina .= "</tr>";
-									$contadorSaltoLinea = 1;
-								} else {
-									$contadorSaltoLinea ++;
+									$contenidoPagina .= $placaSencilla;
 								}
 								
-								$contadorPagina ++;
-								$iterador ++;
+								if (($contadorSaltoLinea) == 3) {
+									
+									$SemaforoCerrarLinea = true;
+									
+									$contenidoPagina .= "</tr>";
+									
+									$contadorSaltoLinea = 1;
+									
+									$SemaforoConstarSalto = false;
+								} else {
+									$SemaforoCerrarLinea = false;
+									$SemaforoConstarSalto = true;
+								}
+								if ($SemaforoConstarSalto == false) {
+									
+									$contenidoPagina .= $placaSencilla;
+								}
 							}
 							
-							if (($contadorSaltoLinea - 1) == 0) {
+							if ($SemaforoCerrarLinea == true) {
 								
 								$contenidoPagina .= "</table>
 								</page >";
-							} elseif (($contadorSaltoLinea - 1) < 3) {
-								
+							} elseif ($SemaforoCerrarLinea == false) {
+								echo "uno";
 								$contenidoPagina .= "</tr></table>
 								</page >";
 							} else {
-								
+								echo "tres";
 								$contenidoPagina .= "</table>
 								</page >";
 							}
+							
+							// echo $contenidoPagina;
+							// exit ();
+							return $contenidoPagina;
+							exit ();
 						} else {
 							
 							if ($POSICIONES != false) {
@@ -286,14 +305,8 @@ class RegistradorOrden {
 							} else {
 								$contadorSaltoLinea ++;
 							}
-							
-							$contadorPagina ++;
-							$iterador ++;
 						}
 					}
-					
-					echo $contenidoPagina;
-					exit ();
 				} else {
 					
 					$contenidoPagina .= "<page backtop='0mm' backbottom='0mm' backleft='0mm' backright='0mm'  pagegroup='new'>
@@ -378,9 +391,9 @@ class RegistradorOrden {
 						$contenidoPagina .= "</table>
 								</page >";
 					}
+					
+					return $contenidoPagina;
 				}
-				
-				return $contenidoPagina;
 				
 				break;
 		}
