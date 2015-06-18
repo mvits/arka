@@ -137,6 +137,18 @@ $enlaceImpresionPlacas ['nombre'] = "Placas Elementos";
 
 
 
+
+// Placas Elementos
+$enlaceDetalleElemento['enlace'] = "pagina=detalleElemento";
+$enlaceDetalleElemento ['enlace'] .= "&usuario=" . $miSesion->getSesionUsuarioId();
+
+$enlaceDetalleElemento ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($enlaceDetalleElemento ['enlace'], $directorio);
+$enlaceDetalleElemento ['nombre'] = "Detalles Elementos";
+
+
+
+
+
 // Sobrantes Y faltantes
 $enlaceSobranteFlatanteElementos ['enlace'] = "pagina=registrarFaltantesSobrantes";
 $enlaceSobranteFlatanteElementos ['enlace'] .= "&usuario=" . $miSesion->getSesionUsuarioId();
@@ -350,7 +362,8 @@ $enlaceFinSesion['nombre'] = "Cerrar Sesión";
                         <ul>
                             <li><a href="<?php echo $enlaceRegistroElementos['urlCodificada'] ?>"><?php echo $enlaceRegistroElementos['nombre'] ?></a></li>
                             <li><a href="<?php echo $enlaceModificarElementos['urlCodificada'] ?>"><?php echo $enlaceModificarElementos['nombre'] ?></a></li>
-                            <li><a href="<?php echo $enlaceImpresionPlacas['urlCodificada'] ?>"><?php echo $enlaceImpresionPlacas['nombre'] ?></a></li> 
+                            <li><a href="<?php echo $enlaceImpresionPlacas['urlCodificada'] ?>"><?php echo $enlaceImpresionPlacas['nombre'] ?></a></li>
+                            <li><a href="<?php echo $enlaceDetalleElemento['urlCodificada'] ?>"><?php echo $enlaceDetalleElemento['nombre'] ?></a></li> 
                         </ul>
                     </div>
 
