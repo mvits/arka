@@ -8,9 +8,9 @@
 $url = $this->miConfigurador->getVariableConfiguracion ( "host" );
 $url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
 
-$urlDirectorio=$url;
+$urlDirectorio = $url;
 
-$urlDirectorio =$urlDirectorio."/plugin/scripts/javascript/dataTable/Spanish.json";
+$urlDirectorio = $urlDirectorio . "/plugin/scripts/javascript/dataTable/Spanish.json";
 
 $url .= "/index.php?";
 
@@ -48,27 +48,68 @@ if (isset ( $_REQUEST ['serie1'] ) && $_REQUEST ['serie1'] != '') {
 }
 
 $arreglo = array (
-		"fecha_inicio"=>$fechaInicio,
-		"fecha_final"=>$fechaFinal,
-		"placa"=>$placa,
-		"serie"=>$serie 
+		"fecha_inicio" => $fechaInicio,
+		"fecha_final" => $fechaFinal,
+		"placa" => $placa,
+		"serie" => $serie 
 );
 
 $arreglo = serialize ( $arreglo );
 
-$cadenaACodificar .= "&arreglo=" .$arreglo;
-
+$cadenaACodificar .= "&arreglo=" . $arreglo;
 
 // Codificar las variables
 $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar, $enlace );
 
-
 // URL definitiva
 $urlFinal = $url . $cadena;
 // echo $urlFinal;
+
+//------ Consulta Placas
+//Variables
+$pagina = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificar = $pagina;
+$cadenaACodificar.="&procesarAjax=true";
+$cadenaACodificar.="&action=index.php";
+$cadenaACodificar.="&bloqueNombre=" . $esteBloque["nombre"];
+$cadenaACodificar.="&bloqueGrupo=" . $esteBloque["grupo"];
+
+//Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+
+//Cadena codificada para listar Catalogos
+
+$cadena0 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($pagina, $enlace);
+
+//Cadena codificada para listar Catalogos
+$cadenaACodificar1 = $cadenaACodificar . "&funcion=placas";
+$cadena1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificar1, $enlace);
+
+$urlFinal = $url . $cadena1;
+
+
+
+
+
+
+
+
+
 ?>
 <script type='text/javascript'>
+
+
+$(document).ready(function () {
+    $("#<?php echo $this->campoSeguro('placa') ?>").devbridgeAutocomplete({
+        minLength: 2,
+        serviceUrl: '<?php echo $urlFinal; ?>'        
+    });
+});
+
+
+
+
 $(function() {
          	$('#tablaTitulos').ready(function() {
 
