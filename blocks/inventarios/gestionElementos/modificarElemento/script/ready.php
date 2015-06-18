@@ -25,9 +25,6 @@
             });
         });
 
-                     $('#tablaTitulos').dataTable( {
-                "sPaginationType": "full_numbers"
-                 } );
 
 
     

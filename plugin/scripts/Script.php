@@ -12,6 +12,8 @@ $indice ++;
 if (isset ( $_REQUEST ['jquery'] )) {
     $funcion [$indice] = 'javascript/jquery.js';
     $indice ++;
+    $funcion [$indice] = 'javascript/jquery-1.11.1.min.js';
+    $indice ++;
     $funcion [$indice] = 'javascript/jquery-ui/jquery-ui.js';
     $estilo [$indice] = 'javascript/jquery-ui/jquery-ui-themes/themes/' . $estiloPredeterminado . '/jquery-ui.css';
     $indice ++;

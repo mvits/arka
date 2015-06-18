@@ -167,8 +167,8 @@ class Sql extends \Sql {
 			case "consultarElemento" :
 				
 				$cadenaSql = "SELECT DISTINCT ";
-				$cadenaSql .= "id_elemento, placa,  ";
-				$cadenaSql .= "elemento.serie, elemento.fecha_registro,tipo_bienes.descripcion, estado_entrada,entrada.cierre_contable  ";
+				$cadenaSql .= "placa,  ";
+				$cadenaSql .= "elemento.serie, tipo_bienes.descripcion, elemento.fecha_registro as fecharegistro, id_elemento as idelemento, estado_entrada as estadoentrada, entrada.cierre_contable as cierrecontable ";
 				$cadenaSql .= "FROM elemento ";
 				$cadenaSql .= "JOIN tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien ";
 				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
@@ -179,12 +179,12 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND  CAST ( '" . $variable [1] . "' AS DATE)  ";
 				}
 				if ($variable [2] != '') {
-					$cadenaSql .= " AND elemento_individual.placa = '" . $variable [2] . "'";
+					$cadenaSql .= " AND elemento_individual.placa = '" . $variable [2] . "' ";
 				}
 				if ($variable [3] != '') {
-					$cadenaSql .= " AND  elemento.serie= '" . $variable [3] . "'";
+					$cadenaSql .= " AND  elemento.serie= '" . $variable [3] . "' ";
 				}
-				
+				$cadenaSql .= "LIMIT 1000 ";	
 				
 				
 				
@@ -235,8 +235,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE tipo_bien='1';";
 				
 				break;
-			
-
 			
 			// SELECT id_elemento, fecha_registro, tipo_bien, descripcion, cantidad,
 			// unidad, valor, iva, ajuste, bodega, subtotal_sin_iva, total_iva,
@@ -473,19 +471,15 @@ class Sql extends \Sql {
 				}
 				
 				break;
-				
-		case "consultar_nivel_inventario" :
+			
+			case "consultar_nivel_inventario" :
 				
 				$cadenaSql = "SELECT elemento_id, elemento_padre||''|| elemento_codigo||' - '||elemento_nombre ";
 				$cadenaSql .= "FROM catalogo.catalogo_elemento ";
 				$cadenaSql .= "WHERE elemento_catalogo=1 ";
 				$cadenaSql .= "ORDER BY elemento_id DESC ;";
 				
-				
 				break;
-			
-				
-				
 		}
 		return $cadenaSql;
 	}
