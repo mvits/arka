@@ -66,30 +66,23 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 $urlFinal = $url . $cadena;
 // echo $urlFinal;
 
-//------ Consulta Placas
-//Variables
-$pagina = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
-$cadenaACodificar = $pagina;
-$cadenaACodificar.="&procesarAjax=true";
-$cadenaACodificar.="&action=index.php";
-$cadenaACodificar.="&bloqueNombre=" . $esteBloque["nombre"];
-$cadenaACodificar.="&bloqueGrupo=" . $esteBloque["grupo"];
-
-//Codificar las variables
-$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-
-//Cadena codificada para listar Catalogos
-
-$cadena0 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($pagina, $enlace);
-
-//Cadena codificada para listar Catalogos
-$cadenaACodificar1 = $cadenaACodificar . "&funcion=placas";
-$cadena1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificar1, $enlace);
-
-$urlFinal = $url . $cadena1;
+// Variables
+$cadenaACodificar1 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar1 .= "&procesarAjax=true";
+$cadenaACodificar1 .= "&action=index.php";
+$cadenaACodificar1 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar1 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar1 .= "&funcion=consultaPlacas";
+$cadenaACodificar1 .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 
 
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar1, $enlace );
+
+// URL definitiva
+$urlFinal1 = $url . $cadena;
 
 
 
@@ -102,8 +95,8 @@ $urlFinal = $url . $cadena1;
 
 $(document).ready(function () {
     $("#<?php echo $this->campoSeguro('placa') ?>").devbridgeAutocomplete({
-        minLength: 2,
-        serviceUrl: '<?php echo $urlFinal; ?>'        
+        minLength: 4,
+        serviceUrl: '<?php echo $urlFinal1; ?>'        
     });
 });
 

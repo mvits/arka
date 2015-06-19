@@ -137,4 +137,27 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
 	echo json_encode ( SSP::simple ( $_GET, $sql_details, $table, $primaryKey, $columns,$join,$where ) );
 }
 
+if ($_REQUEST ['funcion'] == 'consultaPlacas') {
+	
+	
+	
+	$cadenaSql = $this->sql->getCadenaSql('buscar_placa');
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, 'busqueda');
+		
+	
+	foreach ($resultadoItems as $key => $values) {
+		$keys = array('value', 'data');
+		$resultado[$key] = array_intersect_key($resultadoItems[$key], array_flip($keys));
+	}
+	
+	//    var_dump($resultado);
+	
+	
+	echo '{"suggestions":'.json_encode($resultado).'}';
+	
+	
+}
+
+
+
 ?>

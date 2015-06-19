@@ -150,9 +150,9 @@ class Sql extends \Sql {
 			 */
 			
 			case "buscar_placa" :
-				$cadenaSql = " SELECT DISTINCT placa, placa as placas ";
-				$cadenaSql .= "FROM elemento_individual ";
-				$cadenaSql .= "ORDER BY placa DESC ";
+				$cadenaSql = " SELECT placa AS value, placa AS data ";
+				$cadenaSql .= "FROM elemento_individual ;";
+				
 				
 				break;
 			

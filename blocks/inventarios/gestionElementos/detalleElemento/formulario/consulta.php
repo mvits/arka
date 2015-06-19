@@ -106,7 +106,7 @@ class registrarForm {
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'serie1';
-	$atributos ['id'] = $esteCampo;
+		$atributos ['id'] = $esteCampo;
 		$atributos ['nombre'] = $esteCampo;
 		$atributos ['tipo'] = 'text';
 		$atributos ['estilo'] = 'jqueryui';
