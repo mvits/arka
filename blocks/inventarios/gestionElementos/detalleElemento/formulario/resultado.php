@@ -21,6 +21,7 @@ class registrarForm {
 	}
 	function miForm() {
 		
+		var_dump($_REQUEST);
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );

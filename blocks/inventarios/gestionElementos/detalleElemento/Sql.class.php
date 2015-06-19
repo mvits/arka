@@ -149,10 +149,17 @@ class Sql extends \Sql {
 			 * Clausulas Del Caso Uso.
 			 */
 			
+			case "buscar_entradas" :
+				$cadenaSql = " SELECT consecutivo||' - ('||entrada.vigencia||')' AS  value,id_entrada  AS data  ";
+				$cadenaSql .= " FROM entrada  ";
+				$cadenaSql .= "WHERE cast(consecutivo as text) LIKE '%" . $variable . "%' ";
+				$cadenaSql .= "OR vigencia LIKE '%" . $variable . "%' ";
+				break;
+			
 			case "buscar_placa" :
 				$cadenaSql = " SELECT placa AS value, placa AS data ";
 				$cadenaSql .= "FROM elemento_individual ";
-				$cadenaSql .= "WHERE placa LIKE '%".$variable."%' ";
+				$cadenaSql .= "WHERE placa LIKE '%" . $variable . "%' ";
 				
 				break;
 			
@@ -160,7 +167,7 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT DISTINCT serie  AS value, serie  AS data ";
 				$cadenaSql .= "FROM elemento_individual ";
 				$cadenaSql .= "WHERE  serie <> '' ";
-				$cadenaSql .= "AND serie LIKE '%".$variable."%' ";
+				$cadenaSql .= "AND serie LIKE '%" . $variable . "%' ";
 				
 				break;
 			
@@ -184,9 +191,7 @@ class Sql extends \Sql {
 				if ($variable [3] != '') {
 					$cadenaSql .= " AND  elemento.serie= '" . $variable [3] . "' ";
 				}
-				$cadenaSql .= "LIMIT 1000 ";	
-				
-				
+				$cadenaSql .= "LIMIT 1000 ";
 				
 				break;
 			

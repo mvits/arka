@@ -108,6 +108,25 @@ $urlFinal2 = $url . $cadena;
 
 
 
+// Variables
+$cadenaACodificar3 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar3 .= "&procesarAjax=true";
+$cadenaACodificar3 .= "&action=index.php";
+$cadenaACodificar3 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar3 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar3 .= "&funcion=consultaEntrada";
+$cadenaACodificar3 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar3, $enlace );
+
+// URL definitiva
+$urlFinal3 = $url . $cadena;
+
+
 ?>
 <script type='text/javascript'>
 
@@ -124,6 +143,15 @@ $(document).ready(function () {
     	serviceUrl: '<?php echo $urlFinal2; ?>',
                 
     });
+
+
+    $("#<?php echo $this->campoSeguro('entrada') ?>").autocomplete({
+    	minChars: 1,
+    	serviceUrl: '<?php echo $urlFinal3; ?>',
+                
+    });
+
+    
     
 });
 

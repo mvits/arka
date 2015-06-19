@@ -6,7 +6,7 @@ $this->idioma ["observaciones"] ="Observaciones : ";
 $this->idioma ["fecha_inicioTitulo"] ="Ingrese Observaciones";
 
 
-$this->idioma ["entrada"] ="Vigencia y/o Número Entrada : ";
+$this->idioma ["entrada"] =" Número Entrada y/o Vigencia: ";
 $this->idioma ["entradaTitulo"] ="Ingrese Número Entrada";
 
 

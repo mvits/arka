@@ -177,5 +177,30 @@ if ($_REQUEST ['funcion'] == 'consultaSerie') {
 }
 
 
+if ($_REQUEST ['funcion'] == 'consultaEntrada') {
+
+	$cadenaSql = $this->sql->getCadenaSql('buscar_entradas',$_GET['query']);
+	
+	
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+	
+
+	foreach ($resultadoItems as $key => $values) {
+		$keys = array('value', 'data');
+		$resultado[$key] = array_intersect_key($resultadoItems[$key], array_flip($keys));
+	}
+
+	//    var_dump($resultado);
+
+	// 	echo json_encode($resultadoItems);
+	echo '{"suggestions":'.json_encode($resultado).'}';
+
+
+}
+
+
+
+
+
 
 ?>
