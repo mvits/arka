@@ -6,6 +6,28 @@ $this->idioma ["observaciones"] ="Observaciones : ";
 $this->idioma ["fecha_inicioTitulo"] ="Ingrese Observaciones";
 
 
+$this->idioma ["entrada"] ="Vigencia y/o Número Entrada : ";
+$this->idioma ["entradaTitulo"] ="Ingrese Número Entrada";
+
+
+$this->idioma ["funcionario"] ="Identificación y/o Funcionario : ";
+$this->idioma ["funcionarioTitulo"] ="Ingrese Funcionario";
+
+
+$this->idioma ["sede"] ="Sede : ";
+$this->idioma ["sedeTitulo"] ="Ingrese Sede";
+
+$this->idioma ["dependencia"] ="Dependencia  : ";
+$this->idioma ["dependenciaTitulo"] ="Ingrese Dependencia";
+
+
+
+$this->idioma ["espacioFisico"] ="Espacio Fisico : ";
+$this->idioma ["espacioFisicoTitulo"] ="Ingrese Espacio Fisico";
+
+
+
+
 $this->idioma ["fecha_inicio"] ="Fecha Inicial : ";
 $this->idioma ["fecha_inicioTitulo"] ="Seleccione Fecha Inicial";
 

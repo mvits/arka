@@ -114,15 +114,13 @@ $urlFinal2 = $url . $cadena;
 
 $(document).ready(function () {
     $("#<?php echo $this->campoSeguro('placa') ?>").autocomplete({
-    	minChars: 5,
-    	autoSelectFirst: true,
+    	minChars: 4,
     	serviceUrl: '<?php echo $urlFinal1; ?>',
                 
     });
 
     $("#<?php echo $this->campoSeguro('serie1') ?>").autocomplete({
-    	minChars: 3,
-    	autoSelectFirst: true,
+    	minChars: 4,
     	serviceUrl: '<?php echo $urlFinal2; ?>',
                 
     });

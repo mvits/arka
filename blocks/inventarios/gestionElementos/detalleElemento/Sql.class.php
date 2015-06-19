@@ -157,7 +157,7 @@ class Sql extends \Sql {
 				break;
 			
 			case "buscar_serie" :
-				$cadenaSql = " SELECT  serie  AS value, serie  AS data ";
+				$cadenaSql = " SELECT DISTINCT serie  AS value, serie  AS data ";
 				$cadenaSql .= "FROM elemento_individual ";
 				$cadenaSql .= "WHERE  serie <> '' ";
 				$cadenaSql .= "AND serie LIKE '%".$variable."%' ";

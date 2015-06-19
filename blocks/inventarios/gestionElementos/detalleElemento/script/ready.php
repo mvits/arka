@@ -3,7 +3,7 @@
 ?>
 
 // Asociar el widget de validación al formulario
-              $("#modificarElemento").validationEngine({
+              $("#detalleElemento").validationEngine({
             promptPosition : "centerRight", 
             scroll: false,
             autoHidePrompt: true,
@@ -12,8 +12,8 @@
 	
         
         $(function() {
-            $("#modificarElemento").submit(function() {
-                $resultado=$("#modificarElemento").validationEngine("validate");
+            $("#detalleElemento").submit(function() {
+                $resultado=$("#detalleElemento").validationEngine("validate");
                    
                    
                    
