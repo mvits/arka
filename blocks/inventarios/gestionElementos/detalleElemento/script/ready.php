@@ -38,14 +38,6 @@
  $('#<?php echo $this->campoSeguro('fecha_factura')?>').attr('disabled','');
  
  
- $("#<?php echo $this->campoSeguro('placa')?>").select2({
-             	 placeholder: "Search for a repository",
-              	 minimumInputLength: 3,
-              	 });
- $("#<?php echo $this->campoSeguro('serie1')?>").select2({
-             	 placeholder: "Search for a repository",
-              	 minimumInputLength: 3,
-              	 });
               	 
               	 
               	 $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();

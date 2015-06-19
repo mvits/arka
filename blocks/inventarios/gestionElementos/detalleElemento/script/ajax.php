@@ -94,9 +94,10 @@ $urlFinal1 = $url . $cadena;
 
 
 $(document).ready(function () {
-    $("#<?php echo $this->campoSeguro('placa') ?>").devbridgeAutocomplete({
+    $("#<?php echo $this->campoSeguro('placa') ?>").autocomplete({
+        serviceUrl: '<?php echo $urlFinal1; ?>',
         minLength: 4,
-        serviceUrl: '<?php echo $urlFinal1; ?>'        
+        delay: 300        
     });
 });
 
@@ -104,6 +105,7 @@ $(document).ready(function () {
 
 
 $(function() {
+	
          	$('#tablaTitulos').ready(function() {
 
              $('#tablaTitulos').dataTable( {

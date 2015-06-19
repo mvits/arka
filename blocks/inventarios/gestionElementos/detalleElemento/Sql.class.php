@@ -151,8 +151,8 @@ class Sql extends \Sql {
 			
 			case "buscar_placa" :
 				$cadenaSql = " SELECT placa AS value, placa AS data ";
-				$cadenaSql .= "FROM elemento_individual ;";
-				
+				$cadenaSql .= "FROM elemento_individual ";
+				$cadenaSql .= "WHERE placa LIKE '%".$variable."%' ";
 				
 				break;
 			

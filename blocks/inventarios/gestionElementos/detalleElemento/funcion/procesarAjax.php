@@ -139,12 +139,10 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
 
 if ($_REQUEST ['funcion'] == 'consultaPlacas') {
 	
-	
-	
-	$cadenaSql = $this->sql->getCadenaSql('buscar_placa');
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, 'busqueda');
+	$cadenaSql = $this->sql->getCadenaSql('buscar_placa',$_GET['query']);
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 		
-	
+
 	foreach ($resultadoItems as $key => $values) {
 		$keys = array('value', 'data');
 		$resultado[$key] = array_intersect_key($resultadoItems[$key], array_flip($keys));
@@ -152,7 +150,7 @@ if ($_REQUEST ['funcion'] == 'consultaPlacas') {
 	
 	//    var_dump($resultado);
 	
-	
+// 	echo json_encode($resultadoItems);
 	echo '{"suggestions":'.json_encode($resultado).'}';
 	
 	
