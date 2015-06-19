@@ -88,6 +88,25 @@ $urlFinal1 = $url . $cadena;
 
 
 
+// Variables
+$cadenaACodificar2 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar2 .= "&procesarAjax=true";
+$cadenaACodificar2 .= "&action=index.php";
+$cadenaACodificar2 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar2 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar2 .= "&funcion=consultaSerie";
+$cadenaACodificar2 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar2, $enlace );
+
+// URL definitiva
+$urlFinal2 = $url . $cadena;
+
+
 
 ?>
 <script type='text/javascript'>
@@ -95,10 +114,19 @@ $urlFinal1 = $url . $cadena;
 
 $(document).ready(function () {
     $("#<?php echo $this->campoSeguro('placa') ?>").autocomplete({
-        serviceUrl: '<?php echo $urlFinal1; ?>',
-        minLength: 4,
-        delay: 300        
+    	minChars: 5,
+    	autoSelectFirst: true,
+    	serviceUrl: '<?php echo $urlFinal1; ?>',
+                
     });
+
+    $("#<?php echo $this->campoSeguro('serie1') ?>").autocomplete({
+    	minChars: 3,
+    	autoSelectFirst: true,
+    	serviceUrl: '<?php echo $urlFinal2; ?>',
+                
+    });
+    
 });
 
 
