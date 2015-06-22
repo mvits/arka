@@ -77,12 +77,31 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
 		$where [] = '1=1';
 	}
 	
-	$where = implode ( " AND ", $where );
+	if ($arreglo ['entrada'] != '') {
+		$where [] = "entrada.id_entrada= '" . $arreglo ['entrada'] . "' ";
+	} else {
 	
-	if ($arreglo ['fecha_inicio'] == '' && $arreglo ['placa'] == '' && $arreglo ['serie'] == '') {
-		$where = '';
+		$where [] = '1=1';
 	}
 	
+	
+	
+
+	if ($arreglo ['entrada'] != '') {
+		$where [] = "entrada.id_entrada= '" . $arreglo ['entrada'] . "' ";
+	} else {
+	
+		$where [] = '1=1';
+	}
+	
+	
+	
+	
+	
+	
+	$where = implode ( " AND ", $where );
+	
+
 	// Array of database columns which should be read and sent back to DataTables.
 	// The `db` parameter represents the column name in the database, while the `dt`
 	// parameter represents the DataTables column identifier. In this case simple

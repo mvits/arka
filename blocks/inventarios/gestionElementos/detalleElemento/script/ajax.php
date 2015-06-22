@@ -47,12 +47,55 @@ if (isset ( $_REQUEST ['serie1'] ) && $_REQUEST ['serie1'] != '') {
 	$serie = '';
 }
 
+
+if (isset ( $_REQUEST ['id_entrada'] ) && $_REQUEST ['id_entrada'] != '') {
+	$entrada = $_REQUEST ['id_entrada'];
+} else {
+	$entrada = '';
+}
+
+
+if (isset ( $_REQUEST ['id_funcionario'] ) && $_REQUEST ['id_funcionario'] != '') {
+	$funcionario = $_REQUEST ['id_funcionario'];
+} else {
+	$funcionario = '';
+}
+
+
+
+if (isset ( $_REQUEST ['id_sede'] ) && $_REQUEST ['id_sede'] != '') {
+	$sede = $_REQUEST ['id_sede'];
+} else {
+	$sede = '';
+}
+
+
+if (isset ( $_REQUEST ['id_dependencia'] ) && $_REQUEST ['id_dependencia'] != '') {
+	$dependencia = $_REQUEST ['id_dependencia'];
+} else {
+	$dependencia = '';
+}
+
+
+
+
+
+
+
+
+
 $arreglo = array (
 		"fecha_inicio" => $fechaInicio,
 		"fecha_final" => $fechaFinal,
 		"placa" => $placa,
-		"serie" => $serie 
+		"serie" => $serie,
+		"entrada"=>$entrada,
+		"funcionario"=>$funcionario,
+		"sede"=>$sede,
+		"dependencia"=>$dependencia
 );
+
+
 
 $arreglo = serialize ( $arreglo );
 
