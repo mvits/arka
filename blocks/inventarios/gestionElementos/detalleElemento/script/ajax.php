@@ -127,6 +127,74 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 $urlFinal3 = $url . $cadena;
 
 
+
+// Variables
+$cadenaACodificar4 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar4 .= "&procesarAjax=true";
+$cadenaACodificar4 .= "&action=index.php";
+$cadenaACodificar4 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar4 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar4 .= "&funcion=consultaFuncionario";
+$cadenaACodificar4 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar4, $enlace );
+
+// URL definitiva
+$urlFinal4 = $url . $cadena;
+
+
+
+
+// Variables
+$cadenaACodificar5 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar5 .= "&procesarAjax=true";
+$cadenaACodificar5 .= "&action=index.php";
+$cadenaACodificar5 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar5 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar5 .= "&funcion=consultaSede";
+$cadenaACodificar5 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar5, $enlace );
+
+// URL definitiva
+$urlFinal5 = $url . $cadena;
+
+
+
+
+
+// Variables
+$cadenaACodificar6 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar6 .= "&procesarAjax=true";
+$cadenaACodificar6 .= "&action=index.php";
+$cadenaACodificar6 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar6 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar6 .= "&funcion=consultaDependencia";
+$cadenaACodificar6 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar6, $enlace );
+
+// URL definitiva
+$urlFinal6 = $url . $cadena;
+$urlFinal6 = $urlFinal6."&sede=";
+ 
+
+
+
+
+
 ?>
 <script type='text/javascript'>
 
@@ -154,6 +222,67 @@ $(document).ready(function () {
                 
     });
 
+    
+
+    $( "#<?php echo $this->campoSeguro('funcionario')?>" ).keyup(function() {
+
+	$('#<?php echo $this->campoSeguro('funcionario') ?>').val($('#<?php echo $this->campoSeguro('funcionario') ?>').val().toUpperCase());
+        });
+
+
+
+    
+    $("#<?php echo $this->campoSeguro('funcionario') ?>").autocomplete({
+    	minChars: 4,
+    	serviceUrl: '<?php echo $urlFinal4; ?>',
+    	onSelect: function (suggestion) {
+        	
+    	        $("#<?php echo $this->campoSeguro('id_funcionario') ?>").val(suggestion.data);
+    	    }
+                
+    });
+    
+
+    $( "#<?php echo $this->campoSeguro('sede')?>" ).keyup(function() {
+
+	$('#<?php echo $this->campoSeguro('sede') ?>').val($('#<?php echo $this->campoSeguro('sede') ?>').val().toUpperCase());
+        });
+
+    
+    
+
+    $("#<?php echo $this->campoSeguro('sede') ?>").autocomplete({
+    	minChars: 4,
+    	serviceUrl: '<?php echo $urlFinal5; ?>',
+    	onSelect: function (suggestion) {
+    	        $("#<?php echo $this->campoSeguro('id_sede') ?>").val(suggestion.data);
+    	        alert($("#<?php echo $this->campoSeguro('id_sede') ?>").val());
+    	    }
+                
+    });
+
+
+
+    $( "#<?php echo $this->campoSeguro('dependencia')?>" ).keyup(function() {
+
+	$('#<?php echo $this->campoSeguro('dependencia') ?>').val($('#<?php echo $this->campoSeguro('dependencia') ?>').val().toUpperCase());
+        });
+
+    
+
+
+    $("#<?php echo $this->campoSeguro('dependencia') ?>").autocomplete({
+    	minChars: 4,
+    	serviceUrl: '<?php echo $urlFinal6 ?>',
+		val:$("#<?php echo $this->campoSeguro('id_sede') ?>").val();
+    	
+    	onSelect: function (suggestion) {
+    	        $("#<?php echo $this->campoSeguro('id_dependencia') ?>").val(suggestion.data);
+    	    }
+                
+    });
+    
+    
     
     
 });

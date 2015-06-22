@@ -149,6 +149,28 @@ class Sql extends \Sql {
 			 * Clausulas Del Caso Uso.
 			 */
 			
+			case "buscar_funcionarios" :
+				$cadenaSql = " SELECT \"FUN_IDENTIFICACION\"||' - ('||\"FUN_NOMBRE\"||')' AS  value,\"FUN_IDENTIFICACION\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_funcionarios  ";
+				$cadenaSql .= "WHERE \"FUN_ESTADO\" = 'A' AND cast(\"FUN_IDENTIFICACION\" as text) LIKE '%" . $variable . "%' ";
+				$cadenaSql .= "OR \"FUN_NOMBRE\" LIKE '%" . $variable . "%' ";
+				
+				break;
+			
+			case "buscar_sede" :
+				$cadenaSql = "SELECT \"ESF_SEDE\" AS  value,\"ESF_COD_SEDE\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_sedes  ";
+				$cadenaSql .= "WHERE \"ESF_ESTADO\" = 'A' AND  \"ESF_SEDE\" LIKE '%" . $variable . "%' ";
+				
+				break;
+			
+			case "buscar_sede" :
+				$cadenaSql = "SELECT \"ESF_SEDE\" AS  value,\"ESF_COD_SEDE\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_sedes  ";
+				$cadenaSql .= "WHERE \"ESF_ESTADO\" = 'A' AND  \"ESF_SEDE\" LIKE '%" . $variable . "%' ";
+				
+				break;
+			
 			case "buscar_entradas" :
 				$cadenaSql = " SELECT consecutivo||' - ('||entrada.vigencia||')' AS  value,id_entrada  AS data  ";
 				$cadenaSql .= " FROM entrada  ";
