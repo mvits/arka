@@ -445,6 +445,25 @@ class registrarForm {
 		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 		
+		
+		
+		
+		
+		
+		
+		$atributos ["id"] = "id_entrada"; // No cambiar este nombre
+		$atributos ["tipo"] = "hidden";
+		$atributos ['estilo'] = '';
+		$atributos ["obligatorio"] = false;
+		$atributos ['marco'] = true;
+		$atributos ["etiqueta"] = "";
+		$atributos ["valor"] = '';
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+			
+		
+		
 		// ------------------- SECCION: Paso de variables ------------------------------------------------
 		
 		/**

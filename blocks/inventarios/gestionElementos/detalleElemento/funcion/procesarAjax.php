@@ -175,7 +175,7 @@ if ($_REQUEST ['funcion'] == 'consultaSerie') {
 
 
 }
-
+		
 
 if ($_REQUEST ['funcion'] == 'consultaEntrada') {
 
@@ -184,7 +184,6 @@ if ($_REQUEST ['funcion'] == 'consultaEntrada') {
 	
 	$resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 	
-
 	foreach ($resultadoItems as $key => $values) {
 		$keys = array('value', 'data');
 		$resultado[$key] = array_intersect_key($resultadoItems[$key], array_flip($keys));

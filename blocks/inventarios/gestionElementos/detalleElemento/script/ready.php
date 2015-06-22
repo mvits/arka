@@ -2,6 +2,9 @@
 
 ?>
 
+   
+   
+   
 // Asociar el widget de validación al formulario
               $("#detalleElemento").validationEngine({
             promptPosition : "centerRight", 
