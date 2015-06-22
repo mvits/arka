@@ -148,10 +148,9 @@ $(document).ready(function () {
     $("#<?php echo $this->campoSeguro('entrada') ?>").autocomplete({
     	minChars: 1,
     	serviceUrl: '<?php echo $urlFinal3; ?>',
-    	onSelect: function(dateText, inst) {
-			var lockDate = suggestions.data;
-			alert(lockDate);
-			}
+    	onSelect: function (suggestion) {
+    	        $("#<?php echo $this->campoSeguro('id_entrada') ?>").val(suggestion.data);
+    	    }
                 
     });
 
