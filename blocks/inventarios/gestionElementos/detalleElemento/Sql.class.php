@@ -164,10 +164,11 @@ class Sql extends \Sql {
 				
 				break;
 			
-			case "buscar_sede" :
-				$cadenaSql = "SELECT \"ESF_SEDE\" AS  value,\"ESF_COD_SEDE\"  AS data  ";
-				$cadenaSql .= " FROM arka_parametros.arka_sedes  ";
-				$cadenaSql .= "WHERE \"ESF_ESTADO\" = 'A' AND  \"ESF_SEDE\" LIKE '%" . $variable . "%' ";
+			case "buscar_dependencia" :
+				$cadenaSql = "SELECT \"ESF_NOMBRE_ESPACIO\" AS  value,\"ESF_ID_ESPACIO\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos  ";
+				$cadenaSql .= "WHERE \"ESF_ESTADO\" = 'A' AND  \"ESF_NOMBRE_ESPACIO\" LIKE '%" . $variable[1] . "%' ";
+				$cadenaSql .= "AND  \"ESF_COD_SEDE\" = '".$variable[0]."'";
 				
 				break;
 			

@@ -188,7 +188,7 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 
 // URL definitiva
 $urlFinal6 = $url . $cadena;
-$urlFinal6 = $urlFinal6."&sede=";
+
  
 
 
@@ -200,6 +200,10 @@ $urlFinal6 = $urlFinal6."&sede=";
 
 
 $(document).ready(function () {
+
+
+	var sede='listo';
+	
     $("#<?php echo $this->campoSeguro('placa') ?>").autocomplete({
     	minChars: 4,
     	serviceUrl: '<?php echo $urlFinal1; ?>',
@@ -255,8 +259,8 @@ $(document).ready(function () {
     	minChars: 4,
     	serviceUrl: '<?php echo $urlFinal5; ?>',
     	onSelect: function (suggestion) {
-    	        $("#<?php echo $this->campoSeguro('id_sede') ?>").val(suggestion.data);
-    	        alert($("#<?php echo $this->campoSeguro('id_sede') ?>").val());
+    	        $("#<?php echo $this->campoSeguro('id_sede')?>").val(suggestion.data);
+				
     	    }
                 
     });
@@ -272,11 +276,14 @@ $(document).ready(function () {
 
 
     $("#<?php echo $this->campoSeguro('dependencia') ?>").autocomplete({
-    	minChars: 4,
+    	minChars: 1,
     	serviceUrl: '<?php echo $urlFinal6 ?>',
-		val:$("#<?php echo $this->campoSeguro('id_sede') ?>").val();
-    	
-    	onSelect: function (suggestion) {
+    	params:{ 
+            'valor': function() {
+                return $("#<?php echo $this->campoSeguro('id_sede')?>").val();
+            	}
+    	},
+		onSelect: function (suggestion) {
     	        $("#<?php echo $this->campoSeguro('id_dependencia') ?>").val(suggestion.data);
     	    }
                 

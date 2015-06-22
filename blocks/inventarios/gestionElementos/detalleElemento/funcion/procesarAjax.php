@@ -90,7 +90,7 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
 	$columns = array (
 			array (
 					'db' => 'elemento_individual.placa',
-					'dt' => 0
+					'dt' => 0 
 			),
 			array (
 					'db' => 'elemento.serie',
@@ -98,15 +98,15 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
 			),
 			array (
 					'db' => 'tipo_bienes.descripcion',
-					'dt' => 2
+					'dt' => 2 
 			),
 			array (
 					'db' => 'elemento.fecha_registro',
-					'dt' => 3
+					'dt' => 3 
 			),
 			array (
 					'db' => 'elemento.id_elemento',
-					'dt' => 4
+					'dt' => 4 
 			),
 			array (
 					'db' => 'entrada.estado_entrada',
@@ -118,149 +118,138 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
 			) 
 	);
 	
-// 	var_dump($esteRecursoDB);exit;
+	// var_dump($esteRecursoDB);exit;
 	// SQL server connection information
 	$sql_details = array (
-			'user' => $esteRecursoDB-> usuario,
+			'user' => $esteRecursoDB->usuario,
 			'pass' => $esteRecursoDB->clave,
 			'db' => $esteRecursoDB->db,
 			'host' => $esteRecursoDB->servidor 
 	);
 	
-// 	var_dump($sql_details);exit;
+	// var_dump($sql_details);exit;
 	/*
 	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * If you just want to use the basic configuration for DataTables with PHP
 	 * server-side, there is no need to edit below this line.
 	 */
 	
-	echo json_encode ( SSP::simple ( $_GET, $sql_details, $table, $primaryKey, $columns,$join,$where ) );
+	echo json_encode ( SSP::simple ( $_GET, $sql_details, $table, $primaryKey, $columns, $join, $where ) );
 }
 
 if ($_REQUEST ['funcion'] == 'consultaPlacas') {
 	
-	$cadenaSql = $this->sql->getCadenaSql('buscar_placa',$_GET['query']);
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-		
-
-	foreach ($resultadoItems as $key => $values) {
-		$keys = array('value', 'data');
-		$resultado[$key] = array_intersect_key($resultadoItems[$key], array_flip($keys));
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_placa', $_GET ['query'] );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	foreach ( $resultadoItems as $key => $values ) {
+		$keys = array (
+				'value',
+				'data' 
+		);
+		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
 	}
 	
-	//    var_dump($resultado);
+	// var_dump($resultado);
 	
-// 	echo json_encode($resultadoItems);
-	echo '{"suggestions":'.json_encode($resultado).'}';
-	
-	
+	// echo json_encode($resultadoItems);
+	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
 }
-
 
 if ($_REQUEST ['funcion'] == 'consultaSerie') {
-
-	$cadenaSql = $this->sql->getCadenaSql('buscar_serie',$_GET['query']);
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-
-	foreach ($resultadoItems as $key => $values) {
-		$keys = array('value', 'data');
-		$resultado[$key] = array_intersect_key($resultadoItems[$key], array_flip($keys));
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_serie', $_GET ['query'] );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	foreach ( $resultadoItems as $key => $values ) {
+		$keys = array (
+				'value',
+				'data' 
+		);
+		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
 	}
-
-	//    var_dump($resultado);
-
-	// 	echo json_encode($resultadoItems);
-	echo '{"suggestions":'.json_encode($resultado).'}';
-
-
+	
+	// var_dump($resultado);
+	
+	// echo json_encode($resultadoItems);
+	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
 }
-		
 
 if ($_REQUEST ['funcion'] == 'consultaEntrada') {
-
-	$cadenaSql = $this->sql->getCadenaSql('buscar_entradas',$_GET['query']);
 	
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_entradas', $_GET ['query'] );
 	
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
-	foreach ($resultadoItems as $key => $values) {
-		$keys = array('value', 'data');
-		$resultado[$key] = array_intersect_key($resultadoItems[$key], array_flip($keys));
+	foreach ( $resultadoItems as $key => $values ) {
+		$keys = array (
+				'value',
+				'data' 
+		);
+		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
 	}
-
-	//    var_dump($resultado);
-
-	// 	echo json_encode($resultadoItems);
-	echo '{"suggestions":'.json_encode($resultado).'}';
-
-
+	
+	// var_dump($resultado);
+	
+	// echo json_encode($resultadoItems);
+	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
 }
-
-
 
 if ($_REQUEST ['funcion'] == 'consultaFuncionario') {
-
-	$cadenaSql = $this->sql->getCadenaSql('buscar_funcionarios',$_GET['query']);
-
-
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-	foreach ($resultadoItems as $key => $values) {
-		$keys = array('value', 'data');
-		$resultado[$key] = array_intersect_key($resultadoItems[$key], array_flip($keys));
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_funcionarios', $_GET ['query'] );
+	
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	foreach ( $resultadoItems as $key => $values ) {
+		$keys = array (
+				'value',
+				'data' 
+		);
+		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
 	}
-
-
-	echo '{"suggestions":'.json_encode($resultado).'}';
-
-
+	
+	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
 }
-
-
 
 if ($_REQUEST ['funcion'] == 'consultaSede') {
-
-	$cadenaSql = $this->sql->getCadenaSql('buscar_sede',$_GET['query']);
-
-
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-	foreach ($resultadoItems as $key => $values) {
-		$keys = array('value', 'data');
-		$resultado[$key] = array_intersect_key($resultadoItems[$key], array_flip($keys));
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_sede', $_GET ['query'] );
+	
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	foreach ( $resultadoItems as $key => $values ) {
+		$keys = array (
+				'value',
+				'data' 
+		);
+		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
 	}
-
-
-	echo '{"suggestions":'.json_encode($resultado).'}';
-
-
+	
+	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
 }
-
 
 if ($_REQUEST ['funcion'] == 'consultaDependencia') {
-
-	var_dump($_REQUEST);
-// 	$cadenaSql = $this->sql->getCadenaSql('buscar_sede',$_GET['query']);
-
-
-// 	$resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-// 	foreach ($resultadoItems as $key => $values) {
-// 		$keys = array('value', 'data');
-// 		$resultado[$key] = array_intersect_key($resultadoItems[$key], array_flip($keys));
-// 	}
-
-
-// 	echo '{"suggestions":'.json_encode($resultado).'}';
-
-
+	
+	$arreglo = array (
+			$_REQUEST ['valor'],
+			$_GET ['query'] 
+	);
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_dependencia', $arreglo );
+	
+	
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	foreach ( $resultadoItems as $key => $values ) {
+		$keys = array (
+				'value',
+				'data' 
+		);
+		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
+	}
+	
+	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
 }
-
-
-
-
-
-
 
 ?>
