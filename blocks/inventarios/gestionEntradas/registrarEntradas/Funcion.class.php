@@ -86,7 +86,6 @@ class Funcion {
 					if (isset ( $_REQUEST ["botonRegistrar"] ) && $_REQUEST ['botonRegistrar'] == 'true') {
 						
 						redireccion::redireccionar ( 'Registrar' );
-						exit;
 					}
 					
 					if (isset ( $_REQUEST ["botonContinuar"] ) && $_REQUEST ['botonContinuar'] == 'true') {

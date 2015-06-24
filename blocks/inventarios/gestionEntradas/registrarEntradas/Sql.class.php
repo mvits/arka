@@ -217,7 +217,9 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "SELECT ";
 				$cadenaSql .= "id_clase, descripcion  ";
-				$cadenaSql .= "FROM clase_entrada;";
+				$cadenaSql .= "FROM clase_entrada ";
+				$cadenaSql .= "WHERE  id_clase > 1 ";
+				$cadenaSql .= "ORDER BY  descripcion ASC ;";
 				
 				break;
 			
@@ -349,6 +351,7 @@ class Sql extends \Sql {
 			// ?, ?, ?, ?, ?, ?);
 			
 			case "insertarEntrada" :
+				
 				$cadenaSql = " INSERT INTO ";
 				$cadenaSql .= " entrada(";
 				$cadenaSql .= " fecha_registro, vigencia, clase_entrada, info_clase, ";
@@ -367,12 +370,12 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [9] . "',";
 				$cadenaSql .= "'" . $variable [10] . "',";
 				$cadenaSql .= "'" . $variable [11] . "',";
-				$cadenaSql .= "'" . $variable [12] . "',";
+				$cadenaSql .= " " . $variable [12] . ",";
 				$cadenaSql .= "'" . $variable [13] . "',";
 				$cadenaSql .= "'" . $variable [14] . "',";
 				$cadenaSql .= "'" . $variable [15] . "',";
-				$cadenaSql .= "'" . $variable [16] . "',";
-				$cadenaSql .= "'" . $variable [17] . "',";
+				$cadenaSql .= " " . $variable [16] . " ,";
+				$cadenaSql .= " " . $variable [17] . " ,";
 				$cadenaSql .= "'" . $variable [18] . "') ";
 				$cadenaSql .= "RETURNING  consecutivo; ";
 				

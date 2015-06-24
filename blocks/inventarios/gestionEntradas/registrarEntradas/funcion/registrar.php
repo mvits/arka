@@ -78,8 +78,8 @@ class RegistradorOrden {
 			case '3' :
 				
 				// $observacion = $_REQUEST ['observaciones_sobrante'];
-				$entrada = $_REQUEST ['id_entradaS'];
-				$salida = $_REQUEST ['id_salidaS'];
+// 				$entrada = $_REQUEST ['id_entradaS'];
+// 				$salida = $_REQUEST ['id_salidaS'];
 				
 				foreach ( $_FILES as $key => $values ) {
 					
@@ -171,8 +171,8 @@ class RegistradorOrden {
 				(isset ( $entrada )) ? $entrada : 0,
 				(isset ( $salida )) ? $salida : 0,
 				($_REQUEST ['clase'] == 1) ? $_REQUEST ['id_hurtoR'] : 0,
-				($_REQUEST ['clase'] == 3) ? $_REQUEST ['num_placa'] : 0,
-				($_REQUEST ['clase'] == 3) ? $_REQUEST ['valor_sobrante'] : 0,
+				 0,
+				 0,
 				(isset ( $destino1 )) ? $destino1 : 'NULL',
 				(isset ( $archivo1 )) ? $archivo1 : 'NULL' 
 		);
@@ -189,10 +189,12 @@ class RegistradorOrden {
 		
 		
 		$fechaActual = date ( 'Y-m-d' );
+		$anio_vigencia = date ( 'Y' );
+		
 		
 		$arregloDatos = array (
 				$fechaActual,
-				$_REQUEST ['vigencia'],
+				$anio_vigencia,
 				$_REQUEST ['clase'],
 				$info_clase [0] [0],
 				($_REQUEST ['tipo_contrato'] != '') ? $_REQUEST ['tipo_contrato'] : 0,
@@ -203,17 +205,18 @@ class RegistradorOrden {
 				($_REQUEST ['fecha_factura'] != '') ? $_REQUEST ['fecha_factura'] : '0001-01-01',
 				$_REQUEST ['observaciones_entrada'],
 				(isset ( $_REQUEST ['acta_recibido'] ) && $_REQUEST ['acta_recibido'] != '') ? $_REQUEST ['acta_recibido'] : 0,
-				$_REQUEST ['id_ordenador'],
+				($_REQUEST ['id_ordenador']=='')?'NULL':$_REQUEST ['id_ordenador'],
 				$_REQUEST ['sede'],
 				$_REQUEST ['dependencia'],
 				$_REQUEST ['supervisor'],
-				$_REQUEST ['tipo_ordenador'],
-				$_REQUEST ['identificacion_ordenador'],
+				($_REQUEST ['tipo_ordenador']=='')?'NULL':$_REQUEST ['tipo_ordenador'],
+				($_REQUEST ['identificacion_ordenador']=='')?'NULL':$_REQUEST ['identificacion_ordenador'],
 				$idEntradamax
 		);
 		
+
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarEntrada', $arregloDatos );
-		
+
 		$id_entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$arreglo=array($idEntradamax,$id_entrada[0][0]);

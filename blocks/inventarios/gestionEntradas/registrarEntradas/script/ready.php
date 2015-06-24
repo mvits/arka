@@ -64,6 +64,7 @@
                    $("#<?php echo $this->campoSeguro('tipo_cotr')?>").css('display','block');
                    $("#<?php echo $this->campoSeguro('inf_contr')?>").css('display',' none');
                    $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','block');
+                   $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','block');
           		   		$("#<?php echo $this->campoSeguro('proveedor')?>").select2({
              	 placeholder: "Search for a repository",
               	 minimumInputLength: 3,
@@ -102,6 +103,7 @@
                    $("#<?php echo $this->campoSeguro('tipo_cotr')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('inf_contr')?>").css('display',' none');
                    $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','block');
+                   $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','block');
 		$("#<?php echo $this->campoSeguro('proveedor')?>").select2({
              	 placeholder: "Search for a repository",
               	 minimumInputLength: 3,
@@ -123,7 +125,7 @@
                    $("#<?php echo $this->campoSeguro('recuperacion')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('tipo_cotr')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('inf_contr')?>").css('display',' none');
-                   $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','none');
+                   $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','none');
                    		$("#<?php echo $this->campoSeguro('proveedor')?>").select2({
              	 placeholder: "Search for a repository",
               	 minimumInputLength: 3,
@@ -163,6 +165,7 @@
                    $("#<?php echo $this->campoSeguro('tipo_cotr')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('inf_contr')?>").css('display',' none');
                    $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','none');
+                   $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','block');
       		$("#<?php echo $this->campoSeguro('proveedor')?>").select2({
              	 placeholder: "Search for a repository",
               	 minimumInputLength: 3,
@@ -181,9 +184,10 @@
                    $("#<?php echo $this->campoSeguro('sobrante')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('produccion')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('recuperacion')?>").css('display','block');
-                   $("#<?php echo $this->campoSeguro('tipo_cotr')?>").css('display',' block');
-                   $("#<?php echo $this->campoSeguro('inf_contr')?>").css('display',' block');
-                   $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','block');
+                   $("#<?php echo $this->campoSeguro('tipo_cotr')?>").css('display',' none');
+                   $("#<?php echo $this->campoSeguro('inf_contr')?>").css('display',' none');
+                   $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','none');
+                   $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','block');
 				   $("#<?php echo $this->campoSeguro('proveedor')?>").select2({
              	 	placeholder: "Search for a repository",
               	 	minimumInputLength: 3,
@@ -205,6 +209,7 @@
                    $("#<?php echo $this->campoSeguro('tipo_cotr')?>").css('display',' block');
                    $("#<?php echo $this->campoSeguro('inf_contr')?>").css('display',' block');
                    $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','block');
+                   $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','block');
 				   $("#<?php echo $this->campoSeguro('proveedor')?>").select2({
              	 	placeholder: "Search for a repository",
               	 	minimumInputLength: 3,
@@ -224,9 +229,10 @@
                    $("#<?php echo $this->campoSeguro('sobrante')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('produccion')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('recuperacion')?>").css('display','none');
-                   $("#<?php echo $this->campoSeguro('tipo_cotr')?>").css('display',' block');
-                   $("#<?php echo $this->campoSeguro('inf_contr')?>").css('display',' block');
+                   $("#<?php echo $this->campoSeguro('tipo_cotr')?>").css('display',' none');
+                   $("#<?php echo $this->campoSeguro('inf_contr')?>").css('display',' none');
                    $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','block');
+                   $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','block');
 				   $("#<?php echo $this->campoSeguro('proveedor')?>").select2({
              	 	placeholder: "Search for a repository",
               	 	minimumInputLength: 3,
@@ -248,6 +254,7 @@
                    $('#<?php echo $this->campoSeguro('numero_contrato')?>').removeAttr('disabled');
                    $('#<?php echo $this->campoSeguro('fecha_contrato')?>').removeAttr('disabled');
                    $("#<?php echo $this->campoSeguro('tipo_cotr')?>").css('display','none');
+                   $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','block');
                    break;
                 
                 
