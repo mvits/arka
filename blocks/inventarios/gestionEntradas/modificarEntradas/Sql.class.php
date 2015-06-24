@@ -186,7 +186,9 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "SELECT ";
 				$cadenaSql .= "id_clase, descripcion  ";
-				$cadenaSql .= "FROM clase_entrada;";
+				$cadenaSql .= "FROM clase_entrada ";
+				$cadenaSql .= "WHERE id_clase > 1 ";
+				$cadenaSql .= "ORDER BY  descripcion ASC  ;";
 				
 				break;
 			
@@ -449,12 +451,12 @@ class Sql extends \Sql {
 				$cadenaSql .= "  fecha_factura='" . $variable [7] . "', ";
 				$cadenaSql .= "  observaciones='" . $variable [8] . "', ";
 				$cadenaSql .= "  acta_recibido='" . $variable [10] . "', ";
-				$cadenaSql .= "  ordenador='" . $variable [11] . "', ";
+				$cadenaSql .= "  ordenador=" . $variable [11] . ", ";
 				$cadenaSql .= "  sede='" . $variable [12] . "', ";
 				$cadenaSql .= "  dependencia='" . $variable [13] . "', ";
 				$cadenaSql .= "  supervisor='" . $variable [14] . "', ";
-				$cadenaSql .= "  tipo_ordenador='" . $variable [15] . "', ";
-				$cadenaSql .= "  identificacion_ordenador='" . $variable [16] . "', ";
+				$cadenaSql .= "  tipo_ordenador=" . $variable [15] . ", ";
+				$cadenaSql .= "  identificacion_ordenador=" . $variable [16] . ", ";
 				$cadenaSql .= "  info_clase='" . $variable [17] . "', ";
 				$cadenaSql .= "  estado_entrada='1'  ";
 				$cadenaSql .= "  WHERE id_entrada='" . $variable [9] . "' ";
