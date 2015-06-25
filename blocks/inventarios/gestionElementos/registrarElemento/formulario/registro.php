@@ -492,7 +492,6 @@ class registrarForm {
 						echo $this->miFormulario->campoCuadroTexto ( $atributos );
 						unset ( $atributos );
 						
-						
 						$atributos ["id"] = "id_tipo_bien"; // No cambiar este nombre
 						$atributos ["tipo"] = "hidden";
 						$atributos ['estilo'] = '';
@@ -503,7 +502,6 @@ class registrarForm {
 						$atributos = array_merge ( $atributos, $atributosGlobales );
 						echo $this->miFormulario->campoCuadroTexto ( $atributos );
 						unset ( $atributos );
-						
 						
 						$esteCampo = "AgrupacionInformacion";
 						$atributos ['id'] = $esteCampo;
@@ -943,35 +941,9 @@ class registrarForm {
 						// unset ( $atributos );
 						
 						// ---------------- CONTROL: Cuadro Lista --------------------------------------------------------
-/*						
-						$esteCampo = 'bodega';
-						$atributos ['columnas'] = 1;
-						$atributos ['nombre'] = $esteCampo;
-						$atributos ['id'] = $esteCampo;
-						$atributos ['seleccion'] = - 1;
-						$atributos ['evento'] = '';
-						$atributos ['deshabilitado'] = false;
-						$atributos ["etiquetaObligatorio"] = true;
-						$atributos ['tab'] = $tab;
-						$atributos ['tamanno'] = 1;
-						$atributos ['estilo'] = 'jqueryui';
-						$atributos ['validar'] = 'required';
-						$atributos ['limitar'] = false;
-						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-						$atributos ['anchoEtiqueta'] = 220;
-						// Valores a mostrar en el control
-						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_bodega" );
-						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-						$atributos ['matrizItems'] = $matrizItems;
-						
-						// Utilizar lo siguiente cuando no se pase un arreglo:
-						// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
-						// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
-						$tab ++;
-						$atributos = array_merge ( $atributos, $atributosGlobales );
-						echo $this->miFormulario->campoCuadroLista ( $atributos );
-						unset ( $atributos );
-						*/
+						/*
+						 * $esteCampo = 'bodega'; $atributos ['columnas'] = 1; $atributos ['nombre'] = $esteCampo; $atributos ['id'] = $esteCampo; $atributos ['seleccion'] = - 1; $atributos ['evento'] = ''; $atributos ['deshabilitado'] = false; $atributos ["etiquetaObligatorio"] = true; $atributos ['tab'] = $tab; $atributos ['tamanno'] = 1; $atributos ['estilo'] = 'jqueryui'; $atributos ['validar'] = 'required'; $atributos ['limitar'] = false; $atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo ); $atributos ['anchoEtiqueta'] = 220; // Valores a mostrar en el control $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_bodega" ); $matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" ); $atributos ['matrizItems'] = $matrizItems; // Utilizar lo siguiente cuando no se pase un arreglo: // $atributos['baseDatos']='ponerAquiElNombreDeLaConexión'; // $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar'; $tab ++; $atributos = array_merge ( $atributos, $atributosGlobales ); echo $this->miFormulario->campoCuadroLista ( $atributos ); unset ( $atributos );
+						 */
 						$esteCampo = 'subtotal_sin_iva';
 						$atributos ['id'] = $esteCampo;
 						$atributos ['nombre'] = $esteCampo;
@@ -1107,8 +1079,6 @@ class registrarForm {
 			
 			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 			
-	
-			
 			// ------------------Fin Division para los botones-------------------------
 			echo $this->miFormulario->division ( "fin" );
 			
@@ -1161,6 +1131,7 @@ class registrarForm {
 			$atributos ['tipoEtiqueta'] = 'fin';
 			echo $this->miFormulario->formulario ( $atributos );
 			
+			unset ( $atributos );
 			return true;
 		}
 	}
@@ -1199,11 +1170,11 @@ class registrarForm {
 			$tiempo = $_REQUEST ['tiempo'];
 			
 			// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
-			$esteCampo = $esteBloque ['nombre'];
-			$atributos ['id'] = $esteBloque ["nombre"];
-			$atributos ['nombre'] = $esteBloque ["nombre"];
+			$esteCampo = "Mensaje";
+			$atributos ['id'] = $esteCampo;
+			$atributos ['nombre'] = $esteCampo;
 			// Si no se coloca, entonces toma el valor predeterminado 'application/x-www-form-urlencoded'
-			$atributos ['tipoFormulario'] = 'multipart/form-data';
+			$atributos ['tipoFormulario'] = '';
 			// Si no se coloca, entonces toma el valor predeterminado 'POST'
 			$atributos ['metodo'] = 'POST';
 			// Si no se coloca, entonces toma el valor predeterminado 'index.php' (Recomendado)
@@ -1286,46 +1257,50 @@ class registrarForm {
 					
 					echo "<br><br><br>";
 					
-					// -----------------CONTROL: Botón ----------------------------------------------------------------
-					$esteCampo = 'botonContinuar';
-					$atributos ["id"] = $esteCampo;
-					$atributos ["tabIndex"] = $tab;
-					$atributos ["tipo"] = 'boton';
-					// submit: no se coloca si se desea un tipo button genérico
-					$atributos ['submit'] = true;
-					$atributos ["estiloMarco"] = '';
-					$atributos ["estiloBoton"] = 'jqueryui';
-					// verificar: true para verificar el formulario antes de pasarlo al servidor.
-					$atributos ["verificar"] = '';
-					$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
-					$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
-					$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
-					$tab ++;
+					$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
+					$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
+					$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 					
-					// Aplica atributos globales al control
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoBoton ( $atributos );
-					// -----------------FIN CONTROL: Botón -----------------------------------------------------------
+					$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+					$variable = "pagina=indexAlmacen";
 					
+					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+					
+					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+					$esteCampo = 'botonSalir';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['enlace'] = $variable;
+					$atributos ['tabIndex'] = 1;
+					$atributos ['estilo'] = 'textoSubtitulo';
+					$atributos ['enlaceTexto'] = "<< Salir >>";
+					$atributos ['ancho'] = '10%';
+					$atributos ['alto'] = '10%';
+					$atributos ['redirLugar'] = true;
+					echo $this->miFormulario->enlace ( $atributos );
+					unset ( $atributos );
+					
+					$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+					$variable = "pagina=registrarSalidas";
+					$variable .= "&opcion=Salida";
+					$variable .= "&numero_entrada=" . $_REQUEST ['numero_entrada'];
+					$variable .= "&datosGenerales=" . $_REQUEST ['datosGenerales'];
+					
+					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+					
+					echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
 					// -----------------CONTROL: Botón ----------------------------------------------------------------
 					$esteCampo = 'botonSalida';
-					$atributos ["id"] = $esteCampo;
-					$atributos ["tabIndex"] = $tab;
-					$atributos ["tipo"] = 'boton';
-					// submit: no se coloca si se desea un tipo button genérico
-					$atributos ['submit'] = true;
-					$atributos ["estiloMarco"] = '';
-					$atributos ["estiloBoton"] = 'jqueryui';
-					// verificar: true para verificar el formulario antes de pasarlo al servidor.
-					$atributos ["verificar"] = '';
-					$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
-					$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
-					$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
-					$tab ++;
+					$atributos ['id'] = $esteCampo;
+					$atributos ['enlace'] = $variable;
+					$atributos ['tabIndex'] = 1;
+					$atributos ['estilo'] = 'textoSubtitulo';
+					$atributos ['enlaceTexto'] = "<< Generar Salida >>";
+					$atributos ['ancho'] = '10%';
+					$atributos ['alto'] = '10%';
+					$atributos ['redirLugar'] = true;
+					echo $this->miFormulario->enlace ( $atributos );
+					unset ( $atributos );
 					
-					// Aplica atributos globales al control
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoBoton ( $atributos );
 					// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 					
 					// ---------------- FIN SECCION: División ----------------------------------------------------------
@@ -1368,6 +1343,7 @@ class registrarForm {
 			$atributos ['marco'] = true;
 			$atributos ['tipoEtiqueta'] = 'fin';
 			echo $this->miFormulario->formulario ( $atributos );
+			unset ( $atributos );
 			
 			return true;
 		}

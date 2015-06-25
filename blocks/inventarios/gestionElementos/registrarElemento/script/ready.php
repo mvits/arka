@@ -15,8 +15,6 @@
             $("#registrarElemento").submit(function() {
                 $resultado=$("#registrarElemento").validationEngine("validate");
                    
-                   
-                   
                 if ($resultado) {
                 
                     return true;

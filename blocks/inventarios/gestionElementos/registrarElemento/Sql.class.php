@@ -154,12 +154,12 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT  ce.elemento_tipobien , tb.descripcion  ";
 				$cadenaSql .= "FROM grupo.catalogo_elemento ce ";
 				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
-				$cadenaSql .= "WHERE ce.elemento_id = '".$variable."';" ;
+				$cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
 				
 				break;
 			
 			case "buscar_placa_maxima" :
-				$cadenaSql = " SELECT  MAX(placa) placa_max ";
+				$cadenaSql = " SELECT  MAX(placa::FLOAT) placa_max ";
 				$cadenaSql .= " FROM elemento_individual ";
 				break;
 			
@@ -281,12 +281,13 @@ class Sql extends \Sql {
 				break;
 			
 			case "ingresar_elemento_individual" :
+				
 				$cadenaSql = " 	INSERT INTO elemento_individual(";
 				$cadenaSql .= "fecha_registro, placa, serie, id_elemento_gen,id_elemento_ind) ";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
-				$cadenaSql .= "'" . $variable [1] . "',";
-				$cadenaSql .= "'" . $variable [2] . "',";
+				$cadenaSql .= ((is_null($variable [1])) ? 'null'. "," : "'" . $variable [1] . "',");
+				$cadenaSql .= ((is_null($variable [2])) ? 'null'. "," : "'" . $variable [2] . "',");
 				$cadenaSql .= "'" . $variable [3] . "',";
 				$cadenaSql .= "'" . $variable [4] . "') ";
 				$cadenaSql .= "RETURNING id_elemento_ind; ";
