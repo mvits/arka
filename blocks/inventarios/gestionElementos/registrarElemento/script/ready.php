@@ -57,7 +57,7 @@ $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
  
  
  $("#<?php echo $this->campoSeguro('tipo_registro')?>").select2();
- $("#<?php echo $this->campoSeguro('tipo_bien')?>").select2();
+ 
  $("#<?php echo $this->campoSeguro('iva')?>").select2();
  $("#<?php echo $this->campoSeguro('bodega')?>").select2();
  <!--$("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();  -->
@@ -134,42 +134,7 @@ $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
 	
 	
 	
-	     $( "#<?php echo $this->campoSeguro('tipo_bien')?>" ).change(function() {
-        
-            switch($("#<?php echo $this->campoSeguro('tipo_bien')?>").val())
-            {
-                           
-                case '2':
-                    
-                   
-                    $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','none');
-                    $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','block');
-                   
-
-                   
-
-                break;
-                
-                
-                case '3':
-                    
-                  $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','block');
-                  $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','none');
-                  $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
-       
-                break;
-                
-
-                default:
-                
-                $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','none');
-                $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','none');   
-                   break;
-                
-                
-             }
-          });  
-	
+	    
 
                 
                 
@@ -301,43 +266,7 @@ $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
             
           });  
           
-         $( "#<?php echo $this->campoSeguro('tipo_bien')?>" ).change(function() {
-        
-        
-        
-          switch($("#<?php echo $this->campoSeguro('tipo_bien')?>").val())
-            {
-                           
-                
-                case '2':
-                
-                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
-                 $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
 
-                 break;
-                
-                case '3':
-                
-                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
-                 $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
-                    
-                break;
-                                
-           
-                break;
-                
-
-                default:
-                 
-                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('');
-                 $('#<?php echo $this->campoSeguro('cantidad')?>').removeAttr('disabled');
-                 
-                break;
-                
-                }
-            
-          });  
-        
         
                         
         $('#<?php echo $this->campoSeguro('fecha_inicio')?>').datepicker({

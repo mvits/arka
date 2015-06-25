@@ -57,6 +57,9 @@ class RegistradorOrden {
 		
 		$fechaActual = date ( 'Y-m-d' );
 		
+		$_REQUEST ['bodega']=0;
+		
+		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionElementos/";
@@ -79,7 +82,7 @@ class RegistradorOrden {
 			
 			case '1' :
 				
-				if ($_REQUEST ['tipo_bien'] == 1) {
+				if ($_REQUEST ['id_tipo_bien'] == 1) {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_placa', '1' );
 					$placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -87,7 +90,7 @@ class RegistradorOrden {
 					$arreglo = array (
 							$fechaActual,
 							$_REQUEST ['nivel'],
-							$_REQUEST ['tipo_bien'],
+							$_REQUEST ['id_tipo_bien'],
 							$_REQUEST ['descripcion'],
 							$_REQUEST ['cantidad'],
 							$_REQUEST ['unidad'],
@@ -98,8 +101,8 @@ class RegistradorOrden {
 							$_REQUEST ['subtotal_sin_iva'],
 							$_REQUEST ['total_iva'],
 							$_REQUEST ['total_iva_con'],
-							$_REQUEST ['marca'],
-							$_REQUEST ['serie'],
+							($_REQUEST ['marca']!='')?$_REQUEST ['marca']:'NULL',
+							($_REQUEST ['serie']!='')?$_REQUEST ['serie']:'NULL',
 							$_REQUEST ['entrada'],
 							$elemento_id_max
 					);
@@ -107,12 +110,12 @@ class RegistradorOrden {
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 					
 					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				} else if ($_REQUEST ['tipo_bien'] == 2) {
+				} else if ($_REQUEST ['id_tipo_bien'] == 2) {
 					
 					$arreglo = array (
 							$fechaActual,
 							$_REQUEST ['nivel'],
-							$_REQUEST ['tipo_bien'],
+							$_REQUEST ['id_tipo_bien'],
 							$_REQUEST ['descripcion'],
 							$_REQUEST ['cantidad'] = 1,
 							$_REQUEST ['unidad'],
@@ -123,8 +126,8 @@ class RegistradorOrden {
 							$_REQUEST ['subtotal_sin_iva'],
 							$_REQUEST ['total_iva'],
 							$_REQUEST ['total_iva_con'],
-							$_REQUEST ['marca'],
-							$_REQUEST ['serie'],
+							($_REQUEST ['marca']!='')?$_REQUEST ['marca']:'NULL',
+							($_REQUEST ['serie']!='')?$_REQUEST ['serie']:'NULL',
 							$_REQUEST ['entrada'],
 							$elemento_id_max
 					);
@@ -132,14 +135,14 @@ class RegistradorOrden {
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 					
 					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				} else if ($_REQUEST ['tipo_bien'] == 3) {
+				} else if ($_REQUEST ['id_tipo_bien'] == 3) {
 					
 					
 					if ($_REQUEST ['tipo_poliza'] == 0) {
 						$arreglo = array (
 								$fechaActual,
 								$_REQUEST ['nivel'],
-								$_REQUEST ['tipo_bien'],
+								$_REQUEST ['id_tipo_bien'],
 								$_REQUEST ['descripcion'],
 								$_REQUEST ['cantidad'] = 1,
 								$_REQUEST ['unidad'],
@@ -153,8 +156,8 @@ class RegistradorOrden {
 								$_REQUEST ['tipo_poliza'],
 								'0001-01-01',
 								'0001-01-01',
-								$_REQUEST ['marca'],
-								$_REQUEST ['serie'],
+								($_REQUEST ['marca']!='')?$_REQUEST ['marca']:'NULL',
+								($_REQUEST ['serie']!='')?$_REQUEST ['serie']:'NULL',
 								$_REQUEST ['entrada'],
 								$elemento_id_max
 								 
@@ -163,7 +166,7 @@ class RegistradorOrden {
 						$arreglo = array (
 								$fechaActual,
 								$_REQUEST ['nivel'],
-								$_REQUEST ['tipo_bien'],
+								$_REQUEST ['id_tipo_bien'],
 								$_REQUEST ['descripcion'],
 								$_REQUEST ['cantidad'] = 1,
 								$_REQUEST ['unidad'],
@@ -177,8 +180,8 @@ class RegistradorOrden {
 								$_REQUEST ['tipo_poliza'],
 								$_REQUEST ['fecha_inicio'],
 								$_REQUEST ['fecha_final'],
-								$_REQUEST ['marca'],
-								$_REQUEST ['serie'],
+								($_REQUEST ['marca']!='')?$_REQUEST ['marca']:'NULL',
+								($_REQUEST ['serie']!='')?$_REQUEST ['serie']:'NULL',
 								$_REQUEST ['entrada'],
 								$elemento_id_max
 						);

@@ -149,6 +149,15 @@ class Sql extends \Sql {
 			 * Clausulas Del Caso Uso.
 			 */
 			
+			case "ConsultaTipoBien" :
+				
+				$cadenaSql = "SELECT  ce.elemento_tipobien , tb.descripcion  ";
+				$cadenaSql .= "FROM grupo.catalogo_elemento ce ";
+				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
+				$cadenaSql .= "WHERE ce.elemento_id = '".$variable."';" ;
+				
+				break;
+			
 			case "buscar_placa_maxima" :
 				$cadenaSql = " SELECT  MAX(placa) placa_max ";
 				$cadenaSql .= " FROM elemento_individual ";
@@ -262,11 +271,12 @@ class Sql extends \Sql {
 			
 			case "consultar_nivel_inventario" :
 				
-				$cadenaSql = "SELECT elemento_id, elemento_padre||''|| elemento_codigo||' - '||elemento_nombre ";
-				$cadenaSql .= "FROM catalogo.catalogo_elemento ";
-				$cadenaSql .= "WHERE elemento_catalogo=1 ";
-				$cadenaSql .= "AND  elemento_id > 0  ";
-				$cadenaSql .= "ORDER BY elemento_id DESC ;";
+				$cadenaSql = "SELECT ce.elemento_id, ce.elemento_codigo||' - '||ce.elemento_nombre ";
+				$cadenaSql .= "FROM grupo.catalogo_elemento  ce ";
+				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
+				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
+				$cadenaSql .= "AND  ce.elemento_id > 0  ";
+				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
 				
 				break;
 			
@@ -373,13 +383,13 @@ class Sql extends \Sql {
 			case "consultarEntrada" :
 				$cadenaSql = "SELECT DISTINCT ";
 				$cadenaSql .= "entrada.id_entrada, entrada.fecha_registro,  ";
-				$cadenaSql .= " descripcion,proveedor, consecutivo||' - ('||entrada.vigencia||')' entradas   ";
+				$cadenaSql .= " descripcion,proveedor, consecutivo||' - ('||entrada.vigencia||')' entradas    ";
 				$cadenaSql .= "FROM entrada ";
 				$cadenaSql .= "JOIN clase_entrada ON clase_entrada.id_clase = entrada.clase_entrada ";
 				
 				$cadenaSql .= "WHERE 1=1 ";
 				if ($variable [0] != '') {
-					$cadenaSql .= " AND entrada.id_entrada = '" . $variable [0] . "'";
+					$cadenaSql .= " AND entrada.id_entrada = '" . $variable [0] . "' ";
 				}
 				
 				if ($variable [1] != '') {
@@ -388,21 +398,24 @@ class Sql extends \Sql {
 				}
 				
 				if ($variable [3] != '') {
-					$cadenaSql .= " AND clase_entrada = '" . $variable [3] . "'";
+					$cadenaSql .= " AND clase_entrada = '" . $variable [3] . "' ";
 				}
 				if ($variable [4] != '') {
-					$cadenaSql .= " AND entrada.proveedor = '" . $variable [4] . "'";
+					$cadenaSql .= " AND entrada.proveedor = '" . $variable [4] . "' ";
 				}
+				
+				$cadenaSql .= " AND entrada.cierre_contable = FALSE ;";
 				
 				break;
 			
 			case "consultarEntradaParticular" :
-				$cadenaSql = "SELECT DISTINCT ";
+				
+				$cadenaSql = "SELECT  ";
 				$cadenaSql .= "entrada.id_entrada, entrada.fecha_registro,  ";
-				$cadenaSql .= " descripcion,proveedor, consecutivo||' - ('||entrada.vigencia||')' entradas   ";
-				$cadenaSql .= "FROM entrada ";
-				$cadenaSql .= "JOIN clase_entrada ON clase_entrada.id_clase = entrada.clase_entrada ";
-				$cadenaSql .= " AND entrada.id_entrada = '" . $variable. "'";
+				$cadenaSql .= " cl.descripcion,proveedor, consecutivo||' - ('||entrada.vigencia||')' entradas   ";
+				$cadenaSql .= "FROM arka_inventarios.entrada ";
+				$cadenaSql .= "JOIN arka_inventarios.clase_entrada cl ON cl.id_clase = entrada.clase_entrada ";
+				$cadenaSql .= "WHERE entrada.id_entrada = '" . $variable . "';";
 				
 				break;
 		}
