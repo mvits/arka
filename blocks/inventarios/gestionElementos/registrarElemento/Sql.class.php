@@ -281,6 +281,27 @@ class Sql extends \Sql {
 				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
 				
 				break;
+				
+				
+// 				INSERT INTO arka_movil.asignar_imagen(
+// 				num_registro, , estado_registro)
+// 				VALUES (?, ?, ?, ?, ?);
+				
+				
+				case "ElementoImagen" :
+				
+					$cadenaSql = " 	INSERT INTO arka_movil.asignar_imagen(";
+					$cadenaSql .= " id_elemento, prioridad, imagen ) ";
+					$cadenaSql .= " VALUES (";
+					$cadenaSql .= "'" . $variable ['elemento'] . "',";
+					$cadenaSql .= "'" . $variable ['prioridad'] . "',";
+					$cadenaSql .= "'" . $variable ['imagen'] . "') ";
+					$cadenaSql .= "RETURNING num_registro; ";
+					
+				
+					break;
+						
+				
 			
 			case "ingresar_elemento_individual" :
 				

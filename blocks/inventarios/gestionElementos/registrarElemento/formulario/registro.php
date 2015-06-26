@@ -579,13 +579,13 @@ class registrarForm {
 							$atributos ["nombre"] = $esteCampo;
 							$atributos ["tipo"] = "file";
 							$atributos ["obligatorio"] = true;
-							$atributos ["etiquetaObligatorio"] = true;
+							$atributos ["etiquetaObligatorio"] = false;
 							$atributos ["tabIndex"] = $tab ++;
 							$atributos ["columnas"] = 1;
 							$atributos ["estilo"] = "textoIzquierda";
-							$atributos ["anchoEtiqueta"] = 150;
+							$atributos ["anchoEtiqueta"] = 215;
 							$atributos ["tamanno"] = 500000;
-							$atributos ["validar"] = "required";
+							$atributos ["validar"] = " ";
 							$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
 							// $atributos ["valor"] = $valorCodificado;
 							$atributos = array_merge ( $atributos, $atributosGlobales );

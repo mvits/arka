@@ -192,6 +192,9 @@ class RegistradorOrden {
 					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				}
 	
+				
+				
+				
 				$placa = date ( 'Ymd' ) . "00000";
 				
 				
@@ -264,6 +267,39 @@ class RegistradorOrden {
 					}
 				}
 				
+				
+				
+				
+				foreach ( $_FILES as $key => $values ) {
+				
+					$archivo = $_FILES [$key];
+				}
+				
+				
+				
+				
+				
+				
+				if($archivo['type']=='image/jpeg'){
+						
+					$data = base64_encode(file_get_contents($archivo['tmp_name']));
+				//Prioridad 1 ('Principal') 0 ('No Principal')
+					$arreglo=array(
+							"elemento"=>$elemento_id_max,
+							"prioridad"=>"1",
+							"imagen"=>$data
+					);
+					
+				
+					$cadenaSql = $this->miSql->getCadenaSql ( 'ElementoImagen', $arreglo );
+					 
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+						
+					
+						
+				}
+					
 				
 				$datos = array (
 						$elemento [0] [0],

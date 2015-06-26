@@ -15,6 +15,9 @@ $this->idioma ["informacion_proveedor"] ="Nombre y/o Razón Social Proveedor : "
 
 
 
+$this->idioma ["imagenElemento"] ="Imagen Elemento : ";
+$this->idioma ["imagenElementoTitulo"] ="Seleccione Imagen Elemento (.jpg,.jpeg)";
+
 
 
 
