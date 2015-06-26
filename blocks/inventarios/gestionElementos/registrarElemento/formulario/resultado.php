@@ -208,8 +208,9 @@ class registrarForm {
 							$entrada [$i] [1],
 							$entrada [$i] [2],
 							$proveedor [0] [0],
-							$proveedor [0] [1]
+							str_replace("&","",$proveedor [0] [1])
 					);
+					
 				}
 				$arreglo=serialize($arreglo);
 				$variable .= "&datosGenerales=" . $arreglo;

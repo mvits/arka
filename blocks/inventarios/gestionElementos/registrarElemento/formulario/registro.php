@@ -60,6 +60,7 @@ class registrarForm {
 		if (isset ( $_REQUEST ['entradaDirecta'] ) && $_REQUEST ['entradaDirecta'] = 1) {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntradaParticular', $_REQUEST ['numero_entrada'] );
+
 			
 			$datos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			$datos = $datos [0];
@@ -505,7 +506,7 @@ class registrarForm {
 						
 						$esteCampo = "AgrupacionInformacion";
 						$atributos ['id'] = $esteCampo;
-						$atributos ['leyenda'] = "Descripción";
+						$atributos ['leyenda'] = "Detalle";
 						echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 						
 						unset ( $atributos );
@@ -570,6 +571,27 @@ class registrarForm {
 							$atributos = array_merge ( $atributos, $atributosGlobales );
 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
 							unset ( $atributos );
+							
+							
+							
+							$esteCampo = "imagenElemento";
+							$atributos ["id"] = $esteCampo; // No cambiar este nombre
+							$atributos ["nombre"] = $esteCampo;
+							$atributos ["tipo"] = "file";
+							$atributos ["obligatorio"] = true;
+							$atributos ["etiquetaObligatorio"] = true;
+							$atributos ["tabIndex"] = $tab ++;
+							$atributos ["columnas"] = 1;
+							$atributos ["estilo"] = "textoIzquierda";
+							$atributos ["anchoEtiqueta"] = 150;
+							$atributos ["tamanno"] = 500000;
+							$atributos ["validar"] = "required";
+							$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
+							// $atributos ["valor"] = $valorCodificado;
+							$atributos = array_merge ( $atributos, $atributosGlobales );
+							echo $this->miFormulario->campoCuadroTexto ( $atributos );
+							unset ( $atributos );
+							
 						}
 						echo $this->miFormulario->agrupacion ( "fin" );
 						unset ( $atributos );

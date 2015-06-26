@@ -171,7 +171,9 @@ class Sql extends \Sql {
 			
 			case "buscar_entradas" :
 				$cadenaSql = " SELECT id_entrada valor, consecutivo||' - ('||entrada.vigencia||')' descripcion  ";
-				$cadenaSql .= " FROM entrada; ";
+				$cadenaSql .= " FROM entrada  ";
+				$cadenaSql .= " WHERE entrada.cierre_contable = FALSE ; ";
+				
 				break;
 			
 			case "proveedor_informacion" :
