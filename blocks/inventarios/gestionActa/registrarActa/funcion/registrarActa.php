@@ -135,12 +135,13 @@ class RegistradorActa {
 		}
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'limpiar_tabla_items', $_REQUEST ['seccion'] );
-		$resultado_secuencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+// 		$resultado_secuencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		
 		$datos = array (
 				$id_acta [0] [0],
 				$fechaActual 
 		);
+		exit;
 		
 		if ($items && $id_acta) {
 			
