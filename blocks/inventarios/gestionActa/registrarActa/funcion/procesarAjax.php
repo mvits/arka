@@ -1,28 +1,8 @@
 <?php
 use inventarios\gestionActa\registrarActa\Sql;
 
-$ruta = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
-
-$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/plugin/html2pfd/";
-
-include ($ruta . "/plugin/scripts/javascript/dataTable/ssp.class.php");
-
 $conexion = "inventarios";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
-// ********************
-$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
-$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
-$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
-$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-
-$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
-$rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/";
-$rutaBloque .= $esteBloque ['grupo'] . '/' . $esteBloque ['nombre'];
-
-$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-
-// *************************************
 
 if ($_REQUEST ['funcion'] == 'tablaItems') {
 	$tabla = new stdClass ();
@@ -189,146 +169,10 @@ if ($_REQUEST ['funcion'] == 'consultarInfoContrato') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'informacionContrato', $_REQUEST ['valor'] );
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	$resultado = $resultado [0];
+	$resultado=$resultado[0];
 	$resultado = json_encode ( $resultado );
 	
 	echo $resultado;
-}
-
-if ($_REQUEST ['funcion'] == 'Consulta') {
-	
-	/*
-	 * DataTables example server-side processing script.
-	 *
-	 * Please note that this script is intentionally extremely simply to show how
-	 * server-side processing can be implemented, and probably shouldn't be used as
-	 * the basis for a large complex system. It is suitable for simple use cases as
-	 * for learning.
-	 *
-	 * See http://datatables.net/usage/server-side for full details on the server-
-	 * side processing requirements of DataTables.
-	 *
-	 * @license MIT - http://datatables.net/license_mit
-	 */
-	
-	/*
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Easy set variables
-	 */
-	
-	$arreglo = unserialize ( $_REQUEST ['datos'] );
-	
-	// DB table to use
-	
-	$table = '';
-	
-	if (isset ( $arreglo ['tipo'] ) && $arreglo ['tipo'] == 'Orden de Servicios') {
-		
-		$table = 'arka_inventarios.orden_servicio ';
-	}
-	
-	if (isset ( $arreglo ['tipo'] ) && $arreglo ['tipo'] == 'Orden de Compra') {
-		
-		$table = 'arka_inventarios.orden_compra ';
-	}
-	
-	// Table's primary key
-	$primaryKey = '';
-	
-	if (isset ( $arreglo ['tipo'] ) && $arreglo ['tipo'] == 'Orden de Servicios') {
-		
-		$primaryKey = ' id_orden_servicio ';
-	}
-	
-	if (isset ( $arreglo ['tipo'] ) && $arreglo ['tipo'] == 'Orden de Compra') {
-		
-		$primaryKey = ' id_orden_compra ';
-	}
-	
-	// DB JOINS
-	// $join [] = " JOIN arka_inventarios.tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien ";
-	// $join [] = " JOIN arka_inventarios.entrada ON entrada.id_entrada = elemento.id_entrada ";
-	// $join [] = " JOIN arka_inventarios.elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
-	
-	// $join = implode ( " ", $join );
-	
-	$join = '';
-	
-	// DB WHERE
-	
-	if (isset ( $arreglo ['fechaInicio'] ) && $arreglo ['fechaInicio'] != '') {
-		$where [] = " fecha_registro BETWEEN CAST ( '" . $arreglo ['fechaInicio'] . "' AS DATE) AND  CAST ( '" . $arreglo ['fechaFinal'] . "' AS DATE) ";
-	} else {
-		$where [] = '1=1';
-	}
-	
-	$where = implode ( " AND ", $where );
-	
-	// Array of database columns which should be read and sent back to DataTables.
-	// The `db` parameter represents the column name in the database, while the `dt`
-	// parameter represents the DataTables column identifier. In this case simple
-	// indexes
-	
-	if (isset ( $arreglo ['tipo'] ) && $arreglo ['tipo'] == 'Orden de Servicios') {
-		
-		$columns = array (
-				array (
-						'db' => 'id_orden_servicio',
-						'dt' => 0 
-				),
-				array (
-						'db' => 'fecha_registro',
-						'dt' => 1 
-				) 
-		)
-		;
-	}
-	
-	if (isset ( $arreglo ['tipo'] ) && $arreglo ['tipo'] == 'Orden de Compra') {
-		
-		$columns = array (
-				array (
-						'db' => 'id_orden_compra',
-						'dt' => 0 
-				),
-				array (
-						'db' => 'fecha_registro',
-						'dt' => 1 
-				) 
-		)
-		;
-	}
-	
-	// var_dump($esteRecursoDB);exit;
-	// SQL server connection information
-	$sql_details = array (
-			'user' => $esteRecursoDB->usuario,
-			'pass' => $esteRecursoDB->clave,
-			'db' => $esteRecursoDB->db,
-			'host' => $esteRecursoDB->servidor 
-	);
-	
-	
-	
-	$parametros_enlace = array (
-			'pagina' => $this->miConfigurador->getVariableConfiguracion ( "pagina" ),
-			'opcion' => 'asociarActa',
-			'parametros' => array(
-					'id'=>($arreglo['tipo']=='Orden de Compra')?'id_orden_compra':($arreglo['tipo']=='Orden de Servicios')?'id_orden_servicio':'null',
-					'fecha'=>'fecha_registro',
-					'tipo'=>$arreglo['tipo'],
-					
-			)
-	);
-	
-	
-	/*
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * If you just want to use the basic configuration for DataTables with PHP
-	 * server-side, there is no need to edit below this line.
-	 */
-	
-	echo json_encode ( SSP::simple ( $_GET, $sql_details, $table, $primaryKey, $columns, $join, $where,$parametros_enlace) );
 }
 
 ?>

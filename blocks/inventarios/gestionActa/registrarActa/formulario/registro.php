@@ -45,6 +45,7 @@ class registrarForm {
 		$conexion2 = "sicapital";
 		$esteRecursoDB2 = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion2 );
 		
+		
 		$tab = 1;
 		if (isset ( $_REQUEST ['numero_orden'] )) {
 			
@@ -59,7 +60,7 @@ class registrarForm {
 					$id_contratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'informacion_ordenador', $resultado_servicios [0] ['id_ordenador_encargado'] );
-					$ordenador = $esteRecursoDB2->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$ordenador = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
 					$arreglo = array (
 							"asignacionOrdenador" => $resultado_servicios [0] ['id_ordenador_encargado'],
@@ -72,6 +73,8 @@ class registrarForm {
 					
 					$_REQUEST = array_merge ( $_REQUEST, $arreglo );
 					$mostrarContrato = 'none';
+					
+					$estadocampos=0;
 					break;
 				
 				case "Orden de Compra" :
@@ -80,7 +83,10 @@ class registrarForm {
 					$resultado_compras = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'informacion_ordenador', $resultado_compras [0] ['id_ordenador'] );
-					$ordenador = $esteRecursoDB2->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					
+					$ordenador = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					
+					
 					
 					$arreglo = array (
 							"asignacionOrdenador" => $resultado_compras [0] ['id_ordenador'],
@@ -94,6 +100,8 @@ class registrarForm {
 					
 					$_REQUEST = array_merge ( $_REQUEST, $arreglo );
 					$mostrarContrato = 'none';
+					
+					$estadocampos=0;
 					break;
 			}
 			
@@ -103,7 +111,7 @@ class registrarForm {
 			$atributos ['id'] = $esteCampo;
 			
 			$atributos ['evento'] = '';
-			$atributos ['deshabilitado'] = false;
+			$atributos ['deshabilitado'] =true;
 			$atributos ["etiquetaObligatorio"] = true;
 			$atributos ['tab'] = $tab;
 			$atributos ['tamanno'] = 1;
@@ -145,7 +153,7 @@ class registrarForm {
 			$atributos ['id'] = $esteCampo;
 			
 			$atributos ['evento'] = '';
-			$atributos ['deshabilitado'] = true;
+			$atributos ['deshabilitado'] = false;
 			$atributos ["etiquetaObligatorio"] = true;
 			$atributos ['tab'] = $tab;
 			$atributos ['tamanno'] = 1;
@@ -313,11 +321,19 @@ class registrarForm {
 			unset ( $atributos );
 			{
 				
+				
+				
+				
 				$atributos ["id"] = "contratoDiv";
 				$atributos ["estiloEnLinea"] = "display:" . $mostrarContrato;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->division ( "inicio", $atributos );
 				unset ( $atributos );
+				
+				
+				
+				
+				
 				
 				$esteCampo = "AgrupacionContrato";
 				$atributos ['id'] = $esteCampo;
@@ -402,6 +418,20 @@ class registrarForm {
 				echo $this->miFormulario->division ( "fin" );
 				unset ( $atributos );
 				
+				$estadocampos=0;
+				
+// 				echo $estadocampos;exit;
+				
+				if(isset($_REQUEST['numero_orden'])){
+					
+					
+					$estadocampos=1;
+					
+					
+				}
+				
+				
+				
 				$esteCampo = "AgrupacionActa";
 				$atributos ['id'] = $esteCampo;
 				$atributos ['leyenda'] = "Datos Iniciales";
@@ -414,7 +444,7 @@ class registrarForm {
 					$atributos ['nombre'] = $esteCampo;
 					$atributos ['id'] = $esteCampo;
 					$atributos ['evento'] = '';
-					$atributos ['deshabilitado'] = false;
+					$atributos ['deshabilitado'] = $estadocampos;
 					$atributos ["etiquetaObligatorio"] = true;
 					$atributos ['tab'] = $tab;
 					$atributos ['tamanno'] = 1;
@@ -499,7 +529,7 @@ class registrarForm {
 					}
 					
 					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( 'tipoBien' );
-					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+// 					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					
 					// Utilizar lo siguiente cuando no se pase un arreglo:
@@ -507,7 +537,7 @@ class registrarForm {
 					// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
 					$tab ++;
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoCuadroLista ( $atributos );
+// 					echo $this->miFormulario->campoCuadroLista ( $atributos );
 					unset ( $atributos );
 					
 					$esteCampo = "nitproveedor";
@@ -523,7 +553,7 @@ class registrarForm {
 					} else {
 						$atributos ['seleccion'] = - 1;
 					}
-					$atributos ['deshabilitado'] = false;
+					$atributos ['deshabilitado'] = $estadocampos;
 					$atributos ['columnas'] = 1;
 					$atributos ['tamanno'] = 1;
 					$atributos ['ajax_function'] = "";
@@ -595,7 +625,7 @@ class registrarForm {
 					} else {
 						$atributos ['seleccion'] = - 1;
 					}
-					$atributos ['deshabilitado'] = false;
+					$atributos ['deshabilitado'] = $estadocampos;
 					$atributos ['columnas'] = 2;
 					$atributos ['tamanno'] = 1;
 					$atributos ['ajax_function'] = "";
@@ -644,7 +674,7 @@ class registrarForm {
 						$atributos ['valor'] = '';
 					}
 					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-					$atributos ['deshabilitado'] = false;
+					$atributos ['deshabilitado'] = $estadocampos;
 					$atributos ['tamanno'] = 25;
 					$atributos ['maximoTamanno'] = '';
 					$atributos ['anchoEtiqueta'] = 190;
@@ -903,6 +933,9 @@ class registrarForm {
 			if (isset ( $_REQUEST ['numero_orden'] )) {
 				$valorCodificado .= "&tipoOrden=" . $_REQUEST ['titulo'];
 				$valorCodificado .= "&numero_orden=" . $_REQUEST ['numero_orden'];
+				$valorCodificado .= "&sede=" . $_REQUEST ['sede'];
+				$valorCodificado .= "&dependencia=" . $_REQUEST ['dependencia'];
+				$valorCodificado .= "&nitproveedor=" . $_REQUEST ['nitproveedor'];
 			}
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.

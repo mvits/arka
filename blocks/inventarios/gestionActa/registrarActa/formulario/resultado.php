@@ -52,42 +52,6 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
-			$fechaInicio = $_REQUEST ['fecha_inicio'];
-		} else {
-			$fechaInicio = '';
-		}
-		
-		if (isset ( $_REQUEST ['fecha_final'] ) && $_REQUEST ['fecha_final'] != '') {
-			$fechaFinal = $_REQUEST ['fecha_final'];
-		} else {
-			$fechaFinal = '';
-		}
-		
-		$tipo_orden = $_REQUEST ['tipoOrden'];
-		
-		if (isset ( $_REQUEST ['tipoOrden'] ) && $_REQUEST ['tipoOrden'] == 3) {
-			$tipo_orden = $_REQUEST ['tipoOrden'];
-			
-			$datos = array (
-					$fechaInicio,
-					$fechaFinal 
-			);
-			
-			$datos = serialize ( $datos );
-			redireccion::redireccionar ( 'registrar', $datos );
-		}
-		
-		switch ($tipo_orden) {
-			case 1 :
-				$titulo = "Orden de Servicios";
-				break;
-			
-			case 2 :
-				$titulo = "Orden de Compra";
-				break;
-		}
-		
 		if (isset ( $_REQUEST ['tipoOrden'] ) && $_REQUEST ['tipoOrden'] != '') {
 			$tipo_orden = $_REQUEST ['tipoOrden'];
 		} else {
@@ -113,38 +77,44 @@ class registrarForm {
 		}
 		
 		$arreglo = array (
-				"fechaInicio" => $fechaInicio,
-				"fechaFinal" => $fechaFinal,
-				"numeroOrden" => $numeroOrden,
-				"tipo" => $titulo 
+				$fechaInicio,
+				$fechaFinal,
+				$numeroOrden 
 		);
 		
 		switch ($tipo_orden) {
 			case 1 :
-		
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenServicios', $arreglo );
 				
-				$resultado_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-			
+				$resultado_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
 				$titulo = "Orden de Servicios";
 				break;
 			
 			case 2 :
-			
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenCompra', $arreglo );
-				
-				$resultado_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+				$cadenaSql;
+				$resultado_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$titulo = "Orden de Compra";
 				break;
+			
+			case 3 :
+				$datos = array (
+						$fechaInicio,
+						$fechaFinal 
+				);
 				
 				
 				
+				$datos=serialize($datos);
+				redireccion::redireccionar ( 'registrar', $datos );
+				$titulo = "Otros";
+				break;
+			
+			default :
+				break;
 		}
-		
-		
-		
-		
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -199,7 +169,7 @@ class registrarForm {
 		
 		// ------------------Division para los botones-------------------------
 		
-		if ($resultado_orden == true) {
+		if ($resultado_orden !== FALSE) {
 			
 			echo "<table id='tablaTitulos'>";
 			
@@ -207,13 +177,13 @@ class registrarForm {
                 <tr>
                 <th>Fecha Orden</th>
                 <th>Número Orden </th>
-				<th>Seleccionar</th>
+		<th>Seleccionar</th>
                 </tr>
             </thead>
-            </table>";
+            <tbody>";
 			
-// 			for($i = 0; $i < count ( $resultado_orden ); $i ++) {
-		
+			for($i = 0; $i < count ( $resultado_orden ); $i ++) {
+				
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=asociarActa";
 				// $variable .= "&usuario=" . $miSesion->getSesionUsuarioId ();
@@ -223,24 +193,24 @@ class registrarForm {
 				$variable .= "&titulo=" . $titulo;
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
-// 				$mostrarHtml = "<tr>
-//                     <td><center>" . $resultado_orden [$i] [1] . "</center></td>
-//                     <td><center>" . $resultado_orden [$i] [0] . "</center></td>
-//                     <td><center>
-//                     	<a href='" . $variable . "'>
-//                             <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
-//                         </a>
-//                   	</center> </td>
+				$mostrarHtml = "<tr>
+                    <td><center>" . $resultado_orden [$i] [1] . "</center></td>
+                    <td><center>" . $resultado_orden [$i] [0] . "</center></td>
+                    <td><center>
+                    	<a href='" . $variable . "'>
+                            <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
+                        </a>
+                  	</center> </td>
            
-//                 </tr>";
-// 				echo $mostrarHtml;
-// 				unset ( $mostrarHtml );
-// 				unset ( $variable );
-// 			}
+                </tr>";
+				echo $mostrarHtml;
+				unset ( $mostrarHtml );
+				unset ( $variable );
+			}
 			
-// 			echo "</tbody>";
+			echo "</tbody>";
 			
-// 			echo "</table>";
+			echo "</table>";
 			
 			// Fin de Conjunto de Controles
 			// echo $this->miFormulario->marcoAgrupacion("fin");

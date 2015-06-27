@@ -99,7 +99,7 @@ class RegistradorActa {
 				'sede' => $_REQUEST ['sede'],
 				'dependencia' => $_REQUEST ['dependencia'],
 				'fecha_registro' => $fechaActual,
-				'tipo_bien' => $_REQUEST ['tipoBien'],
+				'tipo_bien' => '0',
 				'nitproveedor' => $_REQUEST ['nitproveedor'],
 				'ordenador' => $_REQUEST ['id_ordenador'],
 				'fecha_revision' => $_REQUEST ['fecha_revision'],

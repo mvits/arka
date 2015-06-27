@@ -162,32 +162,31 @@ class Sql extends \Sql {
 				// $cadenaSql .= "JOIN proveedor ON proveedor.id_proveedor = orden_compra.id_proveedor ";
 				// $cadenaSql .= "JOIN dependencia ON dependencia.id_dependencia = orden_compra.id_dependencia ";
 				$cadenaSql .= "WHERE 1=1";
-				if ($variable ['fechaInicio'] != '') {
-					$cadenaSql .= " AND fecha_registro BETWEEN CAST ( '" . $variable ['fechaInicio'] . "' AS DATE) ";
-					$cadenaSql .= " AND  CAST ( '" . $variable ['fechaFinal'] . "' AS DATE)  ";
+				if ($variable [0] != '') {
+					$cadenaSql .= " AND fecha_registro BETWEEN CAST ( '" . $variable [0] . "' AS DATE) ";
+					$cadenaSql .= " AND  CAST ( '" . $variable [1] . "' AS DATE)  ";
 				}
-				if ($variable ['numeroOrden'] != '') {
-					$cadenaSql .= " AND id_orden_compra = '" . $variable ['numeroOrden'] . "'";
+				if ($variable [2] != '') {
+					$cadenaSql .= " AND id_orden_compra = '" . $variable [2] . "'";
 				}
 				
 				// echo $cadenaSql;exit;
 				break;
 			
 			case "consultarOrdenServicios" :
-
 				$cadenaSql = "SELECT DISTINCT ";
 				$cadenaSql .= "id_orden_servicio, orden_servicio.fecha_registro,  ";
-				$cadenaSql .= "  ";
+				$cadenaSql .= "identificacion, dependencia_solicitante , sede ";
 				$cadenaSql .= "FROM orden_servicio ";
 				// $cadenaSql .= "JOIN solicitante_servicios ON solicitante_servicios.id_solicitante = orden_servic io.dependencia_solicitante ";
-// 				$cadenaSql .= "JOIN contratista_servicios ON contratista_servicios.id_contratista = orden_servicio.id_contratista ";
+				$cadenaSql .= "JOIN contratista_servicios ON contratista_servicios.id_contratista = orden_servicio.id_contratista ";
 				$cadenaSql .= "WHERE 1=1";
-				if ($variable ['fechaInicio'] != '') {
-					$cadenaSql .= " AND orden_servicio.fecha_registro BETWEEN CAST ( '" . $variable ['fechaInicio'] . "' AS DATE) ";
-					$cadenaSql .= " AND  CAST ( '" . $variable ['fechaFinal'] . "' AS DATE)  ";
+				if ($variable [0] != '') {
+					$cadenaSql .= " AND orden_servicio.fecha_registro BETWEEN CAST ( '" . $variable [0] . "' AS DATE) ";
+					$cadenaSql .= " AND  CAST ( '" . $variable [1] . "' AS DATE)  ";
 				}
-				if ($variable ['numeroOrden'] != '') {
-					$cadenaSql .= " AND id_orden_servicio = '" . $variable ['numeroOrden'] . "'";
+				if ($variable [2] != '') {
+					$cadenaSql .= " AND id_orden_servicio = '" . $variable [2] . "'";
 				}
 				// echo $cadenaSql;exit;
 				break;
@@ -394,11 +393,18 @@ class Sql extends \Sql {
 				
 				break;
 			
+				
+				
+				
+
+				
 			case "informacion_ordenador" :
-				$cadenaSql = " SELECT ORG_NOMBRE,ORG_IDENTIFICADOR  ";
-				$cadenaSql .= " FROM ORDENADORES_GASTO ";
-				$cadenaSql .= " WHERE  ORG_IDENTIFICADOR='" . $variable . "' ";
-				$cadenaSql .= " AND ORG_ESTADO='A' ";
+				$cadenaSql = " SELECT \"ORG_NOMBRE\",\"ORG_IDENTIFICADOR\"  ";
+				$cadenaSql .= " FROM arka_parametros.arka_ordenadores ";
+				$cadenaSql .= " WHERE  \"ORG_IDENTIFICACION\"='" . $variable . "' ";
+				$cadenaSql .= " AND \"ORG_ESTADO\"='A' ";
+				
+				
 				break;
 			
 			case "select_proveedor" :
