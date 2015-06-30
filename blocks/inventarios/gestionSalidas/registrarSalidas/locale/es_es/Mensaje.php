@@ -17,9 +17,10 @@ $this->idioma ["vigenciaTitulo"] ="Seleccione Vigencia";
 $this->idioma ["sede"] ="Sede : ";
 $this->idioma ["sedeTitulo"] ="Seleccione Sede";
 
+$this->idioma ["ubicacion"] ="Ubicacion Especifica : ";
+$this->idioma ["ubicacionTitulo"] ="Seleccione Ubicación";
 
-
-
+$this->idioma ["nombresElementos"] ="Nombre Elemento(s) :  <br>";
 
 $this->idioma ["numero_entrada"] ="Número de Entrada y/o Vigencia : ";
 $this->idioma ["numero_entradaTitulo"] ="Ingrese Número de Entrada";

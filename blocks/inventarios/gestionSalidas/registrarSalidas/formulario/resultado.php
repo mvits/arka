@@ -208,7 +208,8 @@ class registrarForm {
 									$entrada [$i] [1],
 									$entrada [$i] [2],
 									$proveedor [0] [0],
-									$proveedor [0] [1]
+									$proveedor [0] [1],
+									$entrada[$i]['vigencia']
 							);
 						}
 

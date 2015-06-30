@@ -187,14 +187,14 @@ class Sql extends \Sql {
 			case "consultarEntrada" :
 				$cadenaSql = "SELECT DISTINCT ";
 				$cadenaSql .= "entrada.id_entrada, entrada.fecha_registro,  ";
-				$cadenaSql .= " clase_entrada.descripcion, proveedor ,consecutivo||' - ('||vigencia||')' consecutivos   ";
+				$cadenaSql .= " clase_entrada.descripcion, proveedor ,consecutivo||' - ('||vigencia||')' consecutivos, entrada.vigencia   ";
 				$cadenaSql .= "FROM entrada ";
 				$cadenaSql .= "JOIN clase_entrada ON clase_entrada.id_clase = entrada.clase_entrada ";
 				$cadenaSql .= "JOIN elemento ON elemento.id_entrada = entrada.id_entrada ";
 				$cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento ";
 				$cadenaSql .= "WHERE 1=1 ";
 				$cadenaSql .= "AND entrada.cierre_contable='f' ";
-				$cadenaSql .= "AND ei.id_salida IS NULL ";
+				$cadenaSql .= "AND ei.id_salida IS NULL  ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND entrada.id_entrada = '" . $variable [0] . "'";
 				}
@@ -280,10 +280,12 @@ class Sql extends \Sql {
 			
 			case "consulta_elementos" :
 				
-				$cadenaSql = "SELECT id_elemento, elemento_padre||''||elemento_codigo||' - '||elemento_nombre AS item, cantidad, descripcion ";
-				$cadenaSql .= "FROM elemento ";
-				$cadenaSql .= " JOIN catalogo.catalogo_elemento ON elemento_id = nivel ";
-				$cadenaSql .= "WHERE id_entrada='" . $variable . "' ";
+				$cadenaSql = "SELECT e.id_elemento, ce.elemento_codigo||' - '||ce.elemento_nombre AS item, e.cantidad, e.descripcion ";
+				$cadenaSql .= "FROM elemento e";
+				$cadenaSql .= " JOIN  grupo.catalogo_elemento  ce ON ce.elemento_id = e.nivel ";
+				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
+				$cadenaSql .= "WHERE e.id_entrada='" . $variable . "' ";
+				$cadenaSql .= "AND cl.lista_activo = 1  ";
 				
 				break;
 			
