@@ -334,11 +334,10 @@ class Sql extends \Sql {
 			
 			case "consultarActa" :
 				$cadenaSql = "SELECT DISTINCT ";
-				$cadenaSql .= "id_actarecibido, dependencia, fecha_recibido, ";
-				$cadenaSql .= " tb_descripcion , proveedor,";
+				$cadenaSql .= "id_actarecibido, dependencia, fecha_recibido, proveedor,";
 				$cadenaSql .= "fecha_revision,revisor,observacionesacta ";
 				$cadenaSql .= "FROM registro_actarecibido ";
-				$cadenaSql .= "JOIN tipo_bien ON tb_idbien = tipo_bien ";
+				
 				$cadenaSql .= "WHERE 1 = 1 ";
 				$cadenaSql .= "AND estado_registro = 1 ";
 				if ($variable ['numero_acta'] != '') {

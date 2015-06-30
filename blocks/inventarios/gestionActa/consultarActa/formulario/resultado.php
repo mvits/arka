@@ -157,7 +157,7 @@ class registrarForm {
                                 <th>Número Acta Recibido</th>
                                 <th>Dependencia</th>
                                 <th>Fecha Recibido</th>
-                                <th>Tipo de Bien</th>
+                                
                                  <th>Proveedor</th>
                                 <th>Observaciones</th>
 			        <th>Modificar</th>
@@ -194,7 +194,7 @@ class registrarForm {
                     <td><center>" . $Acta [$i] ['id_actarecibido'] . "</center></td>
                     <td><center>" . $dependencia[0][1]. "</center></td>
                     <td><center>" . $Acta [$i] ['fecha_recibido'] . "</center></td>
-                    <td><center>" . $Acta [$i] ['tb_descripcion'] . "</center></td>
+                    
                     <td><center>" . $proveedor[0][0]. "</center></td>
                     <td><center>" . $Acta [$i] ['observacionesacta'] . "</center></td>
                     <td><center>
