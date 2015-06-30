@@ -177,8 +177,7 @@ $this->idioma ["total_preliminarTitulo"] = "Ingrese Total Preliminar";
 $this->idioma ["total"] = "Total :";
 $this->idioma ["totalTitulo"] = "Ingrese Total: ";
 
-$this->idioma ["iva"] = "Iva 16% :";
-$this->idioma ["ivaTitulo"] = "Ingrese Iva 16%";
+
 
 $this->idioma ["Encargados"] = "Firmas ";
 

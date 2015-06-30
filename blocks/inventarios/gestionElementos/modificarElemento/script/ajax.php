@@ -121,6 +121,29 @@ $cadena16 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 // URL definitiva
 $urlFinal16 = $url . $cadena16;
 // echo $urlFinal;
+
+
+
+
+// Variables
+$cadenaACodificar2 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar2 .= "&procesarAjax=true";
+$cadenaACodificar2 .= "&action=index.php";
+$cadenaACodificar2 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar2 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar2 .= "&funcion=SeleccionTipoBien";
+$cadenaACodificar2 .="&tiempo=".$_REQUEST['tiempo'];
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena2= $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar2, $enlace );
+
+// URL definitiva
+$urlFinal2 = $url . $cadena2;
+
+
+
 ?>
 <script type='text/javascript'>
 $(function() {
@@ -164,6 +187,75 @@ $(function() {
 });
 
 
+
+function tipo_bien(elem, request, response){
+	  $.ajax({
+	    url: "<?php echo $urlFinal2?>",
+	    dataType: "json",
+	    data: { valor:$("#<?php echo $this->campoSeguro('nivel')?>").val()},
+	    success: function(data){ 
+
+
+	    			$("#<?php echo $this->campoSeguro('id_tipo_bien')?>").val(data[0]);
+	    			$("#<?php echo $this->campoSeguro('tipo_bien')?>").val(data[1]);
+
+	    			  switch($("#<?php echo $this->campoSeguro('id_tipo_bien')?>").val())
+	    	            {
+	    	                           
+	    	                
+	    	                case '2':
+
+
+	    	                    $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','none');
+	    	                    $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','block');   
+	    	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
+	    	                 $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
+
+	    	                 break;
+	    	                
+	    	                case '3':
+
+	    	                    $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','block');
+	    	                    $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','none');
+	    	                    $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
+	    	         
+	    	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
+	    	                 $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
+	    	                    
+	    	                break;
+	    	                                
+	    	           
+	    	                break;
+	    	                
+
+	    	                default:
+
+	    	                    $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','none');
+	    	                    $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','none');   
+	    	                    
+	    	                 
+	    	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('');
+	    	                 $('#<?php echo $this->campoSeguro('cantidad')?>').removeAttr('disabled');
+	    	                 
+	    	                break;
+	    	                
+	    	                }
+
+
+
+
+
+
+	    			
+
+	    }
+		                    
+	   });
+	};
+
+
+
+
 function consultarDependencia(elem, request, response){
 	  $.ajax({
 	    url: "<?php echo $urlFinal16?>",
@@ -199,8 +291,16 @@ function consultarDependencia(elem, request, response){
 	};
 
 	  $(function () {
+		    $("#<?php echo $this->campoSeguro('nivel')?>").change(function() {
+		    	
+				if($("#<?php echo $this->campoSeguro('nivel')?>").val()!=''){
 
+					tipo_bien();	
 
+				}else{}
+
+		    });
+			  
 
 	        $("#<?php echo $this->campoSeguro('sede')?>").change(function(){
 	        	if($("#<?php echo $this->campoSeguro('sede')?>").val()!=''){
@@ -212,7 +312,183 @@ function consultarDependencia(elem, request, response){
 	    	      });
 	        
 
+	        $( "#<?php echo $this->campoSeguro('cantidad')?>" ).keyup(function() {
+	            
+	            $("#<?php echo $this->campoSeguro('valor')?>").val('');
+	            $("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
+	            $("#<?php echo $this->campoSeguro('total_iva')?>").val('');
+	            $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
+	            
+	          });  
 		
+	        $( "#<?php echo $this->campoSeguro('valor')?>" ).keyup(function() {
+	        	$("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
+	            $("#<?php echo $this->campoSeguro('total_iva')?>").val('');
+	            $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
+	            
+	            cantidad=Number($("#<?php echo $this->campoSeguro('cantidad')?>").val());
+	            valor=Number($("#<?php echo $this->campoSeguro('valor')?>").val());
+	            
+	            precio = cantidad * valor;
+	      
+	      
+	            if (precio==0){
+	            
+	            
+	            $("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
+	            
+	            }else{
+	            
+	            $("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val(precio);
+	            
+	            }
+
+	          }); 
+	          
+	          $( "#<?php echo $this->campoSeguro('iva')?>" ).change(function() {
+	        
+	        
+	        
+			     switch($("#<?php echo $this->campoSeguro('iva')?>").val())
+	            {
+	                           
+	                case '1':
+	                 
+	                 cantidad=Number($("#<?php echo $this->campoSeguro('cantidad')?>").val());
+	            	 valor=Number($("#<?php echo $this->campoSeguro('valor')?>").val());
+	       			 precio=cantidad * valor;
+	       			 total=precio;
+	       			 
+	                 $("#<?php echo $this->campoSeguro('total_iva')?>").val('0');
+	                 
+	                 $("#<?php echo $this->campoSeguro('total_iva_con')?>").val(total);
+	                                    
+	                break;
+	                
+	                case '2':
+	                 
+	                 cantidad=Number($("#<?php echo $this->campoSeguro('cantidad')?>").val());
+	            	 valor=Number($("#<?php echo $this->campoSeguro('valor')?>").val());
+	       			 precio=cantidad * valor;
+	       			 total=precio;
+	       			 
+	                 $("#<?php echo $this->campoSeguro('total_iva')?>").val('0');
+	                 
+	                 $("#<?php echo $this->campoSeguro('total_iva_con')?>").val(total);
+	                                    
+	                break;
+	                
+	                case '3':
+	                
+	                 cantidad=Number($("#<?php echo $this->campoSeguro('cantidad')?>").val());
+	            	 valor=Number($("#<?php echo $this->campoSeguro('valor')?>").val());
+	       			 iva = (cantidad * valor)* 0.05;
+	       			 precio=cantidad * valor;
+	       			 total=precio+iva;
+	       			 
+	                 $("#<?php echo $this->campoSeguro('total_iva')?>").val(iva);
+	                 
+	                 $("#<?php echo $this->campoSeguro('total_iva_con')?>").val(total);
+	                    
+	                break;
+	                                
+	                case '4':
+	                
+	                 cantidad=Number($("#<?php echo $this->campoSeguro('cantidad')?>").val());
+	            	 valor=Number($("#<?php echo $this->campoSeguro('valor')?>").val());
+	       			 iva = (cantidad * valor)* 0.04;
+	       			 precio = cantidad*valor;
+	       			 total=precio+iva;
+	       			 
+	                 $("#<?php echo $this->campoSeguro('total_iva')?>").val(iva);
+	                 $("#<?php echo $this->campoSeguro('total_iva_con')?>").val(total);
+	                                     
+	                break;
+	                
+
+	                 case '5':
+	                
+	                 cantidad=Number($("#<?php echo $this->campoSeguro('cantidad')?>").val());
+	            	 valor=Number($("#<?php echo $this->campoSeguro('valor')?>").val());
+	       			 iva = (cantidad * valor)* 0.1;
+	       			 precio = cantidad*valor;
+	       			 total=precio+iva;
+	       			 
+	                 $("#<?php echo $this->campoSeguro('total_iva')?>").val(iva);
+	                 $("#<?php echo $this->campoSeguro('total_iva_con')?>").val(total);
+	                                     
+	                break;
+	                
+	                 case '6':
+	                
+	                 cantidad=Number($("#<?php echo $this->campoSeguro('cantidad')?>").val());
+	            	 valor=Number($("#<?php echo $this->campoSeguro('valor')?>").val());
+	       			 iva = (cantidad * valor)* 0.16;
+	       			 precio = cantidad*valor;
+	       			 total=precio+iva;
+	       			 
+	                 $("#<?php echo $this->campoSeguro('total_iva')?>").val(iva);
+	                 $("#<?php echo $this->campoSeguro('total_iva_con')?>").val(total);
+	                                     
+	                break;
+	                
+	                
+	                default:
+	                $("#<?php echo $this->campoSeguro('total_iva')?>").val('');
+	                $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
+	                   
+	                break;
+	                
+	                }
+	            
+	          });  
+	          
+	          $("#<?php echo $this->campoSeguro('iva')?>").select2();  
+	          
+	          
+	         $( "#<?php echo $this->campoSeguro('tipo_bien')?>" ).change(function() {
+	        
+	        
+	        
+	          switch($("#<?php echo $this->campoSeguro('tipo_bien')?>").val())
+	            {
+	                           
+	                
+	                case '2':
+	                
+	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
+	                 $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
+
+	                 break;
+	                
+	                case '3':
+	                
+	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
+	                 $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
+	                    
+	                break;
+	                                
+	           
+	                break;
+	                
+
+	                default:
+	                 
+	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('');
+	                 $('#<?php echo $this->campoSeguro('cantidad')?>').removeAttr('disabled');
+	                 
+	                break;
+	                
+	                }
+	            
+	          });  
+	        
+
+
+
+
+
+			
 	    });
 	
 

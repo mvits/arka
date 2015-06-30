@@ -183,7 +183,8 @@ class Sql extends \Sql {
 			case "buscar_placa" :
 				$cadenaSql = " SELECT DISTINCT placa, placa as placas ";
 				$cadenaSql .= "FROM elemento_individual ";
-				$cadenaSql .= "ORDER BY placa DESC ";
+				$cadenaSql .= "ORDER BY placa DESC ;";
+				
 				
 				break;
 			
@@ -204,18 +205,6 @@ class Sql extends \Sql {
 				
 				break;
 			
-
-// 				Fecha
-// 				Entrada
-// 				Descripción
-// 				Placa
-// 				Funcionario
-// 				Dependencia
-// 				Opciones (Modificar, Inactivar)
-				
-				
-				
-				
 			case "consultarElemento" :
 				
 				$cadenaSql = "SELECT DISTINCT ";
@@ -226,12 +215,13 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM elemento ";
 				$cadenaSql .= "JOIN tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien ";
 				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
-				$cadenaSql .= "JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
+				$cadenaSql .= "LEFT JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
 				$cadenaSql .= "LEFT JOIN salida sl ON sl.id_salida = elemento_individual.id_salida  ";
 				$cadenaSql .= "LEFT JOIN arka_parametros.arka_sedes sas ON sas.\"ESF_ID_SEDE\" = sl.sede ";
 				$cadenaSql .= "LEFT JOIN arka_parametros.arka_espaciosfisicos es ON es.\"ESF_ID_ESPACIO\"= sl.dependencia ";
 				$cadenaSql .= "LEFT JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= sl.funcionario ";
 				$cadenaSql .= "WHERE 1=1 AND estado='TRUE' ";
+				$cadenaSql .= "AND entrada.cierre_contable='f' ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND elemento.fecha_registro BETWEEN CAST ( '" . $variable [0] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable [1] . "' AS DATE)  ";
@@ -256,7 +246,7 @@ class Sql extends \Sql {
 				if ($variable [7] != '') {
 					$cadenaSql .= " AND  entrada.id_entrada= '" . $variable [7] . "' ";
 				}
-				$cadenaSql.=" LIMIT 5000; ";
+				$cadenaSql .= " LIMIT 5000; ";
 				
 				break;
 			
@@ -544,10 +534,21 @@ class Sql extends \Sql {
 			
 			case "consultar_nivel_inventario" :
 				
-				$cadenaSql = "SELECT elemento_id, elemento_padre||''|| elemento_codigo||' - '||elemento_nombre ";
-				$cadenaSql .= "FROM catalogo.catalogo_elemento ";
-				$cadenaSql .= "WHERE elemento_catalogo=1 ";
-				$cadenaSql .= "ORDER BY elemento_id DESC ;";
+				$cadenaSql = "SELECT ce.elemento_id, ce.elemento_codigo||' - '||ce.elemento_nombre ";
+				$cadenaSql .= "FROM grupo.catalogo_elemento  ce ";
+				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
+				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
+				$cadenaSql .= "AND  ce.elemento_id > 0  ";
+				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
+				
+				break;
+			
+			case "ConsultaTipoBien" :
+				
+				$cadenaSql = "SELECT  ce.elemento_tipobien , tb.descripcion  ";
+				$cadenaSql .= "FROM grupo.catalogo_elemento ce ";
+				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
+				$cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
 				
 				break;
 		}

@@ -161,7 +161,7 @@ class registrarForm {
 				
 				if ($_REQUEST ['mensaje'] == 'error') {
 					
-					$mensaje = "No Se Pudo Hacer Actualizar la Orden de Servicios";
+					$mensaje = "No Se Pudo Hacer Actualizar Elemento";
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';

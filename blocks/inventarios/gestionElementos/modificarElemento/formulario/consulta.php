@@ -157,7 +157,7 @@ class registrarForm {
 				) 
 		);
 		
-		$matrizItems = $matrizItems [0] [0] != '' ? $matrizItems : $arreglo;
+// 		$matrizItems = $matrizItems [0] [0] != '' ? $matrizItems : $arreglo;
 		$atributos ['matrizItems'] = $matrizItems;
 		// $atributos['miniRegistro']=;
 		$atributos ['baseDatos'] = "inventarios";
