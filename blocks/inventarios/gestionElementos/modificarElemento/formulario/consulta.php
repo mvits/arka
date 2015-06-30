@@ -130,7 +130,7 @@ class registrarForm {
 		$atributos ["etiquetaObligatorio"] = false;
 		$atributos ['tab'] = $tab ++;
 		$atributos ['seleccion'] = - 1;
-		$atributos ['anchoEtiqueta'] = 220;
+		$atributos ['anchoEtiqueta'] = 180;
 		$atributos ['evento'] = '';
 		if (isset ( $_REQUEST [$esteCampo] )) {
 			$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -175,7 +175,7 @@ class registrarForm {
 		$atributos ["etiquetaObligatorio"] = false;
 		$atributos ['tab'] = $tab ++;
 		$atributos ['seleccion'] = - 1;
-		$atributos ['anchoEtiqueta'] = 220;
+		$atributos ['anchoEtiqueta'] = 150;
 		$atributos ['evento'] = '';
 		if (isset ( $_REQUEST [$esteCampo] )) {
 			$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -219,14 +219,15 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ['evento'] = '';
 		$atributos ['deshabilitado'] = false;
-		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ["etiquetaObligatorio"] = false;
 		$atributos ['tab'] = $tab;
 		$atributos ['tamanno'] = 1;
 		$atributos ['estilo'] = 'jqueryui';
 		$atributos ['validar'] = '';
+		$atributos ['anchoCaja'] = 20;
 		$atributos ['limitar'] = true;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['anchoEtiqueta'] = 220;
+		$atributos ['anchoEtiqueta'] = 180;
 		
 		if (isset ( $_REQUEST [$esteCampo] )) {
 			$atributos ['seleccion'] = $_REQUEST [$esteCampo];
@@ -253,14 +254,14 @@ class registrarForm {
 		
 		$atributos ['evento'] = '';
 		$atributos ['deshabilitado'] = true;
-		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ["etiquetaObligatorio"] = false;
 		$atributos ['tab'] = $tab;
 		$atributos ['tamanno'] = 1;
 		$atributos ['estilo'] = 'jqueryui';
 		$atributos ['validar'] = '';
 		$atributos ['limitar'] = true;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['anchoEtiqueta'] = 220;
+		$atributos ['anchoEtiqueta'] = 150;
 		if (isset ( $_REQUEST [$esteCampo] )) {
 			$atributos ['seleccion'] = $_REQUEST [$esteCampo];
 		} else {
@@ -283,9 +284,9 @@ class registrarForm {
 		$atributos ['nombre'] = $esteCampo;
 		$atributos ['id'] = $esteCampo;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ["etiquetaObligatorio"] = false;
 		$atributos ['tab'] = $tab ++;
-		$atributos ['anchoEtiqueta'] = 220;
+		$atributos ['anchoEtiqueta'] = 180;
 		$atributos ['evento'] = '';
 		if (isset ( $_REQUEST [$esteCampo] )) {
 			$atributos ['seleccion'] = $_REQUEST [$esteCampo];
@@ -344,7 +345,7 @@ class registrarForm {
 		$atributos ['deshabilitado'] = false;
 		$atributos ['tamanno'] = 8;
 		$atributos ['maximoTamanno'] = '';
-		$atributos ['anchoEtiqueta'] = 220;
+		$atributos ['anchoEtiqueta'] = 180;
 		$tab ++;
 		
 		// Aplica atributos globales al control

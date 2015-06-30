@@ -197,9 +197,10 @@ class Sql extends \Sql {
 			
 			case "buscar_entradas" :
 				
-				$cadenaSql = "SELECT id_entrada, consecutivo||' - ('||vigencia||')' entradas ";
-				$cadenaSql .= "FROM entrada  ";
-				$cadenaSql .= "WHERE consecutivo > 0  ";
+				$cadenaSql = "SELECT DISTINCT en.id_entrada, en.consecutivo||' - ('||en.vigencia||')' entradas ";
+				$cadenaSql .= "FROM entrada en ";
+				$cadenaSql .= "JOIN  elemento el ON el.id_entrada=en.id_entrada ";
+				$cadenaSql .= "WHERE en.consecutivo > 0  ";
 				
 				break;
 			
@@ -226,10 +227,10 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien ";
 				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
 				$cadenaSql .= "JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
-				$cadenaSql .= "JOIN salida sl ON sl.id_salida = elemento_individual.id_salida  ";
-				$cadenaSql .= "JOIN arka_parametros.arka_sedes sas ON sas.\"ESF_ID_SEDE\" = sl.sede ";
-				$cadenaSql .= "JOIN arka_parametros.arka_espaciosfisicos es ON es.\"ESF_ID_ESPACIO\"= sl.dependencia ";
-				$cadenaSql .= "JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= sl.funcionario ";
+				$cadenaSql .= "LEFT JOIN salida sl ON sl.id_salida = elemento_individual.id_salida  ";
+				$cadenaSql .= "LEFT JOIN arka_parametros.arka_sedes sas ON sas.\"ESF_ID_SEDE\" = sl.sede ";
+				$cadenaSql .= "LEFT JOIN arka_parametros.arka_espaciosfisicos es ON es.\"ESF_ID_ESPACIO\"= sl.dependencia ";
+				$cadenaSql .= "LEFT JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= sl.funcionario ";
 				$cadenaSql .= "WHERE 1=1 AND estado='TRUE' ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND elemento.fecha_registro BETWEEN CAST ( '" . $variable [0] . "' AS DATE) ";
@@ -255,6 +256,7 @@ class Sql extends \Sql {
 				if ($variable [7] != '') {
 					$cadenaSql .= " AND  entrada.id_entrada= '" . $variable [7] . "' ";
 				}
+				$cadenaSql.=" LIMIT 5000; ";
 				
 				break;
 			
