@@ -149,6 +149,37 @@ class Sql extends \Sql {
 			 * Clausulas Del Caso Uso.
 			 */
 			
+			case "sede" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_sedes ";
+				$cadenaSql .= " WHERE   \"ESF_ESTADO\"='A'";
+				
+				break;
+			
+			case "dependencias" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_ID_ESPACIO\", \"ESF_NOMBRE_ESPACIO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ";
+				$cadenaSql .= " WHERE  \"ESF_ESTADO\"='A'";
+				
+				break;
+			
+			case "dependenciasConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  ae.\"ESF_ID_ESPACIO\", ae.\"ESF_NOMBRE_ESPACIO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ae ";
+				$cadenaSql .= " JOIN arka_parametros.arka_sedes sas ON sas.\"ESF_COD_SEDE\" =ae.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE sas.\"ESF_ID_SEDE\"='" . $variable . "' ";
+				$cadenaSql .= " AND   ae.\"ESF_ESTADO\"='A'";
+				
+				break;
+			
+			case "funcionarios" :
+				
+				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\", \"FUN_IDENTIFICACION\" ||' - '||  \"FUN_NOMBRE\" ";
+				$cadenaSql .= "FROM  arka_parametros.arka_funcionarios ";
+				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
+				
+				break;
+			
 			case "buscar_placa" :
 				$cadenaSql = " SELECT DISTINCT placa, placa as placas ";
 				$cadenaSql .= "FROM elemento_individual ";
@@ -164,15 +195,41 @@ class Sql extends \Sql {
 				
 				break;
 			
+			case "buscar_entradas" :
+				
+				$cadenaSql = "SELECT id_entrada, consecutivo||' - ('||vigencia||')' entradas ";
+				$cadenaSql .= "FROM entrada  ";
+				$cadenaSql .= "WHERE consecutivo > 0  ";
+				
+				break;
+			
+
+// 				Fecha
+// 				Entrada
+// 				Descripción
+// 				Placa
+// 				Funcionario
+// 				Dependencia
+// 				Opciones (Modificar, Inactivar)
+				
+				
+				
+				
 			case "consultarElemento" :
 				
 				$cadenaSql = "SELECT DISTINCT ";
 				$cadenaSql .= "placa,  ";
-				$cadenaSql .= "elemento.serie, tipo_bienes.descripcion, elemento.fecha_registro as fecharegistro, id_elemento as idelemento, estado_entrada as estadoentrada, entrada.cierre_contable as cierrecontable ";
+				$cadenaSql .= "elemento.serie, elemento.fecha_registro as fecharegistro, id_elemento as idelemento, estado_entrada as estadoentrada, entrada.cierre_contable as cierrecontable, fn.\"FUN_IDENTIFICACION\" ||' - '||  fn.\"FUN_NOMBRE\" as funcionario,
+						        entrada.consecutivo||' - ('||entrada.vigencia||')' entrada,
+						       elemento.descripcion descripcion, es.\"ESF_NOMBRE_ESPACIO\" dependencia 	";
 				$cadenaSql .= "FROM elemento ";
 				$cadenaSql .= "JOIN tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien ";
 				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
 				$cadenaSql .= "JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
+				$cadenaSql .= "JOIN salida sl ON sl.id_salida = elemento_individual.id_salida  ";
+				$cadenaSql .= "JOIN arka_parametros.arka_sedes sas ON sas.\"ESF_ID_SEDE\" = sl.sede ";
+				$cadenaSql .= "JOIN arka_parametros.arka_espaciosfisicos es ON es.\"ESF_ID_ESPACIO\"= sl.dependencia ";
+				$cadenaSql .= "JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= sl.funcionario ";
 				$cadenaSql .= "WHERE 1=1 AND estado='TRUE' ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND elemento.fecha_registro BETWEEN CAST ( '" . $variable [0] . "' AS DATE) ";
@@ -184,9 +241,20 @@ class Sql extends \Sql {
 				if ($variable [3] != '') {
 					$cadenaSql .= " AND  elemento.serie= '" . $variable [3] . "' ";
 				}
-				$cadenaSql .= "LIMIT 1000 ";	
+				if ($variable [4] != '') {
+					$cadenaSql .= " AND  sas.\"ESF_ID_SEDE\"= '" . $variable [4] . "' ";
+				}
+				if ($variable [5] != '') {
+					$cadenaSql .= " AND  es.\"ESF_ID_ESPACIO\"= '" . $variable [5] . "' ";
+				}
 				
+				if ($variable [6] != '') {
+					$cadenaSql .= " AND  fn.\"FUN_IDENTIFICACION\"= '" . $variable [6] . "' ";
+				}
 				
+				if ($variable [7] != '') {
+					$cadenaSql .= " AND  entrada.id_entrada= '" . $variable [7] . "' ";
+				}
 				
 				break;
 			

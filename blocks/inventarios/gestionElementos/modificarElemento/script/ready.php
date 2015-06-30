@@ -48,6 +48,24 @@
               	 });
               	 
               	 
+ $("#<?php echo $this->campoSeguro('funcionario')?>").select2({
+             	 placeholder: "Search for a repository",
+              	 minimumInputLength: 3,
+              	 });
+ $("#<?php echo $this->campoSeguro('sede')?>").select2({
+             	 placeholder: "Search for a repository",
+              	 minimumInputLength: 3,
+              	 });  
+ $("#<?php echo $this->campoSeguro('dependencia')?>").select2({
+             	 placeholder: "Search for a repository",
+              	 minimumInputLength: 3,
+              	 });              	            	 
+ $("#<?php echo $this->campoSeguro('numero_entrada')?>").select2({
+             	 placeholder: "Search for a repository",
+              	 minimumInputLength: 3,
+              	 });              	            	 
+              	               	 
+              	 
               	 $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
  $("#<?php echo $this->campoSeguro('nivel')?>").select2();
  $("#<?php echo $this->campoSeguro('tipo_registro')?>").select2();

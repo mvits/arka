@@ -50,7 +50,6 @@ class registrarForm {
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 
-		
 
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -144,13 +143,14 @@ class registrarForm {
 		echo "<table id='tablaTitulos' class='cell-border'>
 			<thead>
                 <tr>
-                   <th>Placa</th>
-					<th>Serie</th>
-                    <th>Tipo Bien</th>
-					<th>Fecha de Registro</th>
-				 	<th>Identificador Elemento</th>
-					<th>Estado Entrada </th>
-					<th>Cierre Contable</th>
+              	  <th>Fecha de Registro</th>   
+					<th>Entrada</th>
+					<th>Descripción</th>
+					<th>Placa</th>
+					<th>Funcionario</th>
+                	<th>Dependencia</th>
+					<th>Modificar</th>
+					<th>Anular</th>
 				  </tr>
             </thead>
             </table>";
