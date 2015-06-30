@@ -73,6 +73,7 @@ class registrarForm {
 		
 		$elementos_validacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		
 		$datosgenerales=unserialize($_REQUEST['datosGenerales']);
 		
 		

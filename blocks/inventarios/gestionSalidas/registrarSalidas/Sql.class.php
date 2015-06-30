@@ -154,6 +154,8 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT id_entrada, consecutivo||' - ('||vigencia||')' entradas ";
 				$cadenaSql .= "FROM entrada  ";
 				$cadenaSql .= "WHERE consecutivo > 0  ";
+				$cadenaSql .= "AND   cierre_contable ='f' ";
+				$cadenaSql .= "AND   estado_entrada = 1 ";
 				
 				break;
 			
@@ -189,7 +191,10 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM entrada ";
 				$cadenaSql .= "JOIN clase_entrada ON clase_entrada.id_clase = entrada.clase_entrada ";
 				$cadenaSql .= "JOIN elemento ON elemento.id_entrada = entrada.id_entrada ";
+				$cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento ";
 				$cadenaSql .= "WHERE 1=1 ";
+				$cadenaSql .= "AND entrada.cierre_contable='f' ";
+				$cadenaSql .= "AND ei.id_salida IS NULL ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND entrada.id_entrada = '" . $variable [0] . "'";
 				}
