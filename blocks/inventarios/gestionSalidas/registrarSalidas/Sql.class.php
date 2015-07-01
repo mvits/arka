@@ -215,7 +215,6 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND entrada.proveedor = '" . $variable [4] . "'";
 				}
 				
-				
 				break;
 			
 			case "clase_entrada" :
@@ -363,7 +362,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [8] . "') ";
 				$cadenaSql .= "RETURNING  id_salida; ";
 				
-				
 				break;
 			
 			case "id_salida_maximo" :
@@ -392,20 +390,16 @@ class Sql extends \Sql {
 				$cadenaSql .= "ORDER BY id ASC;";
 				break;
 			
-				
-				
-				case "busqueda_elementos_bienes" :
-					$cadenaSql = "SELECT ei.id_elemento_ind AS id, tb.descripcion, el.tipo_bien   ";
-					$cadenaSql .= "FROM elemento_individual ei ";
-					$cadenaSql .= "JOIN  elemento el ON el.id_elemento=ei.id_elemento_gen  ";
-					$cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes = el.tipo_bien  ";
-					$cadenaSql .= "JOIN salida  sa ON sa.id_salida = ei.id_salida  ";
-					$cadenaSql .= "WHERE sa.id_salida ='" . $variable . "' ";
-					$cadenaSql .= "ORDER BY id ASC;";
-					break;
-				
-				
-				
+			case "busqueda_elementos_bienes" :
+				$cadenaSql = "SELECT ei.id_elemento_ind AS id, tb.descripcion, el.tipo_bien   ";
+				$cadenaSql .= "FROM elemento_individual ei ";
+				$cadenaSql .= "JOIN  elemento el ON el.id_elemento=ei.id_elemento_gen  ";
+				$cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes = el.tipo_bien  ";
+				$cadenaSql .= "JOIN salida  sa ON sa.id_salida = ei.id_salida  ";
+				$cadenaSql .= "WHERE sa.id_salida ='" . $variable . "' ";
+				$cadenaSql .= "ORDER BY id ASC;";
+				break;
+			
 			case "busqueda_elementos_individuales_cantidad_restante" :
 				$cadenaSql = "SELECT id_elemento_ind  id ";
 				$cadenaSql .= "FROM elemento_individual  ";
@@ -442,17 +436,29 @@ class Sql extends \Sql {
 			case 'reiniciarConsecutivo' :
 				$cadenaSql = "SELECT SETVAL((SELECT pg_get_serial_sequence('salida', 'consecutivo')), 1, false);";
 				break;
+			
+			case 'SalidaContableVigencia' :
+				$cadenaSql = "SELECT max(consecutivo) ";
+				$cadenaSql .= "FROM salida_contable  ";
+				$cadenaSql .= "WHERE  tipo_bien='" . $variable [1] . "' ";
+				$cadenaSql .= "AND  vigencia='" . $variable [0] . "' ";
 				
+				break;
+			
+			case "InsertarSalidaContable" :
+				$cadenaSql = " INSERT INTO ";
+				$cadenaSql .= " salida_contable(
+						        fecha_registro, salida_general, tipo_bien, 
+            					vigencia, consecutivo)";
+				$cadenaSql .= " VALUES (";
+				$cadenaSql .= "'" . $variable [0] . "',";
+				$cadenaSql .= "'" . $variable [1] . "',";
+				$cadenaSql .= "'" . $variable [2] . "',";
+				$cadenaSql .= "'" . $variable [3] . "',";
+				$cadenaSql .= "'" . $variable [4] . "') ";
+				$cadenaSql .= "RETURNING  id_salida_contable; ";
 				
-				case 'SalidaConstableVigencia' :
-					$cadenaSql = "SELECT max(consecutivo) ";
-					$cadenaSql .= "FROM salida_contable  ";
-					$cadenaSql .= "WHERE  tipo_bien='" . $variable[1] . "' ";
-					$cadenaSql .= "AND  vigencia='" . $variable[0] . "' ";
-				echo $cadenaSql;exit;
-					break;
-				
-				
+				break;
 			
 			// _________________________________________________
 		}

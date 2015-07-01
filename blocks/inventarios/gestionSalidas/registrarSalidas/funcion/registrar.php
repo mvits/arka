@@ -113,68 +113,120 @@ class RegistradorOrden {
 		
 		// ----- Salidas Contables ----------
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', '1809' );
-		// $cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', $id_salida[0][0] );
+// 		$cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', '1809' );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', $id_salida[0][0] );
 		
 		$elementos_tipo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', '1809' );
-		// $cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', $id_salida[0][0] );
-		$elementos_tipo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		
-		
+
 		foreach ( $elementos_tipo as $elemento ) {
 			
 			switch ($elemento ['tipo_bien']) {
 				case '1' :
-					$arreglo=array(
-					$_REQUEST['vigencia'],
-					$elemento['tipo_bien']
+					$arreglo = array (
+							$_REQUEST ['vigencia'],
+							$elemento ['tipo_bien'] 
 					);
 					
-					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaConstableVigencia',$arreglo  );
-					// $cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', $id_salida[0][0] );
+					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaConstableVigencia', $arreglo );
+
 					$max_consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
+
+					if (is_null ( $max_consecutivo [0] [0] )) {
 					
+						$salidaConsecutiva = 1;
+					} else {
+					
+						$salidaConsecutiva = $max_consecutivo [0] [0] + 1;
+					}
+						
+					$arreglo_salida_contable = array (
+							$fechaActual,
+							$id_salida [0] [0],
+							$elemento ['tipo_bien'],
+							$_REQUEST ['vigencia'],
+							$salidaConsecutiva
+					);
+						
+					$cadenaSql = $this->miSql->getCadenaSql ( 'InsertarSalidaContable', $arreglo_salida_contable );
+						
+					$id_salida_contable = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+						
 					
 					break;
 				
 				case '2' :
 					
-					
-					$arreglo=array(
-							$_REQUEST['vigencia'],
-							$elemento['tipo_bien']
+					$arreglo = array (
+							$_REQUEST ['vigencia'],
+							$elemento ['tipo_bien'] 
 					);
-						
-					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaConstableVigencia',$arreglo  );
-					// $cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', $id_salida[0][0] );
+					
+					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaContableVigencia', $arreglo );
+
 					$max_consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
+					if (is_null ( $max_consecutivo [0] [0] )) {
+						
+						$salidaConsecutiva = 1;
+					} else {
+						
+						$salidaConsecutiva = $max_consecutivo [0] [0] + 1;
+					}
 					
+					$arreglo_salida_contable = array (
+							$fechaActual,
+							$id_salida [0] [0],
+							$elemento ['tipo_bien'],
+							$_REQUEST ['vigencia'],
+							$salidaConsecutiva 
+					);
+					
+					$cadenaSql = $this->miSql->getCadenaSql ( 'InsertarSalidaContable', $arreglo_salida_contable );
+					
+					$id_salida_contable = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
 					break;
 				
 				case '3' :
 					
+					$arreglo = array (
+							$_REQUEST ['vigencia'],
+							$elemento ['tipo_bien'] 
+					);
 					
-					$arreglo=array(
-							$_REQUEST['vigencia'],
-							$elemento['tipo_bien']
+					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaConstableVigencia', $arreglo );
+
+					$max_consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+					if (is_null ( $max_consecutivo [0] [0] )) {
+					
+						$salidaConsecutiva = 1;
+					} else {
+					
+						$salidaConsecutiva = $max_consecutivo [0] [0] + 1;
+					}
+						
+					$arreglo_salida_contable = array (
+							$fechaActual,
+							$id_salida [0] [0],
+							$elemento ['tipo_bien'],
+							$_REQUEST ['vigencia'],
+							$salidaConsecutiva
 					);
 						
-					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaConstableVigencia',$arreglo  );
-					// $cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', $id_salida[0][0] );
-					$max_consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$cadenaSql = $this->miSql->getCadenaSql ( 'InsertarSalidaContable', $arreglo_salida_contable );
+						
+					$id_salida_contable = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+						
+					
 					
 					break;
 			}
 		}
 		
-		exit ();
+		
 		
 		$arreglo = array (
 				"salida" => $id_salida [0] [0],
