@@ -151,11 +151,14 @@ class Sql extends \Sql {
 			
 			case "buscar_entradas" :
 				
-				$cadenaSql = "SELECT id_entrada, consecutivo||' - ('||vigencia||')' entradas ";
+				$cadenaSql = "SELECT DISTINCT entrada.id_entrada, entrada.consecutivo||' - ('||entrada.vigencia||')' entradas ";
 				$cadenaSql .= "FROM entrada  ";
+				$cadenaSql .= "JOIN elemento ON elemento.id_entrada = entrada.id_entrada ";
+				$cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento ";
 				$cadenaSql .= "WHERE consecutivo > 0  ";
 				$cadenaSql .= "AND   cierre_contable ='f' ";
-				$cadenaSql .= "AND   estado_entrada = 1 ";
+				$cadenaSql .= "AND   estado_entrada = 1  ";
+				$cadenaSql .= "AND ei.id_salida IS NULL  ";
 				
 				break;
 			
@@ -195,6 +198,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE 1=1 ";
 				$cadenaSql .= "AND entrada.cierre_contable='f' ";
 				$cadenaSql .= "AND ei.id_salida IS NULL  ";
+				$cadenaSql .= "AND entrada.estado_entrada = 1 ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND entrada.id_entrada = '" . $variable [0] . "'";
 				}
@@ -210,6 +214,7 @@ class Sql extends \Sql {
 				if ($variable [4] != '') {
 					$cadenaSql .= " AND entrada.proveedor = '" . $variable [4] . "'";
 				}
+				
 				
 				break;
 			
@@ -296,12 +301,20 @@ class Sql extends \Sql {
 				
 				break;
 			case "dependenciasConsultadas" :
-				$cadenaSql = "SELECT DISTINCT  ESF_ID_ESPACIO, ESF_NOMBRE_ESPACIO ";
+				$cadenaSql = "SELECT DISTINCT  ESF_COD_DEP_ENCARGADA , ESF_DEP_ENCARGADA ";
 				$cadenaSql .= " FROM ESPACIOS_FISICOS ";
 				$cadenaSql .= " WHERE ESF_ID_SEDE='" . $variable . "' ";
 				$cadenaSql .= " AND  ESF_ESTADO='A'";
+				break;
+			
+			case "ubicacionesConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  ESF_ID_ESPACIO , ESF_NOMBRE_ESPACIO ";
+				$cadenaSql .= " FROM ESPACIOS_FISICOS ";
+				$cadenaSql .= " WHERE ESF_COD_DEP_ENCARGADA='" . $variable . "' ";
+				$cadenaSql .= " AND  ESF_ESTADO='A'";
 				
 				break;
+			
 			case "sede" :
 				$cadenaSql = "SELECT DISTINCT  ESF_ID_SEDE, ESF_SEDE ";
 				$cadenaSql .= " FROM ESPACIOS_FISICOS ";

@@ -22,5 +22,22 @@ if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 }
 
 
+if ($_REQUEST ['funcion'] == 'consultarUbicacion') {
+
+	$conexion = "sicapital";
+
+	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+
+
+	$cadenaSql = $this->sql->getCadenaSql ( 'ubicacionesConsultadas', $_REQUEST['valor'] );
+	$resultado = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+
+	$resultado = json_encode ( $resultado);
+
+	echo $resultado;
+}
+
+
 
 ?>
