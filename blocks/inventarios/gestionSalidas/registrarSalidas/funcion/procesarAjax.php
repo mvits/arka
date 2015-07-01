@@ -7,13 +7,11 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 
 if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 
-	$conexion = "sicapital";
 
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 
 	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciasConsultadas', $_REQUEST['valor'] );
-	$resultado = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 
 	$resultado = json_encode ( $resultado);
@@ -24,13 +22,9 @@ if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 
 if ($_REQUEST ['funcion'] == 'consultarUbicacion') {
 
-	$conexion = "sicapital";
-
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
 
 	$cadenaSql = $this->sql->getCadenaSql ( 'ubicacionesConsultadas', $_REQUEST['valor'] );
-	$resultado = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 
 	$resultado = json_encode ( $resultado);

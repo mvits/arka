@@ -423,7 +423,7 @@ class registrarForm {
 				}
 				
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "sede" );
-				$matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 				$atributos ['matrizItems'] = $matrizItems;
 				
 				// Utilizar lo siguiente cuando no se pase un arreglo:

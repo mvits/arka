@@ -118,7 +118,7 @@ function consultarDependencia(elem, request, response){
 	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia')?>");
 	            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].ESF_COD_DEP_ENCARGADA+"'>"+data[ indice ].ESF_DEP_ENCARGADA+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia')?>");
+	            	$("<option value='"+data[ indice ].ESF_CODIGO_DEP+"'>"+data[ indice ].ESF_DEP_ENCARGADA+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia')?>");
 	            	
 	            });
 	            
