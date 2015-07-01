@@ -350,7 +350,7 @@ class Sql extends \Sql {
 			case "insertar_salida" :
 				$cadenaSql = " INSERT INTO ";
 				$cadenaSql .= " salida( fecha_registro, dependencia, funcionario, observaciones,";
-				$cadenaSql .= " id_entrada,sede,vigencia,id_salida)";
+				$cadenaSql .= " id_entrada,sede,ubicacion,vigencia,id_salida)";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= "'" . $variable [1] . "',";
@@ -359,8 +359,10 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [4] . "',";
 				$cadenaSql .= "'" . $variable [5] . "',";
 				$cadenaSql .= "'" . $variable [6] . "',";
-				$cadenaSql .= "'" . $variable [7] . "') ";
+				$cadenaSql .= "'" . $variable [7] . "',";
+				$cadenaSql .= "'" . $variable [8] . "') ";
 				$cadenaSql .= "RETURNING  id_salida; ";
+				
 				
 				break;
 			
@@ -390,6 +392,20 @@ class Sql extends \Sql {
 				$cadenaSql .= "ORDER BY id ASC;";
 				break;
 			
+				
+				
+				case "busqueda_elementos_bienes" :
+					$cadenaSql = "SELECT ei.id_elemento_ind AS id, tb.descripcion, el.tipo_bien   ";
+					$cadenaSql .= "FROM elemento_individual ei ";
+					$cadenaSql .= "JOIN  elemento el ON el.id_elemento=ei.id_elemento_gen  ";
+					$cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes = el.tipo_bien  ";
+					$cadenaSql .= "JOIN salida  sa ON sa.id_salida = ei.id_salida  ";
+					$cadenaSql .= "WHERE sa.id_salida ='" . $variable . "' ";
+					$cadenaSql .= "ORDER BY id ASC;";
+					break;
+				
+				
+				
 			case "busqueda_elementos_individuales_cantidad_restante" :
 				$cadenaSql = "SELECT id_elemento_ind  id ";
 				$cadenaSql .= "FROM elemento_individual  ";
@@ -401,7 +417,8 @@ class Sql extends \Sql {
 			
 			case "actualizar_elementos_individuales" :
 				$cadenaSql = "UPDATE elemento_individual ";
-				$cadenaSql .= "SET id_salida='" . $variable [1] . "' ";
+				$cadenaSql .= "SET id_salida='" . $variable [1] . "', ";
+				$cadenaSql .= " funcionario='" . $variable [2] . "' ";
 				$cadenaSql .= "WHERE id_elemento_ind ='" . $variable [0] . "';";
 				
 				break;
@@ -425,6 +442,17 @@ class Sql extends \Sql {
 			case 'reiniciarConsecutivo' :
 				$cadenaSql = "SELECT SETVAL((SELECT pg_get_serial_sequence('salida', 'consecutivo')), 1, false);";
 				break;
+				
+				
+				case 'SalidaConstableVigencia' :
+					$cadenaSql = "SELECT max(consecutivo) ";
+					$cadenaSql .= "FROM salida_contable  ";
+					$cadenaSql .= "WHERE  tipo_bien='" . $variable[1] . "' ";
+					$cadenaSql .= "AND  vigencia='" . $variable[0] . "' ";
+				echo $cadenaSql;exit;
+					break;
+				
+				
 			
 			// _________________________________________________
 		}

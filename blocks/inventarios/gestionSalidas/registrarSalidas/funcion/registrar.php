@@ -32,25 +32,22 @@ class RegistradorOrden {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		
-		
 		if ($fechaActual == $fechaReinicio) {
-				
+			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultaConsecutivo', $fechaReinicio );
 			$consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
+			
 			if (isset ( $consecutivo ) && $consecutivo == false) {
 				$cadenaSql = $this->miSql->getCadenaSql ( 'reiniciarConsecutivo' );
 				$consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 			}
 		}
 		
-	
-		$cadenaSql = $this->miSql->getCadenaSql ( 'id_salida_maximo');
+		$cadenaSql = $this->miSql->getCadenaSql ( 'id_salida_maximo' );
 		
 		$max_id_salida = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$max_id_salida=$max_id_salida[0][0]+1;
+		$max_id_salida = $max_id_salida [0] [0] + 1;
 		
 		$arreglo = array (
 				$fechaActual,
@@ -59,6 +56,7 @@ class RegistradorOrden {
 				$_REQUEST ['observaciones'],
 				$_REQUEST ['numero_entrada'],
 				$_REQUEST ['sede'],
+				$_REQUEST ['ubicacion'],
 				$_REQUEST ['vigencia'],
 				$max_id_salida 
 		);
@@ -91,7 +89,8 @@ class RegistradorOrden {
 					
 					$arreglo = array (
 							$e [$i] [0],
-							$id_salida [0] [0] 
+							$id_salida [0] [0],
+							$_REQUEST ['funcionario'] 
 					);
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elementos_individuales', $arreglo );
@@ -102,7 +101,8 @@ class RegistradorOrden {
 			if (count ( $e ) == 1) {
 				$arreglo = array (
 						$e [0] [0],
-						$id_salida [0] [0] 
+						$id_salida [0] [0],
+						$_REQUEST ['funcionario'] 
 				);
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elementos_individuales', $arreglo );
@@ -111,15 +111,76 @@ class RegistradorOrden {
 			}
 		}
 		
-
+		// ----- Salidas Contables ----------
 		
-
+		$cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', '1809' );
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', $id_salida[0][0] );
+		
+		$elementos_tipo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', '1809' );
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', $id_salida[0][0] );
+		$elementos_tipo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		
+		
+		foreach ( $elementos_tipo as $elemento ) {
+			
+			switch ($elemento ['tipo_bien']) {
+				case '1' :
+					$arreglo=array(
+					$_REQUEST['vigencia'],
+					$elemento['tipo_bien']
+					);
+					
+					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaConstableVigencia',$arreglo  );
+					// $cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', $id_salida[0][0] );
+					$max_consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					
+					
+					
+					break;
+				
+				case '2' :
+					
+					
+					$arreglo=array(
+							$_REQUEST['vigencia'],
+							$elemento['tipo_bien']
+					);
+						
+					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaConstableVigencia',$arreglo  );
+					// $cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', $id_salida[0][0] );
+					$max_consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					
+					
+					
+					break;
+				
+				case '3' :
+					
+					
+					$arreglo=array(
+							$_REQUEST['vigencia'],
+							$elemento['tipo_bien']
+					);
+						
+					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaConstableVigencia',$arreglo  );
+					// $cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_bienes', $id_salida[0][0] );
+					$max_consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					
+					break;
+			}
+		}
+		
+		exit ();
+		
 		$arreglo = array (
 				"salida" => $id_salida [0] [0],
 				"entrada" => $_REQUEST ['numero_entrada'],
 				"fecha" => $fechaActual 
 		);
-		
 		
 		if ($actualizo_elem = true) {
 			
