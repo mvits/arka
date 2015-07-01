@@ -80,6 +80,10 @@ class registrarForm {
 				'clase' => $datosgenerales [2] 
 		);
 		
+		
+		
+		
+		
 		$_REQUEST = array_merge ( $_REQUEST, $entrada );
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];

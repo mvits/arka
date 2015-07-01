@@ -128,7 +128,7 @@ class RegistradorOrden {
 							$elemento ['tipo_bien'] 
 					);
 					
-					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaConstableVigencia', $arreglo );
+					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaContableVigencia', $arreglo );
 
 					$max_consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
@@ -196,7 +196,7 @@ class RegistradorOrden {
 							$elemento ['tipo_bien'] 
 					);
 					
-					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaConstableVigencia', $arreglo );
+					$cadenaSql = $this->miSql->getCadenaSql ( 'SalidaContableVigencia', $arreglo );
 
 					$max_consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
