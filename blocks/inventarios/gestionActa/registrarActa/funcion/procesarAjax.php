@@ -139,13 +139,10 @@ if ($_REQUEST ['funcion'] == 'proveedor') {
 
 if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 	
-	$conexion = "sicapital";
-	
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciasConsultadas', $_REQUEST ['valor'] );
 	
-	$resultado = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	$resultado = json_encode ( $resultado );
 	
@@ -154,11 +151,8 @@ if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 
 if ($_REQUEST ['funcion'] == 'SeleccionOrdenador') {
 	
-	$conexion = "sicapital";
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
 	$cadenaSql = $this->sql->getCadenaSql ( 'informacion_ordenador', $_REQUEST ['ordenador'] );
-	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	$resultado = json_encode ( $resultadoItems [0] );
 	

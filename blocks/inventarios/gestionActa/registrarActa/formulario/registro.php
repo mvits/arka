@@ -105,6 +105,9 @@ class registrarForm {
 					break;
 			}
 			
+			
+			
+			
 			$esteCampo = 'dependencia';
 			$atributos ['columnas'] = 2;
 			$atributos ['nombre'] = $esteCampo;
@@ -153,12 +156,12 @@ class registrarForm {
 			$atributos ['id'] = $esteCampo;
 			
 			$atributos ['evento'] = '';
-			$atributos ['deshabilitado'] = false;
+			$atributos ['deshabilitado'] = true;
 			$atributos ["etiquetaObligatorio"] = true;
 			$atributos ['tab'] = $tab;
 			$atributos ['tamanno'] = 1;
 			$atributos ['estilo'] = 'jqueryui';
-			$atributos ['validar'] = '';
+			$atributos ['validar'] = 'required';
 			$atributos ['limitar'] = 1;
 			$atributos ['anchoCaja'] = 25;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -173,7 +176,7 @@ class registrarForm {
 			$matrizItems = array (
 					array (
 							' ',
-							'Seleccion ... ' 
+							'Seleccione  ..... ' 
 					) 
 			);
 			
@@ -570,10 +573,10 @@ class registrarForm {
 									' ' 
 							) 
 					);
-					$matrizItems = $esteRecursoDB2->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					// $atributos['miniRegistro']=;
-					$atributos ['baseDatos'] = "sicapital";
+					
 					// $atributos ['baseDatos'] = "inventarios";
 					
 					// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
@@ -642,7 +645,7 @@ class registrarForm {
 									' ' 
 							) 
 					);
-					$matrizItems = $esteRecursoDB2->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					// $atributos['miniRegistro']=;
 					$atributos ['baseDatos'] = "inventarios";
@@ -675,7 +678,7 @@ class registrarForm {
 					}
 					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 					$atributos ['deshabilitado'] = $estadocampos;
-					$atributos ['tamanno'] = 25;
+					$atributos ['tamanno'] = 35;
 					$atributos ['maximoTamanno'] = '';
 					$atributos ['anchoEtiqueta'] = 190;
 					$tab ++;

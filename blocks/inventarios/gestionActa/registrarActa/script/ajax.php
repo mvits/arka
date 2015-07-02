@@ -171,37 +171,37 @@ function consultarContrato(elem, request, response){
 
 function consultarDependencia(elem, request, response){
 	  $.ajax({
-	    url: "<?php echo $urlFinal16?>",
-	    dataType: "json",
-	    data: { valor:$("#<?php echo $this->campoSeguro('sede')?>").val()},
-	    success: function(data){ 
+		    url: "<?php echo $urlFinal16?>",
+		    dataType: "json",
+		    data: { valor:$("#<?php echo $this->campoSeguro('sede')?>").val()},
+		    success: function(data){ 
 
 
 
-	        if(data[0]!=" "){
+		        if(data[0]!=" "){
 
-	            $("#<?php echo $this->campoSeguro('dependencia')?>").html('');
-	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia')?>");
-	            $.each(data , function(indice,valor){
+		            $("#<?php echo $this->campoSeguro('dependencia')?>").html('');
+		            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia')?>");
+		            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].ESF_ID_ESPACIO+"'>"+data[ indice ].ESF_NOMBRE_ESPACIO+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia')?>");
-	            	
-	            });
-	            
-	            $("#<?php echo $this->campoSeguro('dependencia')?>").removeAttr('disabled');
-	            
-	            $('#<?php echo $this->campoSeguro('dependencia')?>').width(350);
-	            $("#<?php echo $this->campoSeguro('dependencia')?>").select2();
-	            
-	          
-	            
-		        }
-	    			
+		            	$("<option value='"+data[ indice ].ESF_CODIGO_DEP+"'>"+data[ indice ].ESF_DEP_ENCARGADA+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia')?>");
+		            	
+		            });
+		            
+		            $("#<?php echo $this->campoSeguro('dependencia')?>").removeAttr('disabled');
+		            
+		            $('#<?php echo $this->campoSeguro('dependencia')?>').width(300);
+		            $("#<?php echo $this->campoSeguro('dependencia')?>").select2();
+		            
+		          
+		            
+			        }
+		    			
 
-	    }
-		                    
-	   });
-	};
+		    }
+			                    
+		   });
+		};
 
 
 function datosInfo(elem, request, response) {
