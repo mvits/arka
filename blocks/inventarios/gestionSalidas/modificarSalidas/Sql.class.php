@@ -153,8 +153,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM entrada  ";
 				$cadenaSql .= "JOIN elemento ON elemento.id_entrada = entrada.id_entrada ";
 				$cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento ";
-				$cadenaSql .= "WHERE  ";
-				$cadenaSql .= "AND   cierre_contable ='f' ";
+				$cadenaSql .= "WHERE cierre_contable ='f' ";
 				$cadenaSql .= "AND   estado_entrada = 1  ";
 				$cadenaSql .= "AND ei.id_salida IS NOT NULL  ";
 				break;
@@ -166,8 +165,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN elemento ON elemento.id_entrada = entrada.id_entrada ";
 				$cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento ";
 				$cadenaSql .= "JOIN salida sal ON sal.id_salida = ei.id_salida ";
-				$cadenaSql .= "WHERE   ";
-				$cadenaSql .= "AND   cierre_contable ='f' ";
+				$cadenaSql .= "WHERE cierre_contable ='f' ";
 				$cadenaSql .= "AND   estado_entrada = 1  ";
 				$cadenaSql .= "AND ei.id_salida IS NOT NULL  ";
 				
