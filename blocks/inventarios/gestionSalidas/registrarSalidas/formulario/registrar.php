@@ -350,7 +350,7 @@ class registrarForm {
 				
 				// Aplica atributos globales al control
 				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoTexto ( $atributos );
+// 				echo $this->miFormulario->campoTexto ( $atributos );
 				unset ( $atributos );
 				
 				
@@ -475,11 +475,11 @@ class registrarForm {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['evento'] = '';
 				$atributos ['deshabilitado'] = true;
-				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = false;
 				$atributos ['tab'] = $tab;
 				$atributos ['tamanno'] = 1;
 				$atributos ['estilo'] = 'jqueryui';
-				$atributos ['validar'] = 'required';
+				$atributos ['validar'] = ' ';
 				$atributos ['limitar'] = true;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 				$atributos ['anchoEtiqueta'] = 165;

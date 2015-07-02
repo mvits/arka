@@ -155,8 +155,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM entrada  ";
 				$cadenaSql .= "JOIN elemento ON elemento.id_entrada = entrada.id_entrada ";
 				$cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento ";
-				$cadenaSql .= "WHERE consecutivo > 0  ";
-				$cadenaSql .= "AND   cierre_contable ='f' ";
+				$cadenaSql .= "WHERE cierre_contable ='f' ";
 				$cadenaSql .= "AND   estado_entrada = 1  ";
 				$cadenaSql .= "AND ei.id_salida IS NULL  ";
 				

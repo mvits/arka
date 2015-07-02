@@ -1,5 +1,5 @@
 <?php
-use inventarios\gestionCompras\registrarOrdenCompra\Sql;
+
 
 
 $conexion = "inventarios";

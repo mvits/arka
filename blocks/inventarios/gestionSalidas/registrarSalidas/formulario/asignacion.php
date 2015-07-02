@@ -297,10 +297,10 @@ class registrarForm {
 							
 							echo "<thead>
 				                <tr>
-				                   <th>Item</th>
+				                   <th>Nivel Inventarios</th>
 				                    <th>Cantidad</th>
 									<th>Cantidad Asignar</th>			
-				                    <th>Descripción</th>
+				                    <th>Nombre</th>
 									<th>Selección Items</th>
 							    </tr>
 					            </thead>

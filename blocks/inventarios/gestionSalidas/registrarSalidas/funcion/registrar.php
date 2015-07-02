@@ -56,7 +56,7 @@ class RegistradorOrden {
 				$_REQUEST ['observaciones'],
 				$_REQUEST ['numero_entrada'],
 				$_REQUEST ['sede'],
-				$_REQUEST ['ubicacion'],
+				($_REQUEST ['ubicacion']!='')?$_REQUEST ['ubicacion']:'null',
 				$_REQUEST ['vigencia'],
 				$max_id_salida 
 		);
