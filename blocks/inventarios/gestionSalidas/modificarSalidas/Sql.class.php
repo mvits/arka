@@ -318,7 +318,7 @@ class Sql extends \Sql {
 			case "consultarSalidaParticular" :
 				
 				$cadenaSql = "SELECT DISTINCT ";
-				$cadenaSql .= " dependencia, sede, funcionario, observaciones, vigencia ";
+				$cadenaSql .= " dependencia, sede, funcionario, observaciones, vigencia, ubicacion  ";
 				$cadenaSql .= "FROM salida ";
 				$cadenaSql .= "WHERE id_salida='" . $variable . "';";
 				
@@ -351,6 +351,25 @@ class Sql extends \Sql {
 				$cadenaSql .= "  funcionario='" . $variable [4] . "',  ";
 				$cadenaSql .= "  vigencia='" . $variable [5] . "'  ";
 				$cadenaSql .= "  WHERE id_salida='" . $variable [3] . "' ;";
+				
+				break;
+			
+			case "dependenciasConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE sa.\"ESF_ID_SEDE\"='" . $variable . "' ";
+				$cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A'";
+				
+				break;
+			
+			case "ubicacionesConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  ef.\"ESF_ID_ESPACIO\" , ef.\"ESF_NOMBRE_ESPACIO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ef  ";
+				$cadenaSql .= " JOIN arka_parametros.arka_dependencia ad ON ad.\"ESF_ID_ESPACIO\"=ef.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_CODIGO_DEP\"='" . $variable . "' ";
+				$cadenaSql .= " AND  ef.\"ESF_ESTADO\"='A'";
 				
 				break;
 			

@@ -103,13 +103,21 @@ class registrarForm {
 		
 		$funcionario = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		if ((is_null ( $salida [0] [5] )) == true || $salida [0] [5] == 'null') {
+			$ubicacion = - 1;
+		} else {
+			
+			$ubicacion = $salida [0] [5];
+		}
+		
 		$salida = array (
 				
 				'dependencia' => $salida [0] [0],
 				'sede' => $salida [0] [1],
 				'observaciones' => $salida [0] [3],
 				'funcionarioP' => $salida [0] [2],
-				'vigencia' => $salida [0] [4] 
+				'vigencia' => $salida [0] [4],
+				'ubicacion' => $ubicacion 
 		);
 		
 		$_REQUEST = array_merge ( $_REQUEST, $salida );
@@ -369,7 +377,7 @@ class registrarForm {
 				
 				// Aplica atributos globales al control
 				$atributos = array_merge ( $atributos, $atributosGlobales );
-// 				echo $this->miFormulario->campoCuadroTexto ( $atributos );
+				// echo $this->miFormulario->campoCuadroTexto ( $atributos );
 				unset ( $atributos );
 				
 				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -412,7 +420,7 @@ class registrarForm {
 				$atributos ['id'] = $esteCampo;
 				
 				$atributos ['evento'] = '';
-				$atributos ['deshabilitado'] = true;
+				$atributos ['deshabilitado'] = false;
 				$atributos ["etiquetaObligatorio"] = true;
 				$atributos ['tab'] = $tab;
 				$atributos ['tamanno'] = 1;
@@ -444,7 +452,7 @@ class registrarForm {
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['id'] = $esteCampo;
 				$atributos ['evento'] = '';
-				$atributos ['deshabilitado'] = true;
+				$atributos ['deshabilitado'] = false;
 				$atributos ["etiquetaObligatorio"] = false;
 				$atributos ['tab'] = $tab;
 				$atributos ['tamanno'] = 1;
@@ -863,6 +871,8 @@ class registrarForm {
 			$valorCodificado .= "&numero_salida=" . $_REQUEST ['numero_salida'];
 			$valorCodificado .= "&id_funcionario=" . $id_funcionario;
 			$valorCodificado .= "&cantidadItems=" . $cantidaditems;
+			$valorCodificado .= "&vigencia=" . $salida ['vigencia'];
+			
 			if (isset ( $_REQUEST ['salidasAS'] )) {
 				$valorCodificado .= "&Re_Actualizacion=1";
 			}
