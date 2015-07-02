@@ -49,35 +49,46 @@ class registrarForm {
 		
 		$seccion ['tiempo'] = $tiempo;
 		
-		if (isset ( $_REQUEST ['salidasAS'] )) {
-			
-			$motrar = 'block';
-			$selec = '1';
-			
-			{
-				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntradaParticular', $_REQUEST ['numero_entrada'] );
-				
-				$entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'consulta_elementos_sin_actualizar', $entrada [0] [12] );
-				
-				$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			}
-		} else {
-			
-			$motrar = 'none';
-			$selec = '0';
-			
-			{
-				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntradaParticular', $_REQUEST ['numero_entrada'] );
-				
-				$entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'consulta_elementos', $_REQUEST ['numero_entrada'] );
-				
-				$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			}
-		}
+		$arregloES = array (
+				$_REQUEST ['numero_entrada'],
+				$_REQUEST ['numero_salida'] 
+		);
+		
+		// if (isset ( $_REQUEST ['salidasAS'] )) {
+		
+		// $motrar = 'block';
+		// $selec = '1';
+		
+		// {
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntradaParticular', $_REQUEST ['numero_entrada'] );
+		
+		// $entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'consulta_elementos_sin_actualizar', $entrada [0] [12] );
+		
+		// $elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		// }
+		// } else {
+		// echo("asdasd");
+		$motrar = 'none';
+		$selec = '0';
+		
+		// {
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntradaParticular', $_REQUEST ['numero_entrada'] );
+		
+		$entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consulta_elementos', $arregloES );
+		
+		$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		// }
+		// }
+		
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntradaParticular', $_REQUEST ['numero_entrada'] );
+		
+		// $entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'consulta_elementos', $_REQUEST ['numero_entrada'] );
 		
 		$cantidaditems = count ( $elementos );
 		
@@ -99,8 +110,7 @@ class registrarForm {
 				'observaciones' => $salida [0] [3],
 				'funcionarioP' => $salida [0] [2],
 				'vigencia' => $salida [0] [4] 
-		)
-		;
+		);
 		
 		$_REQUEST = array_merge ( $_REQUEST, $salida );
 		
@@ -179,6 +189,7 @@ class registrarForm {
 				} else {
 					$atributos ['valor'] = '';
 				}
+				
 				$atributos ['titulo'] = '';
 				$atributos ['deshabilitado'] = true;
 				$atributos ['tamanno'] = 10;
@@ -326,7 +337,7 @@ class registrarForm {
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = "Modificar Salida # : " .$datos [1];
+			$atributos ["leyenda"] = "Modificar Salida # : " . $datos [1];
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			unset ( $atributos );
 			{
@@ -358,12 +369,12 @@ class registrarForm {
 				
 				// Aplica atributos globales al control
 				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoCuadroTexto ( $atributos );
+// 				echo $this->miFormulario->campoCuadroTexto ( $atributos );
 				unset ( $atributos );
 				
 				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 				$esteCampo = 'sede';
-				$atributos ['columnas'] = 2;
+				$atributos ['columnas'] = 3;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['id'] = $esteCampo;
 				$atributos ['evento'] = '';
@@ -375,7 +386,7 @@ class registrarForm {
 				$atributos ['validar'] = 'required';
 				$atributos ['limitar'] = true;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['anchoEtiqueta'] = 220;
+				$atributos ['anchoEtiqueta'] = 150;
 				
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
@@ -384,7 +395,7 @@ class registrarForm {
 				}
 				
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "sede" );
-				$matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 				$atributos ['matrizItems'] = $matrizItems;
 				
 				// Utilizar lo siguiente cuando no se pase un arreglo:
@@ -396,12 +407,12 @@ class registrarForm {
 				unset ( $atributos );
 				
 				$esteCampo = "dependencia";
-				$atributos ['columnas'] = 2;
+				$atributos ['columnas'] = 3;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['id'] = $esteCampo;
 				
 				$atributos ['evento'] = '';
-				$atributos ['deshabilitado'] = false;
+				$atributos ['deshabilitado'] = true;
 				$atributos ["etiquetaObligatorio"] = true;
 				$atributos ['tab'] = $tab;
 				$atributos ['tamanno'] = 1;
@@ -409,14 +420,47 @@ class registrarForm {
 				$atributos ['validar'] = 'required';
 				$atributos ['limitar'] = true;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['anchoEtiqueta'] = 200;
+				$atributos ['anchoEtiqueta'] = 150;
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
 				} else {
 					$atributos ['seleccion'] = - 1;
 				}
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "dependencias" );
-				$matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				$atributos ['matrizItems'] = $matrizItems;
+				
+				// Utilizar lo siguiente cuando no se pase un arreglo:
+				// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
+				// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
+				$tab ++;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				
+				$esteCampo = "ubicacion";
+				$atributos ['columnas'] = 3;
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['evento'] = '';
+				$atributos ['deshabilitado'] = true;
+				$atributos ["etiquetaObligatorio"] = false;
+				$atributos ['tab'] = $tab;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['validar'] = ' ';
+				$atributos ['limitar'] = true;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['anchoEtiqueta'] = 165;
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = - 1;
+				}
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "ubicaciones" );
+				
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 				$atributos ['matrizItems'] = $matrizItems;
 				
 				// Utilizar lo siguiente cuando no se pase un arreglo:
