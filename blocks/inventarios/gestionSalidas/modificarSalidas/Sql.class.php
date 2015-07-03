@@ -165,8 +165,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN elemento ON elemento.id_entrada = entrada.id_entrada ";
 				$cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento ";
 				$cadenaSql .= "JOIN salida sal ON sal.id_salida = ei.id_salida ";
-				$cadenaSql .= "WHERE cierre_contable ='f' ";
-				$cadenaSql .= "AND   estado_entrada = 1  ";
+				$cadenaSql .= "WHERE entrada.cierre_contable ='f' ";
+				$cadenaSql .= "AND   entrada.estado_entrada = 1  ";
 				$cadenaSql .= "AND ei.id_salida IS NOT NULL  ";
 				
 				break;
@@ -258,22 +258,6 @@ class Sql extends \Sql {
 			
 			// break;
 			
-			case "consulta_elementos" :
-				$cadenaSql = "SELECT id_elemento, elemento_padre||''||elemento_codigo||' - '||elemento_nombre AS item, cantidad, descripcion ";
-				$cadenaSql .= "FROM elemento ";
-				$cadenaSql .= " JOIN grupo.catalogo_elemento ce ON ce.elemento_id = elemento.nivel ";
-				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
-				$cadenaSql .= "JOIN  entrada en ON en.id_entrada = elemento.id_entrada  ";
-				$cadenaSql .= "JOIN  elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento  ";
-				$cadenaSql .= "JOIN  salida sal ON sal.id_salida = ei.id_salida  ";
-				$cadenaSql .= "WHERE elemento.id_entrada='" . $variable [0] . "' ";
-				$cadenaSql .= "AND ei.id_salida='" . $variable [1] . "' ";
-				$cadenaSql .= "AND cl.lista_activo = 1  ";
-				$cadenaSql .= "AND en.cierre_contable ='f' ";
-				$cadenaSql .= "AND en.estado_entrada = 1  ";
-				
-				break;
-			
 			case "consulta_elementos_informacion" :
 				$cadenaSql = "SELECT el.* ";
 				$cadenaSql .= "FROM elemento el ";
@@ -340,6 +324,33 @@ class Sql extends \Sql {
 				
 				break;
 			
+			case "consulta_elementos" :
+				$cadenaSql = "SELECT id_elemento, elemento_padre||''||elemento_codigo||' - '||elemento_nombre AS item, cantidad, descripcion ";
+				$cadenaSql .= "FROM elemento ";
+				$cadenaSql .= " JOIN grupo.catalogo_elemento ce ON ce.elemento_id = elemento.nivel ";
+				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
+				$cadenaSql .= "JOIN  entrada en ON en.id_entrada = elemento.id_entrada  ";
+				$cadenaSql .= "JOIN  elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento  ";
+				$cadenaSql .= "JOIN  salida sal ON sal.id_salida = ei.id_salida  ";
+				$cadenaSql .= "WHERE elemento.id_entrada='" . $variable [0] . "' ";
+				$cadenaSql .= "AND ei.id_salida='" . $variable [1] . "' ";
+				$cadenaSql .= "AND cl.lista_activo = 1  ";
+				$cadenaSql .= "AND en.cierre_contable ='f' ";
+				$cadenaSql .= "AND en.estado_entrada = 1  ";
+				
+				break;
+			
+			case 'elementosIndividuales' :
+				
+				$cadenaSql = "SELECT ei.id_elemento_ind,ei.id_salida,tb.descripcion,el.tipo_bien ";
+				$cadenaSql .= " FROM elemento_individual ei ";
+				$cadenaSql .= " JOIN  elemento  el ON  el.id_elemento =ei.id_elemento_gen ";
+				$cadenaSql .= " JOIN  tipo_bienes tb ON  tb.id_tipo_bienes =el.tipo_bien ";
+				$cadenaSql .= " JOIN  salida_contable sc ON  sc.salida_general =ei.id_salida ";
+				$cadenaSql .= " WHERE ei.id_salida ='" . $variable . "' ";
+				
+				break;
+			
 			case "actualizar_salida" :
 				
 				$cadenaSql = " UPDATE salida ";
@@ -347,7 +358,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "  sede='" . $variable [1] . "' , ";
 				$cadenaSql .= "  observaciones='" . $variable [2] . "',  ";
 				$cadenaSql .= "  funcionario='" . $variable [4] . "',  ";
-				$cadenaSql .= "  vigencia='" . $variable [5] . "'  ";
+				$cadenaSql .= "  vigencia='" . $variable [5] . "',  ";
+				$cadenaSql .= "  ubicacion='" . $variable [6] . "'  ";
 				$cadenaSql .= "  WHERE id_salida='" . $variable [3] . "' ;";
 				
 				break;
@@ -386,14 +398,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ef  ";
 				$cadenaSql .= " JOIN arka_parametros.arka_dependencia ad ON ad.\"ESF_ID_ESPACIO\"=ef.\"ESF_ID_ESPACIO\" ";
 				$cadenaSql .= " WHERE  ef.\"ESF_ESTADO\"='A'";
-				break;
-			
-			case "dependenciasConsultadas" :
-				$cadenaSql = "SELECT DISTINCT  ESF_ID_ESPACIO, ESF_NOMBRE_ESPACIO ";
-				$cadenaSql .= " FROM ESPACIOS_FISICOS ";
-				$cadenaSql .= " WHERE ESF_ID_SEDE='" . $variable . "' ";
-				$cadenaSql .= " AND  ESF_ESTADO='A'";
-				
 				break;
 			
 			case "sede" :

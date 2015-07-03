@@ -27,6 +27,10 @@ class RegistradorOrden {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		
+		
+		
+		
 		// ----
 		
 		for($i = 0; $i <= 200; $i ++) {
@@ -45,12 +49,21 @@ class RegistradorOrden {
 				$_REQUEST ['numero_salida'],
 				$_REQUEST ['funcionarioP'] ,
 				$_REQUEST ['vigencia'] ,
+				$_REQUEST ['ubicacion'] 
 		);
 
 		$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_salida', $arreglo );
 		$id_salida = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		
 		if ($_REQUEST ['actualizar'] == '1') {
+
+			
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'elementosIndividuales', $_REQUEST['numero_salida'] );
+			$elementos_ind = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			
+			var_dump($elementos_ind);exit;
 			
 			// -- Verificar -- Items -- Cantidades
 			
@@ -79,7 +92,7 @@ class RegistradorOrden {
 				}
 			
 			}
-			
+			exit;
 			if (! isset ( $items )) {
 				
 				redireccion::redireccionar ( "noitems" );
