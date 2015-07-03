@@ -68,3 +68,15 @@
 
 
 
+proveedor') ?>").change(function () {
+		datosInfo();
+		});
+        
+        
+          
+
+
+
+
+
+

@@ -179,19 +179,20 @@ function consultarDependencia(elem, request, response){
 
 
 
+
 	        if(data[0]!=" "){
 
 	            $("#<?php echo $this->campoSeguro('dependencia')?>").html('');
 	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia')?>");
 	            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].ESF_ID_ESPACIO+"'>"+data[ indice ].ESF_NOMBRE_ESPACIO+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia')?>");
+	            	$("<option value='"+data[ indice ].ESF_CODIGO_DEP+"'>"+data[ indice ].ESF_DEP_ENCARGADA+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia')?>");
 	            	
 	            });
 	            
 	            $("#<?php echo $this->campoSeguro('dependencia')?>").removeAttr('disabled');
 	            
-	            $('#<?php echo $this->campoSeguro('dependencia')?>').width(350);
+	            $('#<?php echo $this->campoSeguro('dependencia')?>').width(300);
 	            $("#<?php echo $this->campoSeguro('dependencia')?>").select2();
 	            
 	          

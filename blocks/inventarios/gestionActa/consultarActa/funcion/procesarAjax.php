@@ -129,29 +129,24 @@ if ($_REQUEST ['funcion'] == 'EliminarItem') {
 
 if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 
-	$conexion = "sicapital";
-
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
-
-	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciasConsultadas', $_REQUEST['valor'] );
-
-	$resultado = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-
-	$resultado = json_encode ( $resultado);
-
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciasConsultadas', $_REQUEST ['valor'] );
+	
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	$resultado = json_encode ( $resultado );
+	
 	echo $resultado;
 }
 
 
 if ($_REQUEST ['funcion'] == 'SeleccionOrdenador') {
 
-	$conexion = "sicapital";
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+// 	$conexion = "sicapital";
+// 	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 	$cadenaSql = $this->sql->getCadenaSql ( 'informacion_ordenador', $_REQUEST ['ordenador'] );
-	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 	$resultado = json_encode ( $resultadoItems [0] );
 
