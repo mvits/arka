@@ -152,8 +152,8 @@ class Sql extends \Sql {
 			// _________________________________________________
 			
 			case "proveedores" :
-				$cadenaSql = " SELECT PRO_NIT,PRO_NIT||' - '||PRO_RAZON_SOCIAL AS proveedor ";
-				$cadenaSql .= " FROM PROVEEDORES ";
+				$cadenaSql = " SELECT \"PRO_NIT\",\"PRO_NIT\"||' - '||\"PRO_RAZON_SOCIAL\" AS proveedor ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor ";
 				
 				break;
 			
@@ -234,29 +234,33 @@ class Sql extends \Sql {
 			
 			case "tipoComprador" :
 				
-				$cadenaSql = " 	SELECT ORG_TIPO_ORDENADOR, ORG_ORDENADOR_GASTO ";
-				$cadenaSql .= " FROM ORDENADORES_GASTO ";
-				$cadenaSql .= " WHERE ORG_ESTADO='A' ";
+				$cadenaSql = " 	SELECT \"ORG_IDENTIFICACION\",\"ORG_ORDENADOR_GASTO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_ordenadores ";
+				$cadenaSql .= " WHERE \"ORG_ESTADO\"='A' ";
 				
 				break;
 			
 			case "dependencias" :
-				$cadenaSql = "SELECT   ESF_ID_ESPACIO, ESF_NOMBRE_ESPACIO ";
-				$cadenaSql .= " FROM ESPACIOS_FISICOS ";
-				$cadenaSql .= " WHERE  ESF_ESTADO='A' ";
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_ESTADO\"='A'";
 				break;
 			
 			case "sede" :
-				$cadenaSql = "SELECT DISTINCT  ESF_ID_SEDE, ESF_SEDE ";
-				$cadenaSql .= " FROM ESPACIOS_FISICOS ";
-				$cadenaSql .= " WHERE   ESF_ESTADO='A'";
+				$cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_sedes ";
+				$cadenaSql .= " WHERE   \"ESF_ESTADO\"='A' ";
+				$cadenaSql .= " AND    \"ESF_COD_SEDE\" >  0 ";
 				
 				break;
 			case "informacion_ordenador" :
-				$cadenaSql = " SELECT ORG_NOMBRE,ORG_IDENTIFICADOR , ORG_TIPO_ORDENADOR,ORG_IDENTIFICACION ";
-				$cadenaSql .= " FROM ORDENADORES_GASTO ";
-				$cadenaSql .= " WHERE  ORG_TIPO_ORDENADOR='" . $variable . "' ";
-				$cadenaSql .= " AND ORG_ESTADO='A' ";
+				$cadenaSql = " SELECT \"ORG_NOMBRE\",\"ORG_IDENTIFICACION\"  ";
+				$cadenaSql .= " FROM arka_parametros.arka_ordenadores ";
+				$cadenaSql .= " WHERE  \"ORG_IDENTIFICACION\"='" . $variable . "' ";
+				$cadenaSql .= " AND \"ORG_ESTADO\"='A' ";
+				
 				break;
 			
 			case "tipo_contrato_avance" :
@@ -549,10 +553,12 @@ class Sql extends \Sql {
 				break;
 			
 			case "dependenciasConsultadas" :
-				$cadenaSql = "SELECT DISTINCT  ESF_ID_ESPACIO, ESF_NOMBRE_ESPACIO ";
-				$cadenaSql .= " FROM ESPACIOS_FISICOS ";
-				$cadenaSql .= " WHERE ESF_ID_SEDE='" . $variable . "' ";
-				$cadenaSql .= " AND  ESF_ESTADO='A'";
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE sa.\"ESF_ID_SEDE\"='" . $variable . "' ";
+				$cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A'";
 				
 				break;
 			
@@ -577,9 +583,9 @@ class Sql extends \Sql {
 			
 			case "funcionarios" :
 				
-				$cadenaSql = "SELECT FUN_IDENTIFICACION, FUN_IDENTIFICACION ||' - '|| FUN_NOMBRE ";
-				$cadenaSql .= "FROM FUNCIONARIOS ";
-				$cadenaSql .= "WHERE FUN_ESTADO='A' ";
+				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\", \"FUN_IDENTIFICACION\" ||' - '|| \"FUN_NOMBRE\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_funcionarios ";
+				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
 				
 				break;
 			
@@ -608,8 +614,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM elemento_individual  ";
 				$cadenaSql .= "WHERE placa <> '' ";
 				break;
-				
-				
+			
 			case 'idMaximoEntrada' :
 				$cadenaSql = "SELECT max(id_entrada)  ";
 				$cadenaSql .= "FROM entrada  ";
