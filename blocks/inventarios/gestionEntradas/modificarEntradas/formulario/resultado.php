@@ -174,25 +174,23 @@ class registrarForm {
 							$entrada [$i] [4],
 							$entrada [$i] [1],
 							$entrada [$i] [2],
-							'',
-							'' 
+							$entrada [$i] ['nit']='NO APLICA',
+							$entrada [$i] ['razon_social']='NO APLICA',
 					);
+					$entrada [$i] ['nit']='NO APLICA';
+					$entrada [$i] ['razon_social']='NO APLICA';
 					
-					$proveedor [0] [0] = 'NO APLICA';
-					$proveedor [0] [1] = 'NO APLICA';
 				} else {
-					$cadenaSql = $this->miSql->getCadenaSql ( 'proveedor_informacion', $entrada [$i] [3] );
-					
-					$proveedor = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-					
+			
 					$arreglo = array (
 							$entrada [$i] [4],
 							$entrada [$i] [1],
 							$entrada [$i] [2],
-							$proveedor [0] [0],
-							$proveedor [0] [1] 
+							$entrada [$i] ['nit'],
+							$entrada [$i] ['razon_social']
 					);
 				}
+				
 				
 				$arreglo = serialize ( $arreglo );
 				$variable .= "&datosGenerales=" . $arreglo;
@@ -203,8 +201,8 @@ class registrarForm {
                     <td><center>" . $entrada [$i] [4] . "</center></td>
                     <td><center>" . $entrada [$i] [1] . "</center></td>
                     <td><center>" . $entrada [$i] [2] . "</center></td>
-                    <td><center>" . $proveedor [0] [0] . "</center></td>
-                    <td><center>" . $proveedor [0] [1] . "</center></td>
+                    <td><center>" . $entrada[$i]['nit'] . "</center></td>
+                    <td><center>" . $entrada [$i] ['razon_social'] . "</center></td>
               ";
 				
 				if ($entrada [$i] [5] == 'f') {
