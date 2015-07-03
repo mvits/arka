@@ -67,7 +67,7 @@ class registrarForm {
 		
 		$Acta = $Acta [0];
 		$cadenaSql = $this->miSql->getCadenaSql ( 'informacion_ordenador', $Acta ['ordenador_gasto'] );
-		$ordenador = $esteRecursoDB2->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$ordenador = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$ordenadorGasto = array (
 				"asignacionOrdenador" => $ordenador [0] [1],
@@ -394,7 +394,7 @@ class registrarForm {
 					// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
 					$tab ++;
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoCuadroLista ( $atributos );
+// 					echo $this->miFormulario->campoCuadroLista ( $atributos );
 					unset ( $atributos );
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -492,7 +492,7 @@ class registrarForm {
 										' ' 
 								) 
 						);
-						$matrizItems = $esteRecursoDB2->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 						$atributos ['matrizItems'] = $matrizItems;
 						// $atributos['miniRegistro']=;
 						$atributos ['baseDatos'] = "inventarios";

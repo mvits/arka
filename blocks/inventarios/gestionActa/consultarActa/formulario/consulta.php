@@ -198,7 +198,7 @@ class registrarForm {
         $atributos ['anchoEtiqueta'] = 213;
 
         $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("proveedores");
-        $matrizItems = $esteRecursoDB2->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+        $matrizItems = $esteRecursoDB->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
         $atributos ['matrizItems'] = $matrizItems;
 
         // Utilizar lo siguiente cuando no se pase un arreglo:

@@ -90,7 +90,9 @@ class registrarForm {
 
         $cadenaSql = $this->miSql->getCadenaSql('consultarActa', $arreglo);
         
+        
         $Acta = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        
  
 // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
         $esteCampo = $esteBloque ['nombre'];
@@ -155,12 +157,12 @@ class registrarForm {
             echo "<thead>
                              <tr>
                                 <th>Número Acta Recibido</th>
-                                <th>Dependencia</th>
+                    			<th>Sede</th>            
+            					<th>Dependencia</th>
                                 <th>Fecha Recibido</th>
-                                
                                  <th>Proveedor</th>
                                 <th>Observaciones</th>
-			        <th>Modificar</th>
+			        			<th>Modificar</th>
                                 <th>Eliminar</th>
                              </tr>
             </thead>
@@ -178,24 +180,13 @@ class registrarForm {
                 $variable1.= "&numero_acta=" . $Acta [$i] [0];
                 $variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable1, $directorio);
 
-                $cadenaSql = $this->miSql->getCadenaSql('consultarProveedor', $Acta [$i] ['proveedor']);
-                
-                $proveedor = $esteRecursoDBO->ejecutarAcceso($cadenaSql, "busqueda");
-                
-                
-                $cadenaSql = $this->miSql->getCadenaSql('consultaDependencia', $Acta [$i] ['dependencia']);
-                
-                $dependencia = $esteRecursoDBO->ejecutarAcceso($cadenaSql, "busqueda");
-                
-                
-//                 var_dump($proveedor);exit;
-                
+
                 $mostrarHtml = "<tr>
                     <td><center>" . $Acta [$i] ['id_actarecibido'] . "</center></td>
-                    <td><center>" . $dependencia[0][1]. "</center></td>
+                    <td><center>" . $Acta [$i] ['sede']. "</center></td>		
+                    <td><center>" . $Acta [$i] ['dependencia']. "</center></td>
                     <td><center>" . $Acta [$i] ['fecha_recibido'] . "</center></td>
-                    
-                    <td><center>" . $proveedor[0][0]. "</center></td>
+                    <td><center>" . $Acta [$i] ['proveedor']. "</center></td>
                     <td><center>" . $Acta [$i] ['observacionesacta'] . "</center></td>
                     <td><center>
                     	<a href='" . $variable . "'>
