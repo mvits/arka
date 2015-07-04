@@ -49,12 +49,8 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		
-
 		$conexion = "sicapital";
 		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		
-		
 		
 		if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
 			$fechaInicio = $_REQUEST ['fecha_inicio'];
@@ -120,8 +116,6 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 		
-		
-		
 		$variable = "pagina=" . $miPaginaActual;
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
@@ -137,7 +131,6 @@ class registrarForm {
 		$atributos ['redirLugar'] = true;
 		echo $this->miFormulario->enlace ( $atributos );
 		
-		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -149,15 +142,12 @@ class registrarForm {
 		
 		// ------------------Fin Division para los botones-------------------------
 		
-		
 		$esteCampo = "AgrupacionInformacion";
 		$atributos ['id'] = $esteCampo;
 		$atributos ['leyenda'] = "Información Referente a Entradas";
 		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 		
-
-		
-// 		var_dump($entrada);exit;
+		// var_dump($entrada);exit;
 		
 		if ($entrada) {
 			
@@ -179,40 +169,31 @@ class registrarForm {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=cargarElemento";
 				$variable .= "&numero_entrada=" . $entrada [$i] [0];
-
-				$cadenaSql = $this->miSql->getCadenaSql ( 'proveedor_informacion', $entrada [$i] [3] );
 				
-
-				
-				
-				if ($entrada [$i] [3] ==0) {
-				
-					$arreglo = array (
-							$entrada [$i] [4],
-							$entrada [$i] [1],
-							$entrada [$i] [2],
-							'',
-							''
-					);
-				
-				
-					$proveedor[0][0]='NO APLICA';
-					$proveedor[0][1]='NO APLICA';
-				} else {
-					$cadenaSql = $this->miSql->getCadenaSql ( 'proveedor_informacion', $entrada [$i] [3] );
-				
-					$proveedor = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
-					$arreglo = array (
-							$entrada [$i] [4],
-							$entrada [$i] [1],
-							$entrada [$i] [2],
-							$proveedor [0] [0],
-							str_replace("&","",$proveedor [0] [1])
-					);
+				if ($entrada [$i] [3] == 0) {
 					
+					$arreglo = array (
+							$entrada [$i] [4],
+							$entrada [$i] [1],
+							$entrada [$i] [2],
+							$entrada [$i] ['nit'] = 'NO APLICA',
+							$entrada [$i] ['razon_social'] = 'NO APLICA',
+							$entrada [$i] ['vigencia'] 
+					)
+					;
+				} else {
+					
+					$arreglo = array (
+							$entrada [$i] [4],
+							$entrada [$i] [1],
+							$entrada [$i] [2],
+							$entrada [$i] ['nit'],
+							str_replace ( "&", "", $entrada [$i] ['razon_social'] ),
+							$entrada [$i] ['vigencia'] 
+					)
+					;
 				}
-				$arreglo=serialize($arreglo);
+				$arreglo = serialize ( $arreglo );
 				$variable .= "&datosGenerales=" . $arreglo;
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
@@ -220,8 +201,8 @@ class registrarForm {
                     <td><center>" . $entrada [$i] [4] . "</center></td>
                     <td><center>" . $entrada [$i] [1] . "</center></td>
                     <td><center>" . $entrada [$i] [2] . "</center></td>
-                    <td><center>" . $proveedor [0] [0] . "</center></td>
-                    <td><center>" . $proveedor[0][1]. "</center></td>
+                    <td><center>" . $entrada[$i]['nit'] . "</center></td>
+                    <td><center>" . $entrada[$i]['razon_social'] . "</center></td>
                     <td><center>
                     <a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/item.png' width='15px'>

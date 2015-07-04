@@ -44,7 +44,7 @@ $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
  $("#<?php echo $this->campoSeguro('nivel')?>").select2();
  $("#<?php echo $this->campoSeguro('numero_entrada')?>").select2();
  
- 
+ $('#<?php echo $this->campoSeguro('proveedor')?>').width(230);
  $("#<?php echo $this->campoSeguro('proveedor')?>").select2({
              	 placeholder: "Search for a repository",
               	 minimumInputLength: 3,

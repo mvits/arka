@@ -169,13 +169,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE placa ='" . $variable . "';";
 				break;
 			
-			case "buscar_entradas" :
-				$cadenaSql = " SELECT id_entrada valor, consecutivo||' - ('||entrada.vigencia||')' descripcion  ";
-				$cadenaSql .= " FROM entrada  ";
-				$cadenaSql .= " WHERE entrada.cierre_contable = FALSE ; ";
-				
-				break;
-			
+	
 			case "proveedor_informacion" :
 				$cadenaSql = " SELECT PRO_NIT,PRO_RAZON_SOCIAL  ";
 				$cadenaSql .= " FROM PROVEEDORES ";
@@ -184,8 +178,8 @@ class Sql extends \Sql {
 				break;
 			
 			case "proveedores" :
-				$cadenaSql = " SELECT PRO_NIT,PRO_NIT||' - '||PRO_RAZON_SOCIAL AS proveedor ";
-				$cadenaSql .= " FROM PROVEEDORES ";
+				$cadenaSql = " SELECT \"PRO_NIT\",\"PRO_NIT\"||' - '||\"PRO_RAZON_SOCIAL\" AS proveedor ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor ";
 				
 				break;
 			
@@ -404,14 +398,30 @@ class Sql extends \Sql {
 				$cadenaSql .= "RETURNING  id_elemento; ";
 				
 				break;
+				
+				case "buscar_entradas" :
+					$cadenaSql = " SELECT DISTINCT id_entrada valor, consecutivo||' - ('||entrada.vigencia||')' descripcion  ";
+					$cadenaSql .= " FROM entrada  ";
+					$cadenaSql .= "WHERE cierre_contable='f' ";
+					$cadenaSql .= "AND   estado_registro='t' ";
+					$cadenaSql .= "AND   estado_entrada = 1  ";
+					$cadenaSql .= "ORDER BY id_entrada DESC ;";
+				
+					break;
+						
+				
+				
 			case "consultarEntrada" :
 				$cadenaSql = "SELECT DISTINCT ";
-				$cadenaSql .= "entrada.id_entrada, entrada.fecha_registro,  ";
-				$cadenaSql .= " descripcion,proveedor, consecutivo||' - ('||entrada.vigencia||')' entradas    ";
-				$cadenaSql .= "FROM entrada ";
-				$cadenaSql .= "JOIN clase_entrada ON clase_entrada.id_clase = entrada.clase_entrada ";
+				$cadenaSql .= "en.id_entrada, en.fecha_registro,  ";
+				$cadenaSql .= " ce.descripcion,pr.\"PRO_NIT\" as nit , en.consecutivo||' - ('||en.vigencia||')' entradas , en.vigencia ,  pr.\"PRO_RAZON_SOCIAL\" as razon_social  ";
+				$cadenaSql .= "FROM entrada en  ";
+				$cadenaSql .= "JOIN clase_entrada ce ON ce.id_clase = en.clase_entrada ";
+				$cadenaSql .= "LEFT JOIN arka_parametros.arka_proveedor pr ON pr.\"PRO_NIT\" = CAST(en.proveedor AS CHAR(50)) ";
+				$cadenaSql .= "WHERE en.cierre_contable='f'  ";
+				$cadenaSql .= "AND   en.estado_registro='t' ";
+				$cadenaSql .= "AND   en.estado_entrada = 1  ";
 				
-				$cadenaSql .= "WHERE 1=1 ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND entrada.id_entrada = '" . $variable [0] . "' ";
 				}
@@ -428,7 +438,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND entrada.proveedor = '" . $variable [4] . "' ";
 				}
 				
-				$cadenaSql .= " AND entrada.cierre_contable = FALSE ;";
+				$cadenaSql .= "ORDER BY en.id_entrada DESC ;";
+				
+				
 				
 				break;
 			
@@ -436,7 +448,7 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "SELECT  ";
 				$cadenaSql .= "entrada.id_entrada, entrada.fecha_registro,  ";
-				$cadenaSql .= " cl.descripcion,proveedor, consecutivo||' - ('||entrada.vigencia||')' entradas   ";
+				$cadenaSql .= " cl.descripcion,proveedor, consecutivo||' - ('||entrada.vigencia||')' entradas,entrada.vigencia    ";
 				$cadenaSql .= "FROM arka_inventarios.entrada ";
 				$cadenaSql .= "JOIN arka_inventarios.clase_entrada cl ON cl.id_clase = entrada.clase_entrada ";
 				$cadenaSql .= "WHERE entrada.id_entrada = '" . $variable . "';";

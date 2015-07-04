@@ -83,7 +83,8 @@ class registrarForm {
 					$datos [1],
 					$datos [2],
 					$proveedor [0],
-					$proveedor [1] 
+					$proveedor [1],
+					$datos['vigencia'] 
 			);
 			
 			$_REQUEST ['datosGenerales'] = serialize ( $datos );
