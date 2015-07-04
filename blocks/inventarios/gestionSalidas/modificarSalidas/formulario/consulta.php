@@ -228,7 +228,7 @@ class registrarForm {
 						' ' 
 				) 
 		);
-		$matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 		$atributos ['matrizItems'] = $matrizItems;
 		// $atributos['miniRegistro']=;
 		$atributos ['baseDatos'] = "inventarios";

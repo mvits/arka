@@ -49,10 +49,8 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-
 		$conexion = "sicapital";
 		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		
 		
 		if (isset ( $_REQUEST ['anio'] ) && $_REQUEST ['anio'] != '') {
 			$anio = $_REQUEST ['anio'];
@@ -101,9 +99,7 @@ class registrarForm {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarSalida', $arreglo );
 		
-		
 		$salidas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -127,16 +123,15 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 		
-
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			
+		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			
+		
 		$variable = "pagina=" . $miPaginaActual;
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			
+		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'botonRegresar';
 		$atributos ['id'] = $esteCampo;
@@ -148,7 +143,7 @@ class registrarForm {
 		$atributos ['alto'] = '10%';
 		$atributos ['redirLugar'] = true;
 		echo $this->miFormulario->enlace ( $atributos );
-			
+		
 		unset ( $atributos );
 		
 		$esteCampo = "marcoDatosBasicos";
@@ -157,8 +152,7 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		$atributos ["leyenda"] = "Consultar y Modificar Salida";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-	
-		 
+		
 		if ($salidas) {
 			
 			echo "<table id='tablaTitulos'>";
@@ -183,28 +177,16 @@ class registrarForm {
 				$variable .= "&numero_salida=" . $salidas [$i] [1];
 				$variable .= "&numero_entrada=" . $salidas [$i] [2];
 				
-				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'funcionario_informacion', $salidas [$i] [4] );
-				
-				$funcionario = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
-				
-		
-				
-				
-				
-				$arreglo=array(
-						$salidas[$i][0],
-						$salidas[$i][5],
-						$salidas[$i][6],
-						$funcionario[0][0],
-						$funcionario[0][1]	
+				$arreglo = array (
+						$salidas [$i] [0],
+						$salidas [$i] [5],
+						$salidas [$i] [6],
+						$salidas[$i]['identificacion'],
+						$salidas[$i] ['nombre_fun'] 
 				);
 				
-				
-				$arreglo=serialize($arreglo);
+				$arreglo = serialize ( $arreglo );
 				$variable .= "&datosGenerales=" . $arreglo;
-				
 				
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
@@ -213,20 +195,18 @@ class registrarForm {
                     <td><center>" . $salidas [$i] [5] . "</center></td>
                     <td><center>" . $salidas [$i] [6] . "</center></td>
                     <td><center>" . $salidas [$i] [3] . "</center></td>
-                    <td><center>" . $funcionario[0][0] . "</center></td>
-                    <td><center>" . $funcionario[0][1] . "</center></td>";
+                    <td><center>" . $salidas[$i]['identificacion'] . "</center></td>
+                    <td><center>" . $salidas[$i] ['nombre_fun'] . "</center></td>";
 				
-				
-
 				if ($salidas [$i] [7] == 'f') {
-						
+					
 					$mostrarHtml .= "<td><center>
 			                    	<a href='" . $variable . "'>
 			                            <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
 			                        </a>
                 		  			</center> </td>";
 				} else if ($salidas [$i] [7] == 't') {
-						
+					
 					$mostrarHtml .= "<td><center>Inhabilitado por Cierre Contable</center> </td>";
 				}
 				$mostrarHtml .= "</tr>";
@@ -235,18 +215,14 @@ class registrarForm {
 				unset ( $mostrarHtml );
 				unset ( $variable );
 			}
-// 			foreach ($funcionariosErrores as $i){
-				
-
-// 				$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarFuncionarios',$i );
-				
-// 				$funcionario = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
-				
-// 				echo $i."<br>";
-// 			}
+			// foreach ($funcionariosErrores as $i){
 			
+			// $cadenaSql = $this->miSql->getCadenaSql ( 'actualizarFuncionarios',$i );
 			
+			// $funcionario = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			// echo $i."<br>";
+			// }
 			
 			echo "</tbody>";
 			

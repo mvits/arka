@@ -61,7 +61,7 @@ class RegistradorOrden {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'elementosIndividuales', $_REQUEST['numero_salida'] );
 			$elementos_ind = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			
+			echo $cadenaSql;
 			
 			var_dump($elementos_ind);exit;
 			
@@ -96,6 +96,7 @@ class RegistradorOrden {
 			if (! isset ( $items )) {
 				
 				redireccion::redireccionar ( "noitems" );
+				exit();
 			}
 			
 			
@@ -269,9 +270,11 @@ class RegistradorOrden {
 		
 		if ($semaforo=='true') {
 			redireccion::redireccionar ( 'inserto', $arreglo );
+			exit();
 		} else {
 			
 			redireccion::redireccionar ( 'noInserto' );
+			exit();
 		}
 	}
 	function resetForm() {

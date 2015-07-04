@@ -155,7 +155,9 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento ";
 				$cadenaSql .= "WHERE cierre_contable ='f' ";
 				$cadenaSql .= "AND   estado_entrada = 1  ";
+				$cadenaSql .= "AND entrada.estado_registro='t' ";
 				$cadenaSql .= "AND ei.id_salida IS NOT NULL  ";
+				$cadenaSql .= "ORDER BY entrada.id_entrada DESC ;";
 				break;
 			
 			case "buscar_salidas" :
@@ -167,6 +169,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN salida sal ON sal.id_salida = ei.id_salida ";
 				$cadenaSql .= "WHERE entrada.cierre_contable ='f' ";
 				$cadenaSql .= "AND   entrada.estado_entrada = 1  ";
+				$cadenaSql .= "AND entrada.estado_registro='t' ";
 				$cadenaSql .= "AND ei.id_salida IS NOT NULL  ";
 				
 				break;
@@ -182,10 +185,9 @@ class Sql extends \Sql {
 			
 			case "funcionarios" :
 				
-				$cadenaSql = "SELECT FUN_IDENTIFICACION, FUN_IDENTIFICACION ||' - '|| FUN_NOMBRE ";
-				$cadenaSql .= "FROM FUNCIONARIOS ";
-				$cadenaSql .= "WHERE FUN_ESTADO='A' ";
-				
+				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\", \"FUN_IDENTIFICACION\" ||' - '||  \"FUN_NOMBRE\" ";
+				$cadenaSql .= "FROM  arka_parametros.arka_funcionarios ";
+				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
 				break;
 			
 			case "consultar_funcionario" :
@@ -199,13 +201,18 @@ class Sql extends \Sql {
 			case "consultarSalida" :
 				
 				$cadenaSql = "SELECT DISTINCT ";
-				$cadenaSql .= "entrada.vigencia,salida.id_salida,entrada.id_entrada,salida.fecha_registro,salida.funcionario,  salida.consecutivo||' - ('||salida.vigencia||')' salidas,entrada.consecutivo||' - ('||entrada.vigencia||')' entradas, entrada.cierre_contable  ";
+				$cadenaSql .= "entrada.vigencia,salida.id_salida,entrada.id_entrada,
+						salida.fecha_registro,fn.\"FUN_IDENTIFICACION\" as identificacion ,
+						  salida.consecutivo||' - ('||salida.vigencia||')' salidas,entrada.consecutivo||' - ('||entrada.vigencia||')' entradas, entrada.cierre_contable,
+						    fn.\"FUN_NOMBRE\" as nombre_fun ";
 				$cadenaSql .= "FROM salida ";
 				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = salida.id_entrada ";
 				$cadenaSql .= "JOIN elemento_individual ON elemento_individual.id_salida = salida.id_salida ";
+				$cadenaSql .= "JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\" = salida.funcionario ";
 				$cadenaSql .= "WHERE 1=1";
 				$cadenaSql .= "AND   entrada.cierre_contable ='f' ";
 				$cadenaSql .= "AND   entrada.estado_entrada = 1  ";
+				$cadenaSql .= "AND   entrada.estado_registro='t' ";
 				
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND salida.vigencia = '" . $variable [0] . "'";
@@ -220,15 +227,16 @@ class Sql extends \Sql {
 				}
 				
 				if ($variable [3] != '') {
-					$cadenaSql .= " AND funcionario = '" . $variable [3] . "'";
+					$cadenaSql .= " AND salida.funcionario = '" . $variable [3] . "'";
 				}
 				
 				if ($variable [4] != '') {
 					$cadenaSql .= " AND salida.fecha_registro BETWEEN CAST ( '" . $variable [4] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable [5] . "' AS DATE)  ";
 				}
-				$cadenaSql .= ";";
+				$cadenaSql .= "ORDER BY salida.id_salida DESC ";
 				
+
 				break;
 			
 			case "consultar_dependencia" :
