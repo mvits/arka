@@ -29,6 +29,7 @@ class RegistradorOrden {
 		
 		$_REQUEST ['total_iva_con'] = round ( $_REQUEST ['total_iva_con'] );
 		
+		
 		if ($_REQUEST ['id_tipo_bien'] == 1) {
 			
 			$arreglo = array (
@@ -127,25 +128,21 @@ class RegistradorOrden {
 			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		}
 		
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_placa_actulizada', $_REQUEST ['id_elemento'] );
 		$placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		if ($elemento) {
 			
 			redireccion::redireccionar ( 'inserto', $_REQUEST ['id_elemento'] );
+			exit();
 		} else {
 			
 			redireccion::redireccionar ( 'noInserto' );
+			exit();
 		}
 	}
-	function resetForm() {
-		foreach ( $_REQUEST as $clave => $valor ) {
-			
-			if ($clave != 'pagina' && $clave != 'development' && $clave != 'jquery' && $clave != 'tiempo') {
-				unset ( $_REQUEST [$clave] );
-			}
-		}
-	}
+	
 }
 
 $miRegistrador = new RegistradorOrden ( $this->lenguaje, $this->sql, $this->funcion );

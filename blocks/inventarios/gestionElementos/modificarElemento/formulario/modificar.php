@@ -60,14 +60,14 @@ class registrarForm {
 		switch ($elemento [0] ['tipo_bien']) {
 			
 			case '1' :
-				$tipobien='Consumo';
+				$tipobien = 'Consumo';
 				break;
 			
 			case '2' :
-				$tipobien='Consumo Controlado';
+				$tipobien = 'Consumo Controlado';
 				break;
 			case '3' :
-				$tipobien='Devolutivo';
+				$tipobien = 'Devolutivo';
 				break;
 		}
 		
@@ -77,7 +77,7 @@ class registrarForm {
 				"marca" => ($elemento [0] ['marca'] == 'null') ? '' : $elemento [0] ['marca'],
 				"serie" => ($elemento [0] ['serie'] == 'null') ? '' : $elemento [0] ['serie'],
 				"id_tipo_bien" => $elemento [0] ['tipo_bien'],
-				"tipo_bien" => $tipobien
+				"tipo_bien" => $tipobien 
 		);
 		
 		$_REQUEST = array_merge ( $_REQUEST, $elemento [0], $arreglo );
@@ -232,13 +232,18 @@ class registrarForm {
 						echo $this->miFormulario->campoCuadroTexto ( $atributos );
 						unset ( $atributos );
 						
-						$atributos ["id"] = "id_tipo_bien"; // No cambiar este nombre
+						$esteCampo = 'id_tipo_bien';
+						$atributos ["id"] = $esteCampo; // No cambiar este nombre
 						$atributos ["tipo"] = "hidden";
 						$atributos ['estilo'] = '';
 						$atributos ["obligatorio"] = false;
 						$atributos ['marco'] = true;
 						$atributos ["etiqueta"] = "";
-						$atributos ["valor"] = '';
+						if (isset ( $_REQUEST [$esteCampo] )) {
+							$atributos ['valor'] = $_REQUEST [$esteCampo];
+						} else {
+							$atributos ['valor'] = '';
+						}
 						$atributos = array_merge ( $atributos, $atributosGlobales );
 						echo $this->miFormulario->campoCuadroTexto ( $atributos );
 						unset ( $atributos );
@@ -829,9 +834,9 @@ class registrarForm {
 				$esteCampo = 'botonAceptar';
 				$atributos ["id"] = $esteCampo;
 				$atributos ["tabIndex"] = $tab;
-				$atributos ["tipo"] = '';
+				$atributos ["tipo"] = 'boton';
 				// submit: no se coloca si se desea un tipo button genérico
-				$atributos ['submit'] = 'true';
+				$atributos ['submit'] = true;
 				$atributos ["estiloMarco"] = '';
 				$atributos ["estiloBoton"] = 'jqueryui';
 				// verificar: true para verificar el formulario antes de pasarlo al servidor.
@@ -844,6 +849,7 @@ class registrarForm {
 				// Aplica atributos globales al control
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->campoBoton ( $atributos );
+				unset ( $atributos );
 				// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 				
 				echo $this->miFormulario->division ( 'fin' );

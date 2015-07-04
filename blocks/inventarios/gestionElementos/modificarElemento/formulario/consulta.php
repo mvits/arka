@@ -73,7 +73,6 @@ class registrarForm {
 		$atributos ["leyenda"] = "Modificar y Anular Elementos";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
-		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'numero_entrada';
 		$atributos ['nombre'] = $esteCampo;
@@ -105,12 +104,11 @@ class registrarForm {
 		$arreglo = array (
 				array (
 						'',
-						'Sin Entradas Registradas'
-				)
+						'Sin Entradas Registradas' 
+				) 
 		);
 		
-		
-		$matrizItems=$matrizItems[0][0]!=''?$matrizItems:$arreglo;
+		$matrizItems = $matrizItems [0] [0] != '' ? $matrizItems : $arreglo;
 		$atributos ['matrizItems'] = $matrizItems;
 		// $atributos['miniRegistro']=;
 		$atributos ['baseDatos'] = "inventarios";
@@ -120,7 +118,6 @@ class registrarForm {
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
-		
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'placa';
@@ -157,7 +154,7 @@ class registrarForm {
 				) 
 		);
 		
-// 		$matrizItems = $matrizItems [0] [0] != '' ? $matrizItems : $arreglo;
+		// $matrizItems = $matrizItems [0] [0] != '' ? $matrizItems : $arreglo;
 		$atributos ['matrizItems'] = $matrizItems;
 		// $atributos['miniRegistro']=;
 		$atributos ['baseDatos'] = "inventarios";
@@ -307,8 +304,8 @@ class registrarForm {
 		$matrizItems = array (
 				array (
 						0,
-						' '
-				)
+						' ' 
+				) 
 		);
 		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 		$atributos ['matrizItems'] = $matrizItems;
@@ -320,7 +317,7 @@ class registrarForm {
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
-				
+		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'fecha_inicio';
 		$atributos ['id'] = $esteCampo;
@@ -407,6 +404,7 @@ class registrarForm {
 		// Aplica atributos globales al control
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->campoBoton ( $atributos );
+		unset ( $atributos );
 		// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 		
 		// ---------------------------------------------------------
