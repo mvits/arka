@@ -102,7 +102,7 @@ class registrarForm {
 				
 				if ($_REQUEST ['mensaje'] == 'actualizo') {
 					
-					$mensaje = "Se Cambio el Estado de la Entrada <br> #Número de Entrada y/o Vigencia: " . $_REQUEST ['numero_entrada'] ." .";
+					$mensaje = "Se Cambio el Estado de las Entradas.";
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -118,6 +118,31 @@ class registrarForm {
 					echo $this->miFormulario->cuadroMensaje ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
+				
+				
+				
+				
+				if ($_REQUEST ['mensaje'] == 'SinEntradas') {
+						
+					$mensaje = "No Seleccionó Entradas a Cambiarle Estado";
+						
+					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+					$esteCampo = 'mensajeRegistro';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['tipo'] = 'error';
+					$atributos ['estilo'] = 'textoCentrar';
+					$atributos ['mensaje'] = $mensaje;
+						
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+				}
+				
+				
+				
 				if ($_REQUEST ['mensaje'] == 'error') {
 					
 					$mensaje = "No Se Pudo Cambiar el Estado de la Entrada ";

@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace inventarios\gestionEntradas\consultaEntradas;
 
@@ -37,7 +37,8 @@ class Frontera {
 		$this->funcion = $funcion;
 	}
 	function html() {
-
+            
+         
 		include_once ("core/builder/FormularioHtml.class.php");
 		
 		$this->ruta = $this->miConfigurador->getVariableConfiguracion ( "rutaBloque" );

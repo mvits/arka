@@ -25,12 +25,16 @@
             });
         });
 
-                     $('#tablaTitulos').dataTable( {
-                "sPaginationType": "full_numbers"
+	          $('#tablaTitulos').dataTable( {
+                "sPaginationType": "full_numbers",
                  } );
 
 
              	$("#<?php echo $this->campoSeguro('estado')?>").select2();
+             	$('#<?php echo $this->campoSeguro('estado_contable')?>').width(200);
+             	$("#<?php echo $this->campoSeguro('estado_contable')?>").select2();
+             	$('#<?php echo $this->campoSeguro('selecc_registros')?>').width(250);
+             	$("#<?php echo $this->campoSeguro('selecc_registros')?>").select2();
              	$("#<?php echo $this->campoSeguro('acta_recibido')?>").select2();
              	$("#<?php echo $this->campoSeguro('numero_entrada')?>").select2();
                  
@@ -43,10 +47,7 @@
                   $('#<?php echo $this->campoSeguro('fecha_registroM')?>').attr('disabled','');
                   $('#<?php echo $this->campoSeguro('clase')?>').attr('disabled','');
                   
-                  
-                  
        
-         
              
              
                  

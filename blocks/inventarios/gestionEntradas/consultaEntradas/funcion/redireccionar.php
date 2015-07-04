@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace inventarios\gestionEntradas\consultaEntradas\funcion;
 
@@ -16,7 +16,6 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=actualizo";
-				$variable .= "&numero_entrada=" . $valor ;
 				break;
 			
 			case "noInserto" :
@@ -26,6 +25,12 @@ class redireccion {
 				
 				break;
 			
+			case "noEntradas" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=SinEntradas";
+
+				break;
 			
 			case "regresar" :
 				$variable = "pagina=" . $miPaginaActual;

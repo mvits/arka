@@ -65,8 +65,8 @@ class Funcion {
 	
 	
 	function action() {
-		 
-		
+	
+      
 		// Evitar qu44444444rrrre se ingrese codigo HTML y PHP en los campos de texto
 		// Campos que se quieren excluir de la limpieza de código. Formato: nombreCampo1|nombreCampo2|nombreCampo3
 		$excluir = "";
