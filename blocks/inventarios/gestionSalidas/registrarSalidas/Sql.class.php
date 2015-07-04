@@ -158,14 +158,15 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE cierre_contable ='f' ";
 				$cadenaSql .= "AND   estado_entrada = 1  ";
 				$cadenaSql .= "AND ei.id_salida IS NULL  ";
+				$cadenaSql .= "AND entrada.estado_registro='t' ";
+				$cadenaSql .= "ORDER BY entrada.id_entrada DESC ";
 				
 				break;
 			
 			case "funcionarios" :
-				
-				$cadenaSql = "SELECT FUN_IDENTIFICACION, FUN_IDENTIFICACION ||' - '|| FUN_NOMBRE ";
-				$cadenaSql .= "FROM FUNCIONARIOS ";
-				$cadenaSql .= "WHERE FUN_ESTADO='A' ";
+				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\", \"FUN_IDENTIFICACION\" ||' - '||  \"FUN_NOMBRE\" ";
+				$cadenaSql .= "FROM  arka_parametros.arka_funcionarios ";
+				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
 				
 				break;
 			case "dependencia" :
@@ -198,6 +199,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND entrada.cierre_contable='f' ";
 				$cadenaSql .= "AND ei.id_salida IS NULL  ";
 				$cadenaSql .= "AND entrada.estado_entrada = 1 ";
+				$cadenaSql .= "AND entrada.estado_registro='t' ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND entrada.id_entrada = '" . $variable [0] . "'";
 				}
@@ -293,9 +295,11 @@ class Sql extends \Sql {
 				break;
 			
 			case "dependencias" :
-				$cadenaSql = "SELECT DISTINCT  ESF_ID_ESPACIO, ESF_NOMBRE_ESPACIO ";
-				$cadenaSql .= " FROM ESPACIOS_FISICOS ";
-				$cadenaSql .= " WHERE  ESF_ESTADO='A'";
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_ESTADO\"='A'";
 				
 				break;
 			case "dependenciasConsultadas" :
@@ -416,7 +420,8 @@ class Sql extends \Sql {
 			case "actualizar_elementos_individuales" :
 				$cadenaSql = "UPDATE elemento_individual ";
 				$cadenaSql .= "SET id_salida='" . $variable [1] . "', ";
-				$cadenaSql .= " funcionario='" . $variable [2] . "' ";
+				$cadenaSql .= " funcionario='" . $variable [2] . "', ";
+				$cadenaSql .= " ubicacion_elemento='" . $variable [3] . "' ";
 				$cadenaSql .= "WHERE id_elemento_ind ='" . $variable [0] . "';";
 				
 				break;

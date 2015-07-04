@@ -191,6 +191,11 @@ class registrarForm {
 				$valorCodificado .= "&redireccionar=regresar";
 			} else {
 				
+				
+				
+// 				var_dump(unserialize($_REQUEST['datosGenerales']));
+				
+				
 				unset ( $atributos );
 				{
 					$esteCampo = 'numero_entrada_c';
@@ -428,6 +433,11 @@ class registrarForm {
 					echo $this->miFormulario->division ( 'fin' );
 					
 					echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+					
+					
+					
+					
+					
 					
 					$valorCodificado = "actionBloque=" . $esteBloque ["nombre"];
 					$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
