@@ -423,11 +423,11 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND   en.estado_entrada = 1  ";
 				
 				if ($variable [0] != '') {
-					$cadenaSql .= " AND entrada.id_entrada = '" . $variable [0] . "' ";
+					$cadenaSql .= " AND en.id_entrada = '" . $variable [0] . "' ";
 				}
 				
 				if ($variable [1] != '') {
-					$cadenaSql .= " AND entrada.fecha_registro BETWEEN CAST ( '" . $variable [1] . "' AS DATE) ";
+					$cadenaSql .= " AND en.fecha_registro BETWEEN CAST ( '" . $variable [1] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable [2] . "' AS DATE)  ";
 				}
 				
@@ -435,7 +435,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND clase_entrada = '" . $variable [3] . "' ";
 				}
 				if ($variable [4] != '') {
-					$cadenaSql .= " AND entrada.proveedor = '" . $variable [4] . "' ";
+					$cadenaSql .= " AND en.proveedor = '" . $variable [4] . "' ";
 				}
 				
 				$cadenaSql .= "ORDER BY en.id_entrada DESC ;";
