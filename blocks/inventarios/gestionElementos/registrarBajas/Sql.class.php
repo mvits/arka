@@ -330,6 +330,10 @@ class Sql extends \Sql {
 				$cadenaSql .= " JOIN salida ON elemento_individual.id_salida=salida.id_salida ";
 				$cadenaSql .= ' JOIN arka_parametros.arka_funcionarios ON arka_parametros.arka_funcionarios."FUN_IDENTIFICACION" = elemento_individual.funcionario ';
 				$cadenaSql .= " WHERE elemento.estado='1'  AND elemento.tipo_bien <> 1 ";
+// 				$cadenaSql .= "AND entrada.cierre_contable='f' ";
+// 				$cadenaSql .= "AND entrada.estado_entrada = 1 ";
+// 				$cadenaSql .= "AND entrada.estado_registro='t' ";
+							
 				$cadenaSql .= " AND id_elemento_ind NOT IN (SELECT id_elemento_ind FROM baja_elemento) ";
 				
 				if ($variable ['funcionario'] != '') {
@@ -348,7 +352,7 @@ class Sql extends \Sql {
 				
 				
 				if ($variable ['dependencia'] != '') {
-					$cadenaSql .= ' AND dependencia."ESF_CODIGO_DEP" = ';
+					$cadenaSql .= ' AND dependencias."ESF_CODIGO_DEP" = ';
 					$cadenaSql .= " '" . $variable ['dependencia'] . "' ";
 				}
 				

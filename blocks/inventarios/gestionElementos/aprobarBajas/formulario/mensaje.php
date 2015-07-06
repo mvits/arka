@@ -109,7 +109,7 @@ class registrarForm {
 					$variable = $_REQUEST ['registro'];
 					
 					
-					$mensaje = "Se Registro la Baja de Elemento <br> # Número Aprobación : " . $variable. ".<br>Fecha :" . $fechaActual;
+					$mensaje = "Se Registró un total de : " . $variable. " aprobación(es) de Bajas.<br>Fecha :" . $fechaActual;
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';

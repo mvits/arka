@@ -74,17 +74,12 @@ class registrarForm {
 		} else {
 			$dependencia = '';
 		}
-
 		
-
 		if (isset ( $_REQUEST ['sede'] ) && $_REQUEST ['sede'] != '') {
 			$sede = $_REQUEST ['sede'];
 		} else {
 			$sede = '';
 		}
-		
-		
-		
 		
 		if (isset ( $_REQUEST ['dependencia'] ) && $_REQUEST ['dependencia'] != '') {
 			$dependencia = $_REQUEST ['dependencia'];
@@ -92,17 +87,11 @@ class registrarForm {
 			$dependencia = '';
 		}
 		
-		
-
-
 		if (isset ( $_REQUEST ['ubicacion'] ) && $_REQUEST ['ubicacion'] != '') {
 			$ubicacion = $_REQUEST ['ubicacion'];
 		} else {
 			$ubicacion = '';
 		}
-		
-		
-		
 		
 		$arreglo = array (
 				'funcionario' => $funcionario,
@@ -110,7 +99,7 @@ class registrarForm {
 				'placa' => $placa,
 				'dependencia' => $dependencia,
 				'ubicacion' => $ubicacion,
-				'sede' => $sede,
+				'sede' => $sede 
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
@@ -173,9 +162,6 @@ class registrarForm {
 		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 		// var_dump($elemento);
 		
-		
-		
-		
 		$esteCampo = "selecc_registros";
 		$atributos ['nombre'] = $esteCampo;
 		$atributos ['id'] = $esteCampo;
@@ -200,39 +186,28 @@ class registrarForm {
 		$atributos ['limitar'] = true;
 		$atributos ['anchoCaja'] = 24;
 		$atributos ['miEvento'] = '';
-// 		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "estado_entrada" );
+		// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "estado_entrada" );
 		$matrizItems = array (
 				array (
 						'0',
-						'Ningun Registro'
+						'Ningun Registro' 
 				),
-		
+				
 				array (
 						'1',
-						'Todos Registros'
-		
-				)
-					
-					
-		);
+						'Todos Registros' 
+				) 
+		)
+		;
 		$atributos ['matrizItems'] = $matrizItems;
 		// $atributos['miniRegistro']=;
 		$atributos ['baseDatos'] = "inventarios";
 		// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
-			
+		
 		// Aplica atributos globales al control
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
-			
-			
-			
-		
-		
-		
-		
-		
-		
 		
 		if ($elemento) {
 			
@@ -298,11 +273,13 @@ class registrarForm {
 			
 			echo "</tbody>";
 			
-			echo "</table>"; // ------------------Division para los botones-------------------------
+			echo "</table>";
+			unset ( $atributos );
+			// ------------------Division para los botones-------------------------
 			$atributos ["id"] = "botones";
 			$atributos ["estilo"] = "marcoBotones";
 			echo $this->miFormulario->division ( "inicio", $atributos );
-			
+			unset ( $atributos );
 			// -----------------CONTROL: Botón ----------------------------------------------------------------
 			$esteCampo = 'botonAceptar';
 			$atributos ["id"] = $esteCampo;
@@ -322,6 +299,7 @@ class registrarForm {
 			// Aplica atributos globales al control
 			$atributos = array_merge ( $atributos, $atributosGlobales );
 			echo $this->miFormulario->campoBoton ( $atributos );
+			unset ( $atributos );
 			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 			
 			echo $this->miFormulario->division ( 'fin' );
