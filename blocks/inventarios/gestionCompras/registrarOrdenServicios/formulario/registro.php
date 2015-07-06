@@ -160,7 +160,7 @@ class registrarForm {
 					}
 					
 					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "sede" );
-					$matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					
 					// Utilizar lo siguiente cuando no se pase un arreglo:
@@ -176,7 +176,7 @@ class registrarForm {
 					$atributos ['nombre'] = $esteCampo;
 					$atributos ['id'] = $esteCampo;
 					$atributos ['evento'] = '';
-					$atributos ['deshabilitado'] = false;
+					$atributos ['deshabilitado'] = true;
 					$atributos ["etiquetaObligatorio"] = true;
 					$atributos ['tab'] = $tab;
 					$atributos ['tamanno'] = 1;
@@ -195,7 +195,7 @@ class registrarForm {
 					$matrizItems = array (
 							array (
 									' ',
-									'Seleccion ... ' 
+									'Vacio' 
 							) 
 					);
 					
@@ -327,7 +327,7 @@ class registrarForm {
 					}
 					
 					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "sede" );
-					$matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					
 					// Utilizar lo siguiente cuando no se pase un arreglo:
@@ -343,7 +343,7 @@ class registrarForm {
 					$atributos ['nombre'] = $esteCampo;
 					$atributos ['id'] = $esteCampo;
 					$atributos ['evento'] = '';
-					$atributos ['deshabilitado'] = false;
+					$atributos ['deshabilitado'] = true;
 					$atributos ["etiquetaObligatorio"] = true;
 					$atributos ['tab'] = $tab;
 					$atributos ['tamanno'] = 1;
@@ -362,7 +362,7 @@ class registrarForm {
 					$matrizItems = array (
 							array (
 									' ',
-									'Seleccion ... ' 
+									'VACIO' 
 							) 
 					);
 					

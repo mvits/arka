@@ -224,6 +224,8 @@
 			   	 minimumInputLength: 3,
 			
 			       }); 	
+			       
+				$('#<?php echo $this->campoSeguro('nombre_supervisor')?>').width(300);			       
                $("#<?php echo $this->campoSeguro('nombre_supervisor')?>").select2({
 			   	 placeholder: "Search for a repository",
 			   	 minimumInputLength: 3,
@@ -233,16 +235,28 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2({
 			   	 placeholder: "Search for a repository",
 			   	 minimumInputLength: 3,
 			
-			       }); 	
+			       });
+			       
+			       
+			       
+$('#<?php echo $this->campoSeguro('sede')?>').width(300);
 $("#<?php echo $this->campoSeguro('sede')?>").select2();
+
+
+$('#<?php echo $this->campoSeguro('sede_super')?>').width(300);
 $("#<?php echo $this->campoSeguro('sede_super')?>").select2();
 
 
 $("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").select2();
 $('#<?php echo $this->campoSeguro('diponibilidad')?>').attr('disabled','');
 
-$("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").attr('disabled','');
-$("#<?php echo $this->campoSeguro('dependencia_supervisor')?>").attr('disabled',''); 
+$('#<?php echo $this->campoSeguro('dependencia_solicitante')?>').width(350);
+$("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").select2();
+
+
+
+$('#<?php echo $this->campoSeguro('dependencia_supervisor')?>').width(350);
+$("#<?php echo $this->campoSeguro('dependencia_supervisor')?>").select2(); 
 
 $("#<?php echo $this->campoSeguro('vigencia_registro')?>").select2();
 $("#<?php echo $this->campoSeguro('registro')?>").attr('disabled',''); 

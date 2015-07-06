@@ -213,7 +213,24 @@ $cadena18 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 $urlFinal18 = $url . $cadena18;
 
 
-// echo $urlFinal18;exit;
+// Variables
+$cadenaACodificarDependencia = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificarDependencia .= "&procesarAjax=true";
+$cadenaACodificarDependencia .= "&action=index.php";
+$cadenaACodificarDependencia .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarDependencia .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarDependencia .= $cadenaACodificarDependencia . "&funcion=consultarDependencia";
+$cadenaACodificarDependencia .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadenaDependencia = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarDependencia, $enlace );
+
+// URL definitiva
+$urlFinalDependencia = $url . $cadenaDependencia;
+
+
+
 
 
 
@@ -251,7 +268,7 @@ function datosInfo(elem, request, response){
 
 function consultarDependencia(elem, request, response){
 	  $.ajax({
-	    url: "<?php echo $urlFinal16?>",
+	    url: "<?php echo $urlFinalDependencia?>",
 	    dataType: "json",
 	    data: { valor:$("#<?php echo $this->campoSeguro('sede')?>").val()},
 	    success: function(data){ 
@@ -264,13 +281,13 @@ function consultarDependencia(elem, request, response){
 	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante')?>");
 	            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].ESF_ID_ESPACIO+"'>"+data[ indice ].ESF_NOMBRE_ESPACIO+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante')?>");
+	            	$("<option value='"+data[ indice ].ESF_CODIGO_DEP+"'>"+data[ indice ].ESF_DEP_ENCARGADA+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante')?>");
 	            	
 	            });
 	            
 	            $("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").removeAttr('disabled');
 	            
-	            $('#<?php echo $this->campoSeguro('dependencia_solicitante')?>').width(400);
+	            $('#<?php echo $this->campoSeguro('dependencia_solicitante')?>').width(350);
 	            $("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").select2();
 	            
 	          
@@ -288,7 +305,7 @@ function consultarDependencia(elem, request, response){
 
 	function consultarDependenciaSuper(elem, request, response){
 		  $.ajax({
-		    url: "<?php echo $urlFinal16?>",
+		    url: "<?php echo $urlFinalDependencia?>",
 		    dataType: "json",
 		    data: { valor:$("#<?php echo $this->campoSeguro('sede_super')?>").val()},
 		    success: function(data){ 
@@ -301,13 +318,13 @@ function consultarDependencia(elem, request, response){
 		            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_supervisor')?>");
 		            $.each(data , function(indice,valor){
 
-		            	$("<option value='"+data[ indice ].ESF_ID_ESPACIO+"'>"+data[ indice ].ESF_NOMBRE_ESPACIO+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_supervisor')?>");
+		            	$("<option value='"+data[ indice ].ESF_CODIGO_DEP+"'>"+data[ indice ].ESF_DEP_ENCARGADA+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_supervisor')?>");
 		            	
 		            });
 		            
 		            $("#<?php echo $this->campoSeguro('dependencia_supervisor')?>").removeAttr('disabled');
 		            
-		            $('#<?php echo $this->campoSeguro('dependencia_supervisor')?>').width(400);
+		            $('#<?php echo $this->campoSeguro('dependencia_supervisor')?>').width(350);
 		            $("#<?php echo $this->campoSeguro('dependencia_supervisor')?>").select2();
 		            
 		          

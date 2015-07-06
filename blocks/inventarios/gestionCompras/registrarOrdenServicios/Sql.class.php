@@ -149,6 +149,25 @@ class Sql extends \Sql {
 			 * Clausulas Del Caso Uso.
 			 */
 			
+			case "dependenciasConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE sa.\"ESF_ID_SEDE\"='" . $variable . "' ";
+				$cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A'";
+				
+				break;
+			
+			case "ubicacionesConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  ef.\"ESF_ID_ESPACIO\" , ef.\"ESF_NOMBRE_ESPACIO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ef  ";
+				$cadenaSql .= " JOIN arka_parametros.arka_dependencia ad ON ad.\"ESF_ID_ESPACIO\"=ef.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_CODIGO_DEP\"='" . $variable . "' ";
+				$cadenaSql .= " AND  ef.\"ESF_ESTADO\"='A'";
+				
+				break;
+			
 			case "informacion_proveedor" :
 				$cadenaSql = " SELECT PRO_RAZON_SOCIAL,PRO_NIT,PRO_DIRECCION,PRO_TELEFONO  ";
 				$cadenaSql .= " FROM PROVEEDORES  ";
@@ -188,10 +207,11 @@ class Sql extends \Sql {
 				break;
 			
 			case "sede" :
-				$cadenaSql = "SELECT DISTINCT  ESF_ID_SEDE, ESF_SEDE ";
-				$cadenaSql .= " FROM ESPACIOS_FISICOS ";
-				$cadenaSql .= " WHERE   ESF_ESTADO='A'";
 				
+				$cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_sedes ";
+				$cadenaSql .= " WHERE   \"ESF_ESTADO\"='A' ";
+				$cadenaSql .= " AND    \"ESF_COD_SEDE\" >  0 ;";
 				break;
 			
 			case "buscar_contratista" :
@@ -258,15 +278,15 @@ class Sql extends \Sql {
 				break;
 			
 			case "informacion_ordenador" :
-				$cadenaSql = " SELECT ORG_NOMBRE,ORG_IDENTIFICADOR  ";
+				$cadenaSql = " SELECT ORG_NOMBRE,ORG_IDENTIFICACION  ";
 				$cadenaSql .= " FROM ORDENADORES_GASTO ";
-				$cadenaSql .= " WHERE  ORG_IDENTIFICADOR='" . $variable . "'";
+				$cadenaSql .= " WHERE  ORG_IDENTIFICACION='" . $variable . "'";
 				$cadenaSql .= " AND ORG_ESTADO='A' ";
 				
 				break;
 			
 			case "ordenador_gasto" :
-				$cadenaSql = " 	SELECT ORG_IDENTIFICADOR, ORG_ORDENADOR_GASTO ";
+				$cadenaSql = " 	SELECT ORG_IDENTIFICACION, ORG_ORDENADOR_GASTO ";
 				$cadenaSql .= " FROM ORDENADORES_GASTO ";
 				$cadenaSql .= " WHERE ORG_ESTADO='A' ";
 				break;
