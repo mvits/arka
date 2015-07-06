@@ -42,7 +42,6 @@ class registrarForm {
 		 * Si se utiliza esta técnica es necesario realizar un mezcla entre este arreglo y el específico en cada control:
 		 * $atributos= array_merge($atributos,$atributosGlobales);
 		 */
-		
 		$atributosGlobales ['campoSeguro'] = 'true';
 		
 		// -------------------------------------------------------------------------------------------------
@@ -76,13 +75,34 @@ class registrarForm {
 			$dependencia = '';
 		}
 		
+		
+		if (isset ( $_REQUEST ['sede'] ) && $_REQUEST ['sede'] != '') {
+			$sede = $_REQUEST ['sede'];
+		} else {
+			$sede = '';
+		}
+		
+		if (isset ( $_REQUEST ['dependencia'] ) && $_REQUEST ['dependencia'] != '') {
+			$dependencia = $_REQUEST ['dependencia'];
+		} else {
+			$dependencia = '';
+		}
+		
+		if (isset ( $_REQUEST ['ubicacion'] ) && $_REQUEST ['ubicacion'] != '') {
+			$ubicacion = $_REQUEST ['ubicacion'];
+		} else {
+			$ubicacion = '';
+		}
+		
 		$arreglo = array (
 				$funcionario,
 				$serial,
 				$placa,
-				$dependencia 
+				$dependencia,
+				$ubicacion,
+				
 		);
-		
+		var_dump($arreglo);
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
 		
 		$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -103,24 +123,20 @@ class registrarForm {
 		$atributos ['marco'] = true;
 		$tab = 1;
 		// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
-		
 		// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		echo $this->miFormulario->formulario ( $atributos );
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 		
-
-
-
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			
+		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			
+		
 		$variable = "pagina=" . $miPaginaActual;
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			
+		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'botonRegresar';
 		$atributos ['id'] = $esteCampo;
@@ -132,10 +148,8 @@ class registrarForm {
 		$atributos ['alto'] = '10%';
 		$atributos ['redirLugar'] = true;
 		echo $this->miFormulario->enlace ( $atributos );
-			
+		
 		unset ( $atributos );
-		
-		
 		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
@@ -143,8 +157,6 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		$atributos ["leyenda"] = "Consultar Elementos";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-		
-		
 		
 		$esteCampo = "AgrupacionInformacion";
 		$atributos ['id'] = $esteCampo;
@@ -157,14 +169,16 @@ class registrarForm {
 			
 			echo "<thead>
                 <tr>
-				  	<th>Número Salida y/o<br>Vigencia</th>	
-					<th># ID Elemento </th>	
-                  	<th># Número Placa</th>
+		    <th>Número Salida y/o<br>Vigencia</th>
+                    <th># Número Placa</th>
                     <th># Número Serial</th>
                     <th>Nombre Funcionario</th>
-					<th>Identificación<br>Funcionario</th>
-					<th>Tipo Bien</th>
-			        <th>Generar  Faltante<br>Sobrante</th>
+		    <th>Identificación<br>Funcionario</th>
+					<th>Dependencia</th>
+                    <th>Ubicación Especifica</th>
+        	    <th>Tipo Bien</th>
+                    <th>Estado Elemento</th>
+                    <th>Generar  Faltante<br>Sobrante</th>
                 </tr>
             </thead>
             <tbody>";
@@ -177,18 +191,17 @@ class registrarForm {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'funcionario_informacion_consultada', $elemento [$i] [3] );
 				
-				$funcionario = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
-				
-				
+				$funcionario = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				$mostrarHtml = "<tr>
-					<td><center>" . $elemento [$i] [5] . "</center></td>
-                    <td><center>" . $elemento [$i] [4] . "</center></td>
-					<td><center>" . $elemento [$i] [1] . "</center></td>
-                    <td><center>" . $elemento [$i] [2] . "</center></td>
+                    <td><center>" . $elemento [$i] ['salidas'] . "</center></td>
+                    <td><center>" . $elemento [$i] ['placa'] . "</center></td>
+                    <td><center>" . $elemento [$i] ['serie'] . "</center></td>
                     <td><center>" . $funcionario [0] [1] . "</center></td>
                     <td><center>" . $funcionario [0] [0] . "</center></td>
+                    <td><center>" . $elemento [$i] ['dependencia'] . "</center></td>		
+                    <td><center>" . $elemento [$i] ['ubicacion'] . "</center></td>
                     <td><center>" . $elemento [$i] [6] . "</center></td>
+                    <td><center>" . $elemento [$i] ['descripcion_estado'] . "</center></td>
                     <td><center>
                     	<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/faltsobra.png' width='15px'>
@@ -239,9 +252,7 @@ class registrarForm {
 		 * formsara, cuyo valor será una cadena codificada que contiene las variables.
 		 * (c) a través de campos ocultos en los formularios. (deprecated)
 		 */
-		
 		// En este formulario se utiliza el mecanismo (b) para pasar las siguientes variables:
-		
 		// Paso 1: crear el listado de variables
 		
 		$valorCodificado = "actionBloque=" . $esteBloque ["nombre"];

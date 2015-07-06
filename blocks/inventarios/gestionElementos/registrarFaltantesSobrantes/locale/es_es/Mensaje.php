@@ -4,9 +4,17 @@ $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaj
 
 $this->idioma ["informacion"] ="&nbsp&nbsp&nbspInformacion General: ";
 
-
 $this->idioma ["sede"] ="Sede : ";
 $this->idioma ["sedeTitulo"] ="Seleccione Sede";
+
+
+$this->idioma ["ubicacion"] ="Ubicación Especifica : ";
+$this->idioma ["ubicacionTitulo"] ="Seleccione Ubicación";
+
+$this->idioma ["dependencia"] ="Dependencia : ";
+$this->idioma ["dependenciaTitulo"] ="Seleccione Dependencia";
+
+$this->idioma ["selecc_registros"] ="Selección Registros: ";
 
 $this->idioma ["observaciones"] ="Observaciones: ";
 $this->idioma ["observacionesTitulo"] ="Ingrese Observaciones ";
@@ -41,8 +49,6 @@ $this->idioma ["responsable_ante"] ="Indentificación y Nombre del Funcionario A
 $this->idioma ["responsable_reci"] ="Indentificación y Nombre del Funcionario Recibe: ";
 $this->idioma ["responsable_reciTitulo"] ="Seleccione Funcionario Responsable";
 
-$this->idioma ["dependencia"] ="Dependencia : ";
-$this->idioma ["dependenciaTitulo"] ="Seleccione Dependencia";
 
 
 $this->idioma ["inexistencia"] ="Tipo Inexistencia : ";
