@@ -202,7 +202,7 @@ class registrarForm {
 					$inserto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 					
 					$mensaje = "Se Actualizo Salida <br> Número de Salida: " . $_REQUEST ['salida'];
-					$mensaje .= "<br> Se Actualizo todas las Salidas con todos los Elementos Relacionados con la Entrada";
+					$mensaje .= "<br> Se Actualizo la salida con  los Elementos Relacionados con la Entrada";
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
 					$atributos ['id'] = $esteCampo;

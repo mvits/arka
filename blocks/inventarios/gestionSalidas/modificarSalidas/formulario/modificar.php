@@ -584,6 +584,7 @@ class registrarForm {
 				
 				// ---------------- CONTROL: Cuadro Lista --------------------------------------------------------
 				
+				
 				$esteCampo = 'actualizar';
 				$atributos ['columnas'] = 1;
 				$atributos ['nombre'] = $esteCampo;

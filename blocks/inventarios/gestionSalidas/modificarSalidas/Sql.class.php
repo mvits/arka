@@ -236,7 +236,6 @@ class Sql extends \Sql {
 				}
 				$cadenaSql .= "ORDER BY salida.id_salida DESC ";
 				
-
 				break;
 			
 			case "consultar_dependencia" :
@@ -332,6 +331,24 @@ class Sql extends \Sql {
 				
 				break;
 			
+			case "limpiarIndividuales" :
+				
+				$cadenaSql = " UPDATE elemento_individual ";
+				$cadenaSql .= " SET id_salida=NULL, ";
+				$cadenaSql .= "  ubicacion_elemento=NULL ";
+				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable . "' ;";
+				
+				break;
+			
+			case "ajustar_elementos_salida" :
+				
+				$cadenaSql = " UPDATE elemento_individual ";
+				$cadenaSql .= " SET id_salida='" . $variable [0] . "', ";
+				$cadenaSql .= " ubicacion_elemento='" . $variable [2] . "' ";
+				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable [1] . "' ;";
+				
+				break;
+			
 			case "consulta_elementos" :
 				$cadenaSql = "SELECT id_elemento, elemento_padre||''||elemento_codigo||' - '||elemento_nombre AS item, cantidad, descripcion ";
 				$cadenaSql .= "FROM elemento ";
@@ -345,17 +362,21 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND cl.lista_activo = 1  ";
 				$cadenaSql .= "AND en.cierre_contable ='f' ";
 				$cadenaSql .= "AND en.estado_entrada = 1  ";
+				$cadenaSql .= "AND ei.id_salida IS NOT NULL   ";
+				$cadenaSql .= "ORDER BY ei.id_elemento_ind ASC;  ";
 				
 				break;
 			
 			case 'elementosIndividuales' :
 				
-				$cadenaSql = "SELECT ei.id_elemento_ind,ei.id_salida,tb.descripcion,el.tipo_bien ";
+				$cadenaSql = "SELECT ei.id_elemento_ind,ei.id_salida,tb.descripcion,el.tipo_bien, el.id_elemento ";
 				$cadenaSql .= " FROM elemento_individual ei ";
 				$cadenaSql .= " JOIN  elemento  el ON  el.id_elemento =ei.id_elemento_gen ";
 				$cadenaSql .= " JOIN  tipo_bienes tb ON  tb.id_tipo_bienes =el.tipo_bien ";
 				$cadenaSql .= " JOIN  salida_contable sc ON  sc.salida_general =ei.id_salida ";
 				$cadenaSql .= " WHERE ei.id_salida ='" . $variable . "' ";
+				$cadenaSql .= " ORDER BY ei.id_elemento_ind ASC  ";
+				
 				
 				break;
 			

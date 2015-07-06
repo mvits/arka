@@ -27,10 +27,6 @@ class RegistradorOrden {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		
-		
-		
-		
 		// ----
 		
 		for($i = 0; $i <= 200; $i ++) {
@@ -44,26 +40,25 @@ class RegistradorOrden {
 		$arreglo = array (
 				
 				$_REQUEST ['dependencia'],
-				$_REQUEST ['sede'] ,
+				$_REQUEST ['sede'],
 				$_REQUEST ['observaciones'],
 				$_REQUEST ['numero_salida'],
-				$_REQUEST ['funcionarioP'] ,
-				$_REQUEST ['vigencia'] ,
+				$_REQUEST ['funcionarioP'],
+				$_REQUEST ['vigencia'],
 				$_REQUEST ['ubicacion'] 
 		);
-
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_salida', $arreglo );
 		$id_salida = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+		if ($id_salida == true) {
+			
+			$semaforo = true;
+		} else {
+			
+			$semaforo = false;
+		}
 		
 		if ($_REQUEST ['actualizar'] == '1') {
-
-			
-			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'elementosIndividuales', $_REQUEST['numero_salida'] );
-			$elementos_ind = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			echo $cadenaSql;
-			
-			var_dump($elementos_ind);exit;
 			
 			// -- Verificar -- Items -- Cantidades
 			
@@ -75,11 +70,16 @@ class RegistradorOrden {
 				}
 			}
 			
+			if (! isset ( $items )) {
+				
+				redireccion::redireccionar ( "noitems" );
+				exit ();
+			}
+			
 			for($i = 0; $i <= $_REQUEST ['cantidadItems']; $i ++) {
 				
-
 				if (isset ( $items [$i] ) && isset ( $cantidad [$i] )) {
-						
+					
 					($cantidad [$i] != '') ? '' : redireccion::redireccionar ( "noCantidad" );
 				}
 				
@@ -88,177 +88,55 @@ class RegistradorOrden {
 					$cantidad [$i] = $_REQUEST ['cantidadAsignar' . $i];
 				} else {
 					
-// 					$cantidad [$i] ='';
-				}
-			
-			}
-			exit;
-			if (! isset ( $items )) {
-				
-				redireccion::redireccionar ( "noitems" );
-				exit();
-			}
-			
-			
-			
-			// -------
-			
-			// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntradaParticular', $_REQUEST ['numero_entrada'] );
-			
-			// $entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'consulta_elementos_informacion', $_REQUEST ['numero_entrada'] );
-			
-			$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			// var_dump($elementos);
-			// var_dump($cantidad);
-			// var_dump($items);
-			
-			// Restarurar elementos
-			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'id_items', $_REQUEST ['numero_entrada'] );
-			
-			$id_items = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			
-			for($i = 0; $i < count ( $id_items ); $i ++) {
-				$cadenaSql = $this->miSql->getCadenaSql ( 'restaurar_elementos', $id_items [$i] [0] );
-				
-				$restaurar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-			}
-			
-			foreach ( $items as $i ) {
-				$cadenaSql = $this->miSql->getCadenaSql ( 'busqueda_elementos_individuales', $i );
-				
-				$id_elem_ind [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			}
-			
-// 			var_dump($cantidad);
-// 			var_dump($items);
-			
-			foreach ( $cantidad as $i ) {
-				
-				if ($i != '') {
-					$contador_ele_ind = $i;
+					$cantidad [$i] = '';
 				}
 			}
 			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'elementosIndividuales', $_REQUEST ['numero_salida'] );
+			
+			$elementos_inds = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 			
+			foreach ( $elementos_inds as $claves ) {
+				$cadenaSql = $this->miSql->getCadenaSql ( 'limpiarIndividuales', $claves [0] );
+				
+				$elementos_ind = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			}
+			//
 			
-			foreach ( $id_elem_ind as $i => $e ) {
+			for($i = 0; $i < count ( $items ); $i ++) {
 				
-			
+				$arreglo = array (
+						$_REQUEST ['numero_salida'],
+						$elementos_inds [$i] [0],
+						$_REQUEST ['ubicacion'] 
+				);
 				
-				if (count ( $e ) > 1) {
-					
-					for($i = 0; $i < $contador_ele_ind[0]; $i ++) {
-						
-						$arreglo = array (
-								$e [$i] [0],
-								$_REQUEST ['numero_salida'] 
-						);
-						
-						$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elementos_individuales', $arreglo );
-						
-						$actualizo_elem = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-					}
-				}
+				$cadenaSql = $this->miSql->getCadenaSql ( 'ajustar_elementos_salida', $arreglo );
 				
-				
-				if (count ( $e ) == 1) {
-					$arreglo = array (
-							$e [0] [0],
-							$_REQUEST ['numero_salida']
-					);
-				
-					$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elementos_individuales', $arreglo );
-				
-					$actualizo_elem = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-				}
+				$ele_sali = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 				
 			}
-
-// 			var_dump($elementos);
 			
-// 			exit ();
-// 			foreach ( $elementos as $d ) {
+			if ($ele_sali = true) {
 				
-// 				if ($_REQUEST ['numero_salida'] != $d [4]) {
-					
-// 					$salidasSA [] = $d [4];
-// 				}
-// 			}
-			
-// 			$salidasSA = serialize ( $salidasSA );
-			
-
-// 			for($i = 0; $i <= 200; $i ++) {
+				$semaforo = true;
+			} else {
 				
-// 				if (isset ( $_REQUEST ['item' . $i] )) {
-					
-// 					$items [] = $_REQUEST ['item' . $i];
-// 				}
-// 			}
-			
-// 			foreach ( $items as $i ) {
-				
-// 				$arreglo = array (
-// 						$i,
-// 						$_REQUEST ['numero_salida'] 
-// 				);
-				
-// 				$cadenaSql = $this->miSql->getCadenaSql ( 'insertar_salida_item', $arreglo );
-// 				$semaforo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-// 			}
-			
+				redireccion::redireccionar ( 'noInserto' );
+				exit ();
+			}
 			$arreglo = array (
 					"salida" => $_REQUEST ['numero_salida'],
 					"entrada" => $_REQUEST ['numero_entrada'],
 					"salidasAS" => 0 
 			);
-			$semaforo = 'true';
-		} else if (isset ( $_REQUEST ['Re_Actualizacion'] )) {
 			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntradaParticular', $_REQUEST ['numero_entrada'] );
 			
-			$entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'consulta_elementos_totales', $entrada [0] [12] );
-			
-			$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			
-			foreach ( $elementos as $d ) {
-				
-				if ($_REQUEST ['numero_salida'] != $d [4]) {
-					
-					$salidasSA [] = $d [4];
-				} else {
-					
-					$salidasSA = 'true';
-				}
-			}
-			
-			$salidasSA = serialize ( $salidasSA );
-			
-			foreach ( $items as $i ) {
-				
-				$arreglo = array (
-						$i,
-						$_REQUEST ['numero_salida'] 
-				);
-				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'insertar_salida_item', $arreglo );
-				$semaforo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-			}
-			
-			$arreglo = array (
-					"salida" => $_REQUEST ['numero_salida'],
-					"entrada" => $_REQUEST ['numero_entrada'],
-					"salidasAS" => $salidasSA 
-			);
 		} else if ($_REQUEST ['actualizar'] == '0') {
 			
-			$semaforo = 'true';
+			$semaforo = true;
 			
 			$arreglo = array (
 					"salida" => $_REQUEST ['numero_salida'],
@@ -267,14 +145,13 @@ class RegistradorOrden {
 			);
 		}
 		
-		
-		if ($semaforo=='true') {
+		if ($semaforo) {
 			redireccion::redireccionar ( 'inserto', $arreglo );
-			exit();
+			exit ();
 		} else {
 			
 			redireccion::redireccionar ( 'noInserto' );
-			exit();
+			exit ();
 		}
 	}
 	function resetForm() {
