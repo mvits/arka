@@ -794,7 +794,6 @@ class registrarForm {
 				$atributos ['leyenda'] = "Dependencia Solicitante";
 				echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 				{
-					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'sede';
 					$atributos ['columnas'] = 2;
@@ -818,7 +817,7 @@ class registrarForm {
 					}
 					
 					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "sede" );
-					$matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					
 					// Utilizar lo siguiente cuando no se pase un arreglo:
@@ -835,27 +834,28 @@ class registrarForm {
 					$atributos ['id'] = $esteCampo;
 					
 					$atributos ['evento'] = '';
-					$atributos ['deshabilitado'] = false;
+					$atributos ['deshabilitado'] = true;
 					$atributos ["etiquetaObligatorio"] = true;
 					$atributos ['tab'] = $tab;
 					$atributos ['tamanno'] = 1;
 					$atributos ['estilo'] = 'jqueryui';
 					$atributos ['validar'] = 'required';
-					$atributos ['limitar'] = 1;
-					$atributos ['anchoCaja'] = 25;
+					$atributos ['limitar'] = true;
 					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-					$atributos ['anchoEtiqueta'] = 115;
+					$atributos ['anchoEtiqueta'] = 170;
 					if (isset ( $_REQUEST [$esteCampo] )) {
 						$atributos ['seleccion'] = $_REQUEST [$esteCampo];
 					} else {
 						$atributos ['seleccion'] = - 1;
 					}
-					// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "dependencias" );
+					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "dependencias" );
+					
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					
 					$matrizItems = array (
 							array (
-									' ',
-									'Seleccion ... ' 
+									'',
+									'VACIO' 
 							) 
 					);
 					
@@ -869,7 +869,43 @@ class registrarForm {
 					echo $this->miFormulario->campoCuadroLista ( $atributos );
 					unset ( $atributos );
 					
-		
+					$esteCampo = "ubicacion";
+					$atributos ['columnas'] = 3;
+					$atributos ['nombre'] = $esteCampo;
+					$atributos ['id'] = $esteCampo;
+					$atributos ['evento'] = '';
+					$atributos ['deshabilitado'] = true;
+					$atributos ["etiquetaObligatorio"] = true;
+					$atributos ['tab'] = $tab;
+					$atributos ['tamanno'] = 1;
+					$atributos ['estilo'] = 'jqueryui';
+					$atributos ['validar'] = 'required';
+					$atributos ['limitar'] = true;
+					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos ['anchoEtiqueta'] = 170;
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['seleccion'] = - 1;
+					}
+					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "dependencias" );
+					
+					$matrizItems = array (
+							
+							array (
+									'',
+									'VACIO' 
+							) 
+					);
+					$atributos ['matrizItems'] = $matrizItems;
+					
+					// Utilizar lo siguiente cuando no se pase un arreglo:
+					// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
+					// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
+					$tab ++;
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+// 					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					unset ( $atributos );
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'direccionDependencia';
@@ -910,7 +946,7 @@ class registrarForm {
 					$atributos ['estilo'] = 'jqueryui';
 					$atributos ['marco'] = true;
 					$atributos ['estiloMarco'] = '';
-					$atributos ["etiquetaObligatorio"] = false;
+					$atributos ["etiquetaObligatorio"] = true;
 					$atributos ['columnas'] = 2;
 					$atributos ['dobleLinea'] = 0;
 					$atributos ['tabIndex'] = $tab;
@@ -926,7 +962,7 @@ class registrarForm {
 					$atributos ['deshabilitado'] = false;
 					$atributos ['tamanno'] = 20;
 					$atributos ['maximoTamanno'] = '';
-					$atributos ['anchoEtiqueta'] = 115;
+					$atributos ['anchoEtiqueta'] = 170;
 					$tab ++;
 					
 					// Aplica atributos globales al control

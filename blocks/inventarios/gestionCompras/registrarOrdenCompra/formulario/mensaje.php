@@ -43,9 +43,6 @@ class registrarForm {
 		echo $this->miFormulario->campoBoton ( $atributos );
 		// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 	}
-	
-	
-	
 	function botonDocumento($tab, $col) {
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		// -----------------CONTROL: Botón ----------------------------------------------------------------
@@ -64,9 +61,9 @@ class registrarForm {
 		$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
 		$tab ++;
-	
+		
 		// Aplica atributos globales al control
-	
+		
 		echo $this->miFormulario->campoBoton ( $atributos );
 		// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 	}
@@ -121,16 +118,15 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		{
 			
-			
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-				
+			
 			$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-				
+			
 			$variable = "pagina=" . $miPaginaActual;
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-				
+			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
 			$atributos ['id'] = $esteCampo;
@@ -142,9 +138,8 @@ class registrarForm {
 			$atributos ['alto'] = '10%';
 			$atributos ['redirLugar'] = true;
 			echo $this->miFormulario->enlace ( $atributos );
-				
+			
 			unset ( $atributos );
-				
 			
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 			
@@ -180,13 +175,11 @@ class registrarForm {
 					$atributos ["id"] = "botones";
 					$atributos ["estilo"] = "marcoBotones";
 					echo $this->miFormulario->division ( "inicio", $atributos );
-			
-					$this->botonDocumento($tab, 2);
+					
+					$this->botonDocumento ( $tab, 2 );
 					$this->botonRegresar ( $tab, 2 );
 					
 					echo $this->miFormulario->division ( 'fin' );
-									
-					
 				}
 				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'error') {
 					
@@ -322,7 +315,11 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=documento";
-		$valorCodificado .= "&numero_orden=".$_REQUEST['numero_orden'];
+		
+		if (isset ( $_REQUEST ['numero_orden'] )) {
+			$valorCodificado .= "&numero_orden=" . $_REQUEST ['numero_orden'];
+		}
+		
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
 		 * Para ello utiliza la hora en que es creado el formulario para

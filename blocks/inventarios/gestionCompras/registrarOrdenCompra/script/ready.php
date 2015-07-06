@@ -26,8 +26,14 @@
         
         
         
-        
+        $('#<?php echo $this->campoSeguro('sede')?>').width(250);
         $("#<?php echo $this->campoSeguro('sede')?>").select2();
+        $('#<?php echo $this->campoSeguro('selec_dependencia')?>').width(250);
+        $("#<?php echo $this->campoSeguro('selec_dependencia')?>").select2();
+        
+        
+        
+        
         	$('#<?php echo $this->campoSeguro('proveedor')?>').attr('disabled','');
         	$('#<?php echo $this->campoSeguro('nitProveedor')?>').attr('disabled','');
         	$('#<?php echo $this->campoSeguro('direccionProveedor')?>').attr('disabled','');
@@ -53,7 +59,7 @@
             
 
         
-         $("#<?php echo $this->campoSeguro('selec_dependencia')?>").attr('disabled','');
+         
          
         $("#<?php echo $this->campoSeguro('selec_proveedor')?>").select2({
    		 placeholder: "Search for a repository",

@@ -49,15 +49,18 @@ class RegistradorOrden {
 		if ($items == 0) {
 			
 			redireccion::redireccionar ( 'noItems' );
+			exit();
 		}
 		if ($_REQUEST ['obligacionesProveedor'] == '') {
 			
 			redireccion::redireccionar ( 'noObligaciones' );
+			exit();
 		}
 		
 		if ($_REQUEST ['obligacionesContratista'] == '') {
 			
 			redireccion::redireccionar ( 'noObligaciones' );
+			exit();
 		}
 		
 		$Subtotal = 0;
@@ -152,7 +155,11 @@ class RegistradorOrden {
 		);
 		
 		
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarOrden', $datosOrden );
+		
+		
+		
 		
 		$id_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
@@ -201,12 +208,14 @@ class RegistradorOrden {
 		// //---------
 		
 		if ($items == true) {
-		
 			
 			redireccion::redireccionar ( 'inserto', $datos );
+			exit ();
 		} else {
 			
 			redireccion::redireccionar ( 'noInserto', $datos );
+			
+			exit ();
 		}
 	}
 	function resetForm() {
