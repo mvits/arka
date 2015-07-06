@@ -1,6 +1,6 @@
 <?php
 
-namespace inventarios\gestionElementos\registrarFaltantesSobrantes;
+namespace inventarios\gestionElementos\registrarBajas;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
@@ -55,7 +55,7 @@ class Frontera {
 					include_once ($this->ruta . "/formulario/resultado.php");
 					break;
 				
-				case "trasladarElemento" :
+				case "solicitarBaja" :
 					include_once ($this->ruta . "/formulario/registro.php");
 					break;
 			}

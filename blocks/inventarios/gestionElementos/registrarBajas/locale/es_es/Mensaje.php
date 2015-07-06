@@ -12,6 +12,11 @@ $this->idioma ["sedeTitulo"] ="Seleccione Sede";
 $this->idioma ["observaciones"] ="Observaciones: ";
 $this->idioma ["observacionesTitulo"] ="Ingrese Observaciones ";
 
+$this->idioma ["ubicacion"] ="Ubicación Especifica : ";
+$this->idioma ["ubicacionTitulo"] ="Seleccione Ubicación";
+
+
+$this->idioma ["selecc_registros"] ="Selección Registros: ";
 
 
 $this->idioma ["documento"] ="Documento Denuncia: ";
@@ -44,7 +49,7 @@ $this->idioma ["responsableTitulo"] ="Seleccione Tipo de Mueble";
 
 
 $this->idioma ["radicacion"] ="Cargue Radicación: ";
-$this->idioma ["radicacionTitulo"] ="Seleccione Acrhivpo de Radicación";
+$this->idioma ["radicacionTitulo"] ="Archivo de radicado de bajas y en caso de electrónico concepto de la red datos.";
 
 
 $this->idioma ["responsable_ante"] ="Indentificación y Nombre del Funcionario Actual: ";
@@ -53,7 +58,7 @@ $this->idioma ["responsable_reci"] ="Indentificación y Nombre del Funcionario R
 $this->idioma ["responsable_reciTitulo"] ="Seleccione Funcionario Responsable";
 
 $this->idioma ["dependencia"] ="Dependencia : ";
-$this->idioma ["dependenciaTitulo"] ="Seleccione Dependencia";
+$this->idioma ["dependenciaTitulo"] ="Seleccione Dependencia donde se va alojar el elemento dado de baja";
 
 
 $this->idioma ["dependencia_baja"] ="Dependencia : ";
@@ -349,7 +354,7 @@ $this->idioma ["contratista"] = "Contratista";
 $this->idioma ["ordenadorGasto"] = "Ordenador Gasto";
 
 
-$this->idioma ["botonAceptar"] ="Guardar Entrada";
+$this->idioma ["botonAceptar"] ="Solicitar Baja Elementos";
 $this->idioma ["botonCancelar"] ="Cancelar";
 $this->idioma ["botonContinuar"] ="Continuar";
 $this->idioma ["botonConsultar"] ="Consultar";
@@ -358,12 +363,5 @@ $this->idioma ["botonRegresar"] ="<< Regresar";
 
 
 
-
-//________________________________________________
-$this->idioma ["botonAceptar"] = "Guardar";
-$this->idioma ["botonCancelar"] = "Cancelar";
-$this->idioma ["botonContinuar"] = "Continuar";
-
-$this->idioma ["division1Titulo"] = "Seleccione Fecha Disponibilidad Presupuestal";
 
 ?>

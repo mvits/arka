@@ -1,5 +1,5 @@
 <?php
-namespace inventarios\gestionElementos\registrarFaltantesSobrantes;
+namespace inventarios\gestionElementos\registrarBajas;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
     include ("../index.php");

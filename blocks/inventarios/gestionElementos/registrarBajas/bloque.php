@@ -1,6 +1,6 @@
 <?php
 
-namespace inventarios\gestionElementos\registrarFaltantesSobrantes;
+namespace inventarios\gestionElementos\registrarBajas;
 
 // Evitar un acceso directo a este archivo
 if (! isset ( $GLOBALS ["autorizado"] )) {

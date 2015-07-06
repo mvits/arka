@@ -74,12 +74,43 @@ class registrarForm {
 		} else {
 			$dependencia = '';
 		}
+
+		
+
+		if (isset ( $_REQUEST ['sede'] ) && $_REQUEST ['sede'] != '') {
+			$sede = $_REQUEST ['sede'];
+		} else {
+			$sede = '';
+		}
+		
+		
+		
+		
+		if (isset ( $_REQUEST ['dependencia'] ) && $_REQUEST ['dependencia'] != '') {
+			$dependencia = $_REQUEST ['dependencia'];
+		} else {
+			$dependencia = '';
+		}
+		
+		
+
+
+		if (isset ( $_REQUEST ['ubicacion'] ) && $_REQUEST ['ubicacion'] != '') {
+			$ubicacion = $_REQUEST ['ubicacion'];
+		} else {
+			$ubicacion = '';
+		}
+		
+		
+		
 		
 		$arreglo = array (
-				$funcionario,
-				$serial,
-				$placa,
-				$dependencia 
+				'funcionario' => $funcionario,
+				'serie' => $serial,
+				'placa' => $placa,
+				'dependencia' => $dependencia,
+				'ubicacion' => $ubicacion,
+				'sede' => $sede,
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
@@ -138,65 +169,197 @@ class registrarForm {
 		
 		$esteCampo = "AgrupacionInformacion";
 		$atributos ['id'] = $esteCampo;
-		$atributos ['leyenda'] = "Información Referente a Elementos";
+		$atributos ['leyenda'] = "Información Referente a Elementos (Baja Elementos)";
 		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
-// 		var_dump($elemento);
+		// var_dump($elemento);
+		
+		
+		
+		
+		$esteCampo = "selecc_registros";
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['id'] = $esteCampo;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ["etiquetaObligatorio"] = false;
+		$atributos ['tab'] = $tab ++;
+		$atributos ['seleccion'] = 0;
+		$atributos ['anchoEtiqueta'] = 150;
+		$atributos ['evento'] = '';
+		if (isset ( $_REQUEST [$esteCampo] )) {
+			$atributos ['valor'] = $_REQUEST [$esteCampo];
+		} else {
+			$atributos ['valor'] = '';
+		}
+		$atributos ['deshabilitado'] = false;
+		$atributos ['columnas'] = 2;
+		$atributos ['tamanno'] = 1;
+		$atributos ['ajax_function'] = "";
+		$atributos ['ajax_control'] = $esteCampo;
+		$atributos ['estilo'] = "jqueryui";
+		$atributos ['validar'] = "required";
+		$atributos ['limitar'] = true;
+		$atributos ['anchoCaja'] = 24;
+		$atributos ['miEvento'] = '';
+// 		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "estado_entrada" );
+		$matrizItems = array (
+				array (
+						'0',
+						'Ningun Registro'
+				),
+		
+				array (
+						'1',
+						'Todos Registros'
+		
+				)
+					
+					
+		);
+		$atributos ['matrizItems'] = $matrizItems;
+		// $atributos['miniRegistro']=;
+		$atributos ['baseDatos'] = "inventarios";
+		// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
+			
+		// Aplica atributos globales al control
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroLista ( $atributos );
+		unset ( $atributos );
+			
+			
+			
+		
+		
+		
+		
+		
+		
+		
 		if ($elemento) {
 			
 			echo "<table id='tablaTitulos'>";
 			
 			echo "<thead>
-                <tr>
-				  	<th>Número Salida y/o<br>Vigencia</th>	
-					<th># ID Elemento </th>	
-                  	<th># Número Placa</th>
-                    <th># Número Serial</th>
-                    <th>Nombre Funcionario</th>
-					<th>Identificación<br>Funcionario</th>
-					<th>Tipo Bien</th>
-			        <th>Generar Baja<br>Elemento</th>
-                </tr>
-            </thead>
-            <tbody>";
+                        <tr>
+			    <th>Número Salida y/o<br>Vigencia</th>	
+			    <th># Número Placa</th>
+                            <th> Descripción </th>
+                            <th>ID Funcionario</th>
+			    <th>Nombre<br>Funcionario</th>
+			    <th>Dependencia</th>
+                            <th>Sede</th>
+                            <th>Ubicacion</th>
+			    <th>Solicitar Baja<br>Elemento</th>
+                        </tr>
+                        </thead>
+                        <tbody>";
 			
 			for($i = 0; $i < count ( $elemento ); $i ++) {
-				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-				$variable .= "&opcion=trasladarElemento";
-				
-				$arreglodependencia = array (
-						
-						$elemento [$i] ['dependeciassalidas'],
-						$elemento [$i] ['sedesalidas'] 
-				);
-				
-				$arreglodependencia=serialize($arreglodependencia);
-				$variable .= "&dependencia=".$arreglodependencia;
-				$variable .= "&id_elemento_ind=" . $elemento [$i] [0];
-				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$mostrarHtml = "<tr>
-		    		<td><center>" . $elemento [$i] [5] . "</center></td>
-                    <td><center>" . $elemento [$i] [4] . "</center></td>
-		  			<td><center>" . $elemento [$i] [1] . "</center></td>
-                    <td><center>" . $elemento [$i] [2] . "</center></td>
-                    <td><center>" . $elemento [$i] ['funcionario'] . "</center></td>
-                    <td><center>" . $elemento [$i] ['fun_nombre'] . "</center></td>
-                    <td><center>" . $elemento [$i] [6] . "</center></td>
-                    <td><center>
-                    	<a href='" . $variable . "'>
-                            <img src='" . $rutaBloque . "/css/images/baja.png' width='15px'>
-                        </a>
-                  	</center> </td>
-           
-                </tr>";
+		    		<td><center>" . $elemento [$i] ['salidas'] . "</center></td>
+                                <td><center>" . $elemento [$i] ['placa'] . "</center></td>
+		  		<td><center>" . $elemento [$i] ['descripcion_elemento'] . "</center></td>
+                                <td><center>" . $elemento [$i] ['funcionario_encargado'] . "</center></td>
+                                <td><center>" . $elemento [$i] ['fun_nombre'] . "</center></td>
+                                <td><center>" . $elemento [$i] ['dependencia'] . "</center></td>
+                                <td><center>" . $elemento [$i] ['sede'] . "</center></td>
+                                <td><center>" . $elemento [$i] ['ubicacion'] . "</center></td>
+                               <td><center>";
+				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+				$nombre = 'item_' . $i;
+				$atributos ['id'] = $nombre;
+				$atributos ['nombre'] = $nombre;
+				$atributos ['marco'] = true;
+				$atributos ['estiloMarco'] = true;
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['columnas'] = 1;
+				$atributos ['dobleLinea'] = 1;
+				$atributos ['tabIndex'] = $tab;
+				$atributos ['etiqueta'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['valor'] = $elemento [$i] [0];
+				}
+				
+				$atributos ['deshabilitado'] = false;
+				$tab ++;
+				
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				$mostrarHtml .= $this->miFormulario->campoCuadroSeleccion ( $atributos );
+				
+				$mostrarHtml .= "</center></td>
+                    </tr>";
 				echo $mostrarHtml;
 				unset ( $mostrarHtml );
-				unset ( $variable );
+				unset ( $atributos );
 			}
 			
 			echo "</tbody>";
 			
-			echo "</table>";
+			echo "</table>"; // ------------------Division para los botones-------------------------
+			$atributos ["id"] = "botones";
+			$atributos ["estilo"] = "marcoBotones";
+			echo $this->miFormulario->division ( "inicio", $atributos );
+			
+			// -----------------CONTROL: Botón ----------------------------------------------------------------
+			$esteCampo = 'botonAceptar';
+			$atributos ["id"] = $esteCampo;
+			$atributos ["tabIndex"] = $tab;
+			$atributos ["tipo"] = 'boton';
+			// submit: no se coloca si se desea un tipo button genérico
+			$atributos ['submit'] = true;
+			$atributos ["estiloMarco"] = '';
+			$atributos ["estiloBoton"] = 'jqueryui';
+			// verificar: true para verificar el formulario antes de pasarlo al servidor.
+			$atributos ["verificar"] = '';
+			$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+			$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+			$tab ++;
+			
+			// Aplica atributos globales al control
+			$atributos = array_merge ( $atributos, $atributosGlobales );
+			echo $this->miFormulario->campoBoton ( $atributos );
+			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
+			
+			echo $this->miFormulario->division ( 'fin' );
+			
+			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+			
+			$valorCodificado = "actionBloque=" . $esteBloque ["nombre"];
+			$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
+			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+			$valorCodificado .= "&opcion=solicitarBaja";
+			
+			/*
+			 * supervisor
+			 * SARA permite que los nombres de los campos sean dinámicos.
+			 * Para ello utiliza la hora en que es creado el formulario para
+			 * codificar el nombre de cada campo. Si se utiliza esta técnica es necesario pasar dicho tiempo como una variable:
+			 * (a) invocando a la variable $_REQUEST ['tiempo'] que se ha declarado en ready.php o
+			 * (b) asociando el tiempo en que se está creando el formulario
+			 */
+			$valorCodificado .= "&campoSeguro=" . $_REQUEST ['tiempo'];
+			$valorCodificado .= "&tiempo=" . time ();
+			// Paso 2: codificar la cadena resultante
+			$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
+			
+			$atributos ["id"] = "formSaraData"; // No cambiar este nombre
+			$atributos ["tipo"] = "hidden";
+			$atributos ['estilo'] = '';
+			$atributos ["obligatorio"] = false;
+			$atributos ['marco'] = true;
+			$atributos ["etiqueta"] = "";
+			$atributos ["valor"] = $valorCodificado;
+			echo $this->miFormulario->campoCuadroTexto ( $atributos );
+			unset ( $atributos );
+			
+			$atributos ['marco'] = true;
+			$atributos ['tipoEtiqueta'] = 'fin';
+			echo $this->miFormulario->formulario ( $atributos );
 		} else {
 			
 			$mensaje = "No Se Encontraron<br>Elementos Asociados.";
