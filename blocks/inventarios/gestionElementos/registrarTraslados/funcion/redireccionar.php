@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace inventarios\gestionElementos\registrarTraslados\funcion;
 
@@ -17,7 +17,8 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=confirma";
-				$variable .= "&informacion=" . $valor;
+				$variable .= "&funcionario=" . $valor['responsable'];
+                                $variable .= "&dependencia=" . $valor['dependencia'];
 				
 				break;
 			

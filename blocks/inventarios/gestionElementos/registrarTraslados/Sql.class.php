@@ -31,7 +31,6 @@ class Sql extends \Sql {
 			/**
 			 * Clausulas específicas
 			 */
-			
 			case "buscarUsuario" :
 				$cadenaSql = "SELECT ";
 				$cadenaSql .= "FECHA_CREACION, ";
@@ -85,7 +84,6 @@ class Sql extends \Sql {
 			 * se espera que estén en todos los formularios
 			 * que utilicen esta plantilla
 			 */
-			
 			case "iniciarTransaccion" :
 				$cadenaSql = "START TRANSACTION";
 				break;
@@ -149,11 +147,61 @@ class Sql extends \Sql {
 			 * Clausulas Del Caso Uso.
 			 */
 			
-			case "funcionarios" :
+			case "ubicacionesConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  ef.\"ESF_ID_ESPACIO\" , ef.\"ESF_NOMBRE_ESPACIO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ef  ";
+				$cadenaSql .= " JOIN arka_parametros.arka_dependencia ad ON ad.\"ESF_ID_ESPACIO\"=ef.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_CODIGO_DEP\"='" . $variable . "' ";
+				$cadenaSql .= " AND  ef.\"ESF_ESTADO\"='A'";
 				
-				$cadenaSql = "SELECT FUN_IDENTIFICACION, FUN_IDENTIFICACION ||' - '|| FUN_NOMBRE ";
-				$cadenaSql .= "FROM FUNCIONARIOS ";
-				$cadenaSql .= "WHERE FUN_ESTADO='A' ";
+				break;
+			
+			case "dependenciasConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE sa.\"ESF_ID_SEDE\"='" . $variable . "' ";
+				$cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A'";
+				
+				break;
+			
+			case "sede" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_sedes ";
+				$cadenaSql .= " WHERE   \"ESF_ESTADO\"='A' ";
+				$cadenaSql .= " AND    \"ESF_COD_SEDE\" >  0 ";
+				
+				break;
+			
+			case "dependencias" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_ESTADO\"='A'";
+				
+				break;
+			
+			case "ubicaciones" :
+				$cadenaSql = "SELECT DISTINCT  ef.\"ESF_ID_ESPACIO\" , ef.\"ESF_NOMBRE_ESPACIO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ef  ";
+				$cadenaSql .= " JOIN arka_parametros.arka_dependencia ad ON ad.\"ESF_ID_ESPACIO\"=ef.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " WHERE  ef.\"ESF_ESTADO\"='A'";
+				break;
+			case "funcionarios" :
+				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\", \"FUN_IDENTIFICACION\" ||' - '||  \"FUN_NOMBRE\" ";
+				$cadenaSql .= "FROM  arka_parametros.arka_funcionarios ";
+				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
+				
+				break;
+			
+			case "funcionario_informacion_fn" :
+				
+				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\" ||' - '|| \"FUN_NOMBRE\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_funcionarios ";
+				$cadenaSql .= "WHERE \"FUN_IDENTIFICACION\"='" . $variable . "' ";
+				$cadenaSql .= "AND \"FUN_ESTADO\"='A' ";
 				
 				break;
 			
@@ -165,20 +213,29 @@ class Sql extends \Sql {
 			
 			case "consultarElemento" :
 				
-				$cadenaSql = "SELECT ";
-				$cadenaSql .= "id_elemento_ind, elemento_individual.placa, elemento_individual.serie, funcionario, id_elemento_gen, ";
-				$cadenaSql .= "elemento_individual.id_salida, ";
-				$cadenaSql .= "tb_descripcion ";
-				$cadenaSql .= "FROM elemento_individual ";
-				$cadenaSql .= "JOIN elemento ON elemento.id_elemento = elemento_individual.id_elemento_gen ";
-				$cadenaSql .= "JOIN salida ON salida.id_salida = elemento_individual.id_salida ";
-				$cadenaSql .= "JOIN tipo_bien ON tipo_bien.tb_idbien = elemento.tipo_bien ";
+				$cadenaSql = ' SELECT DISTINCT id_elemento_ind, elemento_individual.placa,  ';
+				$cadenaSql .= ' elemento_individual.serie, elemento_individual.funcionario, id_elemento_gen,  ';
+				$cadenaSql .= ' elemento_individual.id_salida , tipo_bienes.descripcion, dependencias."ESF_DEP_ENCARGADA" dependencia,elemento.descripcion descripcion_elemento,
+                    			 funcionario."FUN_IDENTIFICACION" iden_funcionario, 
+  								funcionario."FUN_NOMBRE" nom_funcionario,espacios."ESF_NOMBRE_ESPACIO" espacio,dependencias."ESF_CODIGO_DEP" coddep ';
+				$cadenaSql .= ' FROM elemento_individual  ';
+				$cadenaSql .= ' JOIN elemento ON elemento.id_elemento = elemento_individual.id_elemento_gen  ';
+				$cadenaSql .= ' JOIN salida ON salida.id_salida = elemento_individual.id_salida  ';
+				$cadenaSql .= ' JOIN arka_parametros.arka_funcionarios as funcionario ON funcionario."FUN_IDENTIFICACION" = elemento_individual.funcionario  ';
+				$cadenaSql .= ' JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
+				
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sedes ON sedes.\"ESF_COD_SEDE\"=espacios.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " JOIN   arka_parametros.arka_dependencia dependencias ON dependencias.\"ESF_ID_ESPACIO\"=espacios.\"ESF_ID_ESPACIO\" ";
+				
+				$cadenaSql .= ' JOIN tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien  ';
+				$cadenaSql .= ' JOIN arka_parametros.arka_dependencia ON arka_parametros.arka_dependencia."ESF_CODIGO_DEP"=salida.dependencia ';
+				
 				// $cadenaSql .= "JOIN funcionario ON funcionario.id_funcionario = salida.funcionario ";
 				$cadenaSql .= "WHERE 1=1 ";
 				$cadenaSql .= "AND elemento.tipo_bien <> 1 ";
 				
 				if ($variable [0] != '') {
-					$cadenaSql .= " AND funcionario = '" . $variable [0] . "'";
+					$cadenaSql .= " AND elemento_individual.funcionario = '" . $variable [0] . "'";
 				}
 				if ($variable [1] != '') {
 					$cadenaSql .= " AND  elemento_individual.serie= '" . $variable [1] . "'";
@@ -187,7 +244,40 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND  elemento_individual.placa= '" . $variable [2] . "'";
 				}
 				
+				if ($variable [5] != '') {
+					$cadenaSql .= ' AND sedes."ESF_ID_SEDE" = ';
+					$cadenaSql .= " '" . $variable ['sede'] . "' ";
+				}
+				
+				if ($variable [4] != '') {
+					$cadenaSql .= ' AND dependencias."ESF_CODIGO_DEP" = ';
+					$cadenaSql .= " '" . $variable ['dependencia'] . "' ";
+				}
+				
+				if ($variable [4] != '') {
+					$cadenaSql .= ' AND espacios."ESF_ID_ESPACIO" = ';
+					$cadenaSql .= " '" . $variable ['ubicacion'] . "' ";
+				}
+				
 				$cadenaSql .= " ; ";
+				
+				break;
+			
+			case "elemento_informacion" :
+				
+				$cadenaSql = "SELECT DISTINCT ";
+				$cadenaSql .= " id_elemento_ind id, elemento_individual.placa, ";
+				$cadenaSql .= " tipo_bienes.descripcion tipo, elemento.descripcion,  elemento_individual.funcionario, ";
+				$cadenaSql .= ' "ESF_DEP_ENCARGADA"  dependencia ';
+				$cadenaSql .= " FROM elemento_individual ";
+				$cadenaSql .= " JOIN elemento ON elemento.id_elemento = elemento_individual.id_elemento_gen ";
+				$cadenaSql .= " JOIN salida ON salida.id_salida = elemento_individual.id_salida ";
+				$cadenaSql .= " JOIN tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien ";
+				$cadenaSql .= ' JOIN arka_parametros.arka_dependencia ON arka_parametros.arka_dependencia."ESF_CODIGO_DEP"=salida.dependencia ';
+				// $cadenaSql .= "JOIN funcionario ON funcionario.id_funcionario = salida.funcionario ";
+				$cadenaSql .= " WHERE 1=1 ";
+				$cadenaSql .= " AND id_elemento_ind='" . $variable . "' ";
+				
 				break;
 			
 			case "seleccion_funcionario_anterior" :
@@ -203,37 +293,34 @@ class Sql extends \Sql {
 			case "insertar_historico" :
 				
 				$cadenaSql = " INSERT INTO historial_elemento_individual( ";
-				$cadenaSql .= "fecha_registro, elemento_individual, funcionario,descripcion_funcionario)  ";
+				$cadenaSql .= "fecha_registro, elemento_individual, funcionario,descripcion_funcionario, destino, observaciones)  ";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= "'" . $variable [1] . "',";
 				$cadenaSql .= "'" . $variable [2] . "',";
-				$cadenaSql .= "'" . $variable [3] . "') ";
+				$cadenaSql .= "'" . $variable [3] . "',";
+				$cadenaSql .= "'" . $variable [4] . "',";
+				$cadenaSql .= "'" . $variable [5] . "') ";
 				$cadenaSql .= "RETURNING  id_evento; ";
+				break;
+			
+			case "eliminar_historico" :
 				
+				$cadenaSql = " DELETE FROM historial_elemento_individual( ";
+				$cadenaSql .= "WHERE  id_evento='" . $variable . "'";
 				break;
 			
 			case "actualizar_salida" :
 				
-				$cadenaSql = " UPDATE salida ";
-				$cadenaSql .= "SET funcionario='" . $variable [1] . "',";
-				$cadenaSql .= " observaciones='" . $variable [2] . "' ";
-				$cadenaSql .= " WHERE id_salida=(SELECT id_salida FROM elemento_individual WHERE id_elemento_ind='" . $variable [0] . "' ) ;";
-				
+				$cadenaSql = " UPDATE elemento_individual ";
+				$cadenaSql .= " SET funcionario='" . $variable [1] . "', ";
+				$cadenaSql .= " ubicacion_elemento='" . $variable [4] . "' ";
+				$cadenaSql .= " WHERE id_elemento_ind='" . $variable [0] . "' ;";
 				break;
 			
 			case "funcionario_informacion" :
 				
 				$cadenaSql = "SELECT FUN_IDENTIFICACION,  FUN_NOMBRE ";
-				$cadenaSql .= "FROM FUNCIONARIOS ";
-				$cadenaSql .= "WHERE FUN_IDENTIFICACION='" . $variable . "' ";
-				$cadenaSql .= "AND FUN_ESTADO='A' ";
-				
-				break;
-			
-			case "funcionario_informacion_fn" :
-				
-				$cadenaSql = "SELECT FUN_IDENTIFICACION ||' - '|| FUN_NOMBRE ";
 				$cadenaSql .= "FROM FUNCIONARIOS ";
 				$cadenaSql .= "WHERE FUN_IDENTIFICACION='" . $variable . "' ";
 				$cadenaSql .= "AND FUN_ESTADO='A' ";
@@ -252,10 +339,18 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT DISTINCT placa, placa as placas ";
 				$cadenaSql .= "FROM elemento_individual ";
 				$cadenaSql .= "ORDER BY placa DESC ";
+				break;
+			
+			case "dependencia_nombre" :
+				$cadenaSql = 'SELECT "ESF_NOMBRE_ESPACIO" ';
+				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ";
+				$cadenaSql .= ' WHERE "ESF_ID_ESPACIO"=';
+				$cadenaSql .= "'" . $variable . "'";
 				
 				break;
 		}
 		return $cadenaSql;
 	}
 }
+
 ?>

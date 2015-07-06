@@ -39,49 +39,65 @@ class RegistradorOrden {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'funcionario_informacion_fn', $_REQUEST ['responsable_reci'] );
 		
-		$funcionario_enviar = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$funcionario_enviar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$fechaActual = date ( 'Y-m-d' );
+		$elementos_traslado = unserialize ( base64_decode ( $_REQUEST ['informacion_elementos'] ) );
+		
+		// trasladar cada elementos
+		foreach ( $elementos_traslado as $key => $values ) {
+			
+			$datos = array (
+					$fechaActual,
+					$elementos_traslado [$key] ['id'],
+					$_REQUEST ['responsable_reci'],
+					$_REQUEST ['fun_anterior'],
+					$_REQUEST ['dependencia'],
+					$_REQUEST ['observaciones'] 
+			);
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'insertar_historico', $datos );
+			$historico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+			
+			if ($historico == false) {
+				redireccion::redireccionar ( 'noInserto', false );
+			}
+			
+			$arreglo_datos = array (
+					$elementos_traslado [$key] ['id'],
+					$_REQUEST ['responsable_reci'],
+					$_REQUEST ['observaciones'],
+					$_REQUEST ['dependencia'],
+					$_REQUEST ['ubicacion'] 
+			);
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_salida', $arreglo_datos );
+			$traslado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+			
+			if ($traslado == false) {
+				$cadenaSql = $this->miSql->getCadenaSql ( 'eliminar_historico', $historico [0] [0] );
+				$historico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+				
+				redireccion::redireccionar ( 'noInserto' );
+				exit ();
+			}
+		}
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'dependencia_nombre', $_REQUEST ['dependencia'] );
+		$dep_nombre = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$datos = array (
-				
-				$fechaActual,
-				$_REQUEST ['elemento_ind'],
-				$_REQUEST ['idfuncionario'],
-				$_REQUEST ['funcionario'] 
-		)
-		;
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'insertar_historico', $datos );
-		$historico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		$arreglo_datos = array (
-				
-				$_REQUEST ['elemento_ind'],
-				$_REQUEST ['responsable_reci'],
-				$_REQUEST ['observaciones'] 
-		)
-		;
-		
-		$datos = unserialize ( $_REQUEST ['informacion'] );
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_salida', $arreglo_datos );
-		$traslado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-		
-		$array = array (
-				$datos [0],
-				$datos [1],
-				$funcionario_enviar [0] [0] 
+				'responsable' => $_REQUEST ['responsable_reci'],
+				'dependencia' => $dep_nombre [0] [0] 
 		);
 		
-		$array = serialize ( $array );
-		
 		if ($traslado) {
-			
-			redireccion::redireccionar ( 'inserto' ,$array);
+			redireccion::redireccionar ( 'inserto', $datos );
+			exit ();
 		} else {
 			
 			redireccion::redireccionar ( 'noInserto' );
+			exit ();
 		}
 	}
 	function resetForm() {
@@ -97,5 +113,4 @@ class RegistradorOrden {
 $miRegistrador = new RegistradorOrden ( $this->lenguaje, $this->sql, $this->funcion );
 
 $resultado = $miRegistrador->procesarFormulario ();
-
 ?>

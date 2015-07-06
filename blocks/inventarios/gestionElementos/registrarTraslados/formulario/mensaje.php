@@ -92,8 +92,6 @@ class registrarForm {
 			
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 			
-			$datos = unserialize ( $_REQUEST ['informacion'] );
-			
 			$esteCampo = "marcoDatosBasicos";
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
@@ -101,11 +99,11 @@ class registrarForm {
 			// $atributos ["leyenda"] = "Regitrar Orden Compra";
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			
-			{
+              			{
 				
 				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'confirma') {
 					
-					$mensaje = "Se Traslado con Exito el Elemento con Placa No. ".$datos[0]." y Serial:".$datos[1]."<br> al Funcionario Responsable : ".$datos[2];
+					$mensaje = "Se Traslado con Exito el (los) elemento(s) a <br><br> Funcionario Responsable ".$_REQUEST['funcionario']."<br>Lugar de Traslado ".$_REQUEST['dependencia'];
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';

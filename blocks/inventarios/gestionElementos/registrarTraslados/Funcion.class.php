@@ -46,7 +46,7 @@ class Funcion {
 	function procesarAjax() {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
 	}
-	function regitrar() {
+	function registrar() {
 		include_once ($this->ruta . "funcion/registrar.php");
 	}
 	function action() {
@@ -72,7 +72,7 @@ class Funcion {
 			// Realizar una validación específica para los campos de este formulario:
 			// $validacion = $this->verificarCampos ();
 			if ($_REQUEST ['opcion'] == 'registrar') {
-				$this->regitrar();
+				$this->registrar();
 			}
 // 			if ($validacion == false) {
 // 				// Instanciar a la clase pagina con mensaje de correcion de datos
