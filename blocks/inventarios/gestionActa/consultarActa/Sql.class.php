@@ -146,6 +146,25 @@ class Sql extends \Sql {
 			/**
 			 * Clausulas Del Caso Uso.
 			 */
+			
+			case "consultarActaM" :
+				
+				$cadenaSql = "SELECT DISTINCT ra.*, \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  nom_razon ";
+				$cadenaSql .= " FROM registro_actarecibido ra  ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_proveedor ap ON ap.\"PRO_NIT\" =CAST(ra.proveedor AS CHAR (50))  ";
+				$cadenaSql .= " WHERE 1 = 1 ";
+				$cadenaSql .= " AND estado_registro = 1 ";
+				$cadenaSql .= " AND id_actarecibido = '" . $variable . "' ";
+				break;
+			
+			case "buscar_Proveedores" :
+				$cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+				$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
+				$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
+				
+				break;
+			
 			case "actualizarItems" :
 				$cadenaSql = " INSERT INTO ";
 				$cadenaSql .= " arka_inventarios.items_actarecibido(";
@@ -362,14 +381,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE PRO_NIT='" . $variable . "' ";
 				
 				break;
-			
-			case "consultarActaM" :
-				
-				$cadenaSql = "SELECT DISTINCT * ";
-				$cadenaSql .= " FROM registro_actarecibido ";
-				$cadenaSql .= " WHERE 1 = 1 ";
-				$cadenaSql .= " AND estado_registro = 1 ";
-				$cadenaSql .= " AND id_actarecibido = '" . $variable . "' ";
 				
 				// $cadenaSql = "SELECT DISTINCT ";
 				// $cadenaSql .= " id_actarecibido, dependencia, fecha_recibido, tipo_bien as tipoBien, nitproveedor, ";
@@ -432,12 +443,7 @@ class Sql extends \Sql {
 			
 			// Consultas de Oracle para rescate de información de Sicapital
 			/*
-			 * case "dependencias":
-			 * $cadenaSql = "SELECT DEP_IDENTIFICADOR, ";
-			 * $cadenaSql.= " DEP_IDENTIFICADOR ||' '|| DEP_DEPENDENCIA ";
-			 * //$cadenaSql .= " DEP_DIRECCION,DEP_TELEFONO ";F
-			 * $cadenaSql.= " FROM DEPENDENCIAS ";
-			 * break;
+			 * case "dependencias": $cadenaSql = "SELECT DEP_IDENTIFICADOR, "; $cadenaSql.= " DEP_IDENTIFICADOR ||' '|| DEP_DEPENDENCIA "; //$cadenaSql .= " DEP_DIRECCION,DEP_TELEFONO ";F $cadenaSql.= " FROM DEPENDENCIAS "; break;
 			 */
 			
 			case "select_proveedor" :
@@ -449,9 +455,7 @@ class Sql extends \Sql {
 			case "contratistas" :
 				$cadenaSql = "SELECT CON_IDENTIFICACION,CON_IDENTIFICACION ||' '|| CON_NOMBRE ";
 				/*
-				 * $cadenaSql .= " CON_CARGO, ";
-				 * $cadenaSql .= " CON_DIRECCION, ";
-				 * $cadenaSql .= " CON_TELEFONO ";
+				 * $cadenaSql .= " CON_CARGO, "; $cadenaSql .= " CON_DIRECCION, "; $cadenaSql .= " CON_TELEFONO ";
 				 */
 				$cadenaSql .= " FROM CONTRATISTAS ";
 				break;

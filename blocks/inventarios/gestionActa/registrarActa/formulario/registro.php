@@ -118,7 +118,7 @@ class registrarForm {
 
 
             $esteCampo = 'dependencia';
-            $atributos ['columnas'] = 2;
+            $atributos ['columnas'] = 1;
             $atributos ['nombre'] = $esteCampo;
             $atributos ['id'] = $esteCampo;
 
@@ -130,7 +130,7 @@ class registrarForm {
             $atributos ['estilo'] = 'jqueryui';
             $atributos ['validar'] = 'required';
             $atributos ['limitar'] = 1;
-            $atributos ['anchoCaja'] = 25;
+            $atributos ['anchoCaja'] = 50;
             $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
             $atributos ['anchoEtiqueta'] = 180;
             if (isset($_REQUEST [$esteCampo])) {
@@ -160,7 +160,7 @@ class registrarForm {
         } else {
 
             $esteCampo = 'dependencia';
-            $atributos ['columnas'] = 2;
+            $atributos ['columnas'] = 1;
             $atributos ['nombre'] = $esteCampo;
             $atributos ['id'] = $esteCampo;
 
@@ -172,7 +172,7 @@ class registrarForm {
             $atributos ['estilo'] = 'jqueryui';
             $atributos ['validar'] = 'required';
             $atributos ['limitar'] = 1;
-            $atributos ['anchoCaja'] = 25;
+            $atributos ['anchoCaja'] = 50;
             $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
             $atributos ['anchoEtiqueta'] = 180;
             if (isset($_REQUEST [$esteCampo])) {
@@ -444,7 +444,7 @@ class registrarForm {
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'sede';
-                    $atributos ['columnas'] = 2;
+                    $atributos ['columnas'] = 1;
                     $atributos ['nombre'] = $esteCampo;
                     $atributos ['id'] = $esteCampo;
                     $atributos ['evento'] = '';
@@ -456,7 +456,7 @@ class registrarForm {
                     $atributos ['validar'] = 'required';
                     $atributos ['limitar'] = false;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                    $atributos ['anchoEtiqueta'] = 150;
+                    $atributos ['anchoEtiqueta'] = 180;
 
                     if (isset($_REQUEST [$esteCampo])) {
                         $atributos ['seleccion'] = $_REQUEST [$esteCampo];
@@ -503,7 +503,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = true;
                     $atributos ['tamanno'] = 20;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 150;
+                    $atributos ['anchoEtiqueta'] = 180;
                     $tab ++;
 
                     // Aplica atributos globales al control
@@ -557,7 +557,7 @@ class registrarForm {
                     $atributos ['tabIndex'] = $tab;
                     $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                     $atributos ['validar'] = 'required';
-                    $atributos ['textoFondo'] = 'Ingrese 3 Caracteres de Búsqueda';
+                    $atributos ['textoFondo'] = 'Ingrese Mínimo 3 Caracteres de Búsqueda';
                     
                     if (isset($_REQUEST [$esteCampo])) {
                     	$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -568,7 +568,7 @@ class registrarForm {
                     $atributos ['deshabilitado'] = $estadocampos;
                     $atributos ['tamanno'] = 80;
                     $atributos ['maximoTamanno'] = '';
-                    $atributos ['anchoEtiqueta'] = 150;
+                    $atributos ['anchoEtiqueta'] = 180;
                     $tab ++;
                     
                     // Aplica atributos globales al control

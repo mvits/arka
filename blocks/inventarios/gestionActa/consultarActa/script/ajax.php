@@ -133,6 +133,26 @@ $urlFinal17 = $url . $cadena17;
 
 
 
+
+// Variables
+$cadenaACodificarProveedor = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificarProveedor .= "&procesarAjax=true";
+$cadenaACodificarProveedor .= "&action=index.php";
+$cadenaACodificarProveedor .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarProveedor .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarProveedor .= "&funcion=consultaProveedor";
+$cadenaACodificarProveedor .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarProveedor, $enlace );
+
+// URL definitiva
+$urlFinalProveedor = $url . $cadena;
+
+
 // echo $urlFinal;exit;
 // echo $urlFinal2;
 // echo $urlFinal3;
@@ -192,7 +212,7 @@ function consultarDependencia(elem, request, response){
 	            
 	            $("#<?php echo $this->campoSeguro('dependencia')?>").removeAttr('disabled');
 	            
-	            $('#<?php echo $this->campoSeguro('dependencia')?>').width(300);
+	            $('#<?php echo $this->campoSeguro('dependencia')?>').width(815);
 	            $("#<?php echo $this->campoSeguro('dependencia')?>").select2();
 	            
 	          
@@ -404,11 +424,40 @@ function datosOrdenador(elem, request, response){
 
 
 
+
+
+
+
+
+
+
+		
+
+        $( "#<?php echo $this->campoSeguro('nitproveedor')?>" ).keyup(function() {
+
+        	
+        	$('#<?php echo $this->campoSeguro('nitproveedor') ?>').val($('#<?php echo $this->campoSeguro('nitproveedor') ?>').val().toUpperCase());
+
+        	
+                });
+
+
+
+
+            $("#<?php echo $this->campoSeguro('nitproveedor') ?>").autocomplete({
+            	minChars: 3,
+            	serviceUrl: '<?php echo $urlFinalProveedor; ?>',
+            	onSelect: function (suggestion) {
+                	
+            	        $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val(suggestion.data);
+            	    }
+                        
+            });
+
+		
         
 
     });
-
-
 
 
 </script>
