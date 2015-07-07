@@ -73,8 +73,8 @@ class registrarForm {
             $numeroActa = '';
         }
 
-        if (isset($_REQUEST ['nitproveedor']) && $_REQUEST ['nitproveedor'] != '') {
-            $nit = $_REQUEST ['nitproveedor'];
+        if (isset($_REQUEST ['id_proveedor']) && $_REQUEST ['id_proveedor'] != '') {
+            $nit = $_REQUEST ['id_proveedor'];
         } else {
             $nit = '';
         }

@@ -207,7 +207,7 @@ function consultarDependencia(elem, request, response){
 		            
 		            $("#<?php echo $this->campoSeguro('dependencia')?>").removeAttr('disabled');
 		            
-		            $('#<?php echo $this->campoSeguro('dependencia')?>').width(300);
+		            $('#<?php echo $this->campoSeguro('dependencia')?>').width(815);
 		            $("#<?php echo $this->campoSeguro('dependencia')?>").select2();
 		            
 		          
