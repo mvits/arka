@@ -130,6 +130,23 @@ $cadena17 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 $urlFinal17 = $url . $cadena17;
 
 
+// Variables
+$cadenaACodificarProveedor = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificarProveedor .= "&procesarAjax=true";
+$cadenaACodificarProveedor .= "&action=index.php";
+$cadenaACodificarProveedor .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarProveedor .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarProveedor .= "&funcion=consultaProveedor";
+$cadenaACodificarProveedor .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarProveedor, $enlace );
+
+// URL definitiva
+$urlFinalProveedor = $url . $cadena;
 
 
 // echo $urlFinal;exit;
@@ -414,6 +431,40 @@ function datosOrdenador(elem, request, response){
 
 
         $("#<?php echo $this->campoSeguro('asignacionOrdenador') ?>").select2();
+
+
+
+
+
+
+
+
+        
+
+
+        $( "#<?php echo $this->campoSeguro('nitproveedor')?>" ).keyup(function() {
+
+        	
+    	$('#<?php echo $this->campoSeguro('nitproveedor') ?>').val($('#<?php echo $this->campoSeguro('nitproveedor') ?>').val().toUpperCase());
+
+    	
+            });
+
+
+
+
+        $("#<?php echo $this->campoSeguro('nitproveedor') ?>").autocomplete({
+        	minChars: 3,
+        	serviceUrl: '<?php echo $urlFinalProveedor; ?>',
+        	onSelect: function (suggestion) {
+            	
+        	        $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val(suggestion.data);
+        	    }
+                    
+        });
+        
+        
+        
 	      
 
     });
