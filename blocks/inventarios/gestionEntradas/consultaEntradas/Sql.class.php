@@ -149,6 +149,14 @@ class Sql extends \Sql {
 			 * Clausulas Del Caso Uso.
 			 */
 			
+			case "buscar_Proveedores" :
+				$cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+				$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
+				$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
+				
+				break;
+			
 			case "buscar_entradas" :
 				$cadenaSql = " SELECT DISTINCT id_entrada valor, consecutivo||' - ('||entrada.vigencia||')' descripcion  ";
 				$cadenaSql .= " FROM entrada  ";
@@ -176,9 +184,9 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM entrada ";
 				$cadenaSql .= "JOIN clase_entrada ON clase_entrada.id_clase = entrada.clase_entrada ";
 				$cadenaSql .= "JOIN estado_entrada ON estado_entrada.id_estado = entrada.estado_entrada ";
-// 				$cadenaSql .= "JOIN elemento ON elemento.id_entrada = entrada.id_entrada ";
+				// $cadenaSql .= "JOIN elemento ON elemento.id_entrada = entrada.id_entrada ";
 				$cadenaSql .= "WHERE 1=1 ";
-				$cadenaSql .= "AND entrada.cierre_contable='".$variable[5]."' ";
+				$cadenaSql .= "AND entrada.cierre_contable='" . $variable [5] . "' ";
 				
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND entrada.id_entrada = '" . $variable [0] . "'";
@@ -196,7 +204,6 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND entrada.proveedor = '" . $variable [4] . "'";
 				}
 				$cadenaSql .= "ORDER BY entrada.id_entrada DESC ; ";
-				
 				
 				break;
 			
