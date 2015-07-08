@@ -6,12 +6,12 @@ $estilo[$indice++]="ui.jqgrid.css";
 $estilo[$indice++]="timepicker.css";
 $estilo[$indice++]="jquery-te.css";
 $estilo[$indice++]="validationEngine.jquery.css";
-$estilo[$indice++]="autocomplete.css";
+$estilo[$indice++]="jquery.auto-complete.css";
 $estilo[$indice++]="chosen.css";
 $estilo[$indice++]="select2.css";
 $estilo[$indice++]="miestilo.css";
 $estilo[$indice++]="jquery_switch.css";
-$estilo[$indice++]="freeow/freeow.css";
+
 //$estilo[$indice++]="humanity/jquery-ui-1.10.3.custom.css";
 
 //Tablas

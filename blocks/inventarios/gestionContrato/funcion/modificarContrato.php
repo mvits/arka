@@ -65,7 +65,7 @@ if ($_FILES) {
 
 
 $arreglo = array (
-		$_REQUEST ['nombre_contratista'],
+		$_REQUEST ['id_contratista'],
 		$_REQUEST ['num_contrato'],
 		$_REQUEST ['fecha_contrato'],
 		$_REQUEST ['identificador_contrato'] 
@@ -80,6 +80,9 @@ $variable = '';
 
 if ($resultado) {
 	$this->funcion->Redireccionador ( 'actualizoDocumento', $variable );
+	exit();
+	
 } else {
 	$this->funcion->Redireccionador ( 'noactualizoDocumento', $variable );
+	exit();
 }

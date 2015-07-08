@@ -57,7 +57,7 @@ if ($_FILES) {
 $fechaActual = date ( 'Y-m-d' );
 
 $arreglo = array (
-		$_REQUEST ['nombre_contratista'],
+		$_REQUEST ['id_contratista'],
 		$_REQUEST ['num_contrato'],
 		$_REQUEST ['fecha_contrato'],
 		$resultado [0] [0],
@@ -76,6 +76,8 @@ $variable = '';
 
 if ($resultado) {
 	$this->funcion->Redireccionador ( 'registroDocumento', $variable );
+	exit();
 } else {
 	$this->funcion->Redireccionador ( 'noregistroDocumento', $variable );
+	exit();
 }
