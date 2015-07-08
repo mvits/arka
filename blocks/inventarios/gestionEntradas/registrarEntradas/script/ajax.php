@@ -84,6 +84,27 @@ $urlFinal17 = $url . $cadena17;
 
 
 
+// Variables
+$cadenaACodificarProveedor = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificarProveedor .= "&procesarAjax=true";
+$cadenaACodificarProveedor .= "&action=index.php";
+$cadenaACodificarProveedor .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarProveedor .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarProveedor .= "&funcion=consultaProveedor";
+$cadenaACodificarProveedor .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarProveedor, $enlace );
+
+// URL definitiva
+$urlFinalProveedor = $url . $cadena;
+
+
+
+
 
 
 
@@ -107,8 +128,9 @@ function consultarActa(elem, request, response){
 
 	        	$("#<?php echo $this->campoSeguro('sede')?> option[value="+ data['sede'] +"]").attr("selected",true);
 	        	$("#<?php echo $this->campoSeguro('sede')?>").select2();
-	        	$("#<?php echo $this->campoSeguro('proveedor')?> option[value="+ data['proveedor'] +"]").attr("selected",true);	
-	        	$("#<?php echo $this->campoSeguro('proveedor')?>").select2();
+	        	$("#<?php echo $this->campoSeguro('proveedor')?>").val(data['nom_razon']);
+	        	$("#<?php echo $this->campoSeguro('id_proveedor')?>").val(data['proveedor']);	
+	        	
 	            $("#<?php echo $this->campoSeguro('dependencia')?>").removeAttr('disabled');
 	            $('#<?php echo $this->campoSeguro('dependencia')?>').width(300);
 	            $("#<?php echo $this->campoSeguro('dependencia')?> option[value="+ data['dependencia'] +"]").attr("selected",true);
@@ -208,7 +230,7 @@ function estado(elem, request, response){
 		    			$("#<?php echo $this->campoSeguro('nombreOrdenador')?>").val(data[0]);
 		    			$("#<?php echo $this->campoSeguro('id_ordenador')?>").val(data[1]);
 		    			$("#<?php echo $this->campoSeguro('tipo_ordenador')?>").val(data[2]);
-		    			$("#<?php echo $this->campoSeguro('identificacion_ordenador')?>").val(data[3]);		    			
+		    			$("#<?php echo $this->campoSeguro('identificacion_ordenador')?>").val(data[1]);		    			
 			    		}else{
 
 					
@@ -226,6 +248,38 @@ function estado(elem, request, response){
 
 
 
+
+
+
+        $( "#<?php echo $this->campoSeguro('proveedor')?>" ).keyup(function() {
+
+        	
+    	$('#<?php echo $this->campoSeguro('proveedor') ?>').val($('#<?php echo $this->campoSeguro('proveedor') ?>').val().toUpperCase());
+
+    	
+            });
+
+
+
+
+        $("#<?php echo $this->campoSeguro('proveedor') ?>").autocomplete({
+        	minChars: 3,
+        	serviceUrl: '<?php echo $urlFinalProveedor; ?>',
+        	onSelect: function (suggestion) {
+            	
+        	        $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val(suggestion.data);
+        	    }
+                    
+        });
+        
+  
+
+    	
+
+        
+
+
+
     	  $("#<?php echo $this->campoSeguro('acta_recibido')?>").change(function(){
           	if($("#<?php echo $this->campoSeguro('acta_recibido')?>").val()!=''){
               	
@@ -235,7 +289,7 @@ function estado(elem, request, response){
       			$("#<?php echo $this->campoSeguro('sede')?> option[value="+''+"]").attr("selected",true);
 	        	$("#<?php echo $this->campoSeguro('sede')?>").select2();
 	        	$("#<?php echo $this->campoSeguro('proveedor')?> option[value="+''+"]").attr("selected",true);	
-	        	$("#<?php echo $this->campoSeguro('proveedor')?>").select2();
+	        	
 
 	            
 	        	$("#<?php echo $this->campoSeguro('asignacionOrdenador')?> option[value="+''+"]").attr("selected",true);
