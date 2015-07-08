@@ -169,7 +169,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE placa ='" . $variable . "';";
 				break;
 			
-	
 			case "proveedor_informacion" :
 				$cadenaSql = " SELECT PRO_NIT,PRO_RAZON_SOCIAL  ";
 				$cadenaSql .= " FROM PROVEEDORES ";
@@ -275,27 +274,22 @@ class Sql extends \Sql {
 				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
 				
 				break;
+			
+			// INSERT INTO arka_movil.asignar_imagen(
+			// num_registro, , estado_registro)
+			// VALUES (?, ?, ?, ?, ?);
+			
+			case "ElementoImagen" :
 				
+				$cadenaSql = " 	INSERT INTO arka_movil.asignar_imagen(";
+				$cadenaSql .= " id_elemento, prioridad, imagen ) ";
+				$cadenaSql .= " VALUES (";
+				$cadenaSql .= "'" . $variable ['elemento'] . "',";
+				$cadenaSql .= "'" . $variable ['prioridad'] . "',";
+				$cadenaSql .= "'" . $variable ['imagen'] . "') ";
+				$cadenaSql .= "RETURNING num_registro; ";
 				
-// 				INSERT INTO arka_movil.asignar_imagen(
-// 				num_registro, , estado_registro)
-// 				VALUES (?, ?, ?, ?, ?);
-				
-				
-				case "ElementoImagen" :
-				
-					$cadenaSql = " 	INSERT INTO arka_movil.asignar_imagen(";
-					$cadenaSql .= " id_elemento, prioridad, imagen ) ";
-					$cadenaSql .= " VALUES (";
-					$cadenaSql .= "'" . $variable ['elemento'] . "',";
-					$cadenaSql .= "'" . $variable ['prioridad'] . "',";
-					$cadenaSql .= "'" . $variable ['imagen'] . "') ";
-					$cadenaSql .= "RETURNING num_registro; ";
-					
-				
-					break;
-						
-				
+				break;
 			
 			case "ingresar_elemento_individual" :
 				
@@ -303,8 +297,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "fecha_registro, placa, serie, id_elemento_gen,id_elemento_ind) ";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
-				$cadenaSql .= ((is_null($variable [1])) ? 'null'. "," : "'" . $variable [1] . "',");
-				$cadenaSql .= ((is_null($variable [2])) ? 'null'. "," : "'" . $variable [2] . "',");
+				$cadenaSql .= ((is_null ( $variable [1] )) ? 'null' . "," : "'" . $variable [1] . "',");
+				$cadenaSql .= ((is_null ( $variable [2] )) ? 'null' . "," : "'" . $variable [2] . "',");
 				$cadenaSql .= "'" . $variable [3] . "',";
 				$cadenaSql .= "'" . $variable [4] . "') ";
 				$cadenaSql .= "RETURNING id_elemento_ind; ";
@@ -398,19 +392,17 @@ class Sql extends \Sql {
 				$cadenaSql .= "RETURNING  id_elemento; ";
 				
 				break;
+			
+			case "buscar_entradas" :
+				$cadenaSql = " SELECT DISTINCT id_entrada valor, consecutivo||' - ('||entrada.vigencia||')' descripcion  ";
+				$cadenaSql .= " FROM entrada  ";
+				$cadenaSql .= "WHERE cierre_contable='f' ";
+				$cadenaSql .= "AND   estado_registro='t' ";
+				$cadenaSql .= "AND   estado_entrada = 1  ";
+				$cadenaSql .= "ORDER BY id_entrada DESC ;";
 				
-				case "buscar_entradas" :
-					$cadenaSql = " SELECT DISTINCT id_entrada valor, consecutivo||' - ('||entrada.vigencia||')' descripcion  ";
-					$cadenaSql .= " FROM entrada  ";
-					$cadenaSql .= "WHERE cierre_contable='f' ";
-					$cadenaSql .= "AND   estado_registro='t' ";
-					$cadenaSql .= "AND   estado_entrada = 1  ";
-					$cadenaSql .= "ORDER BY id_entrada DESC ;";
-				
-					break;
-						
-				
-				
+				break;
+			
 			case "consultarEntrada" :
 				$cadenaSql = "SELECT DISTINCT ";
 				$cadenaSql .= "en.id_entrada, en.fecha_registro,  ";
@@ -440,8 +432,6 @@ class Sql extends \Sql {
 				
 				$cadenaSql .= "ORDER BY en.id_entrada DESC ;";
 				
-				
-				
 				break;
 			
 			case "consultarEntradaParticular" :
@@ -452,6 +442,14 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM arka_inventarios.entrada ";
 				$cadenaSql .= "JOIN arka_inventarios.clase_entrada cl ON cl.id_clase = entrada.clase_entrada ";
 				$cadenaSql .= "WHERE entrada.id_entrada = '" . $variable . "';";
+				
+				break;
+			
+			case "buscar_Proveedores" :
+				$cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+				$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
+				$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
 				
 				break;
 		}
