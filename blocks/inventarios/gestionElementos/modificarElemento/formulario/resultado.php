@@ -188,6 +188,12 @@ class registrarForm {
 			$entrada = '';
 		}
 		
+
+		if (isset ( $_REQUEST ['registro_salidas'] ) && $_REQUEST ['registro_salidas'] != '') {
+			$registroSalidas = $_REQUEST ['registro_salidas'];
+		}
+		
+		
 		
 		
 		
@@ -199,9 +205,10 @@ class registrarForm {
 				$sede,
 				$dependencia,
 				$funcionario,
-				$entrada
+				$entrada,
+				$registroSalidas
 		);
-// 		var_dump($arreglo);
+		
 		
 		
 		

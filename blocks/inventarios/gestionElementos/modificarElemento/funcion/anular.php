@@ -52,9 +52,12 @@ class RegistradorOrden {
 		if ($anular) {
 				
 			redireccion::redireccionar ( 'anulado');
+			exit();
 		} else {
 				
 			redireccion::redireccionar ( 'noAnulado' );
+			exit();
+			
 		}
 		
 	}

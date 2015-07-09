@@ -185,6 +185,7 @@ class Sql extends \Sql {
 			case "buscar_placa" :
 				$cadenaSql = " SELECT DISTINCT placa, placa as placas ";
 				$cadenaSql .= "FROM elemento_individual ";
+				$cadenaSql .= "WHERE placa IS NOT NULL  ";
 				$cadenaSql .= "ORDER BY placa DESC ;";
 				
 				break;
@@ -192,7 +193,7 @@ class Sql extends \Sql {
 			case "buscar_serie" :
 				$cadenaSql = " SELECT DISTINCT serie, serie as series ";
 				$cadenaSql .= "FROM elemento_individual ";
-				$cadenaSql .= "WHERE  serie <> '' ";
+				$cadenaSql .= "WHERE  serie IS NOT NULL ";
 				$cadenaSql .= "ORDER BY serie DESC ";
 				
 				break;
@@ -222,15 +223,25 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM elemento ";
 				$cadenaSql .= "JOIN tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien ";
 				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
-				$cadenaSql .= "JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
-				$cadenaSql .= "LEFT JOIN salida sl ON sl.id_salida = elemento_individual.id_salida  ";
+				$cadenaSql .= "RIGHT JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
+				$cadenaSql .= (($variable[8]==1)?' JOIN ':' LEFT JOIN ' );
+				$cadenaSql .= "salida sl ON sl.id_salida = elemento_individual.id_salida  ";
+				$cadenaSql .= "LEFT JOIN  arka_parametros.arka_dependencia ad ON  ad.\"ESF_CODIGO_DEP\"=sl.dependencia ";
 				$cadenaSql .= "LEFT JOIN arka_parametros.arka_sedes sas ON sas.\"ESF_ID_SEDE\" = sl.sede ";
-				$cadenaSql .= "LEFT JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_COD_SEDE\"=sas.\"ESF_COD_SEDE\" ";
-				$cadenaSql .= "LEFT JOIN  arka_parametros.arka_dependencia ad ON  ad.\"ESF_ID_ESPACIO\"=ef.\"ESF_ID_ESPACIO\" ";
 				$cadenaSql .= "LEFT JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= sl.funcionario ";
-				$cadenaSql .= "WHERE entrada.cierre_contable='f' ";
+				
+				// $cadenaSql .= "LEFT JOIN arka_parametros.arka_espaciosfisicos ef ON ef.\"ESF_COD_SEDE\"=sas.\"ESF_COD_SEDE\" ";
+				
+				$cadenaSql .= "WHERE 1=1 ";
+				if($variable[8]==0){
+					
+					
+					$cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
+					
+				}
+				$cadenaSql .= "AND entrada.cierre_contable='f' ";
 				$cadenaSql .= "AND   entrada.estado_registro='t' ";
-				$cadenaSql .= "AND   entrada.estado_entrada = 1  ";
+// 				$cadenaSql .= "AND   entrada.estado_entrada = 1  ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND elemento.fecha_registro BETWEEN CAST ( '" . $variable [0] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable [1] . "' AS DATE)  ";
@@ -255,8 +266,8 @@ class Sql extends \Sql {
 				if ($variable [7] != '') {
 					$cadenaSql .= " AND  entrada.id_entrada= '" . $variable [7] . "' ";
 				}
-// 				$cadenaSql .= "ORDER BY entrada.id_entrada DESC  ";
-// 				$cadenaSql .= " LIMIT 5000; ";
+				// $cadenaSql .= "ORDER BY entrada.id_entrada DESC ";
+				// $cadenaSql .= " LIMIT 5000; ";
 				
 				break;
 			

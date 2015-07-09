@@ -37,31 +37,42 @@
  $('#<?php echo $this->campoSeguro('numero_factura')?>').attr('disabled','');
  $('#<?php echo $this->campoSeguro('fecha_factura')?>').attr('disabled','');
  
- 
+ $('#<?php echo $this->campoSeguro('placa')?>').width(380);   
  $("#<?php echo $this->campoSeguro('placa')?>").select2({
-             	 placeholder: "Search for a repository",
-              	 minimumInputLength: 3,
-              	 });
- $("#<?php echo $this->campoSeguro('serie1')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });
               	 
+ $('#<?php echo $this->campoSeguro('serie1')?>').width(261);              	 
+ $("#<?php echo $this->campoSeguro('serie1')?>").select2({
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
+              	 minimumInputLength: 3,
+              	 });
+
+ $('#<?php echo $this->campoSeguro('registro_salidas')?>').width(380);  
+  $("#<?php echo $this->campoSeguro('registro_salidas')?>").select2();
+ 
               	 
  $("#<?php echo $this->campoSeguro('funcionario')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });
+$('#<?php echo $this->campoSeguro('sede')?>').width(380);              	 
  $("#<?php echo $this->campoSeguro('sede')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });  
+ 
  $("#<?php echo $this->campoSeguro('dependencia')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
-              	 });              	            	 
+              	 });              	            
+              	 
+              	 
+              	 
+$('#<?php echo $this->campoSeguro('numero_entrada')?>').width(380);              	 	 
  $("#<?php echo $this->campoSeguro('numero_entrada')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });           
               	 
