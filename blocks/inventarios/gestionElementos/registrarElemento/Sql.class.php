@@ -354,8 +354,16 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [11] . "',";
 				$cadenaSql .= "'" . $variable [12] . "',";
 				$cadenaSql .= "'" . $variable [13] . "',";
-				$cadenaSql .= "'" . $variable [14] . "',";
-				$cadenaSql .= "'" . $variable [15] . "',";
+				if ($variable [13] == 0) {
+					
+					$cadenaSql .= "NULL,";
+					$cadenaSql .= "NULL,";
+				} else {
+					
+					$cadenaSql .= "'" . $variable [14] . "',";
+					$cadenaSql .= "'" . $variable [15] . "',";
+				}
+				
 				$cadenaSql .= "'" . $variable [16] . "',";
 				$cadenaSql .= "'" . $variable [17] . "',";
 				$cadenaSql .= "'" . $variable [18] . "',";
