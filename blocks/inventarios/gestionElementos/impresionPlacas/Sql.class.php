@@ -152,6 +152,7 @@ class Sql extends \Sql {
 			case "buscar_placa" :
 				$cadenaSql = " SELECT DISTINCT id_elemento_ind, placa as placas ";
 				$cadenaSql .= "FROM elemento_individual ";
+				$cadenaSql .= "WHERE placa IS NOT NULL ";
 				$cadenaSql .= "ORDER BY placa ASC ";
 				
 				break;
@@ -171,6 +172,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "fecha_registro ";
 				$cadenaSql .= "FROM elemento_individual ";
 				$cadenaSql .= "WHERE 1=1 AND estado_registro='TRUE' ";
+				$cadenaSql .= "AND placa IS NOT NULL ";
 				if ($variable ['placa_inicial'] != '') {
 					$cadenaSql .= " AND id_elemento_ind BETWEEN CAST ( '" . $variable ['placa_inicial'] . "' AS INTEGER) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable ['placa_final'] . "' AS INTEGER)  ";
@@ -472,7 +474,7 @@ class Sql extends \Sql {
 			case "buscarMaxPlacas" :
 				$cadenaSql = " SELECT DISTINCT id_elemento_ind, placa as placas ";
 				$cadenaSql .= "FROM elemento_individual ";
-				$cadenaSql .= "WHERE id_elemento_ind > ".$variable." ";
+				$cadenaSql .= "WHERE id_elemento_ind >= ".$variable." ";
 				$cadenaSql .= "ORDER BY placa ASC ";
 				
 				break;

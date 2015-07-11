@@ -56,7 +56,7 @@ function consultarPlaca(elem, request, response){
 	            
 	            $('#<?php echo $this->campoSeguro('placaFinal')?>').width(180);
 	            $("#<?php echo $this->campoSeguro('placaFinal')?>").select2({
-			     	 placeholder: "Search for a repository",
+			     	 placeholder: "Seleccione...",
 			      	 minimumInputLength: 3,
 			      	 });
 	            

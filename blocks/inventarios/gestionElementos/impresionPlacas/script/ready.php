@@ -26,8 +26,63 @@
         });
 
 
+
+  $("#<?php echo $this->campoSeguro('tipo_impresion')?>").select2();
+ 
+ $("#<?php echo $this->campoSeguro('placaInicial')?>").select2({
+             	 placeholder: "Seleccione...",
+              	 minimumInputLength: 3,
+              	 });
+              	 
+              	 
+              	 
+$("#<?php echo $this->campoSeguro('placaFinal')?>").select2({
+             	 placeholder: "Seleccione...",
+              	 minimumInputLength: 3,
+              	 });
+              	 
+ 
+                  
+     
+     $( "#<?php echo $this->campoSeguro('tipo_impresion')?>" ).change(function() {
         
-              $('#<?php echo $this->campoSeguro('fecha_inicio')?>').datepicker({
+            switch($("#<?php echo $this->campoSeguro('tipo_impresion')?>").val())
+            {
+                           
+                case '1':
+                    
+                   
+                    $("#<?php echo $this->campoSeguro('posicion_placas')?>").css('display','none');
+                    
+
+                   
+
+                break;
+                
+                
+                       case '2':
+                    
+                    $("#<?php echo $this->campoSeguro('posicion_placas')?>").css('display','block');
+                    
+       
+                break;
+                
+
+                default:
+                
+                    
+                    $("#<?php echo $this->campoSeguro('posicion_placas')?>").css('display','none');
+                   
+                   break;
+                
+                
+             }
+          });  
+        
+        
+        
+                        
+        $('#<?php echo $this->campoSeguro('fecha_inicio')?>').datepicker({
 		dateFormat: 'yy-mm-dd',
 		maxDate: 0,
 		changeYear: true,
@@ -79,61 +134,3 @@
 			
 	   });
 	   
-        
-
-  $("#<?php echo $this->campoSeguro('tipo_impresion')?>").select2();
- 
- $("#<?php echo $this->campoSeguro('placaInicial')?>").select2({
-             	 placeholder: "Search for a repository",
-              	 minimumInputLength: 3,
-              	 });
-              	 
-              	 
-              	 
-$("#<?php echo $this->campoSeguro('placaFinal')?>").select2({
-             	 placeholder: "Search for a repository",
-              	 minimumInputLength: 3,
-              	 });
-              	 
- 
-                  
-     
-     $( "#<?php echo $this->campoSeguro('tipo_impresion')?>" ).change(function() {
-        
-            switch($("#<?php echo $this->campoSeguro('tipo_impresion')?>").val())
-            {
-                           
-                case '1':
-                    
-                   
-                    $("#<?php echo $this->campoSeguro('posicion_placas')?>").css('display','none');
-                    
-
-                   
-
-                break;
-                
-                
-                       case '2':
-                    
-                    $("#<?php echo $this->campoSeguro('posicion_placas')?>").css('display','block');
-                    
-       
-                break;
-                
-
-                default:
-                
-                    
-                    $("#<?php echo $this->campoSeguro('posicion_placas')?>").css('display','none');
-                   
-                   break;
-                
-                
-             }
-          });  
-        
-        
-        
-                        
-  
