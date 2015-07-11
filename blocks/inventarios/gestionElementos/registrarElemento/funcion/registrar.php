@@ -474,6 +474,8 @@ class RegistradorOrden {
 								// "5";0.1;"10%";
 								// "6";0.16;"16%";
 								
+								
+								
 								$arreglo = array (
 										$fechaActual,
 										$datos [$i] ['Nivel'],
@@ -693,6 +695,7 @@ class RegistradorOrden {
 									break;
 							}
 							
+							
 							if ($num_placa [0] [0] == 0) {
 								
 								for($j = 0; $j < $_REQUEST ['cantidad']; $j ++) {
@@ -784,6 +787,7 @@ class RegistradorOrden {
 // 								}
 // 							}
 						}
+						
 						
 						if ($elemento) {
 							

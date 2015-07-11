@@ -273,6 +273,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND  ce.elemento_id > 0  ";
 				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
 				
+				
 				break;
 			
 			// INSERT INTO arka_movil.asignar_imagen(
