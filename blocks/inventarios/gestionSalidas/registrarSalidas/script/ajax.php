@@ -93,6 +93,27 @@ $urlFinal4 = $url . $cadena4;
 
 
 
+// Variables
+$cadenaACodificarProveedor = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificarProveedor .= "&procesarAjax=true";
+$cadenaACodificarProveedor .= "&action=index.php";
+$cadenaACodificarProveedor .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarProveedor .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarProveedor .= "&funcion=consultaProveedor";
+$cadenaACodificarProveedor .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarProveedor, $enlace );
+
+// URL definitiva
+$urlFinalProveedor = $url . $cadena;
+
+
+
+
 // echo $urlFinal;exit;
 // echo $urlFinal2;
 // echo $urlFinal3;
@@ -205,6 +226,32 @@ function consultarDependencia(elem, request, response){
 	  	      
 	        
 
+
+
+
+
+	        $( "#<?php echo $this->campoSeguro('proveedor')?>" ).keyup(function() {
+
+	        	
+	    	$('#<?php echo $this->campoSeguro('proveedor') ?>').val($('#<?php echo $this->campoSeguro('proveedor') ?>').val().toUpperCase());
+
+	    	
+	            });
+
+
+
+
+	        $("#<?php echo $this->campoSeguro('proveedor') ?>").autocomplete({
+	        	minChars: 3,
+	        	serviceUrl: '<?php echo $urlFinalProveedor; ?>',
+	        	onSelect: function (suggestion) {
+	            	
+	        	        $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val(suggestion.data);
+	        	    }
+	                    
+	        });
+
+	        
 		
 	    });
 
