@@ -203,9 +203,11 @@ class RegistradorOrden {
 			$registro=serialize($arreglo);
 			
 			redireccion::redireccionar ( 'inserto', $registro);
+			exit();
 		} else {
 			
 			redireccion::redireccionar ( 'noInserto' );
+			exit();
 		}
 	}
 	function resetForm() {
