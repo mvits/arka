@@ -75,7 +75,6 @@ class registrarForm {
 			$dependencia = '';
 		}
 		
-		
 		if (isset ( $_REQUEST ['sede'] ) && $_REQUEST ['sede'] != '') {
 			$sede = $_REQUEST ['sede'];
 		} else {
@@ -99,12 +98,10 @@ class registrarForm {
 				$serial,
 				$placa,
 				$dependencia,
-				$ubicacion,
-				
+				$ubicacion 
 		);
-		var_dump($arreglo);
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
 		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
 		$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -202,11 +199,18 @@ class registrarForm {
                     <td><center>" . $elemento [$i] ['ubicacion'] . "</center></td>
                     <td><center>" . $elemento [$i] [6] . "</center></td>
                     <td><center>" . $elemento [$i] ['descripcion_estado'] . "</center></td>
-                    <td><center>
-                    	<a href='" . $variable . "'>
+                    <td><center>";
+				
+				if ($elemento [$i] ['descripcion_estado'] == 'Sobrante') {
+					
+					$mostrarHtml .= " ";
+				} else {
+					$mostrarHtml .= "<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/faltsobra.png' width='15px'>
-                        </a>
-                  	</center> </td>
+                        </a>";
+				}
+				
+				"</center> </td>
            
                 </tr>";
 				echo $mostrarHtml;

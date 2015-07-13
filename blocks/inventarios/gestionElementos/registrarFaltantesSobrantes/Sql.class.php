@@ -268,14 +268,21 @@ class Sql extends \Sql {
 			case "seleccion_info_elemento" :
 				
 				$cadenaSql = "SELECT ";
-				$cadenaSql .= "id_elemento_ind, elemento_individual.placa, elemento_individual.serie,funcionario, id_elemento_gen, ";
+				$cadenaSql .= "id_elemento_ind, elemento_individual.placa, elemento_individual.serie,elemento_individual.funcionario, id_elemento_gen, ";
 				$cadenaSql .= "salida.consecutivo||' - ('||salida.vigencia||')' salidas,tipo_bienes.descripcion ,salida.id_salida as salida, ";
-				$cadenaSql .= ' "ESF_NOMBRE_ESPACIO" dependencia ';
+				$cadenaSql .= ' "ESF_NOMBRE_ESPACIO" ubicacion,"ESF_DEP_ENCARGADA" dependencia  ';
 				$cadenaSql .= "FROM elemento_individual ";
 				$cadenaSql .= "JOIN elemento ON elemento.id_elemento = elemento_individual.id_elemento_gen ";
 				$cadenaSql .= "JOIN salida ON salida.id_salida = elemento_individual.id_salida ";
 				$cadenaSql .= " JOIN tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien  ";
-				$cadenaSql .= ' JOIN arka_parametros.arka_espaciosfisicos ON arka_parametros.arka_espaciosfisicos."ESF_ID_ESPACIO"=dependencia ';
+				$cadenaSql .= ' JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
+				
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sedes ON sedes.\"ESF_COD_SEDE\"=espacios.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " JOIN   arka_parametros.arka_dependencia dependencias ON dependencias.\"ESF_ID_ESPACIO\"=espacios.\"ESF_ID_ESPACIO\" ";
+				
+				
+				
+				
 				// $cadenaSql .= "JOIN funcionario ON funcionario.id_funcionario = salida.funcionario ";
 				// $cadenaSql .= "left JOIN dependencia ON dependencia.id_dependencia = funcionario.dependencia ";
 				$cadenaSql .= "WHERE 1=1 ";
