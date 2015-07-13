@@ -26,8 +26,9 @@
         });
 
         
+         $('#<?php echo $this->campoSeguro('vigencia')?>').width(370);
          $("#<?php echo $this->campoSeguro('vigencia')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 2 Caracteres de Búsqueda",
               	 minimumInputLength: 2,
               	 });
 
