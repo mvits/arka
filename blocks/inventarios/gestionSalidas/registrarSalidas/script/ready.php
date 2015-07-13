@@ -32,7 +32,8 @@
 
                      
                      
-                     
+$('#<?php echo $this->campoSeguro('selecc_registros')?>').width(250);
+$("#<?php echo $this->campoSeguro('selecc_registros')?>").select2();                     
              
  $('#<?php echo $this->campoSeguro('numero_entrada_c')?>').attr('disabled','');
  $('#<?php echo $this->campoSeguro('fecha_entrada')?>').attr('disabled','');
