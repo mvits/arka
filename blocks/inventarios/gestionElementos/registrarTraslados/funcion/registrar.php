@@ -31,11 +31,12 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+// 		var_dump ( $_REQUEST );
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$conexion = "sicapital";
-		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		// $conexion = "sicapital";
+		// $esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'funcionario_informacion_fn', $_REQUEST ['responsable_reci'] );
 		
@@ -43,7 +44,7 @@ class RegistradorOrden {
 		
 		$fechaActual = date ( 'Y-m-d' );
 		$elementos_traslado = unserialize ( base64_decode ( $_REQUEST ['informacion_elementos'] ) );
-		
+// 		var_dump ( $elementos_traslado );
 		// trasladar cada elementos
 		foreach ( $elementos_traslado as $key => $values ) {
 			
@@ -60,7 +61,9 @@ class RegistradorOrden {
 			$historico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
 			
 			if ($historico == false) {
+		
 				redireccion::redireccionar ( 'noInserto', false );
+				exit ();
 			}
 			
 			$arreglo_datos = array (
@@ -71,7 +74,12 @@ class RegistradorOrden {
 					$_REQUEST ['ubicacion'] 
 			);
 			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'buscar_salidas', $elementos_traslado [$key] ['id'] );
+			$salidas [] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_salida', $arreglo_datos );
+			
+			
 			$traslado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
 			
 			if ($traslado == false) {
@@ -83,6 +91,22 @@ class RegistradorOrden {
 			}
 		}
 		
+		
+		
+		foreach ( $salidas as $tipo ) {
+			
+			$arreglo = array (
+					$tipo[0] ['salida'],
+					$_REQUEST ['responsable_reci'],
+					$_REQUEST ['sede'],
+					$_REQUEST ['dependencia'],
+					$_REQUEST ['ubicacion'] 
+			);
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_registro_salida', $arreglo );
+			$ActualizarRegistroSalida = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+		}
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'dependencia_nombre', $_REQUEST ['dependencia'] );
 		$dep_nombre = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
@@ -91,7 +115,7 @@ class RegistradorOrden {
 				'dependencia' => $dep_nombre [0] [0] 
 		);
 		
-		if ($traslado) {
+		if ($ActualizarRegistroSalida) {
 			redireccion::redireccionar ( 'inserto', $datos );
 			exit ();
 		} else {

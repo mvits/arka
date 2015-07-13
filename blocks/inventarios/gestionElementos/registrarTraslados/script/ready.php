@@ -42,24 +42,26 @@ $("#<?php echo $this->campoSeguro('ubicacion')?>").select2();
         
         
         $("#<?php echo $this->campoSeguro('sede')?>").select2(); 
-              
+$('#<?php echo $this->campoSeguro('placa')?>').width(370);              
  $("#<?php echo $this->campoSeguro('placa')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });
+              	 
+ $('#<?php echo $this->campoSeguro('serial')?>').width(370); 
  $("#<?php echo $this->campoSeguro('serial')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });
         
         
  $("#<?php echo $this->campoSeguro('responsable')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });
  
 $("#<?php echo $this->campoSeguro('responsable_reci')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 4,
               	 });
 
