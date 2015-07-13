@@ -31,7 +31,7 @@
 
                      
                  $("#<?php echo $this->campoSeguro('funcionarioP')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });
 
@@ -52,7 +52,7 @@
  
  
       $("#<?php echo $this->campoSeguro('funcionario')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });
  
