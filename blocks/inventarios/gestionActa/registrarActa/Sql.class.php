@@ -145,6 +145,35 @@ class Sql extends \Sql {
 			
 			// -----------------------------** Cláusulas del caso de uso**----------------------------------//
 			
+			// --- Caragar elemento--
+			
+			case "consultar_nivel_inventario" :
+				
+				$cadenaSql = "SELECT ce.elemento_id, ce.elemento_codigo||' - '||ce.elemento_nombre ";
+				$cadenaSql .= "FROM grupo.catalogo_elemento  ce ";
+				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
+				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
+				$cadenaSql .= "AND  ce.elemento_id > 0  ";
+				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
+				
+				break;
+			
+			case "consultar_tipo_poliza" :
+				
+				$cadenaSql = "SELECT id_tipo_poliza, descripcion ";
+				$cadenaSql .= "FROM arka_inventarios.tipo_poliza;";
+				
+				break;
+			
+			case "consultar_tipo_iva" :
+				
+				$cadenaSql = "SELECT id_iva, descripcion ";
+				$cadenaSql .= "FROM arka_inventarios.aplicacion_iva;";
+				
+				break;
+			
+			// --------------------------------
+			
 			case "consultarCompras" :
 				$cadenaSql = " SELECT  oc.*,ap.\"PRO_NIT\"||' - ('||ap.\"PRO_RAZON_SOCIAL\"||')' AS  nombre_proveedor ";
 				$cadenaSql .= " FROM orden_compra oc";
@@ -348,7 +377,7 @@ class Sql extends \Sql {
 			
 			// break;
 			
-			/* **************** */
+			/* ************* */
 			case "insertarActa" :
 				$cadenaSql = " INSERT INTO registro_actarecibido( ";
 				$cadenaSql .= " sede, dependencia, fecha_recibido, tipo_bien,

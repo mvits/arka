@@ -149,6 +149,27 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 $urlFinalProveedor = $url . $cadena;
 
 
+
+// Variables
+$cadenaACodificarTipoBien = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificarTipoBien .= "&procesarAjax=true";
+$cadenaACodificarTipoBien .= "&action=index.php";
+$cadenaACodificarTipoBien .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarTipoBien .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarTipoBien .= "&funcion=SeleccionTipoBien";
+$cadenaACodificarTipoBien .="&tiempo=".$_REQUEST['tiempo'];
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarTipoBien, $enlace );
+
+// URL definitiva
+$urlFinalTipoBien = $url . $cadena;
+
+
+
+
 // echo $urlFinal;exit;
 // echo $urlFinal2;
 // echo $urlFinal3;
