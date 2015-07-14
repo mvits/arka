@@ -75,7 +75,6 @@ class registrarForm {
 			$dependencia = '';
 		}
 		
-		
 		if (isset ( $_REQUEST ['sede'] ) && $_REQUEST ['sede'] != '') {
 			$sede = $_REQUEST ['sede'];
 		} else {
@@ -99,10 +98,9 @@ class registrarForm {
 				$serial,
 				$placa,
 				$dependencia,
-				$ubicacion,
-				
+				$ubicacion 
 		);
-		var_dump($arreglo);
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
 		
 		$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -196,17 +194,35 @@ class registrarForm {
                     <td><center>" . $elemento [$i] ['salidas'] . "</center></td>
                     <td><center>" . $elemento [$i] ['placa'] . "</center></td>
                     <td><center>" . $elemento [$i] ['serie'] . "</center></td>
-                    <td><center>" . $funcionario [0] [1] . "</center></td>
-                    <td><center>" . $funcionario [0] [0] . "</center></td>
-                    <td><center>" . $elemento [$i] ['dependencia'] . "</center></td>		
-                    <td><center>" . $elemento [$i] ['ubicacion'] . "</center></td>
-                    <td><center>" . $elemento [$i] [6] . "</center></td>
-                    <td><center>" . $elemento [$i] ['descripcion_estado'] . "</center></td>
-                    <td><center>
-                    	<a href='" . $variable . "'>
+                    <td><center>" . $elemento [$i] ['nombre_funcionario'] . "</center></td>
+                    <td><center>" . $elemento [$i] ['funcionario_encargado'] . "</center></td>
+                    <td><center>" . $elemento [$i] ['dependencia_encargada'] . "</center></td>		
+                    <td><center>" . $elemento [$i] ['ubicacion_especifica'] . "</center></td>
+                    <td><center>" . $elemento [$i] ['bien_tipo'] . "</center></td>";
+				
+				if (is_null ( $elemento [$i] ['baja'] ) == false) {
+					
+					$mostrarHtml .= "<td><center>Tramite Baja</center></td>
+                    <td><center>";
+				} else {
+					
+					$mostrarHtml .= "<td><center>" . $elemento [$i] ['elemento_estado'] . "</center></td>
+                    <td><center>";
+				}
+				
+				if (is_null ( $elemento [$i] ['id_tipo_estado_elemento'] ) == true) {
+					
+					if (is_null ( $elemento [$i] ['baja'] ) == true) {
+						
+						$mostrarHtml .= "<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/faltsobra.png' width='15px'>
-                        </a>
-                  	</center> </td>
+                        </a>";
+					}
+				} else {
+					$mostrarHtml .= " ";
+				}
+				
+				"</center> </td>
            
                 </tr>";
 				echo $mostrarHtml;

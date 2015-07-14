@@ -57,8 +57,7 @@ class RegistradorOrden {
 		
 		$fechaActual = date ( 'Y-m-d' );
 		
-		$_REQUEST ['bodega']=0;
-		
+		$_REQUEST ['bodega'] = 0;
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -68,15 +67,11 @@ class RegistradorOrden {
 		
 		$_REQUEST ['total_iva_con'] = round ( $_REQUEST ['total_iva_con'] );
 		
-		
-		
-		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'idElementoMax' );
-			
+		
 		$elemento_id_max = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$elemento_id_max=$elemento_id_max[0][0]+1;
-		
+		$elemento_id_max = $elemento_id_max [0] [0] + 1;
 		
 		switch ($_REQUEST ['tipo_registro']) {
 			
@@ -101,10 +96,10 @@ class RegistradorOrden {
 							$_REQUEST ['subtotal_sin_iva'],
 							$_REQUEST ['total_iva'],
 							$_REQUEST ['total_iva_con'],
-							($_REQUEST ['marca']!='')?$_REQUEST ['marca']:'null',
-							($_REQUEST ['serie']!='')?$_REQUEST ['serie']:'null',
+							($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
+							($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
 							$_REQUEST ['entrada'],
-							$elemento_id_max
+							$elemento_id_max 
 					);
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
@@ -126,17 +121,16 @@ class RegistradorOrden {
 							$_REQUEST ['subtotal_sin_iva'],
 							$_REQUEST ['total_iva'],
 							$_REQUEST ['total_iva_con'],
-							($_REQUEST ['marca']!='')?$_REQUEST ['marca']:'null',
-							($_REQUEST ['serie']!='')?$_REQUEST ['serie']:'null',
+							($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
+							($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
 							$_REQUEST ['entrada'],
-							$elemento_id_max
+							$elemento_id_max 
 					);
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 					
 					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				} else if ($_REQUEST ['id_tipo_bien'] == 3) {
-					
 					
 					if ($_REQUEST ['tipo_poliza'] == 0) {
 						$arreglo = array (
@@ -156,11 +150,10 @@ class RegistradorOrden {
 								$_REQUEST ['tipo_poliza'],
 								'0001-01-01',
 								'0001-01-01',
-								($_REQUEST ['marca']!='')?$_REQUEST ['marca']:'null',
-								($_REQUEST ['serie']!='')?$_REQUEST ['serie']:'null',
+								($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
+								($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
 								$_REQUEST ['entrada'],
-								$elemento_id_max
-								 
+								$elemento_id_max 
 						);
 					} else if ($_REQUEST ['tipo_poliza'] == 1) {
 						$arreglo = array (
@@ -180,10 +173,10 @@ class RegistradorOrden {
 								$_REQUEST ['tipo_poliza'],
 								$_REQUEST ['fecha_inicio'],
 								$_REQUEST ['fecha_final'],
-								($_REQUEST ['marca']!='')?$_REQUEST ['marca']:'null',
-								($_REQUEST ['serie']!='')?$_REQUEST ['serie']:'null',
+								($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
+								($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
 								$_REQUEST ['entrada'],
-								$elemento_id_max
+								$elemento_id_max 
 						);
 					}
 					
@@ -191,49 +184,39 @@ class RegistradorOrden {
 					
 					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				}
-	
-				
-				
 				
 				$placa = date ( 'Ymd' ) . "00000";
 				
-				
-				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'buscar_repetida_placa', $placa );
-				
 				
 				$num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
-				
-				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'idElementoMaxIndividual' );
-					
+				
 				$elemento_id_max_indiv = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
-				$elemento_id_max_indiv=$elemento_id_max_indiv[0][0]+1;
+				$elemento_id_max_indiv = $elemento_id_max_indiv [0] [0] + 1;
 				
-				$sumaplaca=0;
+				$sumaplaca = 0;
 				
 				if ($num_placa [0] [0] == 0) {
 					
 					for($i = 0; $i < $_REQUEST ['cantidad']; $i ++) {
 						$arregloElementosInv = array (
 								$fechaActual,
-								($_REQUEST['id_tipo_bien']==1)? NULL :$placa + $sumaplaca,
-								($_REQUEST ['serie']!='')?$_REQUEST ['serie']:null,
+								($_REQUEST ['id_tipo_bien'] == 1) ? NULL : $placa + $sumaplaca,
+								($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
 								$elemento [0] [0],
-								$elemento_id_max_indiv
+								$elemento_id_max_indiv 
 						);
 						
-						$sumaplaca=($_REQUEST['id_tipo_bien']==1)? $sumaplaca :$sumaplaca++;
-						
+						$sumaplaca = ($_REQUEST ['id_tipo_bien'] == 1) ? $sumaplaca : $sumaplaca ++;
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 						
 						$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 						
-						$elemento_id_max_indiv=$elemento_id_max_indiv +1;
-						
+						$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 					}
 				} else if ($num_placa [0] [0] != 0) {
 					
@@ -242,64 +225,46 @@ class RegistradorOrden {
 					$num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
 					$placa = $num_placa [0] [0];
-					$sumaplaca=1;
+					$sumaplaca = 1;
 					
 					for($i = 1; $i <= $_REQUEST ['cantidad']; $i ++) {
 						$arregloElementosInv = array (
 								$fechaActual,
-								($_REQUEST['id_tipo_bien']==1)? NULL :$placa + $sumaplaca,
-								($_REQUEST ['serie']!='')?$_REQUEST ['serie']:null,
+								($_REQUEST ['id_tipo_bien'] == 1) ? NULL : $placa + $sumaplaca,
+								($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
 								$elemento [0] [0],
-								$elemento_id_max_indiv
+								$elemento_id_max_indiv 
 						);
 						
-						
-						$sumaplaca=($_REQUEST['id_tipo_bien']==1)? $sumaplaca :$sumaplaca++;
-						
+						$sumaplaca = ($_REQUEST ['id_tipo_bien'] == 1) ? $sumaplaca : $sumaplaca ++;
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 						
 						$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 						
-						
-						
-						$elemento_id_max_indiv=$elemento_id_max_indiv +1;
+						$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 					}
 				}
 				
-				
-				
-				
 				foreach ( $_FILES as $key => $values ) {
-				
+					
 					$archivo = $_FILES [$key];
 				}
 				
-				
-				
-				
-				
-				
-				if($archivo['type']=='image/jpeg'){
-						
-					$data = base64_encode(file_get_contents($archivo['tmp_name']));
-				//Prioridad 1 ('Principal') 0 ('No Principal')
-					$arreglo=array(
-							"elemento"=>$elemento_id_max,
-							"prioridad"=>"1",
-							"imagen"=>$data
+				if ($archivo ['type'] == 'image/jpeg') {
+					
+					$data = base64_encode ( file_get_contents ( $archivo ['tmp_name'] ) );
+					// Prioridad 1 ('Principal') 0 ('No Principal')
+					$arreglo = array (
+							"elemento" => $elemento_id_max,
+							"prioridad" => "1",
+							"imagen" => $data 
 					);
 					
-				
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ElementoImagen', $arreglo );
-					 
+					
 					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
-						
-					
-						
 				}
-					
 				
 				$datos = array (
 						$elemento [0] [0],
@@ -307,14 +272,15 @@ class RegistradorOrden {
 						$_REQUEST ['entrada'] 
 				);
 				
-	
-	
 				if ($elemento) {
 					
 					redireccion::redireccionar ( 'inserto', $datos, $_REQUEST ['datosGenerales'] );
+					exit ();
 				} else {
 					
 					redireccion::redireccionar ( 'noInserto', $datos );
+					
+					exit ();
 				}
 				
 				break;
@@ -409,54 +375,295 @@ class RegistradorOrden {
 							
 							$datos [$i] ['Iva'] = $objPHPExcel->getActiveSheet ()->getCell ( 'G' . $i )->getCalculatedValue ();
 							
-							$datos [$i] ['Ajuste'] = $objPHPExcel->getActiveSheet ()->getCell ( 'H' . $i )->getCalculatedValue ();
+							$datos [$i] ['Tipo_poliza'] = $objPHPExcel->getActiveSheet ()->getCell ( 'H' . $i )->getCalculatedValue ();
 							
-							$datos [$i] ['Bodega'] = $objPHPExcel->getActiveSheet ()->getCell ( 'I' . $i )->getCalculatedValue ();
+							$datos [$i] ['Fecha_Inicio_Poliza'] = $objPHPExcel->getActiveSheet ()->getCell ( 'I' . $i )->getCalculatedValue ();
 							
-							$datos [$i] ['Tipo_poliza'] = $objPHPExcel->getActiveSheet ()->getCell ( 'J' . $i )->getCalculatedValue ();
+							$datos [$i] ['Fecha_Final_Poliza'] = $objPHPExcel->getActiveSheet ()->getCell ( 'J' . $i )->getCalculatedValue ();
 							
-							$datos [$i] ['Fecha_Inicio_Poliza'] = $objPHPExcel->getActiveSheet ()->getCell ( 'K' . $i )->getCalculatedValue ();
+							$datos [$i] ['Marca'] = $objPHPExcel->getActiveSheet ()->getCell ( 'K' . $i )->getCalculatedValue ();
 							
-							$datos [$i] ['Fecha_Final_Poliza'] = $objPHPExcel->getActiveSheet ()->getCell ( 'L' . $i )->getCalculatedValue ();
-							
-							$datos [$i] ['Marca'] = $objPHPExcel->getActiveSheet ()->getCell ( 'M' . $i )->getCalculatedValue ();
-							
-							$datos [$i] ['Serie'] = $objPHPExcel->getActiveSheet ()->getCell ( 'N' . $i )->getCalculatedValue ();
-							
-							$datos [$i] ['Entrada'] = $objPHPExcel->getActiveSheet ()->getCell ( 'O' . $i )->getCalculatedValue ();
+							$datos [$i] ['Serie'] = $objPHPExcel->getActiveSheet ()->getCell ( 'L' . $i )->getCalculatedValue ();
 						}
+						
+						
+						
+						
 						
 						for($i = 2; $i <= $highestRow; $i ++) {
 							
-							$arreglo = array (
-									$fechaActual,
-									$datos [$i] ['Nivel'],
-									$datos [$i] ['Tipo_Bien'],
-									trim ( $datos [$i] ['Descripcion'], "'" ),
-									$datos [$i] ['Cantidad'],
-									trim ( $datos [$i] ['Unidad_Medida'], "'" ),
-									$datos [$i] ['Valor_Precio'],
-									$datos [$i] ['Ajuste'],
-									$datos [$i] ['Bodega'],
-									$datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'],
-									$datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'] * $datos [$i] ['Iva'],
-									round ( $datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'] * $datos [$i] ['Iva'] ) + ($datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio']),
-									$datos [$i] ['Tipo_poliza'],
-									trim ( $datos [$i] ['Fecha_Inicio_Poliza'], "'" ),
-									trim ( $datos [$i] ['Fecha_Final_Poliza'], "'" ),
-									trim ( $datos [$i] ['Marca'], "'" ),
-									trim ( $datos [$i] ['Serie'], "'" ),
-									$datos [$i] ['Entrada'] 
-							);
+							switch ($datos [$i] ['Iva']) {
+								
+								case "1" :
+									
+									$IVA = 0;
+									
+									break;
+								
+								case "2" :
+									
+									$IVA = 0;
+									
+									break;
+								
+								case "3" :
+									
+									$IVA = 0.05;
+									
+									break;
+								
+								case "4" :
+									
+									$IVA = 0.04;
+									
+									break;
+								
+								case "5" :
+									
+									$IVA = 0.10;
+									
+									break;
+								
+								case "6" :
+									
+									$IVA = 0.16;
+									
+									break;
+							}
 							
-							$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_masivo', $arreglo );
 							
-							$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 							
-							$_REQUEST ['cantidad'] = $datos [$i] ['Cantidad'];
 							
-							$_REQUEST ['serie'] = trim ( $datos [$i] ['Serie'], "'" );
-							$ingreso = 1;
+							$cadenaSql = $this->miSql->getCadenaSql ( 'idElementoMax' );
+							
+							$elemento_id_max = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							
+							$elemento_id_max = $elemento_id_max [0] [0] + 1;
+							
+							
+							// $arreglo = array (
+							// $fechaActual,
+							// $datos [$i] ['Nivel'],
+							// $datos [$i] ['Tipo_Bien'],
+							// trim ( $datos [$i] ['Descripcion'], "'" ),
+							// $datos [$i] ['Cantidad'],
+							// trim ( $datos [$i] ['Unidad_Medida'], "'" ),
+							// $datos [$i] ['Valor_Precio'],
+							// $datos [$i] ['Ajuste'],
+							// $datos [$i] ['Bodega'],
+							// $datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'],
+							// $datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'] * $datos [$i] ['Iva'],
+							// round ( $datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'] * $datos [$i] ['Iva'] ) + ($datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio']),
+							// $datos [$i] ['Tipo_poliza'],
+							// trim ( $datos [$i] ['Fecha_Inicio_Poliza'], "'" ),
+							// trim ( $datos [$i] ['Fecha_Final_Poliza'], "'" ),
+							// trim ( $datos [$i] ['Marca'], "'" ),
+							// trim ( $datos [$i] ['Serie'], "'" ),
+							// $datos [$i] ['Entrada']
+							// );
+							
+							if ($datos [$i] ['Tipo_Bien'] == 1) {
+								
+								$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_placa', '1' );
+								$placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+								
+								// "1";0;"Exento";
+								// "2";0;"Tarifa de Cero";
+								// "3";0.05;"5%";
+								// "4";0.04;"4%";
+								// "5";0.1;"10%";
+								// "6";0.16;"16%";
+								
+								
+								
+								$arreglo = array (
+										$fechaActual,
+										$datos [$i] ['Nivel'],
+										$datos [$i] ['Tipo_Bien'],
+										trim ( $datos [$i] ['Descripcion'], "'" ),
+										$datos [$i] ['Cantidad'],
+										trim ( $datos [$i] ['Unidad_Medida'], "'" ),
+										$datos [$i] ['Valor_Precio'],
+										$datos [$i] ['Iva'],
+										$_REQUEST ['ajuste'] = 0,
+										$_REQUEST ['bodega'],
+										$datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'],
+										$datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'] * $IVA,
+										round ( $datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'] * $IVA ) + ($datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio']),
+										(is_null ( $datos [$i] ['Marca'] ) == true) ? 'null' : trim ( $datos [$i] ['Marca'], "'" ),
+										(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
+										$_REQUEST ['entrada'],
+										$elemento_id_max 
+								);
+								
+								$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
+								
+								
+								
+								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							} else if ($datos [$i] ['Tipo_Bien'] == 2) {
+								$datos [$i] ['Cantidad'] = 1;
+								
+								// $arreglo = array (
+								// $fechaActual,
+								// $_REQUEST ['nivel'],
+								// $_REQUEST ['id_tipo_bien'],
+								// $_REQUEST ['descripcion'],
+								// $_REQUEST ['cantidad'] = 1,
+								// $_REQUEST ['unidad'],
+								// $_REQUEST ['valor'],
+								// $_REQUEST ['iva'],
+								// $_REQUEST ['ajuste'] = 0,
+								// $_REQUEST ['bodega'],
+								// $_REQUEST ['subtotal_sin_iva'],
+								// $_REQUEST ['total_iva'],
+								// $_REQUEST ['total_iva_con'],
+								// ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
+								// ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
+								// $_REQUEST ['entrada'],
+								// $elemento_id_max
+								// );
+								
+								$arreglo = array (
+										$fechaActual,
+										$datos [$i] ['Nivel'],
+										$datos [$i] ['Tipo_Bien'],
+										trim ( $datos [$i] ['Descripcion'], "'" ),
+										1,
+										trim ( $datos [$i] ['Unidad_Medida'], "'" ),
+										$datos [$i] ['Valor_Precio'],
+										$datos [$i] ['Iva'],
+										$_REQUEST ['ajuste'] = 0,
+										$_REQUEST ['bodega'],
+										1 * $datos [$i] ['Valor_Precio'],
+										1 * $datos [$i] ['Valor_Precio'] * $IVA,
+										round ( 1 * $datos [$i] ['Valor_Precio'] * $IVA ) + (1 * $datos [$i] ['Valor_Precio']),
+										(is_null ( $datos [$i] ['Marca'] ) == true) ? 'null' : trim ( $datos [$i] ['Marca'], "'" ),
+										(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
+										$_REQUEST ['entrada'],
+										$elemento_id_max 
+								);
+								
+								$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
+								
+								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							} else if ($datos [$i] ['Tipo_Bien'] == 3) {
+								
+								$datos [$i] ['Cantidad'] = 1;
+								if ($datos [$i] ['Tipo_poliza'] == 0) {
+									
+									$arreglo = array (
+											$fechaActual,
+											$datos [$i] ['Nivel'],
+											$datos [$i] ['Tipo_Bien'],
+											trim ( $datos [$i] ['Descripcion'], "'" ),
+											1,
+											trim ( $datos [$i] ['Unidad_Medida'], "'" ),
+											$datos [$i] ['Valor_Precio'],
+											$datos [$i] ['Iva'],
+											$_REQUEST ['ajuste'] = 0,
+											$_REQUEST ['bodega'],
+											1 * $datos [$i] ['Valor_Precio'],
+											1 * $datos [$i] ['Valor_Precio'] * $IVA,
+											round ( 1 * $datos [$i] ['Valor_Precio'] * $IVA ) + (1 * $datos [$i] ['Valor_Precio']),
+											$datos [$i] ['Tipo_poliza'],
+											'NULL',
+											'NULL',
+											(is_null ( $datos [$i] ['Marca'] ) == true) ? 'null' : trim ( $datos [$i] ['Marca'], "'" ),
+											(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
+											$_REQUEST ['entrada'],
+											$elemento_id_max 
+									);
+									
+									// $arreglo = array (
+									// $fechaActual,
+									// $_REQUEST ['nivel'],
+									// $_REQUEST ['id_tipo_bien'],
+									// $_REQUEST ['descripcion'],
+									// $_REQUEST ['cantidad'] = 1,
+									// $_REQUEST ['unidad'],
+									// $_REQUEST ['valor'],
+									// $_REQUEST ['iva'],
+									// $_REQUEST ['ajuste'] = 0,
+									// $_REQUEST ['bodega'],
+									// $_REQUEST ['subtotal_sin_iva'],
+									// $_REQUEST ['total_iva'],
+									// $_REQUEST ['total_iva_con'],
+									// $_REQUEST ['tipo_poliza'],
+									// 'NULL',
+									// 'NULL',
+									// ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
+									// ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
+									// $_REQUEST ['entrada'],
+									// $elemento_id_max
+									// );
+								} else if ($datos [$i] ['Tipo_poliza'] == 1) {
+									
+									$arreglo = array (
+											$fechaActual,
+											$datos [$i] ['Nivel'],
+											$datos [$i] ['Tipo_Bien'],
+											trim ( $datos [$i] ['Descripcion'], "'" ),
+											1,
+											trim ( $datos [$i] ['Unidad_Medida'], "'" ),
+											$datos [$i] ['Valor_Precio'],
+											$datos [$i] ['Iva'],
+											$_REQUEST ['ajuste'] = 0,
+											$_REQUEST ['bodega'],
+											1 * $datos [$i] ['Valor_Precio'],
+											1 * $datos [$i] ['Valor_Precio'] * $IVA,
+											round ( 1 * $datos [$i] ['Valor_Precio'] * $IVA ) + (1 * $datos [$i] ['Valor_Precio']),
+											$datos [$i] ['Tipo_poliza'],
+											trim ( $datos [$i] ['Fecha_Inicio_Poliza'], "'" ),
+											trim ( $datos [$i] ['Fecha_Final_Poliza'], "'" ),
+											(is_null ( $datos [$i] ['Marca'] ) == true) ? 'null' : trim ( $datos [$i] ['Marca'], "'" ),
+											(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
+											$_REQUEST ['entrada'],
+											$elemento_id_max 
+									);
+									
+									// $arreglo = array (
+									// $fechaActual,
+									// $_REQUEST ['nivel'],
+									// $_REQUEST ['id_tipo_bien'],
+									// $_REQUEST ['descripcion'],
+									// $_REQUEST ['cantidad'] = 1,
+									// $_REQUEST ['unidad'],
+									// $_REQUEST ['valor'],
+									// $_REQUEST ['iva'],
+									// $_REQUEST ['ajuste'] = 0,
+									// $_REQUEST ['bodega'],
+									// $_REQUEST ['subtotal_sin_iva'],
+									// $_REQUEST ['total_iva'],
+									// $_REQUEST ['total_iva_con'],
+									// $_REQUEST ['tipo_poliza'],
+									// $_REQUEST ['fecha_inicio'],
+									// $_REQUEST ['fecha_final'],
+									// ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
+									// ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
+									// $_REQUEST ['entrada'],
+									// $elemento_id_max
+									// );
+								}
+								
+								$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
+								
+								
+								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							}
+							
+							
+							
+							
+							
+							// $cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_masivo', $arreglo );
+							
+							// $elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							
+							// $_REQUEST ['cantidad'] = $datos [$i] ['Cantidad'];
+							
+							// $_REQUEST ['serie'] = trim ( $datos [$i] ['Serie'], "'" );
+							// $ingreso = 1;
 							
 							$placa = date ( 'Ymd' ) . "00000";
 							
@@ -464,19 +671,50 @@ class RegistradorOrden {
 							
 							$num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 							
+							$cadenaSql = $this->miSql->getCadenaSql ( 'idElementoMaxIndividual' );
+							
+							$elemento_id_max_indiv = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							
+							$elemento_id_max_indiv = $elemento_id_max_indiv [0] [0] + 1;
+							
+							$sumaplaca = 0;
+							
+							switch ($datos [$i] ['Tipo_Bien']) {
+								
+								case '1' :
+									$_REQUEST ['cantidad'] = $datos [$i] ['Cantidad'];
+									
+									break;
+								case '2' :
+									$_REQUEST ['cantidad'] = 1;
+									
+									break;
+								case '3' :
+									$_REQUEST ['cantidad'] = 1;
+									
+									break;
+							}
+							
+							
 							if ($num_placa [0] [0] == 0) {
 								
-								for($i = 0; $i < $_REQUEST ['cantidad']; $i ++) {
+								for($j = 0; $j < $_REQUEST ['cantidad']; $j ++) {
 									$arregloElementosInv = array (
 											$fechaActual,
-											$placa + $i,
-											$_REQUEST ['serie'],
-											$elemento [0] [0] 
+											($datos [$i] ['Tipo_Bien'] == 1) ? NULL : $placa + $sumaplaca,
+											(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
+											$elemento [0] [0],
+											$elemento_id_max_indiv 
 									);
+									
+									$sumaplaca = ($datos [$i] ['Tipo_Bien'] == 1) ? $sumaplaca : $sumaplaca ++;
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 									
-									$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+																		
+									$elemento_id [$j] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									
+									$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 								}
 							} else if ($num_placa [0] [0] != 0) {
 								
@@ -485,28 +723,82 @@ class RegistradorOrden {
 								$num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 								
 								$placa = $num_placa [0] [0];
+								$sumaplaca = 1;
 								
-								for($i = 1; $i <= $_REQUEST ['cantidad']; $i ++) {
+								for($j = 1; $j <= $_REQUEST ['cantidad']; $j ++) {
 									$arregloElementosInv = array (
 											$fechaActual,
-											$placa + $i,
-											$_REQUEST ['serie'],
-											$elemento [0] [0] 
+											($datos [$i] ['Tipo_Bien'] == 1) ? NULL : $placa + $sumaplaca,
+											(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
+											$elemento [0] [0],
+											$elemento_id_max_indiv 
 									);
+									
+									$sumaplaca = ($datos [$i] ['Tipo_Bien'] == 1) ? $sumaplaca : $sumaplaca ++;
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 									
-									$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									
+									
+									$elemento_id [$j] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									
+									$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 								}
 							}
+							
+							
+// 							$cadenaSql = $this->miSql->getCadenaSql ( 'buscar_repetida_placa', $placa );
+							
+// 							$num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							
+// 							if ($num_placa [0] [0] == 0) {
+								
+// 								for($i = 0; $i < $_REQUEST ['cantidad']; $i ++) {
+// 									$arregloElementosInv = array (
+// 											$fechaActual,
+// 											$placa + $i,
+// 											$_REQUEST ['serie'],
+// 											$elemento [0] [0] 
+// 									);
+									
+// 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
+									
+// 									$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+// 								}
+// 							} else if ($num_placa [0] [0] != 0) {
+								
+// 								$cadenaSql = $this->miSql->getCadenaSql ( 'buscar_placa_maxima', $placa );
+								
+// 								$num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+								
+// 								$placa = $num_placa [0] [0];
+								
+// 								for($i = 1; $i <= $_REQUEST ['cantidad']; $i ++) {
+// 									$arregloElementosInv = array (
+// 											$fechaActual,
+// 											$placa + $i,
+// 											$_REQUEST ['serie'],
+// 											$elemento [0] [0] 
+// 									);
+									
+// 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
+									
+// 									$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+// 								}
+// 							}
 						}
+						
 						
 						if ($elemento) {
 							
 							redireccion::redireccionar ( 'inserto_M', $fechaActual );
+							exit();
+							
 						} else {
 							
 							redireccion::redireccionar ( 'noInserto', $datos );
+							exit();
+							
 						}
 					}
 				} else {

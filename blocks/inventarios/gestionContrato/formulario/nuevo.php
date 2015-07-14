@@ -32,8 +32,9 @@ unset ( $atributos );
 	// -------------------- Listado de Pestañas (Como lista No Ordenada) -------------------------------
 	
 	$items = array (
-			"tabContratoConsultar" => $this->lenguaje->getCadena ( "tabContratoConsultar" ),
-			"tabContratoCrear" => $this->lenguaje->getCadena ( "tabContratoCrear" ) 
+			
+			"tabContratoCrear" => $this->lenguaje->getCadena ( "tabContratoCrear" ),
+			"tabContratoConsultar" => $this->lenguaje->getCadena ( "tabContratoConsultar" ) 
 	);
 	$atributos ["items"] = $items;
 	$atributos ["estilo"] = "jqueryui";

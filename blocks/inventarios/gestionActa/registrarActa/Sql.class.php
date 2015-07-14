@@ -145,6 +145,30 @@ class Sql extends \Sql {
 			
 			// -----------------------------** Cláusulas del caso de uso**----------------------------------//
 			
+			case "consultarCompras" :
+				$cadenaSql = " SELECT  oc.*,ap.\"PRO_NIT\"||' - ('||ap.\"PRO_RAZON_SOCIAL\"||')' AS  nombre_proveedor ";
+				$cadenaSql .= " FROM orden_compra oc";
+				$cadenaSql .= " JOIN arka_parametros.arka_proveedor ap ON ap.\"PRO_NIT\"= CAST(oc.id_proveedor AS CHAR (50)) ";
+				$cadenaSql .= " WHERE id_orden_compra ='" . $variable . "';";
+				
+				break;
+			
+			case "indentificacion_contratista" :
+				$cadenaSql = " SELECT  *, identificacion||' - ('||nombre_razon_social||')' AS nom_razon  ";
+				$cadenaSql .= " FROM contratista_servicios";
+				$cadenaSql .= " WHERE id_contratista ='" . $variable . "';";
+				break;
+			
+			case "buscar_Proveedores" :
+				$cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+				$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
+				$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
+				
+				break;
+			
+			// ----------------------------------
+			
 			case "consultarOrden" :
 				$cadenaSql = " SELECT ";
 				$cadenaSql .= " to_id,";
@@ -307,17 +331,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE id_orden_servicio ='" . $variable . "';";
 				break;
 			
-			case "indentificacion_contratista" :
-				$cadenaSql = " SELECT  * ";
-				$cadenaSql .= " FROM contratista_servicios";
-				$cadenaSql .= " WHERE id_contratista ='" . $variable . "';";
-				break;
-			
-			case "consultarCompras" :
-				$cadenaSql = " SELECT  * ";
-				$cadenaSql .= " FROM orden_compra";
-				$cadenaSql .= " WHERE id_orden_compra ='" . $variable . "';";
-				break;
 			// ----homologacion Dependencias
 			// case "ids" :
 			// $cadenaSql = " SELECT id_actarecibido, dependencia ";
@@ -335,7 +348,7 @@ class Sql extends \Sql {
 			
 			// break;
 			
-			/* * ***************** */
+			/* **************** */
 			case "insertarActa" :
 				$cadenaSql = " INSERT INTO registro_actarecibido( ";
 				$cadenaSql .= " sede, dependencia, fecha_recibido, tipo_bien,
@@ -381,12 +394,7 @@ class Sql extends \Sql {
 			
 			// Consultas de Oracle para rescate de información de Sicapital
 			/*
-			 * case "dependencias":
-			 * $cadenaSql = "SELECT DEP_IDENTIFICADOR, ";
-			 * $cadenaSql.= " DEP_IDENTIFICADOR ||' '|| DEP_DEPENDENCIA ";
-			 * //$cadenaSql .= " DEP_DIRECCION,DEP_TELEFONO ";F
-			 * $cadenaSql.= " FROM DEPENDENCIAS ";
-			 * break;
+			 * case "dependencias": $cadenaSql = "SELECT DEP_IDENTIFICADOR, "; $cadenaSql.= " DEP_IDENTIFICADOR ||' '|| DEP_DEPENDENCIA "; //$cadenaSql .= " DEP_DIRECCION,DEP_TELEFONO ";F $cadenaSql.= " FROM DEPENDENCIAS "; break;
 			 */
 			
 			case "dependenciasConsultadas" :
@@ -399,7 +407,7 @@ class Sql extends \Sql {
 				
 				break;
 			case "dependencias" :
-							
+				
 				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
 				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
 				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
@@ -407,7 +415,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE ad.\"ESF_ESTADO\"='A'";
 				
 				break;
-			
+				
 				break;
 			
 			case "sede" :
@@ -434,9 +442,7 @@ class Sql extends \Sql {
 			case "contratistas" :
 				$cadenaSql = "SELECT CON_IDENTIFICACION ||' '|| CON_NOMBRE, ";
 				/*
-				 * $cadenaSql .= " CON_CARGO, ";
-				 * $cadenaSql .= " CON_DIRECCION, ";
-				 * $cadenaSql .= " CON_TELEFONO ";
+				 * $cadenaSql .= " CON_CARGO, "; $cadenaSql .= " CON_DIRECCION, "; $cadenaSql .= " CON_TELEFONO ";
 				 */
 				$cadenaSql .= " FROM CONTRATISTAS ";
 				break;

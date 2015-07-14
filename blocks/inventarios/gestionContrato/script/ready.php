@@ -57,6 +57,8 @@ event.preventDefault();
 	}); 
 	
 	
+
+	
 	
 	
       $('#<?php echo $this->campoSeguro('fecha_contrato')?>').datepicker({
@@ -177,10 +179,5 @@ event.preventDefault();
 	   });
 	
 	
-	$('#<?php echo $this->campoSeguro('nombre_contratista')?>').select2({
-   		 placeholder: "Search for a repository",
-   		 minimumInputLength: 3,
-
-       });
 	
 	

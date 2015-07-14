@@ -149,6 +149,14 @@ class Sql extends \Sql {
 			 * Clausulas Del Caso Uso.
 			 */
 			
+			case "buscar_Proveedores" :
+				$cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+				$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
+				$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
+				
+				break;
+			
 			case "buscar_entradas" :
 				$cadenaSql = "SELECT DISTINCT entrada.id_entrada, entrada.consecutivo||' - ('||entrada.vigencia||')' entradas ";
 				$cadenaSql .= "FROM entrada  ";
@@ -158,8 +166,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "ORDER BY id_entrada DESC ";
 				
 				break;
-			
-
 			
 			case "consultarInfoClase" :
 				$cadenaSql = " SELECT  observacion, id_entrada, id_salida, id_hurto,";
@@ -242,8 +248,10 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT DISTINCT ";
 				$cadenaSql .= " vigencia, clase_entrada, info_clase , ";
 				$cadenaSql .= "	tipo_contrato, numero_contrato, fecha_contrato, proveedor,";
-				$cadenaSql .= "numero_factura, fecha_factura, observaciones, acta_recibido , ordenador, sede, dependencia, supervisor ,tipo_ordenador, identificacion_ordenador ";
+				$cadenaSql .= "numero_factura, fecha_factura, observaciones, acta_recibido , ordenador, sede, dependencia, supervisor ,tipo_ordenador, identificacion_ordenador,
+						 \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  nom_razon ";
 				$cadenaSql .= "FROM entrada ";
+				$cadenaSql .= "LEFT JOIN arka_parametros.arka_proveedor ap ON ap.\"PRO_NIT\"=CAST(entrada.proveedor AS CHAR(50))";
 				$cadenaSql .= "WHERE id_entrada='" . $variable . "';";
 				
 				break;
@@ -531,7 +539,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE sa.\"ESF_ID_SEDE\"='" . $variable . "' ";
 				$cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A'";
 				
-				
 				break;
 			
 			case 'consultarActas' :
@@ -544,11 +551,9 @@ class Sql extends \Sql {
 			
 			case "funcionarios" :
 				
-								
 				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\", \"FUN_IDENTIFICACION\" ||' - '|| \"FUN_NOMBRE\" ";
 				$cadenaSql .= "FROM arka_parametros.arka_funcionarios ";
 				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
-				
 				
 				break;
 			

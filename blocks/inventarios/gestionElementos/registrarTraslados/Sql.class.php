@@ -318,6 +318,25 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE id_elemento_ind='" . $variable [0] . "' ;";
 				break;
 			
+			case "actualizar_registro_salida" :
+				
+				$cadenaSql = " UPDATE salida ";
+				$cadenaSql .= " SET funcionario='" . $variable [1] . "', ";
+				$cadenaSql .= " sede='" . $variable [2] . "' ,";
+				$cadenaSql .= " dependencia='" . $variable [3] . "' ,";
+				$cadenaSql .= " ubicacion='" . $variable [4] . "' ";
+				$cadenaSql .= " WHERE id_salida ='" . $variable [0] . "' ;";
+				
+				break;
+			
+			case "buscar_salidas" :
+				
+				$cadenaSql = " SELECT id_elemento_ind, id_salida as salida  ";
+				$cadenaSql .= " FROM elemento_individual  ";
+				$cadenaSql .= " WHERE id_elemento_ind='" . $variable . "' ;";
+				
+				break;
+			
 			case "funcionario_informacion" :
 				
 				$cadenaSql = "SELECT FUN_IDENTIFICACION,  FUN_NOMBRE ";

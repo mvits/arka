@@ -151,6 +151,7 @@ class Sql extends \Sql {
 			
 			// _________________________________________________
 			
+
 			case "proveedores" :
 				$cadenaSql = " SELECT \"PRO_NIT\",\"PRO_NIT\"||' - '||\"PRO_RAZON_SOCIAL\" AS proveedor ";
 				$cadenaSql .= " FROM arka_parametros.arka_proveedor ";
@@ -256,7 +257,7 @@ class Sql extends \Sql {
 				
 				break;
 			case "informacion_ordenador" :
-				$cadenaSql = " SELECT \"ORG_NOMBRE\",\"ORG_IDENTIFICACION\"  ";
+				$cadenaSql = " SELECT \"ORG_NOMBRE\",\"ORG_IDENTIFICACION\",\"ORG_TIPO_ORDENADOR\"  ";
 				$cadenaSql .= " FROM arka_parametros.arka_ordenadores ";
 				$cadenaSql .= " WHERE  \"ORG_IDENTIFICACION\"='" . $variable . "' ";
 				$cadenaSql .= " AND \"ORG_ESTADO\"='A' ";
@@ -279,7 +280,7 @@ class Sql extends \Sql {
 				
 				break;
 			
-			case "actasRecicbido" :
+			case "actasRecibido" :
 				$cadenaSql = " SELECT id_actarecibido, id_actarecibido ";
 				$cadenaSql .= "FROM registro_actarecibido ";
 				
@@ -563,12 +564,24 @@ class Sql extends \Sql {
 				break;
 			
 			case 'consultarActas' :
-				$cadenaSql = "SELECT registro_actarecibido.* , contratos.numero_contrato, contratos.fecha_contrato ";
+				$cadenaSql = "SELECT registro_actarecibido.* , contratos.numero_contrato, contratos.fecha_contrato, \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  nom_razon ";
 				$cadenaSql .= "FROM registro_actarecibido  ";
 				$cadenaSql .= "LEFT JOIN  contratos ON contratos.id_contrato=registro_actarecibido.id_contrato ";
+				$cadenaSql .= "JOIN  arka_parametros.arka_proveedor ap  ON ap.\"PRO_NIT\"=CAST(registro_actarecibido.proveedor AS CHAR(50) )";
+				
 				$cadenaSql .= "WHERE  id_actarecibido='" . $variable . "';";
 				
 				break;
+				
+				
+				case "buscar_Proveedores" :
+					$cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
+					$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+					$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
+					$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
+				
+					break;
+						
 			
 			case 'consultaConsecutivo' :
 				$cadenaSql = "SELECT consecutivo ";

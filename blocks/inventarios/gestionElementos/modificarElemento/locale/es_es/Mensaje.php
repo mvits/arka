@@ -7,6 +7,13 @@ $this->idioma ["numero_entrada"] ="Vigencia y/o Número Entrada : ";
 $this->idioma ["numero_entradaTitulo"] ="Seleccione Vigencia y/o Número Entrada ";
 
 
+
+
+
+$this->idioma ["registro_salidas"] ="Estado:<br>Salidas";
+$this->idioma ["registro_salidasTitulo"] ="Seleccione Estado Salidas";
+
+
 $this->idioma ["sede"] ="Sede : ";
 $this->idioma ["sedeTitulo"] ="Ingrese Sede";
 
@@ -23,7 +30,7 @@ $this->idioma ["observaciones"] ="Observaciones : ";
 $this->idioma ["fecha_inicioTitulo"] ="Ingrese Observaciones";
 
 
-$this->idioma ["fecha_inicio"] ="Fecha Inicial : ";
+$this->idioma ["fecha_inicio"] ="Fecha Inicial :";
 $this->idioma ["fecha_inicioTitulo"] ="Seleccione Fecha Inicial";
 
 $this->idioma ["fecha_final"] ="Fecha Final : ";

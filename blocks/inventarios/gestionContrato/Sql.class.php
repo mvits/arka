@@ -34,6 +34,23 @@ class Sql extends \Sql {
 				
 				break;
 			
+			case "consultarContratoParticular" :
+				$cadenaSql = "SELECT  ";
+				$cadenaSql .= "nombre_contratista, numero_contrato, fecha_contrato,id_documento_soporte,\"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  nom_razon  ";
+				$cadenaSql .= " FROM contratos cn";
+				$cadenaSql .= " JOIN  arka_parametros.arka_proveedor ap ON ap.\"PRO_NIT\"=cn.nombre_contratista ";
+				$cadenaSql .= "WHERE  id_contrato='" . $variable . "';";
+				
+				break;
+			
+			case "buscar_Proveedores" :
+				$cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+				$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
+				$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
+				
+				break;
+			
 			case 'registroContrato' :
 				$cadenaSql = 'INSERT INTO ';
 				$cadenaSql .= 'contratos';
@@ -75,14 +92,6 @@ class Sql extends \Sql {
 				$cadenaSql .= '\'' . $variable ['ruta'] . '\', ';
 				$cadenaSql .= '\'' . $variable ['estado'] . '\'';
 				$cadenaSql .= ') RETURNING documento_id;';
-				break;
-			
-			case "consultarContratoParticular" :
-				$cadenaSql = "SELECT  ";
-				$cadenaSql .= "nombre_contratista, numero_contrato, fecha_contrato,id_documento_soporte ";
-				$cadenaSql .= " FROM contratos ";
-				$cadenaSql .= "WHERE  id_contrato='" . $variable . "';";
-				
 				break;
 			
 			case "consultarContrato" :

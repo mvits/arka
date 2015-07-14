@@ -32,7 +32,8 @@
 
                      
                      
-                     
+$('#<?php echo $this->campoSeguro('selecc_registros')?>').width(250);
+$("#<?php echo $this->campoSeguro('selecc_registros')?>").select2();                     
              
  $('#<?php echo $this->campoSeguro('numero_entrada_c')?>').attr('disabled','');
  $('#<?php echo $this->campoSeguro('fecha_entrada')?>').attr('disabled','');
@@ -42,9 +43,9 @@
  $('#<?php echo $this->campoSeguro('numero_factura')?>').attr('disabled','');
  $('#<?php echo $this->campoSeguro('fecha_factura')?>').attr('disabled','');
  
- 
+ $('#<?php echo $this->campoSeguro('numero_entrada')?>').width(400);
  $("#<?php echo $this->campoSeguro('numero_entrada')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });
  $("#<?php echo $this->campoSeguro('sede')?>").select2();
@@ -53,14 +54,9 @@
  $("#<?php echo $this->campoSeguro('ubicacion')?>").select2();
  
  
- 
-  $("#<?php echo $this->campoSeguro('proveedor')?>").select2({
-             	 placeholder: "Search for a repository",
-              	 minimumInputLength: 3,
-              	 });
- 
+
      $("#<?php echo $this->campoSeguro('funcionario')?>").select2({
-             	 placeholder: "Search for a repository",
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });
  

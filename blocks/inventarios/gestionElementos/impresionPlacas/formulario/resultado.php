@@ -162,6 +162,7 @@ class registrarForm {
 					$placas [] = $i [1];
 				}
 				
+				
 				$placas = serialize ( $placas );
 				
 				$esteCampo = 'num_placas';

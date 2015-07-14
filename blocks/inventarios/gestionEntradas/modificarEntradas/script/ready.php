@@ -86,10 +86,6 @@
              
       $('#<?php echo $this->campoSeguro('nombreCotizacion')?>').attr('disabled','');
                   
-      $("#<?php echo $this->campoSeguro('proveedor')?>").select2({
-             	 placeholder: "Search for a repository",
-              	 minimumInputLength: 3,
-              	 });
 
 
         $('#<?php echo $this->campoSeguro('nombreCotizacion')?>').attr('disabled','');
@@ -121,11 +117,7 @@
                    $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','block');
                    $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','block');
                    $("#<?php echo $this->campoSeguro('asignacionOrdenador')?>").select2();
-          		   		$("#<?php echo $this->campoSeguro('proveedor')?>").select2({
-             	 placeholder: "Search for a repository",
-              	 minimumInputLength: 3,
-              	 });
-              	 
+    
               	 
                  
          $("#<?php echo $this->campoSeguro('id_salidaR')?>").select2({
@@ -163,11 +155,7 @@
                    $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','block');
                    $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','block');
                    $("#<?php echo $this->campoSeguro('asignacionOrdenador')?>").select2();
-		$("#<?php echo $this->campoSeguro('proveedor')?>").select2({
-             	 placeholder: "Search for a repository",
-              	 minimumInputLength: 3,
-              	 });
-             
+
                    estado();
                 break;
                 
@@ -184,11 +172,7 @@
                    $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','none');
                    
-                   		$("#<?php echo $this->campoSeguro('proveedor')?>").select2({
-             	 placeholder: "Search for a repository",
-              	 minimumInputLength: 3,
-              	 });
-              	 
+   
               	 
          
          $("#<?php echo $this->campoSeguro('id_salidaS')?>").select2({
@@ -224,10 +208,7 @@
                    $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','block');
                    $("#<?php echo $this->campoSeguro('asignacionOrdenador')?>").select2();
-      		$("#<?php echo $this->campoSeguro('proveedor')?>").select2({
-             	 placeholder: "Search for a repository",
-              	 minimumInputLength: 3,
-              	 });
+
              
                    estado();
 
@@ -245,11 +226,7 @@
                    $("#<?php echo $this->campoSeguro('inf_contr')?>").css('display',' none');
                    $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('asignacionOrdenador')?>").select2();
-				   $("#<?php echo $this->campoSeguro('proveedor')?>").select2({
-             	 	placeholder: "Search for a repository",
-              	 	minimumInputLength: 3,
-              	 	});
-             
+
                    
                    estado();
                 break;
@@ -268,11 +245,7 @@
                    $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','block');
                    $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','block');
                    $("#<?php echo $this->campoSeguro('asignacionOrdenador')?>").select2();
-				   $("#<?php echo $this->campoSeguro('proveedor')?>").select2({
-             	 	placeholder: "Search for a repository",
-              	 	minimumInputLength: 3,
-              	 	});
-             
+	
                    
                    estado();
                 break;
@@ -292,10 +265,7 @@
                    $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','block');
                    $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','block');
                    $("#<?php echo $this->campoSeguro('asignacionOrdenador')?>").select2();
-				   $("#<?php echo $this->campoSeguro('proveedor')?>").select2({
-             	 	placeholder: "Search for a repository",
-              	 	minimumInputLength: 3,
-              	 	});
+			
              
                    
                    estado();

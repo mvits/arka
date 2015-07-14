@@ -44,6 +44,7 @@ class RegistradorOrden {
 		if ($items == 0) {
 
 			redireccion::redireccionar ( 'noItems' );
+			exit();
 		}
 		
 
@@ -84,7 +85,7 @@ class RegistradorOrden {
 					'dependencia' => $_REQUEST ['dependencia'],
 					'fecha_registro' => $fechaActual,
 					'tipo_bien' => 0,
-					'nit_proveedor' => $_REQUEST ['nitproveedor'],
+					'nit_proveedor' => $_REQUEST ['id_proveedor'],
 					'ordenador' => $_REQUEST ['id_ordenador'],
 					'fecha_revision' => $_REQUEST ['fecha_revision'],
 					'revisor' => $_REQUEST ['revisor'],
@@ -107,7 +108,7 @@ class RegistradorOrden {
 					'dependencia' => $_REQUEST ['dependencia'],
 					'fecha_registro' => $fechaActual,
 					'tipo_bien' => 0,
-					'nit_proveedor' => $_REQUEST ['nitproveedor'],
+					'nit_proveedor' => $_REQUEST ['id_proveedor'],
 					'ordenador' => $_REQUEST ['id_ordenador'],
 					'fecha_revision' => $_REQUEST ['fecha_revision'],
 					'revisor' => $_REQUEST ['revisor'],
@@ -124,8 +125,7 @@ class RegistradorOrden {
 			
 			
 		}
-		
-		
+
 
 		$cadenaSql = $this->miSql->getCadenaSql ( 'limpiarItems', $_REQUEST ['id_acta'] );
 		$limpiar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -157,9 +157,11 @@ class RegistradorOrden {
 		if ($items == true && isset ( $id_acta )) {
 			
 			redireccion::redireccionar ( 'inserto', $datos );
+			exit();
 		} else {
 			
 			redireccion::redireccionar ( 'noInserto', $datos );
+			exit();
 		}
 	}
 	function resetForm() {

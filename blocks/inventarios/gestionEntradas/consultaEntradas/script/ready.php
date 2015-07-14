@@ -37,12 +37,7 @@
              	$("#<?php echo $this->campoSeguro('selecc_registros')?>").select2();
              	$("#<?php echo $this->campoSeguro('acta_recibido')?>").select2();
              	$("#<?php echo $this->campoSeguro('numero_entrada')?>").select2();
-                 
-			  $("#<?php echo $this->campoSeguro('proveedor')?>").select2({
-			             	 placeholder: "Search for a repository",
-			              	 minimumInputLength: 3,
-			              	 });
-              	 
+
                   $('#<?php echo $this->campoSeguro('numero_entradaM')?>').attr('disabled','');
                   $('#<?php echo $this->campoSeguro('fecha_registroM')?>').attr('disabled','');
                   $('#<?php echo $this->campoSeguro('clase')?>').attr('disabled','');

@@ -76,6 +76,13 @@ if (isset ( $_REQUEST ['numero_entrada'] ) && $_REQUEST ['numero_entrada'] != ''
 }
 
 
+if (isset ( $_REQUEST ['registro_salidas'] ) && $_REQUEST ['registro_salidas'] != '') {
+	$registroSalidas = $_REQUEST ['registro_salidas'];
+} else {
+	$registroSalidas = '';
+}
+
+
 
 
 $arreglo = array (
@@ -86,7 +93,8 @@ $arreglo = array (
 		$sede,
 		$dependencia,
 		$funcionario,
-		$entrada 
+		$entrada,
+		$registroSalidas 
 );
 
 $arreglo = serialize ( $arreglo );
@@ -276,7 +284,7 @@ function consultarDependencia(elem, request, response){
 		            
 		            $("#<?php echo $this->campoSeguro('dependencia')?>").removeAttr('disabled');
 		            
-		            $('#<?php echo $this->campoSeguro('dependencia')?>').width(210);
+		            $('#<?php echo $this->campoSeguro('dependencia')?>').width(260);
 		            $("#<?php echo $this->campoSeguro('dependencia')?>").select2();
 		            
 		          

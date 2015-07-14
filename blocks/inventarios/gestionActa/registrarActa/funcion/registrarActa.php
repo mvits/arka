@@ -24,7 +24,7 @@ class RegistradorActa {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		
+
 		$fechaActual = date ( 'Y-m-d' );
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
@@ -118,7 +118,7 @@ class RegistradorActa {
 				'dependencia' => $_REQUEST ['dependencia'],
 				'fecha_registro' => $fechaActual,
 				'tipo_bien' => '0',
-				'nitproveedor' => $_REQUEST ['nitproveedor'],
+				'nitproveedor' => $_REQUEST ['id_proveedor'],
 				'ordenador' => $_REQUEST ['id_ordenador'],
 				'fecha_revision' => $_REQUEST ['fecha_revision'],
 				'revisor' => $_REQUEST ['revisor'],

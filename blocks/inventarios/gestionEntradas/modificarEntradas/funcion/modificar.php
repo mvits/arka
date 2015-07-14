@@ -222,7 +222,7 @@ class RegistradorOrden {
 				($_REQUEST ['tipo_contrato'] != '') ? $_REQUEST ['tipo_contrato'] : 0,
 				($_REQUEST ['numero_contrato'] != '') ? $_REQUEST ['numero_contrato'] : 0,
 				($_REQUEST ['fecha_contrato'] != '') ? $_REQUEST ['fecha_contrato'] : '0001-01-01',
-				($_REQUEST ['proveedor'] != '') ? $_REQUEST ['proveedor'] : 0,
+				($_REQUEST ['id_proveedor'] != '') ? $_REQUEST ['id_proveedor'] : 0,
 				($_REQUEST ['numero_factura'] != '') ? $_REQUEST ['numero_factura'] : 0,
 				($_REQUEST ['fecha_factura'] != '') ? $_REQUEST ['fecha_factura'] : '0001-01-01',
 				$_REQUEST ['observaciones_entrada'],
@@ -246,9 +246,11 @@ class RegistradorOrden {
 		if ($id_entrada) {
 			
 			redireccion::redireccionar ( 'inserto', $id_entrada [0] [0] );
+			exit();
 		} else {
 			
 			redireccion::redireccionar ( 'noInserto' );
+			exit();
 		}
 	}
 	function resetForm() {

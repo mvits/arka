@@ -45,8 +45,6 @@ class registrarForm {
 		
 		$seccion ['tiempo'] = $tiempo;
 		
-
-		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
 		$atributos ['id'] = $esteCampo;
@@ -120,9 +118,9 @@ class registrarForm {
 				$esteCampo = 'botonAnular';
 				$atributos ["id"] = $esteCampo;
 				$atributos ["tabIndex"] = $tab;
-				$atributos ["tipo"] = '';
+				$atributos ["tipo"] = 'boton';
 				// submit: no se coloca si se desea un tipo button genérico
-				$atributos ['submit'] = 'true';
+				$atributos ['submit'] = true;
 				$atributos ["estiloMarco"] = '';
 				$atributos ["estiloBoton"] = 'jqueryui';
 				// verificar: true para verificar el formulario antes de pasarlo al servidor.
@@ -135,6 +133,7 @@ class registrarForm {
 				// Aplica atributos globales al control
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->campoBoton ( $atributos );
+				unset ( $atributos );
 				// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 				
 				echo $this->miFormulario->division ( 'fin' );

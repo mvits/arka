@@ -80,8 +80,8 @@ class registrarForm {
 			$clase = '';
 		}
 		
-		if (isset ( $_REQUEST ['proveedor'] ) && $_REQUEST ['proveedor'] != '') {
-			$proveedor = $_REQUEST ['proveedor'];
+		if (isset ( $_REQUEST ['id_proveedor'] ) && $_REQUEST ['id_proveedor'] != '') {
+			$proveedor = $_REQUEST ['id_proveedor'];
 		} else {
 			$proveedor = '';
 		}

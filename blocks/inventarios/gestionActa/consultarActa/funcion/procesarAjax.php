@@ -181,4 +181,39 @@ if ($_REQUEST ['funcion'] == 'consultarInfoContrato') {
 }
 
 
+
+
+if ($_REQUEST ['funcion'] == 'consultaProveedor') {
+
+
+
+
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_Proveedores', $_GET ['query'] );
+
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+	foreach ( $resultadoItems as $key => $values ) {
+		$keys = array (
+				'value',
+				'data'
+		);
+		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
+	}
+
+	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
