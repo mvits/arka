@@ -355,16 +355,22 @@ class RegistradorActa {
 								
 								$datos [$i] ['Tipo_poliza'] = $objPHPExcel->getActiveSheet ()->getCell ( 'H' . $i )->getCalculatedValue ();
 								
-								$datos [$i] ['Fecha_Inicio_Poliza'] = $objPHPExcel->getActiveSheet ()->getCell ( 'I' . $i )->getCalculatedValue ();
+								$datos [$i] ['Fecha_Inicio_Poliza_Anio'] = $objPHPExcel->getActiveSheet ()->getCell ( 'I' . $i )->getCalculatedValue ();
 								
-								$datos [$i] ['Fecha_Final_Poliza'] = $objPHPExcel->getActiveSheet ()->getCell ( 'J' . $i )->getCalculatedValue ();
+								$datos [$i] ['Fecha_Inicio_Poliza_Mes'] = $objPHPExcel->getActiveSheet ()->getCell ( 'J' . $i )->getCalculatedValue ();
 								
-								$datos [$i] ['Marca'] = $objPHPExcel->getActiveSheet ()->getCell ( 'K' . $i )->getCalculatedValue ();
+								$datos [$i] ['Fecha_Inicio_Poliza_Dia'] = $objPHPExcel->getActiveSheet ()->getCell ( 'K' . $i )->getCalculatedValue ();
 								
-								$datos [$i] ['Serie'] = $objPHPExcel->getActiveSheet ()->getCell ( 'L' . $i )->getCalculatedValue ();
+								$datos [$i] ['Fecha_Final_Poliza_Anio'] = $objPHPExcel->getActiveSheet ()->getCell ( 'L' . $i )->getCalculatedValue ();
+								
+								$datos [$i] ['Fecha_Final_Poliza_Mes'] = $objPHPExcel->getActiveSheet ()->getCell ( 'M' . $i )->getCalculatedValue ();
+								
+								$datos [$i] ['Fecha_Final_Poliza_Dia'] = $objPHPExcel->getActiveSheet ()->getCell ( 'N' . $i )->getCalculatedValue ();
+								
+								$datos [$i] ['Marca'] = $objPHPExcel->getActiveSheet ()->getCell ( 'O' . $i )->getCalculatedValue ();
+								
+								$datos [$i] ['Serie'] = $objPHPExcel->getActiveSheet ()->getCell ( 'P' . $i )->getCalculatedValue ();
 							}
-							
-							var_dump ( $datos );
 							
 							for($i = 2; $i <= $highestRow; $i ++) {
 								
@@ -454,33 +460,13 @@ class RegistradorActa {
 									);
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
-									echo $cadenaSql;
-									exit ();
+									
 									$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 								} else if ($datos [$i] ['Tipo_Bien'] == 3) {
 									
 									if ($datos [$i] ['Tipo_poliza'] == 0) {
 										
-										// $arreglo = array (
-										// $fechaActual,
-										// $_REQUEST ['nivel'],
-										// $_REQUEST ['id_tipo_bien'],
-										// $_REQUEST ['descripcion'],
-										// $_REQUEST ['cantidad'] = 1,
-										// $_REQUEST ['unidad'],
-										// $_REQUEST ['valor'],
-										// $_REQUEST ['iva'],
-										// $_REQUEST ['cantidad'] * $_REQUEST ['valor'] /*$_REQUEST ['subtotal_sin_iva']*/,
-										// $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva/*$_REQUEST ['total_iva']*/,
-										// round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva )/*$_REQUEST ['total_iva_con']*/,
-										// $_REQUEST ['tipo_poliza'],
-										// NULL,
-										// NULL,
-										// ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
-										// ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
-										// $id_acta [0] [0]
-										// );
-										
+												
 										$arreglo = array (
 												$fechaActual,
 												$datos [$i] ['Nivel'],
@@ -501,28 +487,7 @@ class RegistradorActa {
 												$id_acta [0] [0] 
 										);
 										
-										// $arreglo = array (
-										// $fechaActual,
-										// $_REQUEST ['nivel'],
-										// $_REQUEST ['id_tipo_bien'],
-										// $_REQUEST ['descripcion'],
-										// $_REQUEST ['cantidad'] = 1,
-										// $_REQUEST ['unidad'],
-										// $_REQUEST ['valor'],
-										// $_REQUEST ['iva'],
-										// $_REQUEST ['ajuste'] = 0,
-										// $_REQUEST ['bodega'],
-										// $_REQUEST ['subtotal_sin_iva'],
-										// $_REQUEST ['total_iva'],
-										// $_REQUEST ['total_iva_con'],
-										// $_REQUEST ['tipo_poliza'],
-										// 'NULL',
-										// 'NULL',
-										// ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
-										// ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
-										// $_REQUEST ['entrada'],
-										// $elemento_id_max
-										// );
+							
 									} else if ($datos [$i] ['Tipo_poliza'] == 1) {
 										
 										$arreglo = array (
@@ -538,52 +503,21 @@ class RegistradorActa {
 												1 * $datos [$i] ['Valor_Precio'] * $IVA,
 												round ( 1 * $datos [$i] ['Valor_Precio'] * $IVA ) + (1 * $datos [$i] ['Valor_Precio']),
 												$datos [$i] ['Tipo_poliza'],
-												date(trim ( $datos [$i] ['Fecha_Inicio_Poliza'], "'" )),
-												date(trim ( $datos [$i] ['Fecha_Final_Poliza'], "'" )),
+												$datos [$i] ['Fecha_Inicio_Poliza_Anio'] . "-" . $datos [$i] ['Fecha_Inicio_Poliza_Mes'] . "-" . $datos [$i] ['Fecha_Inicio_Poliza_Dia'],
+												$datos [$i] ['Fecha_Final_Poliza_Anio'] . "-" . $datos [$i] ['Fecha_Final_Poliza_Mes'] . "-" . $datos [$i] ['Fecha_Final_Poliza_Dia'],
 												(is_null ( $datos [$i] ['Marca'] ) == true) ? NULL : trim ( $datos [$i] ['Marca'], "'" ),
 												(is_null ( $datos [$i] ['Serie'] ) == true) ? NULL : trim ( $datos [$i] ['Serie'], "'" ),
 												$id_acta [0] [0] 
 										);
-										
-										// $arreglo = array (
-										// $fechaActual,
-										// $_REQUEST ['nivel'],
-										// $_REQUEST ['id_tipo_bien'],
-										// $_REQUEST ['descripcion'],
-										// $_REQUEST ['cantidad'] = 1,
-										// $_REQUEST ['unidad'],
-										// $_REQUEST ['valor'],
-										// $_REQUEST ['iva'],
-										// $_REQUEST ['ajuste'] = 0,
-										// $_REQUEST ['bodega'],
-										// $_REQUEST ['subtotal_sin_iva'],
-										// $_REQUEST ['total_iva'],
-										// $_REQUEST ['total_iva_con'],
-										// $_REQUEST ['tipo_poliza'],
-										// $_REQUEST ['fecha_inicio'],
-										// $_REQUEST ['fecha_final'],
-										// ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
-										// ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
-										// $_REQUEST ['entrada'],
-										// $elemento_id_max
-										// );
+					
 									}
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
-									echo $cadenaSql;
-									exit ();
-									
+																	
 									$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 								}
 								
-								// $cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_masivo', $arreglo );
 								
-								// $elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-								
-								// $_REQUEST ['cantidad'] = $datos [$i] ['Cantidad'];
-								
-								// $_REQUEST ['serie'] = trim ( $datos [$i] ['Serie'], "'" );
-								// $ingreso = 1;
 								exit ();
 								$placa = date ( 'Ymd' ) . "00000";
 								
