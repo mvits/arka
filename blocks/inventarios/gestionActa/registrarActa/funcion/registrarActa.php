@@ -126,9 +126,9 @@ class RegistradorActa {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarActa', $datosActa );
 		
 		$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-// 		var_dump ( $id_acta );
-// 		var_dump ( $_REQUEST );
-
+		// var_dump ( $id_acta );
+		// var_dump ( $_REQUEST );
+		
 		switch ($_REQUEST ['tipo_registro']) {
 			
 			case '1' :
@@ -234,14 +234,14 @@ class RegistradorActa {
 					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				}
 				
-				echo "Ya registra elementos Indiciduales Acta de Recibido";
-				var_dump ( $elemento );
-				exit ();
-				echo $cadenaSql;
-				exit ();
+				$datos = array (
+						$id_acta [0] [0],
+						$fechaActual 
+				);
+				
 				if ($elemento) {
 					
-					redireccion::redireccionar ( 'inserto', $datos, $_REQUEST ['datosGenerales'] );
+					redireccion::redireccionar ( 'inserto', $datos );
 					exit ();
 				} else {
 					
@@ -253,6 +253,13 @@ class RegistradorActa {
 				break;
 			case '2' :
 				{
+					
+					$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
+					// ** Ruta a directorio ******
+					$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionActa/";
+					$rutaBloque .= $esteBloque ['nombre'];
+					$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/gestionEntradas/" . $esteBloque ['nombre'];
+					
 					$ingreso = 0;
 					
 					$ruta_eliminar_xlsx = $rutaBloque . "/archivo/*.xlsx";
@@ -267,6 +274,8 @@ class RegistradorActa {
 					}
 					
 					$i = 0;
+					var_dump ( $_FILES );
+					
 					foreach ( $_FILES as $key => $values ) {
 						
 						$archivo [$i] = $_FILES [$key];
@@ -274,7 +283,7 @@ class RegistradorActa {
 					}
 					
 					$archivo = $archivo [0];
-					
+					var_dump ( $archivo );
 					$trozos = explode ( ".", $archivo ['name'] );
 					$extension = end ( $trozos );
 					
@@ -289,11 +298,12 @@ class RegistradorActa {
 							
 							if ($archivo1 != "") {
 								// guardamos el archivo a la carpeta files
-								$ruta_absoluta = $rutaBloque . "/archivo/" . $prefijo . "_" . $archivo1;
+								$ruta_absoluta = $rutaBloque . "/archivo/" . $archivo1;
+								// echo $ruta_absoluta;exit;
 								
 								if (copy ( $archivo ['tmp_name'], $ruta_absoluta )) {
 									$status = "Archivo subido: <b>" . $archivo1 . "</b>";
-									$destino1 = $host . "/archivo/" . $prefijo . "_" . $archivo1;
+									// $destino1 = $host . "/archivo/" . $prefijo . "_" . $archivo1;
 								} else {
 									$status = "Error al subir el archivo";
 									echo $status;
@@ -354,8 +364,16 @@ class RegistradorActa {
 								$datos [$i] ['Serie'] = $objPHPExcel->getActiveSheet ()->getCell ( 'L' . $i )->getCalculatedValue ();
 							}
 							
+							var_dump ( $datos );
+							
 							for($i = 2; $i <= $highestRow; $i ++) {
 								
+								// "1";0;"Exento";
+								// "2";0;"Tarifa de Cero";
+								// "3";0.05;"5%";
+								// "4";0.04;"4%";
+								// "5";0.1;"10%";
+								// "6";0.16;"16%";
 								switch ($datos [$i] ['Iva']) {
 									
 									case "1" :
@@ -395,44 +413,7 @@ class RegistradorActa {
 										break;
 								}
 								
-								$cadenaSql = $this->miSql->getCadenaSql ( 'idElementoMax' );
-								
-								$elemento_id_max = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-								
-								$elemento_id_max = $elemento_id_max [0] [0] + 1;
-								
-								// $arreglo = array (
-								// $fechaActual,
-								// $datos [$i] ['Nivel'],
-								// $datos [$i] ['Tipo_Bien'],
-								// trim ( $datos [$i] ['Descripcion'], "'" ),
-								// $datos [$i] ['Cantidad'],
-								// trim ( $datos [$i] ['Unidad_Medida'], "'" ),
-								// $datos [$i] ['Valor_Precio'],
-								// $datos [$i] ['Ajuste'],
-								// $datos [$i] ['Bodega'],
-								// $datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'],
-								// $datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'] * $datos [$i] ['Iva'],
-								// round ( $datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'] * $datos [$i] ['Iva'] ) + ($datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio']),
-								// $datos [$i] ['Tipo_poliza'],
-								// trim ( $datos [$i] ['Fecha_Inicio_Poliza'], "'" ),
-								// trim ( $datos [$i] ['Fecha_Final_Poliza'], "'" ),
-								// trim ( $datos [$i] ['Marca'], "'" ),
-								// trim ( $datos [$i] ['Serie'], "'" ),
-								// $datos [$i] ['Entrada']
-								// );
-								
 								if ($datos [$i] ['Tipo_Bien'] == 1) {
-									
-									$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_placa', '1' );
-									$placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-									
-									// "1";0;"Exento";
-									// "2";0;"Tarifa de Cero";
-									// "3";0.05;"5%";
-									// "4";0.04;"4%";
-									// "5";0.1;"10%";
-									// "6";0.16;"16%";
 									
 									$arreglo = array (
 											$fechaActual,
@@ -443,42 +424,17 @@ class RegistradorActa {
 											trim ( $datos [$i] ['Unidad_Medida'], "'" ),
 											$datos [$i] ['Valor_Precio'],
 											$datos [$i] ['Iva'],
-											$_REQUEST ['ajuste'] = 0,
-											$_REQUEST ['bodega'],
 											$datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'],
 											$datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'] * $IVA,
 											round ( $datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'] * $IVA ) + ($datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio']),
-											(is_null ( $datos [$i] ['Marca'] ) == true) ? 'null' : trim ( $datos [$i] ['Marca'], "'" ),
-											(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
-											$_REQUEST ['entrada'],
-											$elemento_id_max 
+											(is_null ( $datos [$i] ['Marca'] ) == true) ? null : trim ( $datos [$i] ['Marca'], "'" ),
+											(is_null ( $datos [$i] ['Serie'] ) == true) ? null : trim ( $datos [$i] ['Serie'], "'" ),
+											$id_acta [0] [0] 
 									);
-									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 									
-									$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 								} else if ($datos [$i] ['Tipo_Bien'] == 2) {
-									$datos [$i] ['Cantidad'] = 1;
-									
-									// $arreglo = array (
-									// $fechaActual,
-									// $_REQUEST ['nivel'],
-									// $_REQUEST ['id_tipo_bien'],
-									// $_REQUEST ['descripcion'],
-									// $_REQUEST ['cantidad'] = 1,
-									// $_REQUEST ['unidad'],
-									// $_REQUEST ['valor'],
-									// $_REQUEST ['iva'],
-									// $_REQUEST ['ajuste'] = 0,
-									// $_REQUEST ['bodega'],
-									// $_REQUEST ['subtotal_sin_iva'],
-									// $_REQUEST ['total_iva'],
-									// $_REQUEST ['total_iva_con'],
-									// ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
-									// ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
-									// $_REQUEST ['entrada'],
-									// $elemento_id_max
-									// );
 									
 									$arreglo = array (
 											$fechaActual,
@@ -489,24 +445,41 @@ class RegistradorActa {
 											trim ( $datos [$i] ['Unidad_Medida'], "'" ),
 											$datos [$i] ['Valor_Precio'],
 											$datos [$i] ['Iva'],
-											$_REQUEST ['ajuste'] = 0,
-											$_REQUEST ['bodega'],
 											1 * $datos [$i] ['Valor_Precio'],
 											1 * $datos [$i] ['Valor_Precio'] * $IVA,
 											round ( 1 * $datos [$i] ['Valor_Precio'] * $IVA ) + (1 * $datos [$i] ['Valor_Precio']),
-											(is_null ( $datos [$i] ['Marca'] ) == true) ? 'null' : trim ( $datos [$i] ['Marca'], "'" ),
-											(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
-											$_REQUEST ['entrada'],
-											$elemento_id_max 
+											(is_null ( $datos [$i] ['Marca'] ) == true) ? null : trim ( $datos [$i] ['Marca'], "'" ),
+											(is_null ( $datos [$i] ['Serie'] ) == true) ? null : trim ( $datos [$i] ['Serie'], "'" ),
+											$id_acta [0] [0] 
 									);
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
-									
+									echo $cadenaSql;
+									exit ();
 									$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 								} else if ($datos [$i] ['Tipo_Bien'] == 3) {
 									
-									$datos [$i] ['Cantidad'] = 1;
 									if ($datos [$i] ['Tipo_poliza'] == 0) {
+										
+										// $arreglo = array (
+										// $fechaActual,
+										// $_REQUEST ['nivel'],
+										// $_REQUEST ['id_tipo_bien'],
+										// $_REQUEST ['descripcion'],
+										// $_REQUEST ['cantidad'] = 1,
+										// $_REQUEST ['unidad'],
+										// $_REQUEST ['valor'],
+										// $_REQUEST ['iva'],
+										// $_REQUEST ['cantidad'] * $_REQUEST ['valor'] /*$_REQUEST ['subtotal_sin_iva']*/,
+										// $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva/*$_REQUEST ['total_iva']*/,
+										// round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva )/*$_REQUEST ['total_iva_con']*/,
+										// $_REQUEST ['tipo_poliza'],
+										// NULL,
+										// NULL,
+										// ($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
+										// ($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
+										// $id_acta [0] [0]
+										// );
 										
 										$arreglo = array (
 												$fechaActual,
@@ -517,18 +490,15 @@ class RegistradorActa {
 												trim ( $datos [$i] ['Unidad_Medida'], "'" ),
 												$datos [$i] ['Valor_Precio'],
 												$datos [$i] ['Iva'],
-												$_REQUEST ['ajuste'] = 0,
-												$_REQUEST ['bodega'],
 												1 * $datos [$i] ['Valor_Precio'],
 												1 * $datos [$i] ['Valor_Precio'] * $IVA,
 												round ( 1 * $datos [$i] ['Valor_Precio'] * $IVA ) + (1 * $datos [$i] ['Valor_Precio']),
 												$datos [$i] ['Tipo_poliza'],
-												'NULL',
-												'NULL',
-												(is_null ( $datos [$i] ['Marca'] ) == true) ? 'null' : trim ( $datos [$i] ['Marca'], "'" ),
-												(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
-												$_REQUEST ['entrada'],
-												$elemento_id_max 
+												NULL,
+												NULL,
+												(is_null ( $datos [$i] ['Marca'] ) == true) ? null : trim ( $datos [$i] ['Marca'], "'" ),
+												(is_null ( $datos [$i] ['Serie'] ) == true) ? null : trim ( $datos [$i] ['Serie'], "'" ),
+												$id_acta [0] [0] 
 										);
 										
 										// $arreglo = array (
@@ -564,18 +534,15 @@ class RegistradorActa {
 												trim ( $datos [$i] ['Unidad_Medida'], "'" ),
 												$datos [$i] ['Valor_Precio'],
 												$datos [$i] ['Iva'],
-												$_REQUEST ['ajuste'] = 0,
-												$_REQUEST ['bodega'],
 												1 * $datos [$i] ['Valor_Precio'],
 												1 * $datos [$i] ['Valor_Precio'] * $IVA,
 												round ( 1 * $datos [$i] ['Valor_Precio'] * $IVA ) + (1 * $datos [$i] ['Valor_Precio']),
 												$datos [$i] ['Tipo_poliza'],
-												trim ( $datos [$i] ['Fecha_Inicio_Poliza'], "'" ),
-												trim ( $datos [$i] ['Fecha_Final_Poliza'], "'" ),
-												(is_null ( $datos [$i] ['Marca'] ) == true) ? 'null' : trim ( $datos [$i] ['Marca'], "'" ),
-												(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
-												$_REQUEST ['entrada'],
-												$elemento_id_max 
+												date(trim ( $datos [$i] ['Fecha_Inicio_Poliza'], "'" )),
+												date(trim ( $datos [$i] ['Fecha_Final_Poliza'], "'" )),
+												(is_null ( $datos [$i] ['Marca'] ) == true) ? NULL : trim ( $datos [$i] ['Marca'], "'" ),
+												(is_null ( $datos [$i] ['Serie'] ) == true) ? NULL : trim ( $datos [$i] ['Serie'], "'" ),
+												$id_acta [0] [0] 
 										);
 										
 										// $arreglo = array (
@@ -603,6 +570,8 @@ class RegistradorActa {
 									}
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
+									echo $cadenaSql;
+									exit ();
 									
 									$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 								}
@@ -615,7 +584,7 @@ class RegistradorActa {
 								
 								// $_REQUEST ['serie'] = trim ( $datos [$i] ['Serie'], "'" );
 								// $ingreso = 1;
-								
+								exit ();
 								$placa = date ( 'Ymd' ) . "00000";
 								
 								$cadenaSql = $this->miSql->getCadenaSql ( 'buscar_repetida_placa', $placa );
