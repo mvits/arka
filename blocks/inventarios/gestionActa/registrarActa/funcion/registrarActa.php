@@ -126,8 +126,8 @@ class RegistradorActa {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarActa', $datosActa );
 		
 		$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		var_dump ( $id_acta );
-		var_dump ( $_REQUEST );
+// 		var_dump ( $id_acta );
+// 		var_dump ( $_REQUEST );
 
 		switch ($_REQUEST ['tipo_registro']) {
 			
@@ -231,10 +231,11 @@ class RegistradorActa {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
 					
-// 					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				}
 				
-				var_dump ( $arreglo );
+				echo "Ya registra elementos Indiciduales Acta de Recibido";
+				var_dump ( $elemento );
 				exit ();
 				echo $cadenaSql;
 				exit ();

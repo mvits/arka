@@ -259,7 +259,7 @@ class Sql extends \Sql {
 				
 				$cadenaSql .= "'" . $variable [16] . "') ";
 				$cadenaSql .= "RETURNING  id_elemento_ac; ";
-				echo $cadenaSql;
+				
 				break;
 			// --------------------------------
 			
