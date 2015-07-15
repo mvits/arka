@@ -531,12 +531,12 @@ class registrarForm {
 					$atributos ['estilo'] = 'jqueryui';
 					$atributos ['marco'] = true;
 					$atributos ['estiloMarco'] = '';
-					$atributos ["etiquetaObligatorio"] = true;
+					$atributos ["etiquetaObligatorio"] = false;
 					$atributos ['columnas'] = 1;
 					$atributos ['dobleLinea'] = 0;
 					$atributos ['tabIndex'] = $tab;
 					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-					$atributos ['validar'] = 'required';
+					$atributos ['validar'] = '  ';
 					$atributos ['textoFondo'] = 'Ingrese Mínimo 3 Caracteres de Búsqueda';
 					
 					if (isset ( $_REQUEST [$esteCampo] )) {
@@ -1395,7 +1395,7 @@ class registrarForm {
 					$atributos ['nombre'] = $esteCampo;
 					$atributos ['id'] = $esteCampo;
 					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-					$atributos ["etiquetaObligatorio"] = true;
+					$atributos ["etiquetaObligatorio"] = false;
 					$atributos ['tab'] = $tab ++;
 					$atributos ['anchoEtiqueta'] = 180;
 					$atributos ['evento'] = '';
@@ -1410,7 +1410,7 @@ class registrarForm {
 					$atributos ['ajax_function'] = "";
 					$atributos ['ajax_control'] = $esteCampo;
 					$atributos ['estilo'] = "jqueryui";
-					$atributos ['validar'] = "required";
+					$atributos ['validar'] = " ";
 					$atributos ['limitar'] = true;
 					$atributos ['anchoCaja'] = 25;
 					$atributos ['miEvento'] = '';
