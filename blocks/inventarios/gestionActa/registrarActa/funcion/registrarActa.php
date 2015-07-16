@@ -58,10 +58,28 @@ class RegistradorActa {
 		
 		foreach ( $_FILES as $key => $values ) {
 			
-			$archivo = $_FILES [$key];
+			$archivo [] = $_FILES [$key];
 		}
 		
+		$archivoImagen = $archivo [1];
+		
+		
+		
+		
+		
+		if ($archivoImagen ['error'] == 0) {
+			
+			if ($archivoImagen ['type'] != 'image/jpeg') {
+				redireccion::redireccionar ( 'noFormatoImagen' );
+				
+				exit ();
+			}
+		}
+		
+		
 		if ($_FILES ['documentoSoporte'] ['name'] != '') {
+			
+			$archivo = $archivo [2];
 			
 			// obtenemos los datos del archivo
 			$tamano = $archivo ['size'];
@@ -110,8 +128,8 @@ class RegistradorActa {
 				'dependencia' => $_REQUEST ['dependencia'],
 				'fecha_registro' => $fechaActual,
 				'tipo_bien' => '0',
-				'nitproveedor' => $_REQUEST ['id_proveedor'],
-				'ordenador' => $_REQUEST ['id_ordenador'],
+				'nitproveedor' => ($_REQUEST ['id_proveedor'] != '') ? $_REQUEST ['id_proveedor'] : null,
+				'ordenador' => ($_REQUEST ['id_ordenador'] != '') ? $_REQUEST ['id_ordenador'] : null,
 				'fecha_revision' => $_REQUEST ['fecha_revision'],
 				'revisor' => $_REQUEST ['revisor'],
 				'observacion' => $_REQUEST ['observacionesActa'],
@@ -239,6 +257,28 @@ class RegistradorActa {
 						$fechaActual 
 				);
 				
+				//
+				foreach ( $_FILES as $key ) {
+					
+					$archivo [] = $key;
+				}
+				
+				$archivo = $archivo [1];
+				
+				if ($archivo ['type'] == 'image/jpeg') {
+					
+					$data = base64_encode ( file_get_contents ( $archivo ['tmp_name'] ) );
+					
+					$arreglo = array (
+							"elemento" => $elemento [0] [0],
+							"imagen" => $data 
+					);
+					
+					$cadenaSql = $this->miSql->getCadenaSql ( 'ElementoImagen', $arreglo );
+					
+					$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				}
+				
 				if ($elemento) {
 					
 					redireccion::redireccionar ( 'inserto', $datos );
@@ -274,7 +314,6 @@ class RegistradorActa {
 					}
 					
 					$i = 0;
-					var_dump ( $_FILES );
 					
 					foreach ( $_FILES as $key => $values ) {
 						
@@ -283,7 +322,7 @@ class RegistradorActa {
 					}
 					
 					$archivo = $archivo [0];
-					var_dump ( $archivo );
+					
 					$trozos = explode ( ".", $archivo ['name'] );
 					$extension = end ( $trozos );
 					
@@ -461,12 +500,11 @@ class RegistradorActa {
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 									
-									$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 								} else if ($datos [$i] ['Tipo_Bien'] == 3) {
 									
 									if ($datos [$i] ['Tipo_poliza'] == 0) {
 										
-												
 										$arreglo = array (
 												$fechaActual,
 												$datos [$i] ['Nivel'],
@@ -486,8 +524,6 @@ class RegistradorActa {
 												(is_null ( $datos [$i] ['Serie'] ) == true) ? null : trim ( $datos [$i] ['Serie'], "'" ),
 												$id_acta [0] [0] 
 										);
-										
-							
 									} else if ($datos [$i] ['Tipo_poliza'] == 1) {
 										
 										$arreglo = array (
@@ -509,137 +545,22 @@ class RegistradorActa {
 												(is_null ( $datos [$i] ['Serie'] ) == true) ? NULL : trim ( $datos [$i] ['Serie'], "'" ),
 												$id_acta [0] [0] 
 										);
-					
 									}
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
-																	
-									$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									
+									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 								}
-								
-								
-								exit ();
-								$placa = date ( 'Ymd' ) . "00000";
-								
-								$cadenaSql = $this->miSql->getCadenaSql ( 'buscar_repetida_placa', $placa );
-								
-								$num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-								
-								$cadenaSql = $this->miSql->getCadenaSql ( 'idElementoMaxIndividual' );
-								
-								$elemento_id_max_indiv = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-								
-								$elemento_id_max_indiv = $elemento_id_max_indiv [0] [0] + 1;
-								
-								$sumaplaca = 0;
-								
-								switch ($datos [$i] ['Tipo_Bien']) {
-									
-									case '1' :
-										$_REQUEST ['cantidad'] = $datos [$i] ['Cantidad'];
-										
-										break;
-									case '2' :
-										$_REQUEST ['cantidad'] = 1;
-										
-										break;
-									case '3' :
-										$_REQUEST ['cantidad'] = 1;
-										
-										break;
-								}
-								
-								if ($num_placa [0] [0] == 0) {
-									
-									for($j = 0; $j < $_REQUEST ['cantidad']; $j ++) {
-										$arregloElementosInv = array (
-												$fechaActual,
-												($datos [$i] ['Tipo_Bien'] == 1) ? NULL : $placa + $sumaplaca,
-												(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
-												$elemento [0] [0],
-												$elemento_id_max_indiv 
-										);
-										
-										$sumaplaca = ($datos [$i] ['Tipo_Bien'] == 1) ? $sumaplaca : $sumaplaca ++;
-										
-										$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
-										
-										$elemento_id [$j] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-										
-										$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
-									}
-								} else if ($num_placa [0] [0] != 0) {
-									
-									$cadenaSql = $this->miSql->getCadenaSql ( 'buscar_placa_maxima', $placa );
-									
-									$num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-									
-									$placa = $num_placa [0] [0];
-									$sumaplaca = 1;
-									
-									for($j = 1; $j <= $_REQUEST ['cantidad']; $j ++) {
-										$arregloElementosInv = array (
-												$fechaActual,
-												($datos [$i] ['Tipo_Bien'] == 1) ? NULL : $placa + $sumaplaca,
-												(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
-												$elemento [0] [0],
-												$elemento_id_max_indiv 
-										);
-										
-										$sumaplaca = ($datos [$i] ['Tipo_Bien'] == 1) ? $sumaplaca : $sumaplaca ++;
-										
-										$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
-										
-										$elemento_id [$j] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-										
-										$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
-									}
-								}
-								
-								// $cadenaSql = $this->miSql->getCadenaSql ( 'buscar_repetida_placa', $placa );
-								
-								// $num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-								
-								// if ($num_placa [0] [0] == 0) {
-								
-								// for($i = 0; $i < $_REQUEST ['cantidad']; $i ++) {
-								// $arregloElementosInv = array (
-								// $fechaActual,
-								// $placa + $i,
-								// $_REQUEST ['serie'],
-								// $elemento [0] [0]
-								// );
-								
-								// $cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
-								
-								// $elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-								// }
-								// } else if ($num_placa [0] [0] != 0) {
-								
-								// $cadenaSql = $this->miSql->getCadenaSql ( 'buscar_placa_maxima', $placa );
-								
-								// $num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-								
-								// $placa = $num_placa [0] [0];
-								
-								// for($i = 1; $i <= $_REQUEST ['cantidad']; $i ++) {
-								// $arregloElementosInv = array (
-								// $fechaActual,
-								// $placa + $i,
-								// $_REQUEST ['serie'],
-								// $elemento [0] [0]
-								// );
-								
-								// $cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
-								
-								// $elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-								// }
-								// }
 							}
 							
-							if ($elemento) {
+							$datos = array (
+									$id_acta [0] [0],
+									$fechaActual 
+							);
+							
+							if ($elemento_id && $id_acta) {
 								
-								redireccion::redireccionar ( 'inserto_M', $fechaActual );
+								redireccion::redireccionar ( 'inserto', $datos );
 								exit ();
 							} else {
 								
@@ -650,43 +571,12 @@ class RegistradorActa {
 					} else {
 						
 						redireccion::redireccionar ( 'noExtension' );
+						
+						exit ();
 					}
 				}
 				
 				break;
-		}
-		
-		// Registro de Items
-		// foreach ( $items as $contenido ) {
-		
-		// $datosItems = array (
-		// $id_acta [0] [0],
-		// $contenido ['item'],
-		// $contenido ['descripcion'],
-		// $contenido ['cantidad'],
-		// $contenido ['valor_unitario'],
-		// $contenido ['cantidad'] * $contenido ['valor_unitario']
-		// );
-		
-		// $cadenaSql = $this->miSql->getCadenaSql ( 'insertarItems', $datosItems );
-		
-		// $items = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-		// }
-		
-		// $cadenaSql = $this->miSql->getCadenaSql ( 'limpiar_tabla_items', $_REQUEST ['seccion'] );
-		// $resultado_secuencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-		
-		$datos = array (
-				$id_acta [0] [0],
-				$fechaActual 
-		);
-		
-		if ($items && $id_acta) {
-			
-			redireccion::redireccionar ( 'inserto', $datos );
-		} else {
-			
-			redireccion::redireccionar ( 'noInserto', $datos );
 		}
 	}
 	function resetForm() {

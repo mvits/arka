@@ -516,6 +516,7 @@ function datosOrdenador(elem, request, response){
         	    		datosOrdenador();
         			}else{
         				$("#<?php echo $this->campoSeguro('nombreOrdenador')?>").val('');
+        				$("#<?php echo $this->campoSeguro('id_ordenador')?>").val('');
         				}
         		      });
 
@@ -537,10 +538,30 @@ function datosOrdenador(elem, request, response){
         	
     	$('#<?php echo $this->campoSeguro('nitproveedor') ?>').val($('#<?php echo $this->campoSeguro('nitproveedor') ?>').val().toUpperCase());
 
+
+
+
     	
             });
 
 
+
+        $( "#<?php echo $this->campoSeguro('nitproveedor')?>" ).change(function() {
+
+
+            
+        	if($('#<?php echo $this->campoSeguro('nitproveedor') ?>').val()==''){
+
+        		$("#<?php echo $this->campoSeguro('id_proveedor') ?>").val('');
+
+            	
+
+
+            	}
+        
+        	
+                });
+        
 
 
         $("#<?php echo $this->campoSeguro('nitproveedor') ?>").autocomplete({

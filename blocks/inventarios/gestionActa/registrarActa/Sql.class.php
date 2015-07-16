@@ -214,16 +214,6 @@ class Sql extends \Sql {
 				
 				break;
 			
-			// INSERT INTO elemento_acta_recibido(
-			// id_elemento_ac, fecha_registro, nivel, tipo_bien, descripcion,
-			// cantidad, unidad, valor, iva, subtotal_sin_iva, total_iva, total_iva_con,
-			// tipo_poliza, fecha_inicio_pol, fecha_final_pol, marca, serie,
-			// id_acta, estado)
-			// VALUES (?, ?, ?, ?, ?,
-			// ?, ?, ?, ?, ?, ?, ?,
-			// ?, ?, ?, ?, ?,
-			// ?, ?);
-			
 			case "ingresar_elemento_tipo_2" :
 				$cadenaSql = " INSERT INTO ";
 				$cadenaSql .= " elemento_acta_recibido(";
@@ -261,6 +251,18 @@ class Sql extends \Sql {
 				$cadenaSql .= "RETURNING  id_elemento_ac; ";
 				
 				break;
+			
+			case "ElementoImagen" :
+				
+				$cadenaSql = " 	INSERT INTO asignar_imagen_acta(";
+				$cadenaSql .= " id_elemento_acta, imagen ) ";
+				$cadenaSql .= " VALUES (";
+				$cadenaSql .= "'" . $variable ['elemento'] . "',";
+				$cadenaSql .= "'" . $variable ['imagen'] . "') ";
+				$cadenaSql .= "RETURNING id_imagen; ";
+				
+				break;
+			
 			// --------------------------------
 			
 			case "consultarCompras" :
@@ -466,7 +468,8 @@ class Sql extends \Sql {
 			
 			// break;
 			
-			/* ******* */
+			/* ***** */
+			
 			case "insertarActa" :
 				$cadenaSql = " INSERT INTO registro_actarecibido( ";
 				$cadenaSql .= " sede, dependencia, fecha_recibido, tipo_bien,
@@ -478,8 +481,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['dependencia'] . "',";
 				$cadenaSql .= "'" . $variable ['fecha_registro'] . "',";
 				$cadenaSql .= "'" . $variable ['tipo_bien'] . "',";
-				$cadenaSql .= "'" . $variable ['nitproveedor'] . "',";
-				$cadenaSql .= "'" . $variable ['ordenador'] . "',";
+				$cadenaSql .= (is_null ( $variable ['nitproveedor'] ) == true) ? ' NULL , ' : "'" . $variable ['nitproveedor'] . "',";
+				$cadenaSql .= (is_null ( $variable ['ordenador'] ) == true) ? ' NULL , ' : "'" . $variable ['ordenador'] . "',";
 				$cadenaSql .= "'" . $variable ['tipo_orden'] . "',";
 				$cadenaSql .= "'" . $variable ['fecha_revision'] . "',";
 				$cadenaSql .= "'" . $variable ['revisor'] . "',";
