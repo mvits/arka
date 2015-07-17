@@ -348,6 +348,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " tipo_orden ";
 				$cadenaSql .= " WHERE to_estado='1';";
+				
 				break;
 			
 			case "tipoOrden_nombre" :

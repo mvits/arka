@@ -58,29 +58,27 @@ class RegistradorActa {
 		
 		foreach ( $_FILES as $key => $values ) {
 			
-			$archivo [] = $_FILES [$key];
+			$archivo = $_FILES [$key];
 		}
 		
-		$archivoImagen = $archivo [1];
+// 		$archivoImagen = $archivo [1];
 		
 		
 		
 		
 		
-		if ($archivoImagen ['error'] == 0) {
+// 		if ($archivoImagen ['error'] == 0) {
 			
-			if ($archivoImagen ['type'] != 'image/jpeg') {
-				redireccion::redireccionar ( 'noFormatoImagen' );
+// 			if ($archivoImagen ['type'] != 'image/jpeg') {
+// 				redireccion::redireccionar ( 'noFormatoImagen' );
 				
-				exit ();
-			}
-		}
+// 				exit ();
+// 			}
+// 		}
 		
 		
 		if ($_FILES ['documentoSoporte'] ['name'] != '') {
-			
-			$archivo = $archivo [2];
-			
+		
 			// obtenemos los datos del archivo
 			$tamano = $archivo ['size'];
 			$tipo = $archivo ['type'];
@@ -144,9 +142,28 @@ class RegistradorActa {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarActa', $datosActa );
 		
 		$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+		
+		$datos = array (
+				$id_acta [0] [0],
+				$fechaActual
+		);
+		
+		
+		if ($id_acta) {
+				
+			redireccion::redireccionar ( 'inserto', $datos );
+			exit ();
+		} else {
+				
+			redireccion::redireccionar ( 'noInserto', $datos );
+				
+			exit ();
+		}
+		
 		// var_dump ( $id_acta );
 		// var_dump ( $_REQUEST );
-		
+		/*
 		switch ($_REQUEST ['tipo_registro']) {
 			
 			case '1' :
@@ -170,9 +187,9 @@ class RegistradorActa {
 							$_REQUEST ['unidad'],
 							$_REQUEST ['valor'],
 							$_REQUEST ['iva'],
-							$_REQUEST ['cantidad'] * $_REQUEST ['valor'] /*$_REQUEST ['subtotal_sin_iva']*/,
-							$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva/*$_REQUEST ['total_iva']*/,
-							round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva )/*$_REQUEST ['total_iva_con']*/,
+							$_REQUEST ['cantidad'] * $_REQUEST ['valor'] /*$_REQUEST ['subtotal_sin_iva'],
+							$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva/*$_REQUEST ['total_iva'],
+							round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva )/*$_REQUEST ['total_iva_con'],
 							($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : null,
 							($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
 							$id_acta [0] [0] 
@@ -192,9 +209,9 @@ class RegistradorActa {
 							$_REQUEST ['unidad'],
 							$_REQUEST ['valor'],
 							$_REQUEST ['iva'],
-							$_REQUEST ['cantidad'] * $_REQUEST ['valor'] /*$_REQUEST ['subtotal_sin_iva']*/,
-							$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva/*$_REQUEST ['total_iva']*/,
-							round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva )/*$_REQUEST ['total_iva_con']*/,
+							$_REQUEST ['cantidad'] * $_REQUEST ['valor'] /*$_REQUEST ['subtotal_sin_iva'],
+							$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva/*$_REQUEST ['total_iva'],
+							round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva )/*$_REQUEST ['total_iva_con'],
 							($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : null,
 							($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
 							$id_acta [0] [0] 
@@ -215,9 +232,9 @@ class RegistradorActa {
 								$_REQUEST ['unidad'],
 								$_REQUEST ['valor'],
 								$_REQUEST ['iva'],
-								$_REQUEST ['cantidad'] * $_REQUEST ['valor'] /*$_REQUEST ['subtotal_sin_iva']*/,
-						    	$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva/*$_REQUEST ['total_iva']*/,
-						    	round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva )/*$_REQUEST ['total_iva_con']*/,
+								$_REQUEST ['cantidad'] * $_REQUEST ['valor'] /*$_REQUEST ['subtotal_sin_iva'],
+						    	$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva/*$_REQUEST ['total_iva'],
+						    	round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva )/*$_REQUEST ['total_iva_con'],
 								$_REQUEST ['tipo_poliza'],
 								NULL,
 								NULL,
@@ -235,9 +252,9 @@ class RegistradorActa {
 								$_REQUEST ['unidad'],
 								$_REQUEST ['valor'],
 								$_REQUEST ['iva'],
-								$_REQUEST ['cantidad'] * $_REQUEST ['valor'] /*$_REQUEST ['subtotal_sin_iva']*/,
-								$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva/*$_REQUEST ['total_iva']*/,
-								round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva )/*$_REQUEST ['total_iva_con']*/,
+								$_REQUEST ['cantidad'] * $_REQUEST ['valor'] /*$_REQUEST ['subtotal_sin_iva'],
+								$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva/*$_REQUEST ['total_iva'],
+								round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva )/*$_REQUEST ['total_iva_con'],
 								$_REQUEST ['tipo_poliza'],
 								$_REQUEST ['fecha_inicio'],
 								$_REQUEST ['fecha_final'],
@@ -578,6 +595,7 @@ class RegistradorActa {
 				
 				break;
 		}
+		*/
 	}
 	function resetForm() {
 		foreach ( $_REQUEST as $clave => $valor ) {
