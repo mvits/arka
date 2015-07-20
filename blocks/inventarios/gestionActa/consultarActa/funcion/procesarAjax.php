@@ -154,17 +154,9 @@ if ($_REQUEST ['funcion'] == 'SeleccionOrdenador') {
 }
 
 
-
-
-
-
-
-$conexion2 = "sicapital";
-$esteRecursoDB2 = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion2);
-
 if ($_REQUEST ['funcion'] == 'proveedor') {
     $cadenaSql = $this->sql->getCadenaSql('select_proveedor', $_REQUEST['proveedor']);
-    $resultadoItems = $esteRecursoDB2->ejecutarAcceso($cadenaSql, "busqueda");
+    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultadoItems[0]);
     echo $resultado;
 }

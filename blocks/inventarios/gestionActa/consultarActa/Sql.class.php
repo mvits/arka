@@ -447,9 +447,9 @@ class Sql extends \Sql {
 			 */
 			
 			case "select_proveedor" :
-				$cadenaSql = "SELECT PRO_RAZON_SOCIAL";
-				$cadenaSql .= " FROM PROVEEDORES ";
-				$cadenaSql .= " WHERE PRO_NIT='" . $variable . "' ";
+				$cadenaSql = "SELECT \"PRO_RAZON_SOCIAL\" ";
+				$cadenaSql .= " FROM   arka_parametros.arka_proveedor ";
+				$cadenaSql .= " WHERE \"PRO_NIT\"='" . $variable . "' ";
 				break;
 			
 			case "contratistas" :

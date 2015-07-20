@@ -54,9 +54,6 @@ class registrarForm {
         $atributosGlobales ['campoSeguro'] = 'true';
 
         // -------------------------------------------------------------------------------------------------
-        $conexion2 = "sicapital";
-        $esteRecursoDBO= $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion2 );
-        
         
         $conexion = "inventarios";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);

@@ -36,19 +36,7 @@ class RegistradorOrden {
 		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'items', $_REQUEST ['seccion'] );
-		$items = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-// 		var_dump ( $_REQUEST );
-		if ($items == 0) {
 
-			redireccion::redireccionar ( 'noItems' );
-			exit();
-		}
-		
-
-		
 		foreach ( $_FILES as $key => $values ) {
 			
 			$archivo = $_FILES [$key];
@@ -127,34 +115,14 @@ class RegistradorOrden {
 		}
 
 
-		$cadenaSql = $this->miSql->getCadenaSql ( 'limpiarItems', $_REQUEST ['id_acta'] );
-		$limpiar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		foreach ( $items as $contenido ) {
-			$datosItems = array (
-					$_REQUEST ['id_acta'],
-					$contenido ['item'],
-					$contenido ['descripcion'],
-					$contenido ['cantidad'],
-					$contenido ['valor_unitario'],
-					$contenido ['valor_total'],
-					$fechaActual 
-			);
-			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'insertarItems', $datosItems );
-			$items = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-		}
-		
-		$cadenaSql = $this->miSql->getCadenaSql('limpiar_tabla_items', $_REQUEST ['seccion']);
-		$resultado_secuencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
-		
 		$datos = array (
 				$_REQUEST ['id_acta'],
 				$fechaActual 
 		);
+
 		
 
-		if ($items == true && isset ( $id_acta )) {
+		if ($id_acta) {
 			
 			redireccion::redireccionar ( 'inserto', $datos );
 			exit();
