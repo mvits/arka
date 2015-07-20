@@ -12,7 +12,7 @@ class redireccion {
 		$miPaginaActual = $miConfigurador->getVariableConfiguracion ( "pagina" );
 		
 		switch ($opcion) {
-			case "inserto" :
+			case "insertoActa" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=confirma";

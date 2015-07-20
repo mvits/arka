@@ -152,7 +152,7 @@ class RegistradorActa {
 		
 		if ($id_acta) {
 				
-			redireccion::redireccionar ( 'inserto', $datos );
+			redireccion::redireccionar ( 'insertoActa', $datos );
 			exit ();
 		} else {
 				

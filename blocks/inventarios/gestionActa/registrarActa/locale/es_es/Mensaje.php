@@ -4,6 +4,7 @@ $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaj
 $this->idioma ["documentoContrato"] ="Ver Documento Contrato";
 
 //---Cargar Elementos
+$this->idioma ["desicion"] ="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp¿ Que desea realizar ?";
 
 
 $this->idioma ["tipo_registro"] ="Tipo de Registro	";
