@@ -381,6 +381,23 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE PRO_NIT='" . $variable . "' ";
 				
 				break;
+			
+			case "consultarActaElementos" :
+				$cadenaSql = "SELECT  id_elemento_ac  ";
+				$cadenaSql .= "FROM elemento_acta_recibido ";
+				$cadenaSql .= "WHERE id_acta ='" . $variable . "'  ";
+				break;
+			
+			case "consultarElementosActa" :
+				$cadenaSql = "SELECT  ela.*, ct.elemento_nombre nivel_nombre, tb.descripcion nombre_tipo, iv.descripcion nombre_iva ";
+				$cadenaSql .= "FROM elemento_acta_recibido ela ";
+				$cadenaSql .= "JOIN  grupo.catalogo_elemento ct ON ct.elemento_id=ela.nivel ";
+				$cadenaSql .= "JOIN  tipo_bienes tb ON tb.id_tipo_bienes=ela.tipo_bien ";
+				$cadenaSql .= "JOIN  aplicacion_iva iv ON iv.id_iva=ela.iva  ";
+				$cadenaSql .= "WHERE id_acta ='" . $variable . "'  ";
+				$cadenaSql .= "AND  ela.estado=true ";
+				
+				break;
 				
 				// $cadenaSql = "SELECT DISTINCT ";
 				// $cadenaSql .= " id_actarecibido, dependencia, fecha_recibido, tipo_bien as tipoBien, nitproveedor, ";
