@@ -347,7 +347,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " to_nombre ";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " tipo_orden ";
-				$cadenaSql .= " WHERE to_estado='1';";
+				$cadenaSql .= " WHERE to_estado='1' ";
+				$cadenaSql .= " ORDER BY to_id DESC ; ";
 				
 				break;
 			
