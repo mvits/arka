@@ -153,11 +153,94 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 $urlFinalProveedor = $url . $cadena;
 
 
-// echo $urlFinal;exit;
-// echo $urlFinal2;
-// echo $urlFinal3;
+// Variables
+$cadenaACodificarTipoBien = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificarTipoBien .= "&procesarAjax=true";
+$cadenaACodificarTipoBien .= "&action=index.php";
+$cadenaACodificarTipoBien .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarTipoBien .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarTipoBien .= "&funcion=SeleccionTipoBien";
+$cadenaACodificarTipoBien .="&tiempo=".$_REQUEST['tiempo'];
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarTipoBien, $enlace );
+
+// URL definitiva
+$urlFinalTipoBien = $url . $cadena;
+
+
+
+
 ?>
 <script type='text/javascript'>
+
+
+function tipo_bien(elem, request, response){
+	  $.ajax({
+	    url: "<?php echo $urlFinalTipoBien?>",
+	    dataType: "json",
+	    data: { valor:$("#<?php echo $this->campoSeguro('nivel')?>").val()},
+	    success: function(data){ 
+
+
+	    			$("#<?php echo $this->campoSeguro('id_tipo_bien')?>").val(data[0]);
+	    			$("#<?php echo $this->campoSeguro('tipo_bien')?>").val(data[1]);
+
+	    			  switch($("#<?php echo $this->campoSeguro('id_tipo_bien')?>").val())
+	    	            {
+	    	                           
+	    	                
+	    	                case '2':
+
+
+	    	                    $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','none');
+	    	                    $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','block');   
+	    	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
+	    	                 $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
+
+	    	                 break;
+	    	                
+	    	                case '3':
+
+	    	                    $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','block');
+	    	                    $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','none');
+	    	                    $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
+	    	         
+	    	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
+	    	                 $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
+	    	                    
+	    	                break;
+	    	                                
+	    	           
+	    	                break;
+	    	                
+
+	    	                default:
+
+	    	                    $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','none');
+	    	                    $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','none');   
+	    	                    
+	    	                 
+	    	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('');
+	    	                 $('#<?php echo $this->campoSeguro('cantidad')?>').removeAttr('disabled');
+	    	                 
+	    	                break;
+	    	                
+	    	                }
+
+
+
+
+
+
+	    			
+
+	    }
+		                    
+	   });
+	};
 
 
 
@@ -442,6 +525,18 @@ function datosOrdenador(elem, request, response){
                 });
 
 
+
+        $("#<?php echo $this->campoSeguro('nivel')?>").change(function() {
+        	
+    		if($("#<?php echo $this->campoSeguro('nivel')?>").val()!=''){
+
+    			tipo_bien();	
+
+    		}else{}
+
+
+     });
+        
 
 
             $("#<?php echo $this->campoSeguro('nitproveedor') ?>").autocomplete({

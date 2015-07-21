@@ -128,11 +128,13 @@ class registrarForm {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=modificarElementos";
 				$variable .= "&id_elemento_acta=" . $ActaElementos [$i] ['id_elemento_ac'];
+				$variable .= "&numero_acta=" . $_REQUEST ['numero_acta'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$variable1 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable1 .= "&opcion=eliminarElementos";
 				$variable1 .= "&id_elemento_acta=" . $ActaElementos [$i] ['id_elemento_ac'];
+				$variable1 .= "&numero_acta=" .$_REQUEST ['numero_acta'];
 				$variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
 				
 				$mostrarHtml = "<tr>
