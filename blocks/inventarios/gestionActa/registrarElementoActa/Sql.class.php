@@ -322,13 +322,13 @@ class Sql extends \Sql {
 			
 			case "ElementoImagen" :
 				
-				$cadenaSql = " 	INSERT INTO arka_movil.asignar_imagen(";
-				$cadenaSql .= " id_elemento, prioridad, imagen ) ";
+				$cadenaSql = " 	INSERT INTO asignar_imagen_acta(";
+				$cadenaSql .= " id_elemento_acta, imagen ) ";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable ['elemento'] . "',";
-				$cadenaSql .= "'" . $variable ['prioridad'] . "',";
 				$cadenaSql .= "'" . $variable ['imagen'] . "') ";
-				$cadenaSql .= "RETURNING num_registro; ";
+				$cadenaSql .= "RETURNING id_imagen; ";
+				
 				
 				break;
 			

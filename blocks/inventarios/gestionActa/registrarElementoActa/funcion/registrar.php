@@ -31,8 +31,6 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		
-		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -103,7 +101,7 @@ class RegistradorOrden {
 							round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva ),
 							($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : null,
 							($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
-							$_REQUEST ['numero_acta']
+							$_REQUEST ['numero_acta'] 
 					);
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
@@ -129,7 +127,7 @@ class RegistradorOrden {
 								NULL,
 								($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
 								($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
-								$_REQUEST ['numero_acta']
+								$_REQUEST ['numero_acta'] 
 						);
 					} else if ($_REQUEST ['tipo_poliza'] == 1) {
 						$arreglo = array (
@@ -149,7 +147,7 @@ class RegistradorOrden {
 								$_REQUEST ['fecha_final'],
 								($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
 								($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
-								$_REQUEST ['numero_acta']
+								$_REQUEST ['numero_acta'] 
 						);
 					}
 					
@@ -308,8 +306,6 @@ class RegistradorOrden {
 								$datos [$i] ['Serie'] = $objPHPExcel->getActiveSheet ()->getCell ( 'P' . $i )->getCalculatedValue ();
 							}
 							
-							
-							
 							for($i = 2; $i <= $highestRow; $i ++) {
 								
 								// "1";0;"Exento";
@@ -373,7 +369,7 @@ class RegistradorOrden {
 											round ( $datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio'] * $IVA ) + ($datos [$i] ['Cantidad'] * $datos [$i] ['Valor_Precio']),
 											(is_null ( $datos [$i] ['Marca'] ) == true) ? null : trim ( $datos [$i] ['Marca'], "'" ),
 											(is_null ( $datos [$i] ['Serie'] ) == true) ? null : trim ( $datos [$i] ['Serie'], "'" ),
-											$_REQUEST ['numero_acta']
+											$_REQUEST ['numero_acta'] 
 									);
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 									
@@ -394,7 +390,7 @@ class RegistradorOrden {
 											round ( 1 * $datos [$i] ['Valor_Precio'] * $IVA ) + (1 * $datos [$i] ['Valor_Precio']),
 											(is_null ( $datos [$i] ['Marca'] ) == true) ? null : trim ( $datos [$i] ['Marca'], "'" ),
 											(is_null ( $datos [$i] ['Serie'] ) == true) ? null : trim ( $datos [$i] ['Serie'], "'" ),
-											$_REQUEST ['numero_acta']
+											$_REQUEST ['numero_acta'] 
 									);
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
@@ -421,7 +417,7 @@ class RegistradorOrden {
 												NULL,
 												(is_null ( $datos [$i] ['Marca'] ) == true) ? null : trim ( $datos [$i] ['Marca'], "'" ),
 												(is_null ( $datos [$i] ['Serie'] ) == true) ? null : trim ( $datos [$i] ['Serie'], "'" ),
-												$_REQUEST ['numero_acta']
+												$_REQUEST ['numero_acta'] 
 										);
 									} else if ($datos [$i] ['Tipo_poliza'] == 1) {
 										
@@ -442,7 +438,7 @@ class RegistradorOrden {
 												$datos [$i] ['Fecha_Final_Poliza_Anio'] . "-" . $datos [$i] ['Fecha_Final_Poliza_Mes'] . "-" . $datos [$i] ['Fecha_Final_Poliza_Dia'],
 												(is_null ( $datos [$i] ['Marca'] ) == true) ? NULL : trim ( $datos [$i] ['Marca'], "'" ),
 												(is_null ( $datos [$i] ['Serie'] ) == true) ? NULL : trim ( $datos [$i] ['Serie'], "'" ),
-												$_REQUEST ['numero_acta']
+												$_REQUEST ['numero_acta'] 
 										);
 									}
 									
@@ -452,11 +448,8 @@ class RegistradorOrden {
 								}
 							}
 							
-							
-							
-							
 							$datos = array (
-									$_REQUEST['numero_acta'],
+									$_REQUEST ['numero_acta'],
 									$fechaActual 
 							);
 							
