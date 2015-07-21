@@ -4,6 +4,7 @@
 //----------------------modificar Elemento
 
 
+$this->idioma ["botonEliminarActa"] ="Eliminar Acta de Recibido";
 
 $this->idioma ["botonEliminar"] ="Eliminar Elemento";
 

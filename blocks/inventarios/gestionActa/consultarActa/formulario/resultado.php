@@ -156,10 +156,10 @@ class registrarForm {
 				$variable .= "&numero_acta=" . $Acta [$i] [0];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
-				$variable1 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-				$variable1 .= "&opcion=eliminarActa";
-				$variable1 .= "&numero_acta=" . $Acta [$i] [0];
-				$variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
+				$variable2 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+				$variable2 .= "&opcion=eliminarActa";
+				$variable2 .= "&numero_acta=" . $Acta [$i] [0];
+				$variable2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable2, $directorio );
 				
 				$variable1 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable1 .= "&opcion=consultarElementosActa";
@@ -199,7 +199,7 @@ class registrarForm {
 				$mostrarHtml .= $validacion_elementos;
 				
 				$mostrarHtml .= "  <td><center>
-                    	<a href='" . $variable1 . "'>
+                    	<a href='" . $variable2 . "'>
                             <img src='" . $rutaBloque . "/css/images/delete.png' width='15px'>
                         </a>
                   	</center> </td>

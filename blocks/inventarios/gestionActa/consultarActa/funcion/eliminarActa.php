@@ -65,9 +65,11 @@ class RegistradorOrden {
         if ($items == 1) {
 
             redireccion::redireccionar('elimino', $datosActa);
+            exit();
         } else {
 
             redireccion::redireccionar('noElimino', $datosActa);
+            exit();
         }
     }
 
