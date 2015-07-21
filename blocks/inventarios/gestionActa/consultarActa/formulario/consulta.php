@@ -99,7 +99,7 @@ class registrarForm {
 		$arreglo = array (
 				array (
 						'',
-						'Sin Entradas Registradas' 
+						'Sin Actas Registradas' 
 				) 
 		);
 		

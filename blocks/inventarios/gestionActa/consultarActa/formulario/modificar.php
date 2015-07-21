@@ -54,12 +54,7 @@ class registrarForm {
 		
 		$seccion ['tiempo'] = $tiempo;
 		
-		foreach ( $items as $valor => $key ) {
-			$key = array_merge ( $key, $seccion );
-			$cadenaSql = $this->miSql->getCadenaSql ( 'insertarItemTemporal', $key );
-			
-			$insertados = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-		}
+
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActaM', $_REQUEST ['numero_acta'] );
 		
 		$Acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
