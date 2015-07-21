@@ -227,7 +227,7 @@ class RegistradorOrden {
 					$trozos = explode ( ".", $archivo ['name'] );
 					$extension = end ( $trozos );
 					
-					if ($extension == 'xlsx' || $extension == 'xls') {
+					if ($extension == 'xlsx' ) {
 						
 						if ($archivo) {
 							// obtenemos los datos del archivo

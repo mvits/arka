@@ -225,7 +225,7 @@ class registrarForm {
 				
 				if (isset($_REQUEST ['mensaje'])&&$_REQUEST ['mensaje'] == 'noExtension') {
 						
-					$mensaje = "Extension Incorrecta del Archivo a Cargar";
+					$mensaje = "Extension Incorrecta del Archivo a Cargar. <br>Verifique que la Extension sea .xlsx";
 						
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
