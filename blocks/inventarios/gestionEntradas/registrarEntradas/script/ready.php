@@ -24,7 +24,10 @@
             });
         });
 
-                 
+                               $('#tablaTitulos').dataTable( {
+                "sPaginationType": "full_numbers"
+                 } );
+
                  
                  $("#<?php echo $this->campoSeguro('supervisor')?>").select2({
              	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
@@ -32,6 +35,7 @@
               	 });
                  
          $("#<?php echo $this->campoSeguro('clase')?>").select2();
+         $("#<?php echo $this->campoSeguro('numero_acta')?>").select2();
          $("#<?php echo $this->campoSeguro('acta_recibido')?>").select2();
              
          

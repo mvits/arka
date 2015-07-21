@@ -151,7 +151,13 @@ class Sql extends \Sql {
 			
 			// _________________________________________________
 			
-
+			case "consultar_id_acta" :
+				$cadenaSql = " SELECT DISTINCT id_actarecibido, id_actarecibido as acta_serial";
+				$cadenaSql .= " FROM registro_actarecibido ";
+				$cadenaSql .= " JOIN    elemento_acta_recibido  ela ON ela.id_acta=registro_actarecibido. id_actarecibido ";
+				$cadenaSql .= " ORDER BY  id_actarecibido DESC ;  ";
+				break;
+			
 			case "proveedores" :
 				$cadenaSql = " SELECT \"PRO_NIT\",\"PRO_NIT\"||' - '||\"PRO_RAZON_SOCIAL\" AS proveedor ";
 				$cadenaSql .= " FROM arka_parametros.arka_proveedor ";
@@ -191,24 +197,42 @@ class Sql extends \Sql {
 			
 			case "consultarActa" :
 				
-				$cadenaSql = "SELECT DISTINCT ";
-				$cadenaSql .= "id_actarecibido, fecha_registro,  ";
-				$cadenaSql .= "nitproveedor, proveedor  ";
-				$cadenaSql .= "FROM registro_actarecibido ";
-				$cadenaSql .= "WHERE 1=1";
+				$cadenaSql = "SELECT  DISTINCT  ";
+				$cadenaSql .= "ra.id_actarecibido, ra.fecha_registro,  ";
+				$cadenaSql .= "ra. proveedor nit_proveedor , pr.\"PRO_RAZON_SOCIAL\" nombre_proveedor  ";
+				
+				$cadenaSql .= "FROM registro_actarecibido ra   ";
+				$cadenaSql .= " JOIN    elemento_acta_recibido  ela ON ela.id_acta=ra. id_actarecibido ";
+				$cadenaSql .= " LEFT  JOIN arka_parametros.arka_proveedor  pr ON pr.\"PRO_NIT\"=ra.proveedor::text  ";
+				$cadenaSql .= "WHERE ra.estado_registro= 1 ";
 				
 				if ($variable [0] != '') {
-					$cadenaSql .= " AND id_actarecibido = '" . $variable [0] . "'";
+					$cadenaSql .= " AND ra.id_actarecibido = '" . $variable [0] . "'";
 				}
 				
 				if ($variable [1] != '') {
-					$cadenaSql .= " AND  proveedor= '" . $variable [1] . "'";
+					$cadenaSql .= " AND  ra.proveedor= '" . $variable [1] . "'";
 				}
 				
 				if ($variable [2] != '') {
-					$cadenaSql .= " AND fecha_registro BETWEEN CAST ( '" . $variable [2] . "' AS DATE) ";
+					$cadenaSql .= " AND ra.fecha_registro BETWEEN CAST ( '" . $variable [2] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable [3] . "' AS DATE)  ";
 				}
+				
+				$cadenaSql .= " ; ";
+				
+				break;
+			
+			case "consultaActaParticular" :
+				
+				$cadenaSql = "SELECT  DISTINCT  ";
+				$cadenaSql .= "ra.*, pr.\"PRO_RAZON_SOCIAL\" nombre_proveedor  ";
+				
+				$cadenaSql .= "FROM registro_actarecibido ra   ";
+				$cadenaSql .= " JOIN    elemento_acta_recibido  ela ON ela.id_acta=ra. id_actarecibido ";
+				$cadenaSql .= " LEFT  JOIN arka_parametros.arka_proveedor  pr ON pr.\"PRO_NIT\"=ra.proveedor::text  ";
+				$cadenaSql .= "LEFT    JOIN    contratos cot ON cot.=ra. id_actarecibido  ";
+				$cadenaSql .= "WHERE ra.id_actarecibido = '" . $variable  . "'";
 				
 				$cadenaSql .= " ; ";
 				
@@ -572,16 +596,13 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE  id_actarecibido='" . $variable . "';";
 				
 				break;
+			case "buscar_Proveedores" :
+				$cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+				$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
+				$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
 				
-				
-				case "buscar_Proveedores" :
-					$cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
-					$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
-					$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
-					$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
-				
-					break;
-						
+				break;
 			
 			case 'consultaConsecutivo' :
 				$cadenaSql = "SELECT consecutivo ";
