@@ -58,6 +58,11 @@ class Funcion {
 	function eliminarActa() {
 		include_once ($this->ruta . "funcion/eliminarActa.php");
 	}
+	
+	function eliminarElementoActa() {
+		include_once ($this->ruta . "funcion/eliminarElementoActa.php");
+	}
+	
 	function action() {
 		
 		//
@@ -75,6 +80,8 @@ class Funcion {
 			$this->procesarAjax ();
 		} elseif (isset ( $_REQUEST ["opcion"] )) {
 			
+			
+			
 			if (isset ( $_REQUEST ["redireccionar"] ) && $_REQUEST ['redireccionar'] == 'regresar') {
 				redireccion::redireccionar ( $_REQUEST ['opcion'] );
 			}
@@ -90,6 +97,13 @@ class Funcion {
 			if ($_REQUEST ['opcion'] == 'eliminarActa') {
 				$this->eliminarActa ();
 			}
+			
+			if ($_REQUEST ['opcion'] == 'eliminarElementoActa') {
+				
+				
+				$this->eliminarElementoActa ();
+			}
+			
 		}
 	}
 	function __construct() {

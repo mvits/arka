@@ -24,112 +24,144 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		var_dump($_REQUEST);exit;
-		$fechaActual = date ( 'Y-m-d' );
-		
-		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
-		
-		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionActa/registrarActa";
-// 		$rutaBloque .= $esteBloque ['nombre'];
-		
-		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/gestionActa/registrarActa";
-		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
-		foreach ( $_FILES as $key => $values ) {
-			
-			$archivo = $_FILES [$key];
-		}
 		
-		if ($archivo['name']!='') {
-			// obtenemos los datos del archivo
-			$tamano = $archivo ['size'];
-			$tipo = $archivo ['type'];
-			$archivo1 = $archivo ['name'];
-			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
+		// foreach ( $_FILES as $key => $values ) {
+		
+		// $archivoImagen = $_FILES [$key];
+		// }
+		
+		// if ($archivoImagen ['error'] == 0) {
+		
+		// if ($archivoImagen ['type'] != 'image/jpeg') {
+		// redireccion::redireccionar ( 'noFormatoImagen' );
+		// exit ();
+		// }
+		// }
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_iva', $_REQUEST ['iva'] );
+		
+		$valor_iva = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$valor_iva = $valor_iva [0] [0];
+		
+		if ($_REQUEST ['id_tipo_bien'] == 1) {
 			
-			if ($archivo1 != "") {
-				// guardamos el archivo a la carpeta files
-				$destino1 = $rutaBloque . "/soportes/" . $prefijo . "_" . $archivo1;
-				if (copy ( $archivo ['tmp_name'], $destino1 )) {
-					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
-					$destino1 = $host . "/soportes/" . $prefijo . "_" . $archivo1;
-				} else {
-					$status = "Error al subir el archivo";
-				}
-			} else {
-				$status = "Error al subir archivo";
+			$arreglo = array (
+					$_REQUEST ['nivel'],
+					$_REQUEST ['id_tipo_bien'],
+					$_REQUEST ['descripcion'],
+					$_REQUEST ['cantidad'],
+					$_REQUEST ['unidad'],
+					$_REQUEST ['valor'],
+					$_REQUEST ['iva'],
+					$_REQUEST ['cantidad'] * $_REQUEST ['valor'],
+					$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva,
+					round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva ),
+					($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : null,
+					($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
+					$_REQUEST ['id_elemento_acta'] 
+			);
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elemento_tipo_1', $arreglo );
+			
+			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+		} else if ($_REQUEST ['id_tipo_bien'] == 2) {
+			
+			$arreglo = array (
+					$_REQUEST ['nivel'],
+					$_REQUEST ['id_tipo_bien'],
+					$_REQUEST ['descripcion'],
+					1,
+					$_REQUEST ['unidad'],
+					$_REQUEST ['valor'],
+					$_REQUEST ['iva'],
+					1 * $_REQUEST ['valor'],
+					1 * $_REQUEST ['valor'] * $valor_iva,
+					round ( 1 * $_REQUEST ['valor'] + 1 * $_REQUEST ['valor'] * $valor_iva ),
+					($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : null,
+					($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
+					$_REQUEST ['id_elemento_acta'] 
+			);
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elemento_tipo_1', $arreglo );
+			
+			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+		} else if ($_REQUEST ['id_tipo_bien'] == 3) {
+			
+			if ($_REQUEST ['tipo_poliza'] == 0) {
+				$arreglo = array (
+						
+						$_REQUEST ['nivel'],
+						$_REQUEST ['id_tipo_bien'],
+						$_REQUEST ['descripcion'],
+						$_REQUEST ['cantidad'] = 1,
+						$_REQUEST ['unidad'],
+						$_REQUEST ['valor'],
+						$_REQUEST ['iva'],
+						$_REQUEST ['cantidad'] * $_REQUEST ['valor'],
+						$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva,
+						round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva ),
+						$_REQUEST ['tipo_poliza'],
+						NULL,
+						NULL,
+						($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
+						($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
+						$_REQUEST ['id_elemento_acta'] 
+				);
+			} else if ($_REQUEST ['tipo_poliza'] == 1) {
+				$arreglo = array (
+						$_REQUEST ['nivel'],
+						$_REQUEST ['id_tipo_bien'],
+						$_REQUEST ['descripcion'],
+						$_REQUEST ['cantidad'] = 1,
+						$_REQUEST ['unidad'],
+						$_REQUEST ['valor'],
+						$_REQUEST ['iva'],
+						$_REQUEST ['cantidad'] * $_REQUEST ['valor'],
+						$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva,
+						round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva ),
+						$_REQUEST ['tipo_poliza'],
+						$_REQUEST ['fecha_inicio'],
+						$_REQUEST ['fecha_final'],
+						($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : NULL,
+						($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : NULL,
+						$_REQUEST ['id_elemento_acta'] 
+				);
 			}
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elemento_tipo_2', $arreglo );
+			
+			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		}
 		
-		$fechaActual = date ( 'Y-m-d' );
-		// Actualizar Acta de Recibido
 		
-		if ($archivo['name']!='') {
-			
-			$datosActa = array (
-					'sede' => $_REQUEST ['sede'],
-					'dependencia' => $_REQUEST ['dependencia'],
-					'fecha_registro' => $fechaActual,
-					'tipo_bien' => 0,
-					'nit_proveedor' => $_REQUEST ['id_proveedor'],
-					'ordenador' => $_REQUEST ['id_ordenador'],
-					'fecha_revision' => $_REQUEST ['fecha_revision'],
-					'revisor' => $_REQUEST ['revisor'],
-					'observaciones' => $_REQUEST ['observacionesacta'],
-					'estado' => 1,
-					'enlace_soporte' => $destino1,
-					'nombre_soporte' => $archivo1,
-					'id_acta' => $_REQUEST ['id_acta'],
-					'identificador_contrato' => ($_REQUEST ['numeroContrato']!='') ? $_REQUEST ['numeroContrato'] : 0, 
-			);
-			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarActa_soporte', $datosActa );
-			$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-			
-			
-			
-		} else {
-			$datosActa = array (
-					'sede' => $_REQUEST ['sede'],
-					'dependencia' => $_REQUEST ['dependencia'],
-					'fecha_registro' => $fechaActual,
-					'tipo_bien' => 0,
-					'nit_proveedor' => $_REQUEST ['id_proveedor'],
-					'ordenador' => $_REQUEST ['id_ordenador'],
-					'fecha_revision' => $_REQUEST ['fecha_revision'],
-					'revisor' => $_REQUEST ['revisor'],
-					'observaciones' => $_REQUEST ['observacionesacta'],
-					'estado' => 1,
-					'id_acta' => $_REQUEST ['id_acta'],
-					'identificador_contrato' => ($_REQUEST ['numeroContrato']!='') ? $_REQUEST ['numeroContrato'] : 0,
-			);
-			
-			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarActa', $datosActa );
-			$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-			
-			
-			
-		}
-
-
-		$datos = array (
-				$_REQUEST ['id_acta'],
-				$fechaActual 
-		);
-
 		
-
-		if ($id_acta) {
+		// if ($archivoImagen ['type'] == 'image/jpeg') {
+		
+		// $data = base64_encode ( file_get_contents ( $archivo ['tmp_name'] ) );
+		
+		// $arreglo = array (
+		// "elemento" => $_REQUEST ['id_elemento_acta'] ,
+		// "imagen" => $data
+		// );
+		
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'ActualizarElementoImagen', $arreglo );
+		
+		// $imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		// }
+		
+		
+		
+		if ($elemento) {
 			
-			redireccion::redireccionar ( 'inserto', $datos );
-			exit();
+			redireccion::redireccionar ( 'ActualizoElemento' );
+			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noInserto', $datos );
-			exit();
+			redireccion::redireccionar ( 'noActualizoElemento' );
+			exit ();
 		}
 	}
 	function resetForm() {

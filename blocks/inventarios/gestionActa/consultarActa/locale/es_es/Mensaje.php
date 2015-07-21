@@ -5,6 +5,9 @@
 
 
 
+$this->idioma ["botonEliminar"] ="Eliminar Elemento";
+
+
 $this->idioma ["desicion"] ="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp¿ Que desea realizar ?";
 
 

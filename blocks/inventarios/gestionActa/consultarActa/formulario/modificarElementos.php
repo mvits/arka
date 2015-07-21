@@ -73,6 +73,9 @@ class registrarForm {
 				break;
 		}
 		
+// if($elemento[0]['tipo_']){}
+		
+		
 		$arreglo = array (
 				"fecha_inicio" => $elemento [0] ['fecha_inicio_pol'],
 				"fecha_final" => $elemento [0] ['fecha_final_pol'],
@@ -97,6 +100,7 @@ class registrarForm {
 			}
 		} else {
 			$tipoDevolutivo = 'none';
+			$polizasMostrar = 'none';
 		}
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -318,6 +322,28 @@ class registrarForm {
 							$atributos = array_merge ( $atributos, $atributosGlobales );
 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
 							unset ( $atributos );
+							
+							
+							$esteCampo = "imagenElemento";
+							$atributos ["id"] = $esteCampo; // No cambiar este nombre
+							$atributos ["nombre"] = $esteCampo;
+							$atributos ["tipo"] = "file";
+							$atributos ["obligatorio"] = true;
+							$atributos ["etiquetaObligatorio"] = false;
+							$atributos ["tabIndex"] = $tab ++;
+							$atributos ["columnas"] = 1;
+							$atributos ["estilo"] = "textoIzquierda";
+							$atributos ["anchoEtiqueta"] = 215;
+							$atributos ["tamanno"] = 500000;
+							$atributos ["validar"] = " ";
+							$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
+							// $atributos ["valor"] = $valorCodificado;
+							$atributos = array_merge ( $atributos, $atributosGlobales );
+// 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
+							unset ( $atributos );
+								
+							
+							
 						}
 						echo $this->miFormulario->agrupacion ( "fin" );
 						unset ( $atributos );

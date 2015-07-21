@@ -148,6 +148,20 @@ class Sql extends \Sql {
 			 */
 			
 			/*
+			 * Eliminar Elemento
+			 */
+			
+			case "eliminarElementoActa" :
+				$cadenaSql = " UPDATE ";
+				$cadenaSql .= " elemento_acta_recibido  ";
+				$cadenaSql .= " SET ";
+				$cadenaSql .= " estado='false'  ";
+				$cadenaSql .= " WHERE id_elemento_ac='" . $variable . "'";
+				break;
+			
+			// -------
+			
+			/*
 			 * Modificar Elemento
 			 */
 			
@@ -426,6 +440,7 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT  id_elemento_ac  ";
 				$cadenaSql .= "FROM elemento_acta_recibido ";
 				$cadenaSql .= "WHERE id_acta ='" . $variable . "'  ";
+				$cadenaSql .= "AND estado='true' ";
 				break;
 			
 			case "consultarElementosActa" :
@@ -436,6 +451,67 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN  aplicacion_iva iv ON iv.id_iva=ela.iva  ";
 				$cadenaSql .= "WHERE id_acta ='" . $variable . "'  ";
 				$cadenaSql .= "AND  ela.estado=true ";
+				
+				break;
+			
+			// UPDATE elemento_acta_recibido
+			// SET id_elemento_ac=?, fecha_registro=?, nivel=?, tipo_bien=?, descripcion=?,
+			// cantidad=?, unidad=?, valor=?, iva=?, subtotal_sin_iva=?, total_iva=?,
+			// total_iva_con=?, tipo_poliza=?, fecha_inicio_pol=?, fecha_final_pol=?,
+			// marca=?, serie=?, id_acta=?, estado=?
+			// WHERE <condition>;
+			
+			case "actualizar_elemento_tipo_2" :
+				$cadenaSql = "UPDATE elemento_acta_recibido ";
+				$cadenaSql .= "SET nivel='" . $variable [0] . "', ";
+				$cadenaSql .= "tipo_bien='" . $variable [1] . "', ";
+				$cadenaSql .= "descripcion='" . $variable [2] . "', ";
+				$cadenaSql .= "cantidad='" . $variable [3] . "', ";
+				$cadenaSql .= "unidad='" . $variable [4] . "', ";
+				$cadenaSql .= "valor='" . $variable [5] . "', ";
+				$cadenaSql .= "iva='" . $variable [6] . "', ";
+				$cadenaSql .= "subtotal_sin_iva='" . $variable [7] . "', ";
+				$cadenaSql .= "total_iva='" . $variable [8] . "', ";
+				$cadenaSql .= "total_iva_con='" . $variable [9] . "', ";
+				$cadenaSql .= "tipo_poliza='" . $variable [10] . "', ";
+				if ($variable [10] == 0) {
+					
+					$cadenaSql .= "fecha_inicio_pol=NULL, ";
+					$cadenaSql .= "fecha_final_pol=NULL, ";
+				} else if ($variable [10] == 1) {
+					
+					$cadenaSql .= "fecha_inicio_pol='" . $variable [11] . "', ";
+					$cadenaSql .= "fecha_final_pol='" . $variable [12] . "', ";
+				}
+				$cadenaSql .= (is_null ( $variable [13] ) == true) ? "marca=NULL, " : "marca='" . $variable [13] . "', ";
+				$cadenaSql .= (is_null ( $variable [14] ) == true) ? "serie=NULL, " : "serie='" . $variable [14] . "'  ";
+				$cadenaSql .= "WHERE id_elemento_ac ='" . $variable [15] . "' ";
+				
+				break;
+			
+			case "actualizar_elemento_tipo_1" :
+				$cadenaSql = "UPDATE elemento_acta_recibido ";
+				$cadenaSql .= "SET nivel='" . $variable [0] . "', ";
+				$cadenaSql .= "tipo_bien='" . $variable [1] . "', ";
+				$cadenaSql .= "descripcion='" . $variable [2] . "', ";
+				$cadenaSql .= "cantidad='" . $variable [3] . "', ";
+				$cadenaSql .= "unidad='" . $variable [4] . "', ";
+				$cadenaSql .= "valor='" . $variable [5] . "', ";
+				$cadenaSql .= "iva='" . $variable [6] . "', ";
+				$cadenaSql .= "subtotal_sin_iva='" . $variable [7] . "', ";
+				$cadenaSql .= "total_iva='" . $variable [8] . "', ";
+				$cadenaSql .= "total_iva_con='" . $variable [9] . "', ";
+				$cadenaSql .= (is_null ( $variable [10] ) == true) ? "marca=NULL, " : "marca='" . $variable [10] . "', ";
+				$cadenaSql .= (is_null ( $variable [11] ) == true) ? "serie=NULL, " : "serie='" . $variable [11] . "'  ";
+				$cadenaSql .= "WHERE id_elemento_ac ='" . $variable [12] . "'  ";
+				
+				break;
+			
+			case "consultar_iva" :
+				
+				$cadenaSql = "SELECT iva ";
+				$cadenaSql .= "FROM arka_inventarios.aplicacion_iva ";
+				$cadenaSql .= "WHERE id_iva='" . $variable . "';";
 				
 				break;
 			
