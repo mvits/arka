@@ -1100,7 +1100,7 @@ class registrarForm {
 					$atributos ['ancho'] = '10%';
 					$atributos ['alto'] = '10%';
 					$atributos ['redirLugar'] = true;
-					echo $this->miFormulario->enlace ( $atributos );
+// 					echo $this->miFormulario->enlace ( $atributos );
 					unset ( $atributos );
 					
 					// -----------------FIN CONTROL: Botón -----------------------------------------------------------
