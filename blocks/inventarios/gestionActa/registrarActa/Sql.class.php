@@ -489,12 +489,12 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['fecha_revision'] . "',";
 				$cadenaSql .= "'" . $variable ['revisor'] . "',";
 				$cadenaSql .= "'" . $variable ['observacion'] . "',";
-				$cadenaSql .= "'" . $variable ['enlace_soporte'] . "',";
-				$cadenaSql .= "'" . $variable ['nombre_soporte'] . "',";
+				$cadenaSql .= (is_null($variable['enlace_soporte'])==true )? "NULL, ":"'" . $variable ['enlace_soporte'] . "',";
+				$cadenaSql .= (is_null($variable['nombre_soporte'])==true)?"NULL , ":"'" . $variable ['nombre_soporte'] . "',";
 				$cadenaSql .= "'" . $variable ['numero_orden'] . "',";
 				$cadenaSql .= "'" . $variable ['estado'] . "',";
 				$cadenaSql .= "'" . $variable ['fecha_registro'] . "',";
-				$cadenaSql .= "'" . $variable ['identificador_contrato'] . "') ";
+				$cadenaSql .= (is_null($variable['identificador_contrato'])==true)?"NULL ) " :"'" . $variable ['identificador_contrato'] . "') ";
 				$cadenaSql .= "RETURNING  id_actarecibido; ";
 				
 				break;
