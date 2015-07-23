@@ -201,7 +201,7 @@ class registrarForm {
 					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoBoton ( $atributos );
+// 					echo $this->miFormulario->campoBoton ( $atributos );
 					// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 
 					// -----------------CONTROL: Botón ----------------------------------------------------------------

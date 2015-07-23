@@ -155,8 +155,11 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT DISTINCT id_actarecibido, id_actarecibido as acta_serial";
 				$cadenaSql .= " FROM registro_actarecibido ";
 				$cadenaSql .= " JOIN    elemento_acta_recibido  ela ON ela.id_acta=registro_actarecibido. id_actarecibido ";
+				$cadenaSql .= " LEFT JOIN  entrada  en ON en.acta_recibido=registro_actarecibido. id_actarecibido ";
 				$cadenaSql .= " WHERE ela.estado='true'   ";
+				$cadenaSql .= " AND  en.acta_recibido IS NULL   ";
 				$cadenaSql .= " ORDER BY  id_actarecibido DESC ;  ";
+				
 				break;
 			
 			case "proveedores" :
@@ -204,9 +207,11 @@ class Sql extends \Sql {
 				
 				$cadenaSql .= "FROM registro_actarecibido ra   ";
 				$cadenaSql .= " JOIN    elemento_acta_recibido  ela ON ela.id_acta=ra. id_actarecibido ";
+				$cadenaSql .= " LEFT JOIN  entrada  en ON en.acta_recibido=ra. id_actarecibido ";
 				$cadenaSql .= " LEFT  JOIN arka_parametros.arka_proveedor  pr ON pr.\"PRO_NIT\"=ra.proveedor::text  ";
 				$cadenaSql .= "WHERE ra.estado_registro= 1 ";
-				
+				$cadenaSql .= " AND  en.acta_recibido IS NULL   "; 
+				 
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND ra.id_actarecibido = '" . $variable [0] . "'";
 				}
