@@ -60,8 +60,16 @@ class redireccion {
 				
 				$variable = "pagina=registrarElemento";
 				$variable .= "&opcion=cargarElemento";
-				$variable .= "&entradaDirecta=".TRUE;
-				$variable .= "&numero_entrada=".$valor;
+				$variable .= "&entradaDirecta=" . TRUE;
+				$variable .= "&numero_entrada=" . $valor;
+				break;
+			
+			case "ActivarElementos" :
+				
+				$variable = "pagina=activacionElementosActa";
+// 				$variable .= "&opcion=cargarElemento";
+// 				$variable .= "&entradaDirecta=" . TRUE;
+				$variable .= "&numero_entrada=" . $valor;
 				break;
 		}
 		

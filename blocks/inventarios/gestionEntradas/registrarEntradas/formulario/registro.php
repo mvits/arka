@@ -53,7 +53,7 @@ class registrarForm {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( "consultaActaParticular", $_REQUEST ['numero_acta'] );
 		$acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		var_dump ( $acta );
+		
 		
 		$acta = $acta [0];
 		$arreglo = array (
@@ -270,6 +270,8 @@ class registrarForm {
 				$atributos ['miEvento'] = '';
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
 				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				
+				
 				$arreglo = array (
 						array (
 								'',

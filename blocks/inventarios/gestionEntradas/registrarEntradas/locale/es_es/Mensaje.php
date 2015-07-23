@@ -2,6 +2,7 @@
 $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaje.php";
 
 $this->idioma ["informacion_numero"] =" # Número de Acta de Recibido : ";
+$this->idioma ["botonActivarElementos"] ="Activar Elementos";
 
 
 $this->idioma ["desicion"] ="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp¿ Que desea realizar ?";

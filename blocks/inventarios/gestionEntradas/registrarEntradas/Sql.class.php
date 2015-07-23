@@ -236,7 +236,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "LEFT  JOIN    arka_parametros.arka_ordenadores ord ON ord.\"ORG_IDENTIFICACION\"=ra. ordenador_gasto  ";
 				$cadenaSql .= "WHERE ra.id_actarecibido = '" . $variable . "'";
 				$cadenaSql .= " ; ";
-				echo $cadenaSql;
+				
 				break;
 			
 			case "clase_entrada" :
@@ -396,17 +396,17 @@ class Sql extends \Sql {
 				$cadenaSql .= (is_null($variable[4])==true)?"NULL,":"'" . $variable [4] . "',";
 				$cadenaSql .= (is_null($variable[5])==true)?"NULL,":"'" . $variable [5] . "',";
 				$cadenaSql .= (is_null($variable[6])==true)?"NULL,":"'" . $variable [6] . "',";
-				$cadenaSql .= "'" . $variable [7] . "',";
-				$cadenaSql .= "'" . $variable [8] . "',";
-				$cadenaSql .= "'" . $variable [9] . "',";
+				$cadenaSql .= (is_null($variable[7])==true)?"NULL,":"'" . $variable [7] . "',";
+				$cadenaSql .= (is_null($variable[8])==true)?"NULL,":"'" . $variable [8] . "',";
+				$cadenaSql .= (is_null($variable[9])==true)?"NULL,":"'" . $variable [9] . "',";
 				$cadenaSql .= "'" . $variable [10] . "',";
 				$cadenaSql .= "'" . $variable [11] . "',";
-				$cadenaSql .= " " . $variable [12] . ",";
+				$cadenaSql .= (is_null($variable[12])==true)?"NULL,":"'" . $variable [12] . "',";
 				$cadenaSql .= "'" . $variable [13] . "',";
 				$cadenaSql .= "'" . $variable [14] . "',";
 				$cadenaSql .= "'" . $variable [15] . "',";
-				$cadenaSql .= " " . $variable [16] . " ,";
-				$cadenaSql .= " " . $variable [17] . " ,";
+				$cadenaSql .= (is_null($variable[16])==true)?"NULL,":"'" . $variable [16] . "',";
+				$cadenaSql .= (is_null($variable[17])==true)?"NULL,":"'" . $variable [17] . "',";
 				$cadenaSql .= "'" . $variable [18] . "') ";
 				$cadenaSql .= "RETURNING  consecutivo; ";
 				
