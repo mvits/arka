@@ -3,7 +3,7 @@
 ?>
 
 // Asociar el widget de validación al formulario
-              $("#consultarActa").validationEngine({
+              $("#activacionElementosActa").validationEngine({
             promptPosition : "centerRight", 
             scroll: false,
             autoHidePrompt: true,
@@ -12,8 +12,8 @@
 	
         
         $(function() {
-            $("#consultarActa").submit(function() {
-                $resultado=$("#consultarActa").validationEngine("validate");
+            $("#activacionElementosActa").submit(function() {
+                $resultado=$("#activacionElementosActa").validationEngine("validate");
            
                 if ($resultado) {
                 
@@ -43,6 +43,10 @@
         
         
         
+        
+        
+        
+        
         $("#<?php echo $this->campoSeguro('sede') ?>").select2();
        
 		$("#<?php echo $this->campoSeguro('tipoBien') ?>").select2(); 
@@ -55,6 +59,8 @@
         $("#<?php echo $this->campoSeguro('asignacionOrdenador') ?>").select2();
           
         <!--  Modificar Elementos -->
+        
+        $("#<?php echo $this->campoSeguro('numero_entrada') ?>").select2();
         
         
         $('#<?php echo $this->campoSeguro('fecha_inicio')?>').datepicker({

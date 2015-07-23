@@ -147,6 +147,13 @@ class Sql extends \Sql {
 			 * Clausulas Del Caso Uso.
 			 */
 			
+			case "buscar_entradas" :
+				$cadenaSql = " SELECT DISTINCT id_entrada valor, consecutivo||' - ('||entrada.vigencia||')' descripcion  ";
+				$cadenaSql .= " FROM entrada  ";
+				$cadenaSql .= "WHERE entrada.cierre_contable='f' ";
+				$cadenaSql .= "ORDER BY id_entrada DESC ;";
+				break;
+			
 			/*
 			 * Eliminar Elemento
 			 */
@@ -543,9 +550,10 @@ class Sql extends \Sql {
 				break;
 			
 			case "consultar_id_acta" :
-				$cadenaSql = " SELECT id_actarecibido, id_actarecibido as acta_serial";
+				$cadenaSql = " SELECT DISTINCT id_actarecibido, id_actarecibido as acta_serial";
 				$cadenaSql .= " FROM registro_actarecibido ";
-				$cadenaSql .= " ORDER BY  id_actarecibido ASC;  ";
+				$cadenaSql .= " JOIN    elemento_acta_recibido  ela ON ela.id_acta=registro_actarecibido. id_actarecibido ";
+				$cadenaSql .= " ORDER BY  id_actarecibido DESC ;  ";	
 				break;
 			
 			case "inactivarActa" :
