@@ -227,13 +227,14 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "SELECT  DISTINCT  ";
 				$cadenaSql .= "ra.*, pr.\"PRO_RAZON_SOCIAL\" nombre_proveedor ,ra.proveedor ||'  - ('|| pr.\"PRO_RAZON_SOCIAL\"  ||')'  nit_nombre
-										  , cot.numero_contrato , cot.fecha_contrato  ";
+										  , cot.numero_contrato , cot.fecha_contrato, ord.\"ORG_NOMBRE\"  nombre_ordenador ,ord.\"ORG_ORDENADOR_GASTO\"  tipo_ordenador  ";
 				
 				$cadenaSql .= "FROM registro_actarecibido ra   ";
 				$cadenaSql .= " JOIN  elemento_acta_recibido  ela ON ela.id_acta=ra. id_actarecibido ";
 				$cadenaSql .= " LEFT  JOIN arka_parametros.arka_proveedor  pr ON pr.\"PRO_NIT\"=ra.proveedor::text  ";
 				$cadenaSql .= "LEFT  JOIN    contratos cot ON cot.id_contrato=ra. id_contrato  ";
-				$cadenaSql .= "WHERE ra.id_actarecibido = '" . $variable  . "'";
+				$cadenaSql .= "LEFT  JOIN    arka_parametros.arka_ordenadores ord ON ord.\"ORG_IDENTIFICACION\"=ra. ordenador_gasto  ";
+				$cadenaSql .= "WHERE ra.id_actarecibido = '" . $variable . "'";
 				$cadenaSql .= " ; ";
 				echo $cadenaSql;
 				break;
@@ -244,7 +245,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "id_clase, descripcion  ";
 				$cadenaSql .= "FROM clase_entrada ";
 				$cadenaSql .= "WHERE  id_clase > 1 ";
-				$cadenaSql .= "ORDER BY  descripcion ASC ;";
+				$cadenaSql .= "ORDER BY  id_clase  ASC ;";
 				
 				break;
 			
@@ -271,6 +272,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
 				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
 				$cadenaSql .= " WHERE ad.\"ESF_ESTADO\"='A'";
+				$cadenaSql .= " AND  sa.\"ESF_ID_SEDE\"='".$variable."'  ;";
 				break;
 			
 			case "sede" :
@@ -391,9 +393,9 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [1] . "',";
 				$cadenaSql .= "'" . $variable [2] . "',";
 				$cadenaSql .= "'" . $variable [3] . "',";
-				$cadenaSql .= "'" . $variable [4] . "',";
-				$cadenaSql .= "'" . $variable [5] . "',";
-				$cadenaSql .= "'" . $variable [6] . "',";
+				$cadenaSql .= (is_null($variable[4])==true)?"NULL,":"'" . $variable [4] . "',";
+				$cadenaSql .= (is_null($variable[5])==true)?"NULL,":"'" . $variable [5] . "',";
+				$cadenaSql .= (is_null($variable[6])==true)?"NULL,":"'" . $variable [6] . "',";
 				$cadenaSql .= "'" . $variable [7] . "',";
 				$cadenaSql .= "'" . $variable [8] . "',";
 				$cadenaSql .= "'" . $variable [9] . "',";
