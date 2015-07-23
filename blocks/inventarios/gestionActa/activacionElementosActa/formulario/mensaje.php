@@ -153,9 +153,9 @@ class registrarForm {
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
 				
-				if ($_REQUEST ['mensaje'] == 'eliminoElemento') {
+				if ($_REQUEST ['mensaje'] == 'registro') {
 				
-					$mensaje = "Se Elimino el  Elemento con Exito del Acta de Recibido." ;
+					$mensaje = "Se Activaron los Elementos  relacionados  Acta de recibido N# ".$_REQUEST['numero_acta']."<br>y  Número de Entrada / Vigencia:  ".$_REQUEST['consecutivo'] ;
 				
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -198,7 +198,7 @@ class registrarForm {
 				
 				if ($_REQUEST ['mensaje'] == 'error') {
 					
-					$mensaje = "No Se Pudo Hacer Actualizar el Acta de Recibido";
+					$mensaje = "No se pudo  Activar Elementos";
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';

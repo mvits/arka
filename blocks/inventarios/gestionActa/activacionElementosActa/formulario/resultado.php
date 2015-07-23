@@ -51,10 +51,17 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		if (isset ( $_REQUEST ['fecha_recibido'] ) && $_REQUEST ['fecha_recibido'] != '') {
-			$fechaRecibido = $_REQUEST ['fecha_recibido'];
+		
+		if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
+			$fechaInicio = $_REQUEST ['fecha_inicio'];
 		} else {
-			$fechaRecibido = '';
+			$fechaInicio = '';
+		}
+		
+		if (isset ( $_REQUEST ['fecha_final'] ) && $_REQUEST ['fecha_final'] != '') {
+			$fechaFinal = $_REQUEST ['fecha_final'];
+		} else {
+			$fechaFinal = '';
 		}
 		
 		if (isset ( $_REQUEST ['numero_acta'] ) && $_REQUEST ['numero_acta'] != '') {
@@ -63,22 +70,23 @@ class registrarForm {
 			$numeroActa = '';
 		}
 		
-		if (isset ( $_REQUEST ['id_proveedor'] ) && $_REQUEST ['id_proveedor'] != '') {
-			$nit = $_REQUEST ['id_proveedor'];
+		if (isset ( $_REQUEST ['numero_entrada'] ) && $_REQUEST ['numero_entrada'] != '') {
+			$entrada = $_REQUEST ['numero_entrada'];
 		} else {
-			$nit = '';
+			$entrada = '';
 		}
 		
 		$arreglo = array (
 				'numero_acta' => $numeroActa,
-				'fecha' => $fechaRecibido,
-				'nit' => $nit 
+				'numero_entrada' => $entrada,
+				'fecha_inicio' => $fechaInicio,
+				'fecha_final' => $fechaFinal 
 		);
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActa', $arreglo );
-		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActaEntrada', $arreglo );
+
 		$Acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
+	
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
 		$atributos ['id'] = $esteCampo;
@@ -137,13 +145,10 @@ class registrarForm {
 			
 			echo "<thead>
                              <tr>
-                                <th>Número Acta Recibido</th>
-                    			<th>Sede</th>            
-            					<th>Dependencia</th>
-                                <th>Fecha Recibido</th>
-                                 <th>Proveedor</th>
-                                <th>Observaciones</th>
-			        			<th>Activar <br>Elementos </th>
+                                <th># Número Entrada y/o<br>Vigencia </th>
+                    			<th>Fecha Registro<br>Entrada</th>            
+            					<th>Número Acta de Recibido</th>
+                                <th>Activar <br>Elementos </th>
                         </tr>
             </thead>
             <tbody>";
@@ -152,34 +157,27 @@ class registrarForm {
 				
 				$variable1 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable1 .= "&opcion=consultarElementosActa";
-				$variable1 .= "&numero_acta=" . $Acta [$i] [0];
+				$variable1 .= "&numero_acta=" . $Acta [$i] ['id_acta'];
+				$variable1 .= "&numero_entrada=" . $Acta [$i] ['id_entrada'];
+				$variable1 .= "&consecutivo_entrada=" . $Acta [$i] ['consecutivo_entrada'];
+				
 				$variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActaElementos', $Acta [$i] [0] );
 				
 				$elementos_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
-				
-				
-				if ( $elementos_acta == false) {
-					$validacion_elementos = "  <td><center></center> </td>";
-				} else {
-					
-					$validacion_elementos = "  <td><center>
+				$validacion_elementos = "  <td><center>
 				                    							<a href='" . $variable1 . "'>
 				                            								<img src='" . $rutaBloque . "/css/images/update.png' width='15px'>
 				                                            	</a>
 				                                            </center> </td>";
-				}
 				
 				$mostrarHtml = "<tr>
-                    <td><center>" . $Acta [$i] ['id_actarecibido'] . "</center></td>
-                    <td><center>" . $Acta [$i] ['sede'] . "</center></td>		
-                    <td><center>" . $Acta [$i] ['dependencia'] . "</center></td>
-                    <td><center>" . $Acta [$i] ['fecha_recibido'] . "</center></td>
-                    <td><center>" . $Acta [$i] ['proveedor'] . "</center></td>
-                    <td><center>" . $Acta [$i] ['observacionesacta'] . "</center></td>
-                ";
+                    <td><center>" . $Acta [$i] ['consecutivo_entrada'] . "</center></td>
+                    <td><center>" . $Acta [$i] ['fecha_registro_entrada'] . "</center></td>		
+                    <td><center>" . $Acta [$i] ['id_acta'] . "</center></td>
+                    ";
 				
 				$mostrarHtml .= $validacion_elementos;
 				

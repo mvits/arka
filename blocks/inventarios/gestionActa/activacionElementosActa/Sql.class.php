@@ -154,11 +154,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "ORDER BY id_entrada DESC ;";
 				break;
 			
-			/*
-			 * Eliminar Elemento
-			 */
-			
-			case "eliminarElementoActa" :
+
+			case "anular_elementos_acta" :
 				$cadenaSql = " UPDATE ";
 				$cadenaSql .= " elemento_acta_recibido  ";
 				$cadenaSql .= " SET ";
@@ -171,11 +168,98 @@ class Sql extends \Sql {
 			/*
 			 * Modificar Elemento
 			 */
+				
+
+				case "buscar_placa_maxima" :
+					$cadenaSql = " SELECT  MAX(placa::FLOAT) placa_max ";
+					$cadenaSql .= " FROM elemento_individual ";
+					break;
+					
+				case "ingresar_elemento_individual" :
+				
+					$cadenaSql = " 	INSERT INTO elemento_individual(";
+					$cadenaSql .= "fecha_registro, placa, serie, id_elemento_gen,id_elemento_ind) ";
+					$cadenaSql .= " VALUES (";
+					$cadenaSql .= "'" . $variable [0] . "',";
+					$cadenaSql .= ((is_null ( $variable [1] )) ? 'null' . "," : "'" . $variable [1] . "',");
+					$cadenaSql .= ((is_null ( $variable [2] )) ? 'null' . "," : "'" . $variable [2] . "',");
+					$cadenaSql .= "'" . $variable [3] . "',";
+					$cadenaSql .= "'" . $variable [4] . "') ";
+					$cadenaSql .= "RETURNING id_elemento_ind; ";
+				
+					break;
+				
+				
+				case "buscar_repetida_placa" :
+					$cadenaSql = " SELECT  count (placa) ";
+					$cadenaSql .= " FROM elemento_individual ";
+					$cadenaSql .= " WHERE placa ='" . $variable . "';";
+					break;
+					
+					case "idElementoMaxIndividual" :
+					
+						$cadenaSql = "SELECT max(id_elemento_ind) ";
+						$cadenaSql .= "FROM elemento_individual  ";
+					
+						break;
+				
+				case "ElementoImagen" :
+				
+					$cadenaSql = " 	INSERT INTO arka_movil.asignar_imagen(";
+					$cadenaSql .= " id_elemento, prioridad, imagen ) ";
+					$cadenaSql .= " VALUES (";
+					$cadenaSql .= "'" . $variable ['elemento'] . "',";
+					$cadenaSql .= "1,";
+					$cadenaSql .= "'" . $variable ['imagen'] . "') ";
+					$cadenaSql .= "RETURNING num_registro; ";
+				
+					break;
+						
+				
+			
+			case "ingresar_elemento" :
+				$cadenaSql = " INSERT INTO ";
+				$cadenaSql .= " elemento(";
+				$cadenaSql .= "fecha_registro,nivel,tipo_bien, descripcion, cantidad, ";
+				$cadenaSql .= "unidad, valor, iva, ajuste, bodega, subtotal_sin_iva, total_iva, ";
+				$cadenaSql .= "total_iva_con,tipo_poliza, fecha_inicio_pol, fecha_final_pol,marca,serie,id_entrada,id_elemento) ";
+				$cadenaSql .= " VALUES (";
+				$cadenaSql .= "'" . $variable [0] . "',";
+				$cadenaSql .= "'" . $variable [1] . "',";
+				$cadenaSql .= "'" . $variable [2] . "',";
+				$cadenaSql .= "'" . $variable [3] . "',";
+				$cadenaSql .= "'" . $variable [4] . "',";
+				$cadenaSql .= "'" . $variable [5] . "',";
+				$cadenaSql .= "'" . $variable [6] . "',";
+				$cadenaSql .= "'" . $variable [7] . "',";
+				$cadenaSql .= "NULL,";
+				$cadenaSql .= "NULL,";
+				$cadenaSql .= "'" . $variable [10] . "',";
+				$cadenaSql .= "'" . $variable [11] . "',";
+				$cadenaSql .= "'" . $variable [12] . "',";
+				$cadenaSql .= (is_null ( $variable [13] ) == true) ? ' NULL , ' : "'" . $variable [13] . "',";
+				$cadenaSql .= (is_null ( $variable [14] ) == true) ? ' NULL , ' : "'" . $variable [14] . "',";
+				$cadenaSql .= (is_null ( $variable [15] ) == true) ? ' NULL , ' : "'" . $variable [15] . "',";
+				$cadenaSql .= (is_null ( $variable [16] ) == true) ? ' NULL , ' : "'" . $variable [16] . "',";
+				$cadenaSql .= (is_null ( $variable [17] ) == true) ? ' NULL , ' : "'" . $variable [17] . "',";
+				$cadenaSql .= "'" . $variable [18] . "',";
+				$cadenaSql .= "'" . $variable [19] . "') ";
+				$cadenaSql .= "RETURNING  id_elemento; ";
+				
+				break;
+			
+			case "idElementoMax" :
+				
+				$cadenaSql = "SELECT max(id_elemento) ";
+				$cadenaSql .= "FROM elemento  ";
+				
+				break;
 			
 			case "consulta_elementos_activar" :
-				$cadenaSql = " SELECT *  ";
-				$cadenaSql .= " FROM elemento_acta_recibido  ";
-				$cadenaSql .= " WHERE id_elemento_ac='" . $variable . "'";
+				$cadenaSql = " SELECT ar.*,  im.imagen ";
+				$cadenaSql .= " FROM elemento_acta_recibido  ar ";
+				$cadenaSql .= " LEFT  JOIN  asignar_imagen_acta im ON im.id_elemento_acta=ar.id_elemento_ac   ";
+				$cadenaSql .= " WHERE ar.id_elemento_ac='" . $variable . "'";
 				break;
 			
 			case "consultar_nivel_inventario" :
@@ -216,7 +300,7 @@ class Sql extends \Sql {
 			
 			case "consultarActaM" :
 				
-				$cadenaSql = "SELECT DISTINCT ra.*, \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  nom_razon ";
+				$cadenaSql = "SELECT DISTINCT ra.*, \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  nom_razon  ";
 				$cadenaSql .= " FROM registro_actarecibido ra  ";
 				$cadenaSql .= " JOIN  arka_parametros.arka_proveedor ap ON ap.\"PRO_NIT\" =CAST(ra.proveedor AS CHAR (50))  ";
 				$cadenaSql .= " WHERE 1 = 1 ";
@@ -418,24 +502,24 @@ class Sql extends \Sql {
 				
 				break;
 			
-			case "consultarActa" :
+			case "consultarActaEntrada" :
 				$cadenaSql = "SELECT DISTINCT ";
-				$cadenaSql .= "id_actarecibido,se.\"ESF_SEDE\" as sede, dep.\"ESF_DEP_ENCARGADA\" as dependencia, fecha_recibido, apr.\"PRO_NIT\" ||' - '|| apr.\"PRO_RAZON_SOCIAL\" as  proveedor,";
-				$cadenaSql .= "fecha_revision,revisor,observacionesacta ";
+				$cadenaSql .= "en.id_entrada id_entrada ,en.consecutivo||' - ('||en.vigencia||')' consecutivo_entrada,
+											en.fecha_registro fecha_registro_entrada ,ar.id_actarecibido id_acta ";
 				$cadenaSql .= "FROM registro_actarecibido ar ";
-				$cadenaSql .= "JOIN arka_parametros.arka_proveedor apr ON apr.\"PRO_NIT\" =  CAST(ar.proveedor AS CHAR(50))  ";
-				$cadenaSql .= "JOIN  arka_parametros.arka_dependencia dep ON dep.\"ESF_CODIGO_DEP\" = ar.dependencia	 ";
-				$cadenaSql .= "JOIN  arka_parametros.arka_sedes se ON se.\"ESF_ID_SEDE\" = ar.sede	 ";
-				$cadenaSql .= "WHERE 1 = 1 ";
-				$cadenaSql .= "AND estado_registro = 1 ";
+				$cadenaSql .= "JOIN elemento_acta_recibido  el  ON el.id_acta=  ar.id_actarecibido ";
+				$cadenaSql .= "JOIN  entrada en ON en.acta_recibido= ar.id_actarecibido ";
+				$cadenaSql .= "WHERE  ar.estado_registro = 1 
+											AND el.estado='true'   ";
 				if ($variable ['numero_acta'] != '') {
-					$cadenaSql .= " AND id_actarecibido = '" . $variable ['numero_acta'] . "' ";
+					$cadenaSql .= " AND ar.id_actarecibido = '" . $variable ['numero_acta'] . "' ";
 				}
-				if ($variable ['fecha'] != '') {
-					$cadenaSql .= " AND fecha_recibido = '" . $variable ['fecha'] . "' ";
+				if ($variable ['numero_entrada'] != '') {
+					$cadenaSql .= " AND en.id_entrada = '" . $variable ['numero_entrada'] . "' ";
 				}
-				if ($variable ['nit'] != '') {
-					$cadenaSql .= " AND proveedor = '" . $variable ['nit'] . "' ";
+				if ($variable ['fecha_inicio'] != '') {
+					$cadenaSql .= " AND en.fecha_registro  BETWEEN CAST ( '" . $variable ['fecha_inicio'] . "' AS DATE) ";
+					$cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
 				}
 				
 				$cadenaSql .= " ; ";
@@ -552,8 +636,10 @@ class Sql extends \Sql {
 			case "consultar_id_acta" :
 				$cadenaSql = " SELECT DISTINCT id_actarecibido, id_actarecibido as acta_serial";
 				$cadenaSql .= " FROM registro_actarecibido ";
+				$cadenaSql .= " JOIN    entrada  en ON en.acta_recibido=registro_actarecibido.id_actarecibido  ";
 				$cadenaSql .= " JOIN    elemento_acta_recibido  ela ON ela.id_acta=registro_actarecibido. id_actarecibido ";
-				$cadenaSql .= " ORDER BY  id_actarecibido DESC ;  ";	
+				$cadenaSql .= " WHERE ela.estado='true'  ";
+				$cadenaSql .= " ORDER BY  id_actarecibido DESC ;  ";
 				break;
 			
 			case "inactivarActa" :

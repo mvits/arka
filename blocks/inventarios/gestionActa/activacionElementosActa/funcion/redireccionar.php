@@ -1,6 +1,6 @@
 <?php
 
-namespace inventarios\gestionActa\consultarActa\funcion;
+namespace inventarios\gestionActa\activacionElementosActa\funcion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("index.php");
@@ -13,10 +13,13 @@ class redireccion {
 		
 		switch ($opcion) {
 			case "inserto" :
+				
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
-				$variable .= "&mensaje=actualizo";
-				$variable .= "&numero_acta=" . $valor [0];
+				$variable .= "&mensaje=registro";
+				$variable .= "&numero_acta=" . $valor [1];
+				$variable .= "&numero_entrada=" . $valor [0];
+				$variable .= "&consecutivo=" . $valor [2];
 				break;
 			
 			case "noInserto" :
