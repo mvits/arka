@@ -138,12 +138,12 @@ class RegistradorActa {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarActa', $datosActa );
 		
 		$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-// 		var_dump ( $id_acta );
-// 		exit ();
+		
 		$datos = array (
 				$id_acta [0] [0],
 				$fechaActual 
 		);
+		
 		
 		if ($id_acta) {
 			
