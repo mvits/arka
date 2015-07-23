@@ -61,14 +61,14 @@ class registrarForm {
 		
 		$acta=$acta[0];
 		$arreglo=array(
-			""=>$acta['']
-				
-				
-				
-				
+			"numero_contrato"=>$acta['numero_contrato'],
+			"fecha_contrato"=>$acta['fecha_contrato'],
+			"proveedor"=>$acta['nit_nombre'],
+			"id_proveedor"=>$acta['']		
+					
 		);
 		
-		
+		$_REQUEST=array_merge($_REQUEST, $arreglo);
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];

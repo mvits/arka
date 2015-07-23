@@ -226,16 +226,16 @@ class Sql extends \Sql {
 			case "consultaActaParticular" :
 				
 				$cadenaSql = "SELECT  DISTINCT  ";
-				$cadenaSql .= "ra.*, pr.\"PRO_RAZON_SOCIAL\" nombre_proveedor  ";
+				$cadenaSql .= "ra.*, pr.\"PRO_RAZON_SOCIAL\" nombre_proveedor ,ra.proveedor ||'  - ('|| pr.\"PRO_RAZON_SOCIAL\"  ||')'  nit_nombre
+										  , cot.numero_contrato , cot.fecha_contrato  ";
 				
 				$cadenaSql .= "FROM registro_actarecibido ra   ";
-				$cadenaSql .= " JOIN    elemento_acta_recibido  ela ON ela.id_acta=ra. id_actarecibido ";
+				$cadenaSql .= " JOIN  elemento_acta_recibido  ela ON ela.id_acta=ra. id_actarecibido ";
 				$cadenaSql .= " LEFT  JOIN arka_parametros.arka_proveedor  pr ON pr.\"PRO_NIT\"=ra.proveedor::text  ";
-				$cadenaSql .= "LEFT    JOIN    contratos cot ON cot.=ra. id_actarecibido  ";
+				$cadenaSql .= "LEFT  JOIN    contratos cot ON cot.id_contrato=ra. id_contrato  ";
 				$cadenaSql .= "WHERE ra.id_actarecibido = '" . $variable  . "'";
-				
 				$cadenaSql .= " ; ";
-				
+				echo $cadenaSql;
 				break;
 			
 			case "clase_entrada" :
