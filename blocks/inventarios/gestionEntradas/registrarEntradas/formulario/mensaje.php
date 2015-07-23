@@ -103,7 +103,7 @@ class registrarForm {
 				
 				if ($_REQUEST ['mensaje'] == 'inserto') {
 					
-					$mensaje = "Se Registro Entrada <br> Número de Entrada: " . $_REQUEST ['consecutivo'] . "<br>Fecha Registro:". date ( 'Y-m-d' );
+					$mensaje = "Se Registro Entrada <br> Número de Entrada: " . $_REQUEST ['consecutivo']."<br>Fecha Registro:". date ( 'Y-m-d' );
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -331,7 +331,9 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=redireccionar";
-		$valorCodificado .= "&id_entrada=". $_REQUEST ['numero_entrada'];
+		$valorCodificado .= "&numero_entrada=". $_REQUEST ['numero_entrada'];
+		$valorCodificado .= "&consecutivo_entrada=" . $_REQUEST ['consecutivo'];
+		$valorCodificado .= "&numero_acta=".$_REQUEST['numero_acta'];
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
 		 * Para ello utiliza la hora en que es creado el formulario para

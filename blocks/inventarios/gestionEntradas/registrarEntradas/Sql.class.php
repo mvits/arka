@@ -155,6 +155,7 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT DISTINCT id_actarecibido, id_actarecibido as acta_serial";
 				$cadenaSql .= " FROM registro_actarecibido ";
 				$cadenaSql .= " JOIN    elemento_acta_recibido  ela ON ela.id_acta=registro_actarecibido. id_actarecibido ";
+				$cadenaSql .= " WHERE ela.estado='true'   ";
 				$cadenaSql .= " ORDER BY  id_actarecibido DESC ;  ";
 				break;
 			
@@ -227,7 +228,7 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "SELECT  DISTINCT  ";
 				$cadenaSql .= "ra.*, pr.\"PRO_RAZON_SOCIAL\" nombre_proveedor ,ra.proveedor ||'  - ('|| pr.\"PRO_RAZON_SOCIAL\"  ||')'  nit_nombre
-										  , cot.numero_contrato , cot.fecha_contrato, ord.\"ORG_NOMBRE\"  nombre_ordenador ,ord.\"ORG_ORDENADOR_GASTO\"  tipo_ordenador  ";
+										  , cot.numero_contrato , cot.fecha_contrato, ord.\"ORG_NOMBRE\"  nombre_ordenador ,ord.\"ORG_TIPO_ORDENADOR\"  tipo_ordenador  ";
 				
 				$cadenaSql .= "FROM registro_actarecibido ra   ";
 				$cadenaSql .= " JOIN  elemento_acta_recibido  ela ON ela.id_acta=ra. id_actarecibido ";
@@ -408,7 +409,7 @@ class Sql extends \Sql {
 				$cadenaSql .= (is_null($variable[16])==true)?"NULL,":"'" . $variable [16] . "',";
 				$cadenaSql .= (is_null($variable[17])==true)?"NULL,":"'" . $variable [17] . "',";
 				$cadenaSql .= "'" . $variable [18] . "') ";
-				$cadenaSql .= "RETURNING  consecutivo; ";
+				$cadenaSql .= "RETURNING  consecutivo, acta_recibido; ";
 				
 				break;
 			

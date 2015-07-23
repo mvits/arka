@@ -102,8 +102,15 @@ class Funcion {
 					}
 					
 					if (isset ( $_REQUEST ["botonActivarElementos"] ) && $_REQUEST ['botonActivarElementos'] == 'true') {
-					
-						redireccion::redireccionar ('ActivarElementos', $_REQUEST['id_entrada']);
+						
+						$array=array(
+								$_REQUEST['numero_entrada'],
+								$_REQUEST['consecutivo_entrada'],
+								$_REQUEST['numero_acta'],
+								
+								
+						);
+						redireccion::redireccionar ('ActivarElementos', $array);
 						exit;
 					}
 					

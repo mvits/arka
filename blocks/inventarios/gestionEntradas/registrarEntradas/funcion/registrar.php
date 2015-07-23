@@ -244,13 +244,17 @@ class RegistradorOrden {
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarEntrada', $arregloDatos );
+		
 		$id_entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$arreglo = array (
 				$idEntradamax,
-				$id_entrada [0] [0] 
+				$id_entrada [0] [0] ,
+				$id_entrada [0] [1] ,
 		);
-		if ($id_entrada [0] [0]) {
+		
+		
+		if ($id_entrada) {
 			
 			redireccion::redireccionar ( 'inserto', $arreglo );
 			exit ();

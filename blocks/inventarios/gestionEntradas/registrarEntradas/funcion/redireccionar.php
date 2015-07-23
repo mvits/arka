@@ -16,8 +16,9 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=inserto";
-				$variable .= "&consecutivo=" . $valor [1];
+				$variable .= "&consecutivo=" . $valor [1] . " - (" . date ( 'Y' ) . ")";
 				$variable .= "&numero_entrada=" . $valor [0];
+				$variable .= "&numero_acta=" . $valor [2];
 				break;
 			
 			case "noInserto" :
@@ -67,9 +68,10 @@ class redireccion {
 			case "ActivarElementos" :
 				
 				$variable = "pagina=activacionElementosActa";
-// 				$variable .= "&opcion=cargarElemento";
-// 				$variable .= "&entradaDirecta=" . TRUE;
-				$variable .= "&numero_entrada=" . $valor;
+				$variable .= "&opcion=consultarElementosActa";
+				$variable .= "&numero_acta=" . $valor[2];
+				$variable .= "&numero_entrada=" .$valor[0];
+				$variable .= "&consecutivo_entrada=" .$valor[1];
 				break;
 		}
 		
