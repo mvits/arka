@@ -49,7 +49,7 @@
               	 minimumInputLength: 3,
               	 });
 
- $('#<?php echo $this->campoSeguro('registro_salidas')?>').width(380);  
+ $('#<?php echo $this->campoSeguro('registro_salidas')?>').width(390);  
   $("#<?php echo $this->campoSeguro('registro_salidas')?>").select2();
  
               	 

@@ -132,7 +132,7 @@ class registrarForm {
 		$atributos ['estilo'] = 'jqueryui';
 		$atributos ['validar'] = '';
 		$atributos ['anchoCaja'] = 20;
-		$atributos ['limitar'] = true;
+		$atributos ['limitar'] = false;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['anchoEtiqueta'] = 99;
 		
