@@ -86,14 +86,14 @@ class registrarForm {
 		$atributos ['redirLugar'] = true;
 		echo $this->miFormulario->enlace ( $atributos );
 		unset ( $atributos );
-
+		
 		$funcionario = $_REQUEST ['funcionario'];
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $funcionario );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		var_dump($resultado);exit;
+
 		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
@@ -106,20 +106,55 @@ class registrarForm {
 		
 		if ($resultado) {
 			
-			echo "<table id='tablaTitulos' class='cell-border'>
+			$mostrarHtml= "<table id='tablaTitulos'>
 			<thead>
                 <tr>
-              	  <th>Fecha de Registro</th>
-					<th>Entrada</th>
-					<th>Descripción</th>
+              	  <th>Tipo<br>Bien</th>
 					<th>Placa</th>
-					<th>Funcionario</th>
-                	<th>Dependencia</th>
-					<th>Modificar</th>
-					<th>Anular</th>
-				  </tr>
+					<th>Descripción</th>
+					<th>Sede</th>
+					<th>Dependencia</th>
+                	<th>Estado Elemento</th>
+					 </tr>
             </thead>
-            </table>";
+			<tbody>
+            ";
+			
+			for($i = 0; $i < count ( $resultado ); $i ++) {
+				
+				// $variable1 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+				// $variable1 .= "&opcion=consultarElementosActa";
+				// $variable1 .= "&numero_acta=" . $resultado [$i] ['id_acta'];
+				// $variable1 .= "&numero_entrada=" . $resultado [$i] ['id_entrada'];
+				// $variable1 .= "&consecutivo_entrada=" . $resultado [$i] ['consecutivo_entrada'];
+				
+				// $variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
+				
+				// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarActaElementos', $resultado [$i] [0] );
+				
+				// $elementos_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				// $validacion_elementos = " <td><center>
+				// <a href='" . $variable1 . "'>
+				// <img src='" . $rutaBloque . "/css/images/update.png' width='15px'>
+				// </a>
+				// </center> </td>";
+				
+				$mostrarHtml .= "<tr>
+                    <td><center>" . $resultado [$i] ['nombre_tipo_bienes'] . "</center></td>
+                    <td><center>" . $resultado [$i] ['placa'] . "</center></td>
+                    <td><center>" . $resultado [$i] ['descripcion_elemento'] . "</center></td>
+                    <td><center>" . $resultado [$i] ['sede'] . "</center></td>
+                    <td><center>" . $resultado [$i] ['dependencia'] . "</center></td>
+                    <td><center>" . $resultado [$i] ['estado_bien'] . "</center></td>
+					 </tr>";
+			}
+			
+			$mostrarHtml .= "</tbody>
+					 </table>";
+			echo $mostrarHtml;
+			unset ( $mostrarHtml );
+			unset ( $variable );
 		} else {
 			
 			$mensaje = "No Exiten Elementos Con los Parametros Enviados";
