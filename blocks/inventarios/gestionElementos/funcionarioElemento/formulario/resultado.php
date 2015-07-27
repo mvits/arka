@@ -93,8 +93,6 @@ class registrarForm {
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-
-		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -103,18 +101,21 @@ class registrarForm {
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
 		unset ( $atributos );
+		// var_dump($resultado);exit;
 		
 		if ($resultado) {
 			
-			$mostrarHtml= "<table id='tablaTitulos'>
+			$mostrarHtml = "<table id='tablaTitulos'>
 			<thead>
                 <tr>
-              	  <th>Tipo<br>Bien</th>
+              	  <th>Tipo Bien</th>
 					<th>Placa</th>
 					<th>Descripción</th>
 					<th>Sede</th>
 					<th>Dependencia</th>
                 	<th>Estado Elemento</th>
+					<th>Detalle Elemento</th> 
+					<th>Registrar<br>Observaciones</th> 
 					 </tr>
             </thead>
 			<tbody>
@@ -122,15 +123,17 @@ class registrarForm {
 			
 			for($i = 0; $i < count ( $resultado ); $i ++) {
 				
-				// $variable1 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-				// $variable1 .= "&opcion=consultarElementosActa";
-				// $variable1 .= "&numero_acta=" . $resultado [$i] ['id_acta'];
-				// $variable1 .= "&numero_entrada=" . $resultado [$i] ['id_entrada'];
-				// $variable1 .= "&consecutivo_entrada=" . $resultado [$i] ['consecutivo_entrada'];
+				$VariableDetalles = "pagina=detalleElemento"; // pendiente la pagina para modificar parametro
+				$VariableDetalles .= "&opcion=detalle";
+				$VariableDetalles .= "&elemento=" . $resultado [$i] ['identificador_elemento_individual'];
+				$VariableDetalles .= "&funcionario=" . $funcionario;
+				$VariableDetalles = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableDetalles, $directorio );
 				
-				// $variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
-				
-				// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarActaElementos', $resultado [$i] [0] );
+				$VariableObservaciones = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+				$VariableObservaciones .= "&opcion=observaciones";
+				$VariableObservaciones .= "&elemento_individual=" . $resultado [$i] ['identificador_elemento_individual'];
+				$VariableObservaciones .= "&funcionario=" . $funcionario;
+				$VariableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableObservaciones, $directorio );
 				
 				// $elementos_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
@@ -147,6 +150,7 @@ class registrarForm {
                     <td><center>" . $resultado [$i] ['sede'] . "</center></td>
                     <td><center>" . $resultado [$i] ['dependencia'] . "</center></td>
                     <td><center>" . $resultado [$i] ['estado_bien'] . "</center></td>
+                    <td><center><a href='".$VariableDetalles."'><u>Ver Detalles</u></a></center> </td>                    		
 					 </tr>";
 			}
 			
@@ -157,7 +161,7 @@ class registrarForm {
 			unset ( $variable );
 		} else {
 			
-			$mensaje = "No Exiten Elementos Con los Parametros Enviados";
+			$mensaje = "No Existen Elementos Asociados con el Funcionario";
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'mensajeRegistro';
