@@ -31,7 +31,7 @@ class registrarForm {
 		
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/";
-		$rutaBloque .= $esteBloque ['grupo'] . $esteBloque ['nombre'];
+		$rutaBloque .= $esteBloque ['grupo'] ."/". $esteBloque ['nombre'];
 		
 		// ---------------- SECCION: Parámetros Globales del Formulario ----------------------------------
 		/**
@@ -133,6 +133,7 @@ class registrarForm {
 				$VariableObservaciones .= "&opcion=observaciones";
 				$VariableObservaciones .= "&elemento_individual=" . $resultado [$i] ['identificador_elemento_individual'];
 				$VariableObservaciones .= "&funcionario=" . $funcionario;
+				$VariableObservaciones .= "&placa=" . $resultado [$i] ['placa'];
 				$VariableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableObservaciones, $directorio );
 				
 				// $elementos_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -150,7 +151,9 @@ class registrarForm {
                     <td><center>" . $resultado [$i] ['sede'] . "</center></td>
                     <td><center>" . $resultado [$i] ['dependencia'] . "</center></td>
                     <td><center>" . $resultado [$i] ['estado_bien'] . "</center></td>
-                    <td><center><a href='".$VariableDetalles."'><u>Ver Detalles</u></a></center> </td>                    		
+                    <td><center><a href='".$VariableDetalles."'><u>Ver Detalles</u></a></center> </td>    
+					 <td><center><a href='" . $VariableObservaciones . "'><img src='" . $rutaBloque . "/css/images/edit.png' width='15px'></a></center>
+                    		
 					 </tr>";
 			}
 			

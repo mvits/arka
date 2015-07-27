@@ -79,7 +79,7 @@ $this->idioma ["tipo_polizaTitulo"] ="Seleccione Tipo de Poliza";
 $this->idioma ["tipo_bien"] ="Tipo de Bien : ";
 $this->idioma ["tipo_bienTitulo"] ="Seleccione Tipo de Bien";
 
-$this->idioma ["descripcion"] ="Descripción: ";
+$this->idioma ["descripcion"] ="Observaciones: ";
 $this->idioma ["descripcionTitulo"] ="Ingrese Descripción";
 
 $this->idioma ["cantidad"] ="Cantidad: ";
@@ -234,7 +234,7 @@ $this->idioma ["contratista"] = "Contratista";
 $this->idioma ["ordenadorGasto"] = "Ordenador Gasto";
 
 
-$this->idioma ["botonAceptar"] ="Actualizar Elemento";
+$this->idioma ["botonAceptar"] ="Guardar Observación";
 $this->idioma ["botonAnular"] ="Anular Elemento";
 $this->idioma ["botonCancelar"] ="Cancelar";
 $this->idioma ["botonContinuar"] ="Continuar";
