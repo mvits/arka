@@ -213,22 +213,25 @@ class Sql extends \Sql {
             case "consultarElemento" :
 
                 $cadenaSql = "SELECT DISTINCT ";
-                $cadenaSql .= "eli.placa , tb.descripcion nombre_tipo_bienes,
-                						sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia  ";
+                $cadenaSql .= "  eli.id_elemento_ind  identificador_elemento_individual , eli.placa , tb.descripcion nombre_tipo_bienes,
+                						sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia, 
+                						CASE
+                						WHEN  tfs.descripcion IS  NULL THEN 'Activo'
+										ELSE  tfs.descripcion  
+                						END   as estado_bien, ele.descripcion descripcion_elemento	";
                 $cadenaSql .= "FROM elemento_individual  eli ";
                 $cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
                 $cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes = ele.tipo_bien ";
-//                 $cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
-//                 $cadenaSql .= "RIGHT JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
-//                 $cadenaSql .= (($variable[8] == 1) ? ' JOIN ' : ' LEFT JOIN ' );
-//                 $cadenaSql .= "salida sl ON sl.id_salida = elemento_individual.id_salida  ";
-//                 $cadenaSql .= "JOIN entrada ON entrada.id_entrada = sl.id_entrada ";
+                $cadenaSql .= "LEFT JOIN estado_elemento  est ON est.id_elemento_ind = eli.id_elemento_ind ";
+                $cadenaSql .= "LEFT JOIN tipo_falt_sobr  tfs ON tfs.id_tipo_falt_sobr = est.tipo_faltsobr   ";
                 $cadenaSql .= "LEFT JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= eli.funcionario ";
                 $cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
                 $cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
                 $cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
                 $cadenaSql .= "WHERE 1=1 ";
+                $cadenaSql .= " AND 	tb.id_tipo_bienes <> 1 ";
                 $cadenaSql .= " AND eli.funcionario= '" . $variable . "' ";
+                $cadenaSql .= " ORDER BY eli.id_elemento_ind DESC ;  ";
                 
 
                 break;
