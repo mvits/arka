@@ -1,6 +1,6 @@
 <?php
 
-namespace inventarios\gestionElementos\modificarElemento;
+namespace inventarios\gestionElementos\funcionarioElemento;
 
 if (!isset($GLOBALS ["autorizado"])) {
     include ("../index.php");
@@ -213,59 +213,23 @@ class Sql extends \Sql {
             case "consultarElemento" :
 
                 $cadenaSql = "SELECT DISTINCT ";
-                $cadenaSql .= "placa,  ";
-                $cadenaSql .= "elemento.serie, elemento.fecha_registro as fecharegistro, id_elemento as idelemento,
-								      	 estado_entrada as estadoentrada, 
-						   			 	  entrada.cierre_contable as cierrecontable,
-						 			   	 fn.\"FUN_IDENTIFICACION\" ||' - '||  fn.\"FUN_NOMBRE\" as funcionario,
-						     		  	 entrada.consecutivo||' - ('||entrada.vigencia||')' entrada,
-						     			  elemento.descripcion descripcion, ad.\"ESF_DEP_ENCARGADA\" dependencia 	";
-                $cadenaSql .= "FROM elemento ";
-                $cadenaSql .= "JOIN tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien ";
-                $cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
-                $cadenaSql .= "RIGHT JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
-                $cadenaSql .= (($variable[8] == 1) ? ' JOIN ' : ' LEFT JOIN ' );
-                $cadenaSql .= "salida sl ON sl.id_salida = elemento_individual.id_salida  ";
+                $cadenaSql .= "eli.placa , tb.descripcion nombre_tipo_bienes,
+                						sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia  ";
+                $cadenaSql .= "FROM elemento_individual  eli ";
+                $cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
+                $cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes = ele.tipo_bien ";
+//                 $cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
+//                 $cadenaSql .= "RIGHT JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
+//                 $cadenaSql .= (($variable[8] == 1) ? ' JOIN ' : ' LEFT JOIN ' );
+//                 $cadenaSql .= "salida sl ON sl.id_salida = elemento_individual.id_salida  ";
 //                 $cadenaSql .= "JOIN entrada ON entrada.id_entrada = sl.id_entrada ";
-                $cadenaSql .= "LEFT JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= elemento_individual.funcionario ";
-                $cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
-                $cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
+                $cadenaSql .= "LEFT JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= eli.funcionario ";
+                $cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
+                $cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
                 $cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
                 $cadenaSql .= "WHERE 1=1 ";
-                if ($variable[8] == 0) {
-         
-
-                    $cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
-                }
-                $cadenaSql .= "AND entrada.cierre_contable='f' ";
-                $cadenaSql .= "AND   entrada.estado_registro='t' ";
-// 				$cadenaSql .= "AND   entrada.estado_entrada = 1  ";
-                if ($variable [0] != '') {
-                    $cadenaSql .= " AND elemento.fecha_registro BETWEEN CAST ( '" . $variable [0] . "' AS DATE) ";
-                    $cadenaSql .= " AND  CAST ( '" . $variable [1] . "' AS DATE)  ";
-                }
-                if ($variable [2] != '') {
-                    $cadenaSql .= " AND elemento_individual.placa = '" . $variable [2] . "' ";
-                }
-                if ($variable [3] != '') {
-                    $cadenaSql .= " AND  elemento.serie= '" . $variable [3] . "' ";
-                }
-                if ($variable [4] != '') {
-                    $cadenaSql .= " AND  sas.\"ESF_ID_SEDE\"= '" . $variable [4] . "' ";
-                }
-                if ($variable [5] != '') {
-                    $cadenaSql .= " AND  ad.\"ESF_CODIGO_DEP\"= '" . $variable [5] . "' ";
-                }
-
-                if ($variable [6] != '') {
-                    $cadenaSql .= " AND  fn.\"FUN_IDENTIFICACION\"= '" . $variable [6] . "' ";
-                }
-
-                if ($variable [7] != '') {
-                    $cadenaSql .= " AND  entrada.id_entrada= '" . $variable [7] . "' ";
-                }
-                // $cadenaSql .= "ORDER BY entrada.id_entrada DESC ";
-                // $cadenaSql .= " LIMIT 5000; ";
+                $cadenaSql .= " AND eli.funcionario= '" . $variable . "' ";
+                
 
                 break;
 

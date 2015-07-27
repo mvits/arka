@@ -1,6 +1,6 @@
 <?php
 
-namespace inventarios\gestionElementos\modificarElemento;
+namespace inventarios\gestionElementos\funcionarioElemento;
 
 // Evitar un acceso directo a este archivo
 if (! isset ( $GLOBALS ["autorizado"] )) {

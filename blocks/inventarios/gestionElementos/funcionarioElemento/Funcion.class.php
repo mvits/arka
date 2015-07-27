@@ -1,8 +1,8 @@
 <?php
 
-namespace inventarios\gestionElementos\modificarElemento;
+namespace inventarios\gestionElementos\funcionarioElemento;
 
-use inventarios\gestionElementos\modificarElemento\funcion\redireccion;
+use inventarios\gestionElementos\funcionarioElemento\funcion\redireccion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");

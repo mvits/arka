@@ -1,5 +1,6 @@
 <?php
-if (! isset ( $GLOBALS ["autorizado"]funcionarioElemento/index.php");
+if (! isset ( $GLOBALS ["autorizado"] )) {
+	include ("../index.php");
 	exit ();
 }
 class registrarForm {
@@ -115,7 +116,7 @@ class registrarForm {
 		
 		// Aplica atributos globales al control
 		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroLista ( $atributos );
+		// echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -141,21 +142,20 @@ class registrarForm {
 			$atributos ['seleccion'] = 1;
 		}
 		
-		// 		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "sede" );
-		// 		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-		
+		// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "sede" );
+		// $matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 		
 		$matrizItems = array (
 				array (
 						'0',
-						'Sin Salidas Registradas'
+						'Sin Salidas Registradas' 
 				),
 				array (
 						'1',
-						'Con Salidas Registradas'
-				)
-		
-		);
+						'Con Salidas Registradas' 
+				) 
+		)
+		;
 		
 		$atributos ['matrizItems'] = $matrizItems;
 		
@@ -164,10 +164,8 @@ class registrarForm {
 		// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
 		$tab ++;
 		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroLista ( $atributos );
+		// echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
-		
-		
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'placa';
@@ -212,7 +210,7 @@ class registrarForm {
 		
 		// Aplica atributos globales al control
 		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroLista ( $atributos );
+		// echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'serie1';
@@ -257,7 +255,7 @@ class registrarForm {
 		
 		// Aplica atributos globales al control
 		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroLista ( $atributos );
+// 		echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'sede';
@@ -291,7 +289,7 @@ class registrarForm {
 		// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
 		$tab ++;
 		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroLista ( $atributos );
+		// echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
 		
 		$esteCampo = "dependencia";
@@ -324,9 +322,8 @@ class registrarForm {
 		// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
 		$tab ++;
 		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroLista ( $atributos );
+		// echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
-		
 		
 		$esteCampo = "funcionario";
 		$atributos ['nombre'] = $esteCampo;
@@ -347,7 +344,7 @@ class registrarForm {
 		$atributos ['ajax_function'] = "";
 		$atributos ['ajax_control'] = $esteCampo;
 		$atributos ['estilo'] = "jqueryui";
-		$atributos ['validar'] = "";
+		$atributos ['validar'] = "required";
 		$atributos ['limitar'] = true;
 		$atributos ['anchoCaja'] = 52;
 		$atributos ['miEvento'] = '';
@@ -398,7 +395,8 @@ class registrarForm {
 		
 		// Aplica atributos globales al control
 		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		// echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'fecha_final';
@@ -429,10 +427,8 @@ class registrarForm {
 		
 		// Aplica atributos globales al control
 		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset($atributos);
-		
-		
+// 		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
 		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 		
@@ -467,8 +463,6 @@ class registrarForm {
 		
 		// ------------------Fin Division para los botones-------------------------
 		echo $this->miFormulario->division ( "fin" );
-		
-		
 		
 		// ------------------- SECCION: Paso de variables ------------------------------------------------
 		

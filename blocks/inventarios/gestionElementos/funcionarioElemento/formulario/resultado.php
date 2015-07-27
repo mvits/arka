@@ -1,5 +1,6 @@
 <?php
-if (! isset ( $GLOBALS ["autorizado"]funcionarioElemento/index.php");
+if (! isset ( $GLOBALS ["autorizado"] )) {
+	include ("../index.php");
 	exit ();
 }
 class registrarForm {
@@ -48,8 +49,6 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-
-
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
 		$atributos ['id'] = $esteCampo;
@@ -87,137 +86,14 @@ class registrarForm {
 		$atributos ['redirLugar'] = true;
 		echo $this->miFormulario->enlace ( $atributos );
 		unset ( $atributos );
-		
-		$atributos ["id"] = "fecha_inicio"; // No cambiar este nombre
-		$atributos ["tipo"] = "hidden";
-		$atributos ['estilo'] = '';
-		$atributos ["obligatorio"] = false;
-		$atributos ['marco'] = true;
-		$atributos ["etiqueta"] = "";
-		$atributos ["valor"] = $_REQUEST ['fecha_inicio'];
-		// $atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos );
-		
-		$atributos ["id"] = "fecha_final"; // No cambiar este nombre
-		$atributos ["tipo"] = "hidden";
-		$atributos ['estilo'] = '';
-		$atributos ["obligatorio"] = false;
-		$atributos ['marco'] = true;
-		$atributos ["etiqueta"] = "";
-		$atributos ["valor"] = $_REQUEST ['fecha_final'];
-		// $atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos );
-		
-		$atributos ["id"] = "placa"; // No cambiar este nombre
-		$atributos ["tipo"] = "hidden";
-		$atributos ['estilo'] = '';
-		$atributos ["obligatorio"] = false;
-		$atributos ['marco'] = true;
-		$atributos ["etiqueta"] = "";
-		$atributos ["valor"] = $_REQUEST ['placa'];
-		// $atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos );
-		
-		$atributos ["id"] = "serie"; // No cambiar este nombre
-		$atributos ["tipo"] = "hidden";
-		$atributos ['estilo'] = '';
-		$atributos ["obligatorio"] = false;
-		$atributos ['marco'] = true;
-		$atributos ["etiqueta"] = "";
-		$atributos ["valor"] = $_REQUEST ['serie1'];
-		// $atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos );
-		
-		
-		
 
-		if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
-			$fechaInicio = $_REQUEST ['fecha_inicio'];
-		} else {
-			$fechaInicio = '';
-		}
+		$funcionario = $_REQUEST ['funcionario'];
 		
-		if (isset ( $_REQUEST ['fecha_final'] ) && $_REQUEST ['fecha_final'] != '') {
-			$fechaFinal = $_REQUEST ['fecha_final'];
-		} else {
-			$fechaFinal = '';
-		}
-		
-		if (isset ( $_REQUEST ['placa'] ) && $_REQUEST ['placa'] != '') {
-			$placa = $_REQUEST ['placa'];
-		} else {
-			$placa = '';
-		}
-		
-		if (isset ( $_REQUEST ['serie1'] ) && $_REQUEST ['serie1'] != '') {
-			$serie = $_REQUEST ['serie1'];
-		} else {
-			$serie = '';
-		}
-		
-		if (isset ( $_REQUEST ['sede'] ) && $_REQUEST ['sede'] != '') {
-			$sede = $_REQUEST ['sede'];
-		} else {
-			$sede = '';
-		}
-		
-		if (isset ( $_REQUEST ['dependencia'] ) && $_REQUEST ['dependencia'] != '') {
-			$dependencia = $_REQUEST ['dependencia'];
-		} else {
-			$dependencia = '';
-		}
-		
-		
-		
-		if (isset ( $_REQUEST ['funcionario'] ) && $_REQUEST ['funcionario'] != '') {
-			$funcionario = $_REQUEST ['funcionario'];
-		} else {
-			$funcionario = '';
-		}
-		
-		
-		
-		if (isset ( $_REQUEST ['numero_entrada'] ) && $_REQUEST ['numero_entrada'] != '') {
-			$entrada = $_REQUEST ['numero_entrada'];
-		} else {
-			$entrada = '';
-		}
-		
-
-		if (isset ( $_REQUEST ['registro_salidas'] ) && $_REQUEST ['registro_salidas'] != '') {
-			$registroSalidas = $_REQUEST ['registro_salidas'];
-		}
-		
-		
-		
-		
-		
-		$arreglo = array (
-				$fechaInicio,
-				$fechaFinal,
-				$placa,
-				$serie,
-				$sede,
-				$dependencia,
-				$funcionario,
-				$entrada,
-				$registroSalidas
-		);
-		
-		
-		
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $funcionario );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		
-		
-		
+		var_dump($resultado);exit;
 		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
@@ -225,11 +101,10 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		$atributos ["leyenda"] = "Modificar y Anular Elementos";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-
-		unset($atributos);
 		
+		unset ( $atributos );
 		
-		if($resultado){
+		if ($resultado) {
 			
 			echo "<table id='tablaTitulos' class='cell-border'>
 			<thead>
@@ -245,31 +120,24 @@ class registrarForm {
 				  </tr>
             </thead>
             </table>";
-			
-			
-		}else{
-			
+		} else {
 			
 			$mensaje = "No Exiten Elementos Con los Parametros Enviados";
-				
+			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'mensajeRegistro';
 			$atributos ['id'] = $esteCampo;
 			$atributos ['tipo'] = 'error';
 			$atributos ['estilo'] = 'textoCentrar';
 			$atributos ['mensaje'] = $mensaje;
-				
+			
 			$tab ++;
-				
+			
 			// Aplica atributos globales al control
 			$atributos = array_merge ( $atributos, $atributosGlobales );
 			echo $this->miFormulario->cuadroMensaje ( $atributos );
-			
 		}
 		
-		
-	
-	
 		// ------------------- SECCION: Paso de variables ------------------------------------------------
 		
 		/**
