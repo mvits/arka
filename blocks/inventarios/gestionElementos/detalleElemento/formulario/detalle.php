@@ -30,7 +30,7 @@ class registrarForm {
     }
 
     function miForm() {
-
+var_dump($_REQUEST);
 // Rescatar los datos de este bloque
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
         $rutaBloque = $this->miConfigurador->getVariableConfiguracion("host");
@@ -154,8 +154,19 @@ class registrarForm {
             $directorio .= $this->miConfigurador->getVariableConfiguracion("site") . "/index.php?";
             $directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");
 
+            if(isset($_REQUEST['funcionario'])){
+            	
+            	$variable = "pagina=funcionarioElemento";
+            	$variable .= "&opcion=Consultar";
+            	$variable .= "&funcionario=".$_REQUEST['funcionario'];
+            	$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
+            	
+            	
+            }else{
+            
             $variable = "pagina=" . $miPaginaActual;
             $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
+            }
 
 // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
             $esteCampo = 'botonRegresar';
