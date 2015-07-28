@@ -97,7 +97,7 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Modificar y Anular Elementos";
+		$atributos ["leyenda"] = "Invetario Funcionionario CC. ".$_REQUEST['funcionario'];
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		unset ( $atributos );
 		{
@@ -222,6 +222,9 @@ class registrarForm {
 					$atributos ['dobleLinea'] = 1;
 					$atributos ['tabIndex'] = $tab;
 					$atributos ['etiqueta'] = '';
+					$atributos ['seleccionado'] = false;
+					$atributos ['evento'] = 'onclick';
+					$atributos ['eventoFuncion'] = ' verificarElementos(this.form)';
 					$atributos ['valor'] = $resultado [$i] ['identificador_elemento_individual'];
 					$atributos ['deshabilitado'] = false;
 					$tab ++;
@@ -268,7 +271,7 @@ class registrarForm {
 			$esteCampo = 'botonGuadar';
 			$atributos ["id"] = $esteCampo;
 			$atributos ["tabIndex"] = $tab;
-			$atributos ["tipo"] = 'boton';
+			$atributos ["tipo"] = ' ';
 			// submit: no se coloca si se desea un tipo button genérico
 			$atributos ['submit'] = true;
 			$atributos ["estiloMarco"] = '';
@@ -289,7 +292,7 @@ class registrarForm {
 			$esteCampo = 'botonAprobar';
 			$atributos ["id"] = $esteCampo;
 			$atributos ["tabIndex"] = $tab;
-			$atributos ["tipo"] = 'boton';
+			$atributos ["tipo"] = ' ';
 			// submit: no se coloca si se desea un tipo button genérico
 			$atributos ['submit'] = true;
 			$atributos ["estiloMarco"] = '';
@@ -310,7 +313,7 @@ class registrarForm {
 			$esteCampo = 'botonGenerarPdf ';
 			$atributos ["id"] = $esteCampo;
 			$atributos ["tabIndex"] = $tab;
-			$atributos ["tipo"] = 'boton';
+			$atributos ["tipo"] = ' ';
 			// submit: no se coloca si se desea un tipo button genérico
 			$atributos ['submit'] = true;
 			$atributos ["estiloMarco"] = '';

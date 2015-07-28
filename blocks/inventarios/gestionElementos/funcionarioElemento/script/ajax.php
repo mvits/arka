@@ -77,6 +77,27 @@ function desmarcar(obj) {
 
 
 
+function verificarElementos(obj) {
+	elem=obj.elements;
+    for (i=0;i<elem.length;i++)
+    { 
+ 		if (elem[i].type=="checkbox"){
+        	if (elem[i].checked==true){
+        		$('#<?php echo $this->campoSeguro('botonAprobar')?>').removeAttr('disabled');
+        		$('#<?php echo $this->campoSeguro('botonGuadar')?>').attr('disabled','disabled');
+             	}else if(elem[i].checked==false){
+				desicion= 1;
+ 				}
+
+			if(desicion==1 ){
+				$('#<?php echo $this->campoSeguro('botonGuadar')?>').removeAttr('disabled');
+        		$('#<?php echo $this->campoSeguro('botonAprobar')?>').attr('disabled','disabled');
+				}
+    	}            
+	} 
+}
+
+
 
 
 
@@ -376,6 +397,9 @@ function consultarDependencia(elem, request, response){
 	          });  
 	         $('#<?php echo $this->campoSeguro('selecc_registros')?>').width(160);
 	         $("#<?php echo $this->campoSeguro('selecc_registros') ?>").select2();
+
+
+	         
 	         
 	         
 	     	$("#<?php echo $this->campoSeguro('selecc_registros')?>").change(function(){
@@ -383,11 +407,15 @@ function consultarDependencia(elem, request, response){
 	     		
 	     		if($("#<?php echo $this->campoSeguro('selecc_registros')?>").val()==1){
 	     			marcar(this.form);
+	     			verificarElementos(this.form);
 	     			
 
 	     		}else{
 
-	     			desmarcar(this.form);
+	     			desmarcar(this.form);	 
+
+	     			verificarElementos(this.form);
+	     			    			
 	     			}
 
 	     	      });

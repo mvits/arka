@@ -26,11 +26,13 @@
         });
 
                $('#tablaTitulos').dataTable( {
-                "sPaginationType": "full_numbers"
+					"sScrollY": "100px",
+					 "bScrollCollapse": true,
+					   "bPaginate": false,
                  } );
 
 
-    
+    $('#<?php echo $this->campoSeguro('botonAprobar')?>').attr('disabled','disabled');
              
  $('#<?php echo $this->campoSeguro('numero_entrada_c')?>').attr('disabled','');
  $('#<?php echo $this->campoSeguro('fecha_entrada')?>').attr('disabled','');

@@ -70,7 +70,7 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Modificar y Anular Elementos";
+		$atributos ["leyenda"] = "Consulta de Invetario Funcionario";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
