@@ -154,6 +154,14 @@ class Sql extends \Sql {
 			// ?, ?, ?, ?,
 			// ?, ?);
 			
+			case "Elemento_Existencia" :
+				
+				$cadenaSql = "	UPDATE elemento_individual ";
+				$cadenaSql .= "	SET   confirmada_existencia=true ";
+				$cadenaSql .= "	WHERE  id_elemento_ind='" . $variable . "';";
+				
+				break;
+			
 			case "Registrar_Observaciones_Elemento" :
 				
 				$cadenaSql = "INSERT INTO arka_movil.detalle_levantamiento( 
@@ -168,9 +176,9 @@ class Sql extends \Sql {
 			case "Registrar_Levantamiento_Elemento" :
 				
 				$cadenaSql = ' UPDATE elemento_individual ';
-				$cadenaSql .= "SET id_levantamiento ='".$variable[0]."'  ";
+				$cadenaSql .= "SET id_levantamiento ='" . $variable [0] . "'  ";
 				$cadenaSql .= "WHERE id_elemento_ind ='" . $variable [1] . "';";
-
+				
 				break;
 			
 			case "sede" :

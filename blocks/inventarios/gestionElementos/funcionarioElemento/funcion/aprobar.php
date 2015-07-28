@@ -27,11 +27,35 @@ class RegistradorOrden {
 	function procesarFormulario() {
 		var_dump($_REQUEST);
 		
+		$conexion = "inventarios";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
+
+		
+		for($i = 0; $i <= 10000; $i ++) {
+			if (isset ( $_REQUEST ['item_' . $i] )) {
+				$elementos [] = $_REQUEST ['item_' . $i];
+			}
+		}
+	
+		foreach ($elementos as $valor){
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'Elemento_Existencia', $valor );
+		
+		$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+		
+		}
+		
+	
+	
+	
+	
+	
+// 		var_dump($elementos);
 		
 		exit;
 			
-		$conexion = "inventarios";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 		$arreglo=array(
 			$_REQUEST['id_elemento'],
@@ -39,9 +63,7 @@ class RegistradorOrden {
 				
 		);
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'estado_elemento', $_REQUEST['id_elemento'] );
-		
-		$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+
 		
 
 		
