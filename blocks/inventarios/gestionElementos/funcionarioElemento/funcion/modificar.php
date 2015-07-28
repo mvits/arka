@@ -1,11 +1,12 @@
 <?php
 
-namespace inventarios\gestionElementos\modificarElemento\funcion;
+namespace inventarios\gestionElementos\funcionarioElemento\funcion;
 
-use inventarios\gestionElementos\modificarElemento\funcion\redireccion;
+use inventarios\gestionElementos\funcionarioElemento\funcion\redireccion;
 
 include_once ('redireccionar.php');
-if (! isset ( $GLOBALS ["autorizado"]funcionarioElemento/index.php");
+if (! isset ( $GLOBALS ["autorizado"] )) {
+	include ("../index.php");
 	exit ();
 }
 class RegistradorOrden {
@@ -23,125 +24,51 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+// 		echo "REGISTRANDO OBSERVACIONES";
+		
+// 		var_dump ( $_REQUEST );
+		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$_REQUEST ['total_iva_con'] = round ( $_REQUEST ['total_iva_con'] );
+		$arreglo = array (
+				"funcionario" => $_REQUEST ['funcionario'],
+				"id_elemento_individual" => $_REQUEST ['elemento_individual'],
+				'observacion' => $_REQUEST ['descripcion'] 
+		);
 		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'Registrar_Observaciones_Elemento', $arreglo );
 		
-		if ($_REQUEST ['id_tipo_bien'] == 1) {
-			
-			$arreglo = array (
-					$_REQUEST ['id_tipo_bien'],
-					$_REQUEST ['descripcion'],
-					$_REQUEST ['cantidad'],
-					$_REQUEST ['unidad'],
-					$_REQUEST ['valor'],
-					$_REQUEST ['iva'],
-					$_REQUEST ['ajuste'] = 0,
-					0,
-					$_REQUEST ['subtotal_sin_iva'],
-					$_REQUEST ['total_iva'],
-					$_REQUEST ['total_iva_con'],
-					($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
-					($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
-					$_REQUEST ['id_elemento'],
-					$_REQUEST ['nivel'] 
-			);
-			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elemento_tipo_1', $arreglo );
-			
-			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-		} else if ($_REQUEST ['id_tipo_bien'] == 2) {
-			
-			$arreglo = array (
-					
-					$_REQUEST ['id_tipo_bien'],
-					$_REQUEST ['descripcion'],
-					$_REQUEST ['cantidad'] = 1,
-					$_REQUEST ['unidad'],
-					$_REQUEST ['valor'],
-					$_REQUEST ['iva'],
-					$_REQUEST ['ajuste'] = 0,
-					0,
-					$_REQUEST ['subtotal_sin_iva'],
-					$_REQUEST ['total_iva'],
-					$_REQUEST ['total_iva_con'],
-					($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
-					($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
-					$_REQUEST ['id_elemento'],
-					$_REQUEST ['nivel'] 
-			);
-			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elemento_tipo_1', $arreglo );
-			
-			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-		} else if ($_REQUEST ['id_tipo_bien'] == 3) {
-			
-			if ($_REQUEST ['tipo_poliza'] == 0) {
-				$arreglo = array (
-						$_REQUEST ['id_tipo_bien'],
-						$_REQUEST ['descripcion'],
-						$_REQUEST ['cantidad'] = 1,
-						$_REQUEST ['unidad'],
-						$_REQUEST ['valor'],
-						$_REQUEST ['iva'],
-						$_REQUEST ['ajuste'] = 0,
-						0,
-						$_REQUEST ['subtotal_sin_iva'],
-						$_REQUEST ['total_iva'],
-						$_REQUEST ['total_iva_con'],
-						$_REQUEST ['tipo_poliza'],
-						'0001-01-01',
-						'0001-01-01',
-						($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
-						($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
-						$_REQUEST ['id_elemento'],
-						$_REQUEST ['nivel'] 
-				);
-			} else if ($_REQUEST ['tipo_poliza'] == 1) {
-				$arreglo = array (
-						$_REQUEST ['id_tipo_bien'],
-						$_REQUEST ['descripcion'],
-						$_REQUEST ['cantidad'] = 1,
-						$_REQUEST ['unidad'],
-						$_REQUEST ['valor'],
-						$_REQUEST ['iva'],
-						$_REQUEST ['ajuste'] = 0,
-						0,
-						$_REQUEST ['subtotal_sin_iva'],
-						$_REQUEST ['total_iva'],
-						$_REQUEST ['total_iva_con'],
-						$_REQUEST ['tipo_poliza'],
-						$_REQUEST ['fecha_inicio'],
-						$_REQUEST ['fecha_final'],
-						($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : 'null',
-						($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : 'null',
-						$_REQUEST ['id_elemento'],
-						$_REQUEST ['nivel'] 
-				);
-			}
-			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elemento_tipo_2', $arreglo );
-			
-			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-		}
+		$observacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		$arreglo = array (
+				$observacion [0] [0],
+				$_REQUEST ['elemento_individual'] 
+		);
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_placa_actulizada', $_REQUEST ['id_elemento'] );
-		$placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'Registrar_Levantamiento_Elemento', $arreglo );
 		
-		if ($elemento) {
+		$Elemento_Levantamiento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+		
+		$arreglo = array (
+				
+				$_REQUEST ['placa'],
+				$_REQUEST ['funcionario'],
+				$_REQUEST ['elemento_individual'] 
+		)
+		;
+// 		var_dump($Elemento_Levantamiento);exit;
+		if ($Elemento_Levantamiento) {
 			
-			redireccion::redireccionar ( 'inserto', $_REQUEST ['id_elemento'] );
-			exit();
+			redireccion::redireccionar('insertoObservacion',$arreglo);
+			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noInserto' );
-			exit();
+			redireccion::redireccionar('noInsertoObservacion',$_REQUEST['funcionario']);
+			
+			exit ();
 		}
 	}
-	
 }
 
 $miRegistrador = new RegistradorOrden ( $this->lenguaje, $this->sql, $this->funcion );

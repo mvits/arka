@@ -1,6 +1,6 @@
 <?
 
-namespace inventarios\gestionElementos\modificarElemento\funcion;
+namespace inventarios\gestionElementos\funcionarioElemento\funcion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("index.php");
@@ -12,6 +12,26 @@ class redireccion {
 		$miPaginaActual = $miConfigurador->getVariableConfiguracion ( "pagina" );
 		
 		switch ($opcion) {
+			
+			case "insertoObservacion" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=insertoObservacion";
+				$variable .= "&placa=" . $valor [0];
+				$variable .= "&funcionario=" . $valor [1];
+				$variable .= "&elemento_individual=" . $valor [2];
+				
+				break;
+			
+			case "noInsertoObservacion" :
+				
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=noInsertoObservación";
+				$variable .= "&funcionario=".$valor;
+				
+				break;
+			
 			case "inserto" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";

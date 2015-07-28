@@ -44,7 +44,7 @@ class Funcion {
 	function ConsultarOrden() {
 		include_once ($this->ruta . "funcion/ConsultarOrden.php");
 	}
-	function modificar() {
+	function RegistrarObservaciones() {
 		include_once ($this->ruta . "funcion/modificar.php");
 	}
 	function anular() {
@@ -71,9 +71,9 @@ class Funcion {
 				redireccion::redireccionar ( $_REQUEST ['opcion'] );
 			}
 			
-			if ($_REQUEST ['opcion'] == 'modificar') {
+			if ($_REQUEST ['opcion'] == 'registrarObservaciones') {
 				
-				$this->modificar ();
+				$this->RegistrarObservaciones ();
 			}
 			
 			if ($_REQUEST ['opcion'] == 'anular') {

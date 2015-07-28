@@ -1,5 +1,6 @@
 <?php
-if (! isset ( $GLOBALS ["autorizado"]funcionarioElemento/index.php");
+if (! isset ( $GLOBALS ["autorizado"] )) {
+	include ("../index.php");
 	exit ();
 }
 class registrarForm {
@@ -98,6 +99,27 @@ class registrarForm {
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			
 			{
+
+				if ($_REQUEST ['mensaje'] == 'insertoObservacion') {
+						
+					$mensaje = "Se ha Guardado la observación con respecto al Elemento de Placa No. " . $_REQUEST ['placa'] . "";
+						
+					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+					$esteCampo = 'mensajeRegistro';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['tipo'] = 'success';
+					$atributos ['estilo'] = 'textoCentrar';
+					$atributos ['mensaje'] = $mensaje;
+						
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+				}
+				
+				
 				
 				if ($_REQUEST ['mensaje'] == 'actualizo') {
 					
@@ -266,7 +288,9 @@ class registrarForm {
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-		$valorCodificado .= "&opcion=registrarOrden";
+		$valorCodificado .= "&opcion=Consultar";
+		$valorCodificado.="&funcionario=".$_REQUEST['funcionario'];
+		
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
 		 * Para ello utiliza la hora en que es creado el formulario para
