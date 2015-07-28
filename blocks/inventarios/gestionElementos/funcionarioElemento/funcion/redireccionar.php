@@ -87,6 +87,8 @@ class redireccion {
 		$redireccion = $url . $_REQUEST [$enlace];
 		
 		echo "<script>location.replace('" . $redireccion . "')</script>";
+		exit();
+		
 	}
 }
 

@@ -60,6 +60,26 @@ $urlFinal2 = $url . $cadena2;
 
 
 
+
+function marcar(obj) {
+    elem=obj.elements;
+    for (i=0;i<elem.length;i++)
+        if (elem[i].type=="checkbox")
+            elem[i].checked=true;
+} 
+
+function desmarcar(obj) {
+    elem=obj.elements;
+    for (i=0;i<elem.length;i++)
+        if (elem[i].type=="checkbox")
+            elem[i].checked=false;
+} 
+
+
+
+
+
+
 function tipo_bien(elem, request, response){
 	  $.ajax({
 	    url: "<?php echo $urlFinal2?>",
@@ -354,8 +374,23 @@ function consultarDependencia(elem, request, response){
 	                }
 	            
 	          });  
-	        
+	         $('#<?php echo $this->campoSeguro('selecc_registros')?>').width(160);
+	         $("#<?php echo $this->campoSeguro('selecc_registros') ?>").select2();
+	         
+	         
+	     	$("#<?php echo $this->campoSeguro('selecc_registros')?>").change(function(){
 
+	     		
+	     		if($("#<?php echo $this->campoSeguro('selecc_registros')?>").val()==1){
+	     			marcar(this.form);
+	     			
+
+	     		}else{
+
+	     			desmarcar(this.form);
+	     			}
+
+	     	      });
 
 
 

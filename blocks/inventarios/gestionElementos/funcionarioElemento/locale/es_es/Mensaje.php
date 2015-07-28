@@ -2,12 +2,18 @@
 $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaje.php";
 
 
+$this->idioma ["botonGuadar"] ="Guardar";
+$this->idioma ["botonAprobar"] ="Aprobar";
+$this->idioma ["botonGenerarPdf"] ="Generar PDF";
+
+
+
 
 $this->idioma ["numero_entrada"] ="Vigencia y/o Número Entrada : ";
 $this->idioma ["numero_entradaTitulo"] ="Seleccione Vigencia y/o Número Entrada ";
 
 
-
+$this->idioma ["selecc_registros"] ="Selección Registros: ";
 
 
 $this->idioma ["registro_salidas"] ="Estado:<br>Salidas";

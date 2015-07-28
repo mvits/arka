@@ -99,6 +99,27 @@ class registrarForm {
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			
 			{
+				
+				
+				if ($_REQUEST ['mensaje'] == 'mantenimiento') {
+						
+					$mensaje = "Página En Contrucción Pronto.<br>Pronto Estara en Funcionamiento";
+						
+					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+					$esteCampo = 'mensajeRegistro';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['tipo'] = 'warning';
+					$atributos ['estilo'] = 'textoCentrar';
+					$atributos ['mensaje'] = $mensaje;
+						
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+				}
+				
 
 				if ($_REQUEST ['mensaje'] == 'insertoObservacion') {
 						
