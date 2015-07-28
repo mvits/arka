@@ -103,7 +103,7 @@ class registrarForm {
 				
 				if ($_REQUEST ['mensaje'] == 'mantenimiento') {
 						
-					$mensaje = "Página En Contrucción Pronto.<br>Pronto Estara en Funcionamiento";
+					$mensaje = "Página En Contrucción.<br>Pronto Estara en Funcionamiento";
 						
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
