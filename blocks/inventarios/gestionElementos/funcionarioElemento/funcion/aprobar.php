@@ -1,11 +1,12 @@
 <?php
 
-namespace inventarios\gestionElementos\modificarElemento\funcion;
+namespace inventarios\gestionElementos\funcionarioElemento\funcion;
 
-use inventarios\gestionElementos\modificarElemento\funcion\redireccion;
+use inventarios\gestionElementos\funcionarioElemento\funcion\redireccion;
 
 include_once ('redireccionar.php');
-if (! isset ( $GLOBALS ["autorizado"]funcionarioElemento/index.php");
+if (! isset ( $GLOBALS ["autorizado"] )) {
+	include ("../index.php");
 	exit ();
 }
 
@@ -24,7 +25,10 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+		var_dump($_REQUEST);
 		
+		
+		exit;
 			
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );

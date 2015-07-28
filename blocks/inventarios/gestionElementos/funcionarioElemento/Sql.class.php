@@ -255,7 +255,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE 1=1 ";
 				$cadenaSql .= " AND 	tb.id_tipo_bienes <> 1 ";
 				$cadenaSql .= " AND eli.funcionario= '" . $variable . "' ";
-				$cadenaSql .= " ORDER BY eli.id_elemento_ind DESC   LIMIT 3    ;  ";
+				$cadenaSql .= " ORDER BY eli.id_elemento_ind DESC   ;  ";
 				
 				break;
 			

@@ -79,6 +79,7 @@ function desmarcar(obj) {
 
 function verificarElementos(obj) {
 	elem=obj.elements;
+	desicion= 0;
     for (i=0;i<elem.length;i++)
     { 
  		if (elem[i].type=="checkbox"){

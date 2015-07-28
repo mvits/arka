@@ -47,8 +47,8 @@ class Funcion {
 	function RegistrarObservaciones() {
 		include_once ($this->ruta . "funcion/modificar.php");
 	}
-	function anular() {
-		include_once ($this->ruta . "funcion/anular.php");
+	function Aprobar() {
+		include_once ($this->ruta . "funcion/aprobar.php");
 	}
 	function action() {
 		
@@ -76,10 +76,15 @@ class Funcion {
 				$this->RegistrarObservaciones ();
 			}
 			
-			if ($_REQUEST ['opcion'] == 'anular') {
+			if ($_REQUEST ['opcion'] == 'Accion') {
 				
-				$this->anular ();
+				if (isset ( $_REQUEST ['botonAprobar'] ) && $_REQUEST ['botonAprobar'] == 'Aprobar') {
+					
+					$this->Aprobar ();
+				}
 			}
+			
+			exit ();
 		}
 	}
 	function __construct() {

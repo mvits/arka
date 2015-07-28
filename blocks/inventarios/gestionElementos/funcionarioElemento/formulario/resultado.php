@@ -97,7 +97,7 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Invetario Funcionionario CC. ".$_REQUEST['funcionario'];
+		$atributos ["leyenda"] = "Invetario Funcionionario CC. " . $_REQUEST ['funcionario'];
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		unset ( $atributos );
 		{
@@ -191,6 +191,8 @@ class registrarForm {
 					$VariableObservaciones .= "&funcionario=" . $funcionario;
 					$VariableObservaciones .= "&placa=" . $resultado [$i] ['placa'];
 					$VariableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableObservaciones, $directorio );
+					
+					$identificaciones_elementos [] = $resultado [$i] ['identificador_elemento_individual'];
 					
 					// $elementos_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
@@ -359,10 +361,13 @@ class registrarForm {
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-		// $valorCodificado .= "&opcion=Accion";
+		$valorCodificado .= "&opcion=Accion";
 		$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
-		$valorCodificado .= "&opcion=mensaje";
-		$valorCodificado .= "&mensaje=mantenimiento";
+		if ($resultado) {
+			$valorCodificado .= "&id_elementos=" . serialize ( $identificaciones_elementos );
+		}
+		// $valorCodificado .= "&opcion=mensaje";
+		// $valorCodificado .= "&mensaje=mantenimiento";
 		
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
@@ -372,6 +377,7 @@ class registrarForm {
 		 * (b) asociando el tiempo en que se está creando el formulario
 		 */
 		$valorCodificado .= "&tiempo=" . time ();
+		$valorCodificado .= "&campoSeguro=" . $_REQUEST ['tiempo'];
 		// Paso 2: codificar la cadena resultante
 		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
 		
