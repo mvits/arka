@@ -139,9 +139,9 @@ class registrarForm {
 				}
 				
 				
-				if ($_REQUEST ['mensaje'] == 'noAnulado') {
+				if ($_REQUEST ['mensaje'] == 'noExiste') {
 				
-					$mensaje = "No se  Anulo el Registro del Elemento";
+					$mensaje = "No se pudo recuperar la información del Elemento";
 				
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';

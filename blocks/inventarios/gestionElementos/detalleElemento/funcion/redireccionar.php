@@ -1,6 +1,6 @@
-<?
+<?php
 
-namespace inventarios\gestionElementos\modificarElemento\funcion;
+namespace inventarios\gestionElementos\detalleElemento\funcion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("index.php");
@@ -20,6 +20,13 @@ class redireccion {
 				break;
 			
 			case "noInserto" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=error";
+				
+				break;
+                            
+                            case "noExiste" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=error";

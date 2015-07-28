@@ -31,7 +31,7 @@ include_once ("Lenguaje.class.php");
 
 include_once ('funcion/redireccionar.php');
 
-use inventarios\gestionCompras\consultaOrdenServicios\funcion\redireccion;
+use inventarios\gestionElementos\detalleElemento\funcion\redireccion;
 // ------------------
 
 // Esta clase actua como control del bloque en un patron FCE
@@ -43,9 +43,7 @@ class Bloque implements \Bloque {
 	var $miFuncion;
 	var $miSql;
 	var $miConfigurador;
-	public 
-
-	function __construct($esteBloque, $lenguaje = "") {
+	public function __construct($esteBloque, $lenguaje = "") {
 		
 		// El objeto de la clase Configurador debe ser único en toda la aplicación
 		$this->miConfigurador = \Configurador::singleton ();
