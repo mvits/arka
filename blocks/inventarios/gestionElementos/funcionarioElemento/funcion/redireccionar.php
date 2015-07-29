@@ -13,6 +13,18 @@ class redireccion {
 		
 		switch ($opcion) {
 			
+			case "Verificacion" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=" . $valor;
+				break;
+			
+			case "noVerificado" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=" . $valor;
+				break;
+			
 			case "insertoObservacion" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
@@ -28,7 +40,7 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=noInsertoObservación";
-				$variable .= "&funcionario=".$valor;
+				$variable .= "&funcionario=" . $valor;
 				
 				break;
 			
@@ -87,8 +99,7 @@ class redireccion {
 		$redireccion = $url . $_REQUEST [$enlace];
 		
 		echo "<script>location.replace('" . $redireccion . "')</script>";
-		exit();
-		
+		exit ();
 	}
 }
 

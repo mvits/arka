@@ -154,10 +154,30 @@ class Sql extends \Sql {
 			// ?, ?, ?, ?,
 			// ?, ?);
 			
-			case "Elemento_Existencia" :
+				
+				
+				case "Elemento_Existencia_Tipo_Confirmada" :
+				
+					$cadenaSql = "	UPDATE elemento_individual ";
+					$cadenaSql .= "	SET  tipo_confirmada='2'  ";
+					$cadenaSql .= "	WHERE  id_elemento_ind='" . $variable . "';";
+				
+					break;
+				
+			
+			case "Elemento_Existencia_No_Aprovado" :
 				
 				$cadenaSql = "	UPDATE elemento_individual ";
-				$cadenaSql .= "	SET   confirmada_existencia=true ";
+				$cadenaSql .= "	SET  confirmada_existencia=true  ";
+				$cadenaSql .= "	WHERE  id_elemento_ind='" . $variable . "';";
+				
+				break;
+			
+			case "Elemento_Existencia_Aprobado" :
+				
+				$cadenaSql = "	UPDATE elemento_individual ";
+				$cadenaSql .= "	SET   confirmada_existencia=true, 
+							                 tipo_confirmada='1'  ";
 				$cadenaSql .= "	WHERE  id_elemento_ind='" . $variable . "';";
 				
 				break;

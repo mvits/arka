@@ -47,8 +47,8 @@ class Funcion {
 	function RegistrarObservaciones() {
 		include_once ($this->ruta . "funcion/modificar.php");
 	}
-	function Aprobar() {
-		include_once ($this->ruta . "funcion/aprobar.php");
+	function Verificacion() {
+		include_once ($this->ruta . "funcion/verificacion.php");
 	}
 	function action() {
 		
@@ -78,13 +78,8 @@ class Funcion {
 			
 			if ($_REQUEST ['opcion'] == 'Accion') {
 				
-				if (isset ( $_REQUEST ['botonAprobar'] ) && $_REQUEST ['botonAprobar'] == 'Aprobar') {
-					
-					$this->Aprobar ();
-				}
+				$this->Verificacion ();
 			}
-			
-			exit ();
 		}
 	}
 	function __construct() {

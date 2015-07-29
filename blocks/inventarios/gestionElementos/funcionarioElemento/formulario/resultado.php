@@ -214,6 +214,7 @@ class registrarForm {
                      <td><center>		
 					";
 					
+					
 					$nombre = 'item_' . $i;
 					$atributos ['id'] = $nombre;
 					$atributos ['nombre'] = $nombre;
