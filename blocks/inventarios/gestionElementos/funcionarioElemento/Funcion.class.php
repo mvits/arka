@@ -50,6 +50,9 @@ class Funcion {
 	function Verificacion() {
 		include_once ($this->ruta . "funcion/verificacion.php");
 	}
+	function documentoPDF() {
+		include_once ($this->ruta . "funcion/documentoPdf.php");
+	}
 	function action() {
 		
 		// Evitar qu44444444rrrre se ingrese codigo HTML y PHP en los campos de texto
@@ -76,9 +79,17 @@ class Funcion {
 				$this->RegistrarObservaciones ();
 			}
 			
+			if (isset($_REQUEST ['botonGenerarPdf'])) {
+			
+			$this->documentoPDF ();
+			}
+			
 			if ($_REQUEST ['opcion'] == 'Accion') {
 				
-				$this->Verificacion ();
+				if (isset ( $_REQUEST ['botonGuadar'] ) || isset ( $_REQUEST ['botonAprobar'] )) {
+					
+					$this->Verificacion ();
+				}
 			}
 		}
 	}

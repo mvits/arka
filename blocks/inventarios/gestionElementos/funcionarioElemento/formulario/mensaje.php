@@ -101,7 +101,7 @@ class registrarForm {
 				
 				if ($_REQUEST ['mensaje'] == 'Aprobado') {
 					
-					$mensaje = "Se ha Aprobado el Invetario.";
+					$mensaje = "Se ha Aprobado el Inventario.";
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -122,7 +122,7 @@ class registrarForm {
 
 				if ($_REQUEST ['mensaje'] == 'NoAprobado') {
 						
-					$mensaje = "Se han guardado los cambios en el Invetario";
+					$mensaje = "Se han guardado los cambios en el Inventario";
 						
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';

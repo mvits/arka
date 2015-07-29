@@ -24,6 +24,8 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=noVerificado";
+				$variable .= "&funcionario=".$valor;
+				
 				break;
 			
 			case "insertoObservacion" :

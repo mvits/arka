@@ -383,7 +383,7 @@ class registrarForm {
 			
 			
 			// -----------------CONTROL: Botón ----------------------------------------------------------------
-			$esteCampo = 'botonGenerarPdf ';
+			$esteCampo = 'botonGenerarPdf';
 			$atributos ["id"] = $esteCampo;
 			$atributos ["tabIndex"] = $tab;
 			$atributos ["tipo"] = ' ';

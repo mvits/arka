@@ -80,7 +80,7 @@ class RegistradorOrden {
 			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noVerificado' );
+			redireccion::redireccionar ( 'noVerificado',$_REQUEST[funcionario] );
 			exit ();
 		}
 	}
