@@ -26,7 +26,7 @@
         });
 
                $('#tablaTitulos').dataTable( {
-					"sScrollY": "500px",
+					"sScrollY": "350px",
 					 "bScrollCollapse": true,
 					   "bPaginate": false,
                  } );

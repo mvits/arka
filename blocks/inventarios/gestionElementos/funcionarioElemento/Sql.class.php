@@ -159,7 +159,7 @@ class Sql extends \Sql {
 				case "Elemento_Existencia_Tipo_Confirmada" :
 				
 					$cadenaSql = "	UPDATE elemento_individual ";
-					$cadenaSql .= "	SET  tipo_confirmada='2'  ";
+					$cadenaSql .= "	SET  confirmada_existencia= false , tipo_confirmada='2'  ";
 					$cadenaSql .= "	WHERE  id_elemento_ind='" . $variable . "';";
 				
 					break;
@@ -177,7 +177,7 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "	UPDATE elemento_individual ";
 				$cadenaSql .= "	SET   confirmada_existencia=true, 
-							                 tipo_confirmada='1'  ";
+							                 tipo_confirmada='1' ";
 				$cadenaSql .= "	WHERE  id_elemento_ind='" . $variable . "';";
 				
 				break;
@@ -270,7 +270,7 @@ class Sql extends \Sql {
                 						CASE
                 						WHEN  tfs.descripcion IS  NULL THEN 'Activo'
 										ELSE  tfs.descripcion  
-                						END   as estado_bien, ele.descripcion descripcion_elemento	";
+                						END   as estado_bien, ele.descripcion descripcion_elemento, eli.confirmada_existencia , eli.tipo_confirmada  	";
 				$cadenaSql .= "FROM elemento_individual  eli ";
 				$cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
 				$cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes = ele.tipo_bien ";

@@ -38,7 +38,7 @@ class registrarForm {
 		// -------------------------------------------------------------------------------------------------
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
+		
 		// Limpia Items Tabla temporal
 		
 		// $cadenaSql = $this->miSql->getCadenaSql ( 'limpiar_tabla_items' );
@@ -67,16 +67,15 @@ class registrarForm {
 		{
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 			
-			
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-				
+			
 			$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-				
+			
 			$variable = "pagina=" . $miPaginaActual;
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-				
+			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
 			$atributos ['id'] = $esteCampo;
@@ -88,25 +87,63 @@ class registrarForm {
 			$atributos ['alto'] = '10%';
 			$atributos ['redirLugar'] = true;
 			echo $this->miFormulario->enlace ( $atributos );
-				
+			
 			unset ( $atributos );
 			
 			$esteCampo = "marcoDatosBasicos";
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-
+			
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-			var_dump($_REQUEST);exit;
 			
 			{
 				
+				if ($_REQUEST ['mensaje'] == 'Aprobado') {
+					
+					$mensaje = "Se ha Aprobado el Invetario.";
+					
+					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+					$esteCampo = 'mensajeRegistro';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['tipo'] = 'success';
+					$atributos ['estilo'] = 'textoCentrar';
+					$atributos ['mensaje'] = $mensaje;
+					
+					$tab ++;
+					
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+				}
 				
 				
-				
+
 				if ($_REQUEST ['mensaje'] == 'NoAprobado') {
+						
+					$mensaje = "Se han guardado los cambios en el Invetario";
+						
+					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+					$esteCampo = 'mensajeRegistro';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['tipo'] = 'success';
+					$atributos ['estilo'] = 'textoCentrar';
+					$atributos ['mensaje'] = $mensaje;
+						
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+				}
 				
-					$mensaje = "Página En Contrucción.<br>Pronto Estara en Funcionamiento";
+				
+				
+				if ($_REQUEST ['mensaje'] == 'noVerificado') {
+				
+					$mensaje = "Error de Verificación Inventario.<br> Verifique los Datos";
 				
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -126,45 +163,42 @@ class registrarForm {
 				
 				
 				if ($_REQUEST ['mensaje'] == 'mantenimiento') {
-						
+					
 					$mensaje = "Página En Contrucción.<br>Pronto Estara en Funcionamiento";
-						
+					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['tipo'] = 'warning';
 					$atributos ['estilo'] = 'textoCentrar';
 					$atributos ['mensaje'] = $mensaje;
-						
+					
 					$tab ++;
-						
+					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->cuadroMensaje ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
 				
-
 				if ($_REQUEST ['mensaje'] == 'insertoObservacion') {
-						
+					
 					$mensaje = "Se ha Guardado la observación con respecto al Elemento de Placa No. " . $_REQUEST ['placa'] . "";
-						
+					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['tipo'] = 'success';
 					$atributos ['estilo'] = 'textoCentrar';
 					$atributos ['mensaje'] = $mensaje;
-						
+					
 					$tab ++;
-						
+					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->cuadroMensaje ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
-				
-				
 				
 				if ($_REQUEST ['mensaje'] == 'actualizo') {
 					
@@ -186,44 +220,42 @@ class registrarForm {
 				}
 				
 				if ($_REQUEST ['mensaje'] == 'anulado') {
-						
+					
 					$mensaje = "Se Anulo el Registro del Elemento";
-						
+					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['tipo'] = 'success';
 					$atributos ['estilo'] = 'textoCentrar';
 					$atributos ['mensaje'] = $mensaje;
-						
+					
 					$tab ++;
-						
+					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->cuadroMensaje ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
 				
-				
 				if ($_REQUEST ['mensaje'] == 'noAnulado') {
-				
+					
 					$mensaje = "No se  Anulo el Registro del Elemento";
-				
+					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['tipo'] = 'error';
 					$atributos ['estilo'] = 'textoCentrar';
 					$atributos ['mensaje'] = $mensaje;
-				
+					
 					$tab ++;
-				
+					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->cuadroMensaje ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
-				
 				
 				if ($_REQUEST ['mensaje'] == 'error') {
 					
@@ -334,7 +366,8 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Consultar";
-		$valorCodificado.="&funcionario=".$_REQUEST['funcionario'];
+		
+		$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
 		
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.

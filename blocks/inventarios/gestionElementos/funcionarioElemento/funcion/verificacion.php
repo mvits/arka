@@ -24,8 +24,6 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		
-		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -43,43 +41,42 @@ class RegistradorOrden {
 				$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 			}
 			
-			
-			
-			$mensaje='Aprobado';
-			
-			
+			$mensaje = array (
+					'Aprobado',
+					$_REQUEST ['funcionario'] 
+			);
 		} elseif (isset ( $_REQUEST ['botonGuadar'] ) && $_REQUEST ['botonGuadar'] == 'Guardar') {
 			
-			foreach ( $elementos as $valor ) {
+			$elemento = unserialize ( $_REQUEST ['id_elementos'] );
+			
+			foreach ( $elemento as $valor ) {
 				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'Elemento_Existencia_No_Aprovado', $valor );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'Elemento_Existencia_Tipo_Confirmada', $valor );
 				
 				$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 			}
 			
 			if ($estado == true) {
 				
-				$elemento = unserialize ( $_REQUEST ['id_elementos'] );
-				
-				foreach ( $elemento as $valor ) {
+				foreach ( $elementos as $valor ) {
 					
-					$cadenaSql = $this->miSql->getCadenaSql ( 'Elemento_Existencia_Tipo_Confirmada', $valor );
+					$cadenaSql = $this->miSql->getCadenaSql ( 'Elemento_Existencia_No_Aprovado', $valor );
 					
 					$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 					
-					
-					$mensaje='NoAprobado';
+					$mensaje = array (
+							'NoAprobado',
+							$_REQUEST ['funcionario'] 
+					);
 				}
 			}
 		}
 		
 		// var_dump($elementos);
 		
-		
-		
-		if ($estado==true) {
+		if ($estado == true) {
 			
-			redireccion::redireccionar ( 'Verificacion',$mensaje );
+			redireccion::redireccionar ( 'Verificacion', $mensaje );
 			exit ();
 		} else {
 			

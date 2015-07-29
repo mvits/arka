@@ -93,6 +93,21 @@ class registrarForm {
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		
+
+		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+		$esteCampo = 'encabezado';
+		$atributos ['id'] = $esteCampo;
+		$atributos ['tipo'] = 'warning';
+		$atributos ['estilo'] = 'textoNotasFormulario';
+		$atributos ['mensaje'] = $this->lenguaje->getCadena ( $esteCampo );
+			
+		$tab ++;
+			
+		// Aplica atributos globales al control
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->cuadroMensaje ( $atributos );
+		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -102,9 +117,50 @@ class registrarForm {
 		unset ( $atributos );
 		{
 			
-			// var_dump($resultado);exit;
+// 			var_dump ( $resultado );
 			
 			if ($resultado) {
+				
+				
+				
+		
+				
+				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+				$esteCampo = 'encabezado';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['tipo'] = 'text';
+				$atributos ['estilo'] = 'textoNotasFormulario';
+				$atributos ['marco'] = true;
+				$atributos ['estiloMarco'] = '';
+				$atributos ['texto'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['dobleLinea'] = 0;
+				$atributos ['tabIndex'] = $tab;
+				$atributos ['validar'] = '';
+				// $atributos ['etiqueta'] =$this->lenguaje->getCadena ( $esteCampo."Nota" );
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['valor'] = '';
+				}
+				$atributos ['titulo'] = '';
+				$atributos ['deshabilitado'] = true;
+				$atributos ['tamanno'] = 10;
+				$atributos ['maximoTamanno'] = '';
+				$atributos ['anchoEtiqueta'] = 10;
+				$tab ++;
+					
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+// 				echo $this->miFormulario->campoTexto ( $atributos );
+				unset ( $atributos );
+					
+				
+				
+				
+				
 				
 				// ------------------Division para los botones-------------------------
 				$atributos ["id"] = "SeleccionRegistro";
@@ -214,7 +270,6 @@ class registrarForm {
                      <td><center>		
 					";
 					
-					
 					$nombre = 'item_' . $i;
 					$atributos ['id'] = $nombre;
 					$atributos ['nombre'] = $nombre;
@@ -225,7 +280,7 @@ class registrarForm {
 					$atributos ['dobleLinea'] = 1;
 					$atributos ['tabIndex'] = $tab;
 					$atributos ['etiqueta'] = '';
-					$atributos ['seleccionado'] = false;
+					$atributos ['seleccionado'] = ($resultado [$i] ['confirmada_existencia'] == 't') ? true : false;
 					$atributos ['evento'] = 'onclick';
 					$atributos ['eventoFuncion'] = ' verificarElementos(this.form)';
 					$atributos ['valor'] = $resultado [$i] ['identificador_elemento_individual'];
@@ -234,7 +289,9 @@ class registrarForm {
 					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					$mostrarHtml .= $this->miFormulario->campoCuadroSeleccion ( $atributos );
+					$mostrarHtml .= ($resultado [$i] ['tipo_confirmada'] == 1) ? '&#8730 ' : $this->miFormulario->campoCuadroSeleccion ( $atributos );
+					
+					$mostrar_botones=($resultado [$i] ['tipo_confirmada'] != 1) ? 'block' :'none';
 					
 					$mostrarHtml .= "</center> </td> </tr>";
 				}
@@ -268,6 +325,7 @@ class registrarForm {
 			// ------------------Division para los botones-------------------------
 			$atributos ["id"] = "botones";
 			$atributos ["estilo"] = "marcoBotones";
+			$atributos ["estiloEnLinea"] = "display:".$mostrar_botones;
 			echo $this->miFormulario->division ( "inicio", $atributos );
 			
 			// -----------------CONTROL: Botón ----------------------------------------------------------------
@@ -311,6 +369,18 @@ class registrarForm {
 			$atributos = array_merge ( $atributos, $atributosGlobales );
 			echo $this->miFormulario->campoBoton ( $atributos );
 			unset ( $atributos );
+			
+			
+			
+			
+			echo $this->miFormulario->division ( "fin" );
+			unset ( $atributos );
+			
+			// ------------------Division para los botones-------------------------
+			$atributos ["id"] = "botones";
+			$atributos ["estilo"] = "marcoBotones";
+			echo $this->miFormulario->division ( "inicio", $atributos );
+			
 			
 			// -----------------CONTROL: Botón ----------------------------------------------------------------
 			$esteCampo = 'botonGenerarPdf ';
@@ -358,7 +428,7 @@ class registrarForm {
 		
 		// Paso 1: crear el listado de variables
 		
-		$valorCodificado = "actionBloque=" . $esteBloque ["nombre"];
+		$valorCodificado = "action=" . $esteBloque ["nombre"];
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];

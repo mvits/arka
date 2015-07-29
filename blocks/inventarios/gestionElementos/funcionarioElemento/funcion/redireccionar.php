@@ -16,13 +16,14 @@ class redireccion {
 			case "Verificacion" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
-				$variable .= "&mensaje=" . $valor;
+				$variable .= "&mensaje=" . $valor[0];
+				$variable .= "&funcionario=" . $valor[1];
 				break;
 			
 			case "noVerificado" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
-				$variable .= "&mensaje=" . $valor;
+				$variable .= "&mensaje=noVerificado";
 				break;
 			
 			case "insertoObservacion" :
