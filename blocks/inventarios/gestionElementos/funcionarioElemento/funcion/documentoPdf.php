@@ -41,13 +41,12 @@ class RegistradorOrden {
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'jefe_recursos_fisicos' );
-		
+// 		echo $cadenaSql;
 		$jefe = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$jefe = $jefe [0];
 		
-		// var_dump($resultado);exit;
-		
-		
+// 		var_dump($jefe);exit;
+// 		var_dump($resultado);exit;
 		
 		foreach ( $resultado as $valor ) {
 			
@@ -62,14 +61,13 @@ class RegistradorOrden {
 			}
 		}
 		
-		
 		// var_dump($elementos_devolutivos);exit;
 		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( 'rutaUrlBloque' );
 		
-		$contenidoPagina ='';
+		$contenidoPagina = '';
 		
-		if ($elementos_consumo_controlado) {
+		if (isset ( $elementos_consumo_controlado )) {
 			
 			$contenidoPagina .= "
 <style type=\"text/css\">
@@ -89,8 +87,7 @@ class RegistradorOrden {
 	width=50%;
 	
 	}			
-				
-    th {
+	th {
         
         font-weight: bold; /* Make sure they're bold */
         text-align: center;
@@ -105,7 +102,7 @@ class RegistradorOrden {
 </style>				
 				
 				
-<page backtop='10mm' backbottom='7mm' backleft='10mm' backright='10mm'>
+<page backtop='5mm' backbottom='5mm' backleft='5mm' backright='5mm'>
 	
 
         <table align='left' style='width:100%;' >
@@ -130,47 +127,47 @@ class RegistradorOrden {
                 </td>
             </tr>
         </table>
-
-                    		<br>
-                    		
            	<table style='width:100%;border=none;'>
             <tr> 
 			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>NOMBRE FUNCIONARIO : " . $resultado [0] ['nombre_funcionario'] . "</td>
 			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>CC : " . $_REQUEST ['funcionario'] . "</td> 			
  		 	</tr>
-			<tr> 
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>DEPENDENCIA : " . $resultado [0] ['dependencia'] . "</td>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>SEDE : " . $resultado [0] ['sede'] . "</td> 			
- 		 	</tr>		
 			</table>
-			<br>
+			
            	<table style='width:100%;'>
             <tr> 
-			<td style='width:100%;border=none;'>CONSUMO CONTROLADO</td> 			
+			<td style='width:100%;border=none;text-align:left;'>TIPO DE BIEN CONSUMO CONTROLADO</td> 			
  		 	</tr>
 			</table>  
 			 <br>		
 			<table style='width:100%;'>
 			<tr> 
-			<td style='width:15%;text-align=center;'>Placa</td>
+			<td style='width:10%;text-align=center;'>Placa</td>
+			<td style='width:10%;text-align=center;'>Dependencia</td>
+			<td style='width:10%;text-align=center;'>Sede</td>
 			<td style='width:35%;text-align=center;'>Descripción</td>
-			<td style='width:15%;text-align=center;'>Marca</td>
-			<td style='width:15%;text-align=center;'>Serie</td>
-			<td style='width:10%;text-align=center;'>Estado</td>
+			<td style='width:10%;text-align=center;'>Marca</td>
+			<td style='width:10%;text-align=center;'>Serie</td>
+			<td style='width:5%;text-align=center;'>Estado</td>
 			<td style='width:10%;text-align=center;'>Verificación</td>
 			</tr>";
 			
 			foreach ( $elementos_consumo_controlado as $valor ) {
 				
 				$contenidoPagina .= "<tr>
-                    			<td style='width:15%;text-align=center;'>" . $valor ['placa'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['placa'] . "</td>
+                    			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['dependencia'] . "</font></td>
+                    			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['sede'] . "</font></td>
                     			<td style='width:35%;text-align=center;'>" . $valor ['descripcion_elemento'] . "</td>
-                    			<td style='width:15%;text-align=center;'>" . $valor ['marca'] . "</td>
-                    			<td style='width:15%;text-align=center;'>" . $valor ['serie'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['estado_bien'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['marca'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['serie'] . "</td>
+                    			<td style='width:5%;text-align=center;'>" . $valor ['estado_bien'] . "</td>
                     			<td style='width:10%;text-align=center;'>" . $valor ['marca_existencia'] . "</td>
                     			</tr>";
 			}
+			
+			
+			
 			
 			$contenidoPagina .= "</table>";
 			
@@ -189,11 +186,11 @@ class RegistradorOrden {
 												</tr>
 												<tr>
 												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $jefe ['nombre'] . "</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Firma y C.C. </td>
+												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>".$resultado [0] ['nombre_funcionario']."</td>
 												</tr>
 												<tr>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $jefe ['cargo'] . "</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>  </td>
+												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Almacenista General</td>
+												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>CC : " . $_REQUEST ['funcionario'] . "</td>
 												</tr>
 												</table>";
 			
@@ -208,7 +205,7 @@ class RegistradorOrden {
 												<tr>
 												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Nombre : </td>
 												<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>________________________________________</td>
-												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Actualido a : </td>
+												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Actualizado a : </td>
 												<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . date ( 'Y - m - d    H:i:s' ) . "</td>
 												</tr>
 												</table>";
@@ -228,12 +225,8 @@ class RegistradorOrden {
 			$contenidoPagina .= "</page>";
 		}
 		
-		
-		
-		if ($elementos_devolutivos==false) {
+		if ( isset($elementos_devolutivos)) {
 			
-			
-				
 			$contenidoPagina .= "
 <style type=\"text/css\">
     table {
@@ -293,56 +286,54 @@ class RegistradorOrden {
                 </td>
             </tr>
         </table>
-		
-                    		<br>
-		
+
            	<table style='width:100%;'>
             <tr>
 			<td style='width:50%;border=none;text-align:center;'>NOMBRE FUNCIONARIO : " . $resultado [0] ['nombre_funcionario'] . "</td>
 			<td style='width:50%;border=none;text-align:center;'>CC :    " . $_REQUEST ['funcionario'] . "</td>
  		 	</tr>
-			<tr>
-			<td style='width:50%;border=none;text-align:center;'>DEPENDENCIA : " . $resultado [0] ['dependencia'] . "</td>
-			<td style='width:50%;border=none;text-align:center;'>SEDE :    " . $resultado [0] ['sede'] . "</td>
- 		 	</tr>
 			</table>
-			<br>
+			
            	<table style='width:100%;'>
             <tr>
-			<td style='width:100%;border=none;'>DEVOLUTIVOS</td>
+			<td style='width:100%;border=none;text-align:left;'>TIPO DE BIEN DEVOLUTIVO</td>
  		 	</tr>
 			</table>
 			 <br>
 			<table style='width:100%;'>
 			<tr>
-			<td style='width:15%;text-align=center;'>Placa</td>
+			<td style='width:10%;text-align=center;'>Placa</td>
+			<td style='width:10%;text-align=center;'>Dependencia</td>
+			<td style='width:10%;text-align=center;'>Sede</td>
 			<td style='width:35%;text-align=center;'>Descripción</td>
-			<td style='width:15%;text-align=center;'>Marca</td>
-			<td style='width:15%;text-align=center;'>Serie</td>
-			<td style='width:10%;text-align=center;'>Estado</td>
+			<td style='width:10%;text-align=center;'>Marca</td>
+			<td style='width:10%;text-align=center;'>Serie</td>
+			<td style='width:5%;text-align=center;'>Estado</td>
 			<td style='width:10%;text-align=center;'>Verificación</td>
 			</tr>";
-				
+			
 			foreach ( $elementos_devolutivos as $valor ) {
-		
+				
 				$contenidoPagina .= "<tr>
-                    			<td style='width:15%;text-align=center;'>" . $valor ['placa'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['placa'] . "</td>
+                    			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['dependencia'] . "</font></td>
+                    			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['sede'] . "</font></td>
                     			<td style='width:35%;text-align=center;'>" . $valor ['descripcion_elemento'] . "</td>
-                    			<td style='width:15%;text-align=center;'>" . $valor ['marca'] . "</td>
-                    			<td style='width:15%;text-align=center;'>" . $valor ['serie'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['estado_bien'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['marca'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['serie'] . "</td>
+                    			<td style='width:5%;text-align=center;'>" . $valor ['estado_bien'] . "</td>
                     			<td style='width:10%;text-align=center;'>" . $valor ['marca_existencia'] . "</td>
                     			</tr>";
 			}
-				
+			
 			$contenidoPagina .= "</table>";
-				
+			
 			$contenidoPagina .= "<table style='width:100%;'>
 											<tr>
 											<td style='width:100%;border=none;'><font size='5px'>Nota: Antes de firmar, verifique que los bienes que se encuentran en el presente listado corresponden a los que usted se hace responsable.</font></td>
 											</tr>
 											</table>";
-				
+			
 			$contenidoPagina .= "
 												<br>
 												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
@@ -352,14 +343,14 @@ class RegistradorOrden {
 												</tr>
 												<tr>
 												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $jefe ['nombre'] . "</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Firma y C.C. </td>
+												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>".$resultado [0] ['nombre_funcionario']."</td>
 												</tr>
 												<tr>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $jefe ['cargo'] . "</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>  </td>
+												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Almacenista General</td>
+												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>CC : " . $_REQUEST ['funcionario'] . "</td>
 												</tr>
 												</table>";
-				
+			
 			$contenidoPagina .= "		<br>
 												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
 												<tr>
@@ -371,11 +362,11 @@ class RegistradorOrden {
 												<tr>
 												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Nombre : </td>
 												<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>________________________________________</td>
-												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Actualido a : </td>
+												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Actualizado a : </td>
 												<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . date ( 'Y - m - d    H:i:s' ) . "</td>
 												</tr>
 												</table>";
-				
+			
 			$contenidoPagina .= "<page_footer>
 														<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
 														<tr>
@@ -387,15 +378,10 @@ class RegistradorOrden {
 														</tr>
 														</table>
 									    </page_footer> ";
-				
+			
 			$contenidoPagina .= "</page>";
 		}
-		
-		
-		
-		
-		
-		
+// 		echo $contenidoPagina;exit;
 		return $contenidoPagina;
 	}
 }
@@ -405,11 +391,11 @@ $miRegistrador = new RegistradorOrden ( $this->lenguaje, $this->sql, $this->func
 $textos = $miRegistrador->documento ();
 
 ob_start ();
-$html2pdf = new \HTML2PDF ( 'L', 'LETTER', 'es', true, 'UTF-8' );
+$html2pdf = new \HTML2PDF ( 'L', 'LETTER', 'es', true, 'UTF-8', array (1,	1,	1,	1) );
 $html2pdf->pdf->SetDisplayMode ( 'fullpage' );
 $html2pdf->WriteHTML ( $textos );
 
-$html2pdf->Output ( 'Certificado  '.date('Y-m-d').'.pdf', 'D' );
+$html2pdf->Output ( 'Certificado  	' . date ( 'Y-m-d' ) . '.pdf', 'D' );
 
 ?>
 

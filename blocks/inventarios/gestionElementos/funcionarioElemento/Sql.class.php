@@ -158,7 +158,7 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "	SELECT \"FUN_IDENTIFICACION\" 	identificacion, \"FUN_NOMBRE\" nombre, \"FUN_CARGO\" cargo ";
 				$cadenaSql .= "	FROM arka_parametros.arka_funcionarios  ";
-				$cadenaSql .= "WHERE \"FUN_CARGO\"='JEFE DIVISION RECURSOS FISICOS' ";
+				$cadenaSql .= "WHERE \"FUN_IDENTIFICACION\"='14231658' ";
 				$cadenaSql .= "			AND \"FUN_ESTADO\"='A';";
 				
 				break;
@@ -297,7 +297,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE 1=1 ";
 				$cadenaSql .= " AND 	tb.id_tipo_bienes <> 1 ";
 				$cadenaSql .= " AND eli.funcionario= '" . $variable . "' ";
-				$cadenaSql .= " ORDER BY eli.id_elemento_ind DESC   ;  ";
+				$cadenaSql .= " ORDER BY dependencia DESC   ;  ";
 				
 				break;
 			
