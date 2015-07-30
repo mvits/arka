@@ -30,10 +30,48 @@ class RegistradorOrden {
 	}
 	function documento() {
 // echo "pdf";
-		var_dump($_REQUEST);
+// 		var_dump($_REQUEST);exit;
+		
+		
+		
 		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
+		
+		
+		$funcionario = $_REQUEST ['funcionario'];
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $funcionario );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		
+// 		var_dump($resultado);exit;
+		
+	 foreach ($resultado as $valor){
+	 	
+	 	
+	 	if ($valor['tipo_bien']==2){
+	 	
+	 	$elementos_consumo_controlado[]=$valor;
+	 	
+	 	}
+	 	
+	 	
+	 	if ($valor['tipo_bien']==3){
+	 		 
+	 		$elementos_devolutivos[]=$valor;
+	 		 
+	 	}
+	 	
+	 }
+		
+// 	 var_dump($elementos_devolutivos);exit;
+	 
+	 
+		
 		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( 'rutaUrlBloque' );
 		
@@ -79,7 +117,7 @@ class RegistradorOrden {
 
         <table align='left' style='width:100%;' >
             <tr>
-                <td align='center' >
+                <td align='center' style='width:12%;' >
                     <img src='" . $directorio . "/css/images/escudo.png'  width='80' height='100'>
                 </td>
                 <td align='center' style='width:88%;' >
@@ -99,21 +137,52 @@ class RegistradorOrden {
                 </td>
             </tr>
         </table>
-                    		
+                   
+                    		<br>
+                    		<br>
                     		
            	<table style='width:100%;'>
             <tr> 
-			<td style='width:50%;'>ORDEN DE SERVICIOS Nro.  " . $_REQUEST ['numero_orden'] . "</td>
-			<td style='width:50%;text-aling=right;'>FECHA DE ORDEN :  " . $orden ['fecha_registro'] . "</td> 			
+			<td style='width:50%;'>NOMBRE FUNCIONARIO : " . $resultado[0]['nombre_funcionario'] . "</td>
+			<td style='width:50%;text-aling=left;'>CC : " . $_REQUEST ['funcionario'] . "</td> 			
  		 	</tr>
-		    </table>   		
+			<tr> 
+			<td style='width:50%;'>DEPENDENCIA : " . $resultado[0]['dependencia'] . "</td>
+			<td style='width:50%;text-aling=left;'>SEDE : " . $resultado[0] ['sede'] . "</td> 			
+ 		 	</tr>		
+			</table>   		
+             <br>		
+			<table style='width:100%;'>
+			<tr> 
+			<td style='width:15%;text-align=center;'>Placa</td>
+			<td style='width:35%;text-align=center;'>Descripción</td>
+			<td style='width:15%;text-align=center;'>Marca</td>
+			<td style='width:15%;text-align=center;'>Serie</td>
+			<td style='width:10%;text-align=center;'>Estado</td>
+			<td style='width:10%;text-align=center;'>Verificación</td>
+			</tr> 		          		
+ 			</table>
+			<table style='width:100%;'>";	       		
                     		
-                    		
-                    		
+                    		foreach ($elementos_consumo_controlado as $valor){
+                    			
+                   $contenidoPagina.="<tr>
+                    			<td style='width:15%;text-align=center;'>".$valor['placa']."</td>
+                    			<td style='width:35%;text-align=center;'>".$valor['descripcion_elemento']."</td>
+                    			<td style='width:15%;text-align=center;'>".$valor['marca']."</td>
+                    			<td style='width:15%;text-align=center;'>".$valor['serie']."</td>
+                    			<td style='width:10%;text-align=center;'>".$valor['estado_bien']."</td>
+                    			<td style='width:10%;text-align=center;'>".$valor['marca_existencia']."</td>
+                    			</tr>";
+                    			
+                    			
+                    			
+                    			
+                    		}
 	
-	                  		
+$contenidoPagina .= "</table>";
 
-<page_footer  backleft='10mm' backright='10mm'>
+$contenidoPagina.="<page_footer  backleft='10mm' backright='10mm'>
 
 </page_footer> 
 					
@@ -122,7 +191,7 @@ class RegistradorOrden {
 		
 		$contenidoPagina .= "</page>";
 		
-		echo $contenidoPagina;exit;
+// 		echo $contenidoPagina;exit;
 		return $contenidoPagina;
 	}
 }

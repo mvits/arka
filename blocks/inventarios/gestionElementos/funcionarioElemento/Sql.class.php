@@ -266,6 +266,14 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "SELECT DISTINCT ";
 				$cadenaSql .= "  eli.id_elemento_ind  identificador_elemento_individual , eli.placa , tb.descripcion nombre_tipo_bienes,
+											ele.tipo_bien tipo_bien,
+											ele.marca marca,
+											ele.serie serie,
+											CASE eli.confirmada_existencia
+											WHEN  't'  THEN 'X' 
+											ELSE  ' '
+											END  marca_existencia,
+										\"FUN_NOMBRE\" nombre_funcionario, 					
                 						sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia, 
                 						CASE
                 						WHEN  tfs.descripcion IS  NULL THEN 'Activo'
