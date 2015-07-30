@@ -119,9 +119,9 @@ class RegistradorOrden {
                     <font size='7px'><b>NIT: 899.999.230-7</b></font>
                      <br>
                       <br>
-                     <font size='7px'>Almacén General e Inventarios</font>
+                     <font size='9px'><b>Almacén General e Inventarios</b></font>
                     <br>		
-                    <font size='5px'>Acta Inventario Individualizado</font>
+                    <font size='7px'><b>Acta Inventario Individualizado</b></font>
                     <br>									
                     <font size='3px'>www.udistrital.edu.co</font>
                      <br>
@@ -133,20 +133,20 @@ class RegistradorOrden {
 
                     		<br>
                     		
-           	<table style='width:100%;'>
+           	<table style='width:100%;border=none;'>
             <tr> 
-			<td style='width:50%;border=none;'>NOMBRE FUNCIONARIO : " . $resultado [0] ['nombre_funcionario'] . "</td>
-			<td style='width:50%;text-aling=left;border=none;'>CC : " . $_REQUEST ['funcionario'] . "</td> 			
+			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>NOMBRE FUNCIONARIO : " . $resultado [0] ['nombre_funcionario'] . "</td>
+			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>CC : " . $_REQUEST ['funcionario'] . "</td> 			
  		 	</tr>
 			<tr> 
-			<td style='width:50%;border=none;'>DEPENDENCIA : " . $resultado [0] ['dependencia'] . "</td>
-			<td style='width:50%;text-aling=left;border=none;'>SEDE : " . $resultado [0] ['sede'] . "</td> 			
+			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>DEPENDENCIA : " . $resultado [0] ['dependencia'] . "</td>
+			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>SEDE : " . $resultado [0] ['sede'] . "</td> 			
  		 	</tr>		
 			</table>
 			<br>
            	<table style='width:100%;'>
             <tr> 
-			<td style='width:100%;text-aling=left;border=none;'>CONSUMO CONTROLADO</td> 			
+			<td style='width:100%;border=none;'>CONSUMO CONTROLADO</td> 			
  		 	</tr>
 			</table>  
 			 <br>		
@@ -176,7 +176,7 @@ class RegistradorOrden {
 			
 			$contenidoPagina .= "<table style='width:100%;'>
 											<tr>
-											<td style='width:100%;text-aling=left;border=none;'><font size='5px'>Nota: Antes de firmar, verifique que los bienes que se encuentran en el presente listado corresponden a los que usted se hace responsable.</font></td>
+											<td style='width:100%;border=none;'><font size='5px'>Nota: Antes de firmar, verifique que los bienes que se encuentran en el presente listado corresponden a los que usted se hace responsable.</font></td>
 											</tr>
 											</table>";
 			
@@ -230,7 +230,7 @@ class RegistradorOrden {
 		
 		
 		
-		if ($elementos_devolutivos) {
+		if ($elementos_devolutivos==false) {
 			
 			
 				
@@ -282,9 +282,9 @@ class RegistradorOrden {
                     <font size='7px'><b>NIT: 899.999.230-7</b></font>
                      <br>
                       <br>
-                     <font size='7px'>Almacén General e Inventarios</font>
+                     <font size='9px'><b>Almacén General e Inventarios</b></font>
                     <br>
-                    <font size='5px'>Acta Inventario Individualizado</font>
+                    <font size='7px'><b>Acta Inventario Individualizado</b></font>
                     <br>
                     <font size='3px'>www.udistrital.edu.co</font>
                      <br>
@@ -298,18 +298,18 @@ class RegistradorOrden {
 		
            	<table style='width:100%;'>
             <tr>
-			<td style='width:50%;border=none;'>NOMBRE FUNCIONARIO : " . $resultado [0] ['nombre_funcionario'] . "</td>
-			<td style='width:50%;text-aling=left;border=none;'>CC : " . $_REQUEST ['funcionario'] . "</td>
+			<td style='width:50%;border=none;text-align:center;'>NOMBRE FUNCIONARIO : " . $resultado [0] ['nombre_funcionario'] . "</td>
+			<td style='width:50%;border=none;text-align:center;'>CC :    " . $_REQUEST ['funcionario'] . "</td>
  		 	</tr>
 			<tr>
-			<td style='width:50%;border=none;'>DEPENDENCIA : " . $resultado [0] ['dependencia'] . "</td>
-			<td style='width:50%;text-aling=left;border=none;'>SEDE : " . $resultado [0] ['sede'] . "</td>
+			<td style='width:50%;border=none;text-align:center;'>DEPENDENCIA : " . $resultado [0] ['dependencia'] . "</td>
+			<td style='width:50%;border=none;text-align:center;'>SEDE :    " . $resultado [0] ['sede'] . "</td>
  		 	</tr>
 			</table>
 			<br>
            	<table style='width:100%;'>
             <tr>
-			<td style='width:100%;text-aling=left;border=none;'>DEVOLUTIVOS</td>
+			<td style='width:100%;border=none;'>DEVOLUTIVOS</td>
  		 	</tr>
 			</table>
 			 <br>
@@ -339,7 +339,7 @@ class RegistradorOrden {
 				
 			$contenidoPagina .= "<table style='width:100%;'>
 											<tr>
-											<td style='width:100%;text-aling=left;border=none;'><font size='5px'>Nota: Antes de firmar, verifique que los bienes que se encuentran en el presente listado corresponden a los que usted se hace responsable.</font></td>
+											<td style='width:100%;border=none;'><font size='5px'>Nota: Antes de firmar, verifique que los bienes que se encuentran en el presente listado corresponden a los que usted se hace responsable.</font></td>
 											</tr>
 											</table>";
 				
@@ -409,7 +409,7 @@ $html2pdf = new \HTML2PDF ( 'L', 'LETTER', 'es', true, 'UTF-8' );
 $html2pdf->pdf->SetDisplayMode ( 'fullpage' );
 $html2pdf->WriteHTML ( $textos );
 
-$html2pdf->Output ( 'Compra_Nro_.pdf', 'D' );
+$html2pdf->Output ( 'Certificado  '.date('Y-m-d').'.pdf', 'D' );
 
 ?>
 

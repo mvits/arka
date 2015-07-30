@@ -8,7 +8,7 @@ $this->idioma ["botonGenerarPdf"] ="Generar PDF";
 
 
 $this->idioma ["encabezado"] ="
-Apreciado Funcionario lo invitamos a que consulte y verifique su Inventario para el periodo comprendido entre el XXX  y el XXX, por favor tenga en cuenta las siguientes indicaciones:
+Apreciado Funcionario lo invitamos a que consulte y verifique su Inventario, por favor tenga en cuenta las siguientes indicaciones:
 <br>&nbsp &#9658 	Marque la casilla de “Verificación” de los bienes o elementos de los que usted es responsable en el listado que aparece a continuación de estas indicaciones.
 <br>&nbsp &#9658 En caso que usted no marque la casilla de “Verificación” de un elemento, por favor registre los comentarios o aclaraciones a que haya lugar en la opción “Registrar Observaciones”.
 <br>&nbsp &#9658 Una vez usted, esté de acuerdo con la totalidad de su inventario, por favor “Apruebe”, de lo contrario “Guarde” las acciones que vayan realizando en el sistema.
