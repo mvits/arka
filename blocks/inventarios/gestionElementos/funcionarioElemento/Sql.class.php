@@ -154,16 +154,22 @@ class Sql extends \Sql {
 			// ?, ?, ?, ?,
 			// ?, ?);
 			
+			case "jefe_recursos_fisicos" :
 				
+				$cadenaSql = "	SELECT \"FUN_IDENTIFICACION\" 	identificacion, \"FUN_NOMBRE\" nombre, \"FUN_CARGO\" cargo ";
+				$cadenaSql .= "	FROM arka_parametros.arka_funcionarios  ";
+				$cadenaSql .= "WHERE \"FUN_CARGO\"='JEFE DIVISION RECURSOS FISICOS' ";
+				$cadenaSql .= "			AND \"FUN_ESTADO\"='A';";
 				
-				case "Elemento_Existencia_Tipo_Confirmada" :
+				break;
+			
+			case "Elemento_Existencia_Tipo_Confirmada" :
 				
-					$cadenaSql = "	UPDATE elemento_individual ";
-					$cadenaSql .= "	SET  confirmada_existencia= false , tipo_confirmada='2'  ";
-					$cadenaSql .= "	WHERE  id_elemento_ind='" . $variable . "';";
+				$cadenaSql = "	UPDATE elemento_individual ";
+				$cadenaSql .= "	SET  confirmada_existencia= false , tipo_confirmada='2'  ";
+				$cadenaSql .= "	WHERE  id_elemento_ind='" . $variable . "';";
 				
-					break;
-				
+				break;
 			
 			case "Elemento_Existencia_No_Aprovado" :
 				
