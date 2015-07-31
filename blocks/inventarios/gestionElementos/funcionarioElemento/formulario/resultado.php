@@ -112,12 +112,12 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Invetario Funcionionario CC. " . $_REQUEST ['funcionario'];
+		$atributos ["leyenda"] = "Inventario Funcionario CC. " . $_REQUEST ['funcionario'] ."    -    ".$resultado[0]['nombre_funcionario'];
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		unset ( $atributos );
 		{
 			
-// 			var_dump ( $resultado );
+			
 			
 			if ($resultado) {
 				
