@@ -69,24 +69,47 @@ if (!isset($GLOBALS["autorizado"])) {
     //$atributos["estiloEnLinea"]="display:none"; 
     echo $this->miFormulario->division("inicio", $atributos);
 
-    if ($_REQUEST['mensaje'] == 'confirma') {
+    
+    if ($_REQUEST['mensaje'] == 'actualizoPeriodo') {
+    
+    	$tipo = 'success';
+    	$mensaje = "Se Actualizado Periodo de Levantamiento Conprendido entre fechas ".$_REQUEST['fecha_inicio']." y ".$_REQUEST['fecha_final'].".";
+    	$boton = "continuar";
+    
+    	$valorCodificado = "pagina=periodoLevantamiento";
+    	$valorCodificado.="&opcion=nuevo";
+    	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+    	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+    
+    
+    } else if($_REQUEST['mensaje'] == 'noactualizoPeriodo') {
+    	$tipo = 'error';
+    	$mensaje = "No se puedo Actualizar  Periodo de Levantamiento.<br>Verifique los Datos.";
+    	$boton = "regresar";
+    
+    	$valorCodificado = "pagina=periodoLevantamiento";
+    	$valorCodificado.="&opcion=nuevo";
+    	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+    	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+    	 
+    }elseif ($_REQUEST['mensaje'] == 'registroPeriodo') {
 
         $tipo = 'success';
-        $mensaje = "Se ha Registrado Contrato.<br>Se subió el archivo correctamente";
+        $mensaje = "Se ha Registrado Periodo de Levantamiento Conprendido entre fechas ".$_REQUEST['fecha_inicio']." y ".$_REQUEST['fecha_final'].".";
         $boton = "continuar";
 
-        $valorCodificado = "pagina=gestionContrato";
+        $valorCodificado = "pagina=periodoLevantamiento";
         $valorCodificado.="&opcion=nuevo";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         
         
-    } else if($_REQUEST['mensaje'] == 'error') {
+    } else if($_REQUEST['mensaje'] == 'noregistroPeriodo') {
         $tipo = 'error';
-        $mensaje = "Error en el cargue. No se subió el archivo correctamente";
+        $mensaje = "No se puedo Regitrar Periodo de Levantamiento.<br>Verifique los Datos.";
         $boton = "regresar";
 
-        $valorCodificado = "pagina=gestionContrato";
+        $valorCodificado = "pagina=periodoLevantamiento";
         $valorCodificado.="&opcion=nuevo";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];

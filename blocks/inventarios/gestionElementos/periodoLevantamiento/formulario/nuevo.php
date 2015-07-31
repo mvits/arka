@@ -33,15 +33,17 @@ unset ( $atributos );
 	
 	$items = array (
 			
-			"tabContratoCrear" => $this->lenguaje->getCadena ( "tabContratoCrear" ),
-			"tabContratoConsultar" => $this->lenguaje->getCadena ( "tabContratoConsultar" ) 
+			"tabCrear" => $this->lenguaje->getCadena ( "tabCrear" ),
+			"tabModificar" => $this->lenguaje->getCadena ( "tabModificar" )
+			
+			 
 	);
 	$atributos ["items"] = $items;
 	$atributos ["estilo"] = "jqueryui";
 	$atributos ["pestañas"] = "true";
 	echo $this->miFormulario->listaNoOrdenada ( $atributos );
 	
-	$esteCampo = "tabContratoCrear";
+	$esteCampo = "tabCrear";
 	$atributos ['id'] = $esteCampo;
 	$atributos ["estilo"] = "jqueryui";
 	$atributos ['tipoEtiqueta'] = 'inicio';
@@ -55,7 +57,7 @@ unset ( $atributos );
 	}
 	echo $this->miFormulario->agrupacion ( 'fin' );
 	
-	$esteCampo = "tabContratoConsultar";
+	$esteCampo = "tabModificar";
 	$atributos ['id'] = $esteCampo;
 	$atributos ["estilo"] = "jqueryui";
 	$atributos ['tipoEtiqueta'] = 'inicio';

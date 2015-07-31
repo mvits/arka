@@ -1,5 +1,26 @@
 <?php
 
+//-------------------Periodo Levantamiento------------
+$this->idioma["fecha_inicio_cierre"] = "Fecha de Inicio Levantamiento :";
+$this->idioma["fecha_inicio_cierreTitulo"] = "Seleccione Fecha Inicial de Levantamiento ";
+
+$this->idioma["fecha_fin_cierre"] = "Fecha de Cierre Levatamiento:";
+$this->idioma["fecha_fin_cierreTitulo"] = "Seleccione Fecha Final de Levantamiento ";
+
+
+
+$this->idioma["tabCrear"] = "Registrar Periodo Levantamiento";
+$this->idioma["tabModificar"] = "Modificar Periodo Levantamiento";
+
+
+$this->idioma["botonActualizar"] = "Actualizar";
+
+
+
+
+
+//-------------------------------------------------------------
+
 $this->idioma["FechasError"] =  "<center>Error al Seleccionar rango de Fechas<br>Falta Fecha Inicial y/o Final.</center>";
 $this->idioma["nFechasErrorTitulo"] = "Ingrese Número Contrato ";
 

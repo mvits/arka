@@ -28,6 +28,44 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			// id_periodolevantamiento, fecha_inicio, fecha_final, cierre_levantamiento,
+			// fecha_cierre, fecha_registro, estado_registro, vigencia)
+			// VALUES (?, ?, ?, ?,
+			// ?, ?, ?, ?);
+			
+			// estado_registro=false ; ";
+			
+			case "Actualizar_Periodos" :
+				$cadenaSql = " UPDATE arka_movil.periodo_levantamiento  ";
+				$cadenaSql .= " SET  fecha_inicio=' " . $variable [0] . "', ";
+				$cadenaSql .= "fecha_final=' " . $variable [1] . "'  ";
+				$cadenaSql .= "WHERE estado_registro=TRUE ;  ";
+				
+				break;
+			
+			case "Verificar_Periodo" :
+				$cadenaSql = " SELECT *   ";
+				$cadenaSql .= " FROM  arka_movil.periodo_levantamiento ";
+				$cadenaSql .= "WHERE estado_registro=TRUE ;";
+				
+				break;
+			
+			case "Actualizar_Periodos_Anterioes" :
+				$cadenaSql = " UPDATE arka_movil.periodo_levantamiento  ";
+				$cadenaSql .= " SET  estado_registro=false ; ";
+				
+				break;
+			case "registroPeriodo" :
+				$cadenaSql = " INSERT INTO arka_movil.periodo_levantamiento( ";
+				$cadenaSql .= " fecha_inicio, fecha_final, vigencia,fecha_registro) ";
+				$cadenaSql .= " VALUES ( ";
+				$cadenaSql .= "' " . $variable [0] . "', ";
+				$cadenaSql .= "' " . $variable [1] . "', ";
+				$cadenaSql .= "' " . $variable [2] . "', ";
+				$cadenaSql .= "' " . $variable [3] . "') ";
+				
+				break;
+			
 			case "proveedores" :
 				$cadenaSql = " SELECT PRO_NIT,PRO_NIT||' - '||PRO_RAZON_SOCIAL AS proveedor ";
 				$cadenaSql .= " FROM PROVEEDORES ";

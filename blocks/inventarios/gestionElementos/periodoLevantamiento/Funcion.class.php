@@ -26,16 +26,19 @@ class Funcion {
 	var $error;
 	var $miRecursoDB;
 	var $crypto;
-// 	function verificarCampos() {
-// 		include_once ($this->ruta . "/funcion/verificarCampos.php");
-// 		if ($this->error == true) {
-// 			return false;
-// 		} else {
-// 			return true;
-// 		}
-// 	}
+	// function verificarCampos() {
+	// include_once ($this->ruta . "/funcion/verificarCampos.php");
+	// if ($this->error == true) {
+	// return false;
+	// } else {
+	// return true;
+	// }
+	// }
 	function formProcessor() {
-		include_once ($this->ruta . "/funcion/funcionEjemplo.php");
+		include_once ($this->ruta . "/funcion/registrarPeriodo.php");
+	}
+	function formActualizar() {
+		include_once ($this->ruta . "/funcion/actualizarPeriodo.php");
 	}
 	function procesarAjax() {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
@@ -78,7 +81,10 @@ class Funcion {
 					$this->consultarContrato ();
 					break;
 				
-				case 'documento' :
+				case 'ActualizarPeriodo' :
+					$this->formActualizar ();
+					break;
+				case 'RegistrarPeriodo' :
 					$this->formProcessor ();
 					break;
 				

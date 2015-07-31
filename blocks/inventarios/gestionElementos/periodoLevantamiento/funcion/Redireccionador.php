@@ -1,70 +1,81 @@
 <?php
 
-namespace inventarios\gestionContrato\funcion;
+namespace inventarios\gestionElementos\periodoLevantamiento\funcion;
 
-if (!isset($GLOBALS ["autorizado"])) {
-    include ("index.php");
-    exit();
+if (! isset ( $GLOBALS ["autorizado"] )) {
+	include ("index.php");
+	exit ();
 }
- 
 
-        $miConfigurador = \Configurador::singleton();
+$miConfigurador = \Configurador::singleton ();
 
-        switch ($opcion) {
+switch ($opcion) {
+	
+	case "actualizoPeriodo" :
+		$variable = "pagina=periodoLevantamiento";
+		$variable .= "&opcion=mensaje";
+		$variable .= "&mensaje=actualizoPeriodo";
+		$variable .= "&fecha_inicio=" . $_REQUEST ['fecha_inicio_cierre'];
+		$variable .= "&fecha_final=" . $_REQUEST ['fecha_fin_cierre'];
+		break;
+	
+	case "noactualizoPeriodo" :
+		$variable = "pagina=periodoLevantamiento";
+		$variable .= "&opcion=mensaje";
+		$variable .= "&mensaje=noactualizoPeriodo";
+		break;
+		
+	case "registroPeriodo" :
+		$variable = "pagina=periodoLevantamiento";
+		$variable .= "&opcion=mensaje";
+		$variable .= "&mensaje=registroPeriodo";
+		$variable .= "&fecha_inicio=" . $_REQUEST ['fecha_inicio_cierre'];
+		$variable .= "&fecha_final=" . $_REQUEST ['fecha_fin_cierre'];
+		break;
+	
+	case "noregistroPeriodo" :
+		$variable = "pagina=periodoLevantamiento";
+		$variable .= "&opcion=mensaje";
+		$variable .= "&mensaje=noregistroPeriodo";
+		break;
+	
+	case "actualizoDocumento" :
+		$variable = "pagina=gestionContrato";
+		$variable .= "&opcion=mensaje";
+		$variable .= "&mensaje=mensajeActualizacion";
+		break;
+	
+	case "noactualizoDocumento" :
+		$variable = "pagina=gestionContrato";
+		$variable .= "&opcion=mensaje";
+		$variable .= "&mensaje=error";
+		break;
+	
+	case "paginaPrincipal" :
+		$variable = "pagina=index";
+		break;
+	
+	default :
+		$variable = '';
+}
+foreach ( $_REQUEST as $clave => $valor ) {
+	unset ( $_REQUEST [$clave] );
+}
 
-            case "registroDocumento":
-                $variable = "pagina=gestionContrato";
-                $variable.="&opcion=mensaje";
-                $variable.="&mensaje=confirma";
-                break;
+$url = $miConfigurador->configuracion ["host"] . $miConfigurador->configuracion ["site"] . "/index.php?";
+$enlace = $miConfigurador->configuracion ['enlace'];
+$variable = $miConfigurador->fabricaConexiones->crypto->codificar ( $variable );
+$_REQUEST [$enlace] = $enlace . '=' . $variable;
+$redireccion = $url . $_REQUEST [$enlace];
 
-            case "noregistroDocumento":
-                $variable = "pagina=gestionContrato";
-                $variable.="&opcion=mensaje";
-                $variable.="&mensaje=error";
-                break;
+echo "<script>location.replace('" . $redireccion . "')</script>";
 
-            case "actualizoDocumento":
-                $variable = "pagina=gestionContrato";
-                $variable.="&opcion=mensaje";
-                $variable.="&mensaje=mensajeActualizacion";
-                break;
+// $enlace = $miConfigurador->getVariableConfiguracion("enlace");
+// $variable = $miConfigurador->fabricaConexiones->crypto->codificar($variable);
 
-            case "noactualizoDocumento":
-                $variable = "pagina=gestionContrato";
-                $variable.="&opcion=mensaje";
-                $variable.="&mensaje=error";
-                break;
+// $_REQUEST [$enlace] = $variable;
+// $_REQUEST ["recargar"] = true;
 
-            case "paginaPrincipal":
-                $variable = "pagina=index";
-                break;
-
-            default:
-                $variable = '';
-        }
-        foreach ($_REQUEST as $clave => $valor) {
-            unset($_REQUEST [$clave]);
-        }
-
-        
-        $url = $miConfigurador->configuracion ["host"] . $miConfigurador->configuracion ["site"] . "/index.php?";
-        $enlace = $miConfigurador->configuracion ['enlace'];
-        $variable = $miConfigurador->fabricaConexiones->crypto->codificar($variable);
-        $_REQUEST [$enlace] = $enlace . '=' . $variable;
-        $redireccion = $url . $_REQUEST [$enlace];
-        
-        echo "<script>location.replace('" . $redireccion . "')</script>";
-        
-        
-        
-//         $enlace = $miConfigurador->getVariableConfiguracion("enlace");
-//         $variable = $miConfigurador->fabricaConexiones->crypto->codificar($variable);
-
-//         $_REQUEST [$enlace] = $variable;
-//         $_REQUEST ["recargar"] = true;
-
-//         return true;
-   
+// return true;
 
 ?>
