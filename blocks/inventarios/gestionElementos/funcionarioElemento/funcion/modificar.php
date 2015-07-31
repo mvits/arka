@@ -24,9 +24,6 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-// 		echo "REGISTRANDO OBSERVACIONES";
-		
-// 		var_dump ( $_REQUEST );
 		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -46,9 +43,6 @@ class RegistradorOrden {
 				$_REQUEST ['elemento_individual'] 
 		);
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'Registrar_Levantamiento_Elemento', $arreglo );
-		
-		$Elemento_Levantamiento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		
 		$arreglo = array (
 				
@@ -57,8 +51,8 @@ class RegistradorOrden {
 				$_REQUEST ['elemento_individual'] 
 		)
 		;
-// 		var_dump($Elemento_Levantamiento);exit;
-		if ($Elemento_Levantamiento) {
+
+		if ($observacion) {
 			
 			redireccion::redireccionar('insertoObservacion',$arreglo);
 			exit ();
