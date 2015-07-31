@@ -196,7 +196,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['funcionario'] . "',";
 				$cadenaSql .= "'" . $variable ['id_elemento_individual'] . "',";
 				$cadenaSql .= "'" . $variable ['observacion'] . "',";
-				$cadenaSql .= "NULL) RETURNING  id_levantamiento  ";
+				$cadenaSql .= "NULL) RETURNING  id_detallelevantamiento  ";
 				
 				break;
 			
