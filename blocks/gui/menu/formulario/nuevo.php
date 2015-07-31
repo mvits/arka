@@ -90,8 +90,8 @@ $enlaceconsultaActa['urlCodificada'] = $this->miConfigurador->fabricaConexiones-
 $enlaceconsultaActa['nombre'] = "Consultar y Modificar Acta de Recibido";
 
 
-// Gestionar Acta de Recibido Elementos
 
+// Gestionar Acta de Recibido Elementos
 
 $enlaceElementosActa ['enlace'] = "pagina=registrarElementoActa";
 $enlaceElementosActa['enlace'] .= "&usuario=" . $miSesion->getSesionUsuarioId();
@@ -100,15 +100,12 @@ $enlaceElementosActa['urlCodificada'] = $this->miConfigurador->fabricaConexiones
 $enlaceElementosActa['nombre'] = "Cargar Elementos Acta de Recibido";
 
 
-
-// Activar Acta de Recibido Elementos
-
-
 $enlaceActivarElementosActa ['enlace'] = "pagina=activacionElementosActa";
 $enlaceActivarElementosActa['enlace'] .= "&usuario=" . $miSesion->getSesionUsuarioId();
 
 $enlaceActivarElementosActa['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($enlaceActivarElementosActa['enlace'], $directorio);
 $enlaceActivarElementosActa['nombre'] = "Activar  Elementos";
+
 
 
 // Registro Entradas
@@ -146,6 +143,28 @@ $enlaceModificarElementos['enlace'] .= "&usuario=" . $miSesion->getSesionUsuario
 
 $enlaceModificarElementos ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($enlaceModificarElementos ['enlace'], $directorio);
 $enlaceModificarElementos ['nombre'] = "Modificar y Anular Elementos";
+
+
+
+
+//Funcionario  Elementos
+$enlacePeriodoLevantamiento ['enlace'] = "pagina=periodoLevantamiento";
+$enlacePeriodoLevantamiento['enlace'] .= "&usuario=" . $miSesion->getSesionUsuarioId();
+
+$enlacePeriodoLevantamiento ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($enlacePeriodoLevantamiento ['enlace'], $directorio);
+$enlacePeriodoLevantamiento ['nombre'] = "Periodo Levantamiento Físico";
+
+
+
+
+
+//Funcionario  Elementos
+$enlaceFuncionarioElementos ['enlace'] = "pagina=funcionarioElemento";
+$enlaceFuncionarioElementos['enlace'] .= "&usuario=" . $miSesion->getSesionUsuarioId();
+
+$enlaceFuncionarioElementos ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($enlaceFuncionarioElementos ['enlace'], $directorio);
+$enlaceFuncionarioElementos ['nombre'] = "Inventario Funcionarios";
+
 
 // Consultar Elementos
 $enlaceHojaVida ['enlace'] = "pagina=detalleElemento";
@@ -409,7 +428,7 @@ if ($nivel == '0') {
                                 <li><a href="<?php echo $enlaceRegistroEntradas['urlCodificada'] ?>"><?php echo $enlaceRegistroEntradas['nombre'] ?></a></li>
                                 <li><a href="<?php echo $enlaceConsultaEntradas['urlCodificada'] ?>"><?php echo $enlaceConsultaEntradas['nombre'] ?></a></li>
                                 <li><a href="<?php echo $enlaceModificarEntradas['urlCodificada'] ?>"><?php echo $enlaceModificarEntradas['nombre'] ?></a></li>  
-                                <li><a href="<?php echo $enlaceActivarElementosActa['urlCodificada'] ?>"><?php echo $enlaceActivarElementosActa['nombre'] ?></a></li>
+                                <li><a href="<?php echo $enlaceActivarElementosActa['urlCodificada'] ?>"><?php echo $enlaceActivarElementosActa['nombre'] ?></a></li> 
                             </ul>
                         </div>
 
@@ -417,7 +436,8 @@ if ($nivel == '0') {
                             <h4>Salida de Elementos</h4>
                             <ul>
                                 <li><a href="<?php echo $enlaceRegistroSalidas['urlCodificada'] ?>"><?php echo $enlaceRegistroSalidas['nombre'] ?></a></li>
-                                <li><a href="<?php echo $enlaceModificarSalidas['urlCodificada'] ?>"><?php echo $enlaceModificarSalidas['nombre'] ?></a></li>  
+                                <li><a href="<?php echo $enlaceModificarSalidas['urlCodificada'] ?>"><?php echo $enlaceModificarSalidas['nombre'] ?></a></li>
+                                  
                             </ul>
                         </div>
 
@@ -452,11 +472,19 @@ if ($nivel == '0') {
                                 <li><a href="<?php echo $enlaceSobranteFlatanteElementos['urlCodificada'] ?>"><?php echo $enlaceSobranteFlatanteElementos['nombre'] ?></a></li>
                                 <li><a href="<?php echo $enlaceBajasElementos['urlCodificada'] ?>"><?php echo $enlaceBajasElementos['nombre'] ?></a></li>
                                 <li><a href="<?php echo $enlaceAprobarBajas['urlCodificada'] ?>"><?php echo $enlaceAprobarBajas['nombre'] ?></a></li>
-<li><a href="<?php echo $enlacereposicionElementos['urlCodificada'] ?>"><?php echo $enlacereposicionElementos['nombre'] ?></a></li>
+								<li><a href="<?php echo $enlacereposicionElementos['urlCodificada'] ?>"><?php echo $enlacereposicionElementos['nombre'] ?></a></li>
+								
                             </ul>
                         </div>
 
                         <div>
+                          <h4>Levantamiento Físico</h4>
+                            <ul>
+                                <li><a href="<?php echo $enlacePeriodoLevantamiento['urlCodificada'] ?>"><?php echo $enlacePeriodoLevantamiento['nombre'] ?></a></li>
+                                <li><a href="<?php echo $enlaceFuncionarioElementos['urlCodificada'] ?>"><?php echo $enlaceFuncionarioElementos['nombre'] ?></a></li>
+                        
+                            </ul>
+                        
                             <h4>Asignación de Elementos Contratistas</h4>
                             <ul>
                                 <li><a href="<?php echo $enlaceasignarInventarioC['urlCodificada'] ?>"><?php echo $enlaceasignarInventarioC['nombre'] ?></a></li>
@@ -599,9 +627,7 @@ if ($nivel == '1') {
                             <ul>
                                 <li><a href="<?php echo $enlaceRegistroEntradas['urlCodificada'] ?>"><?php echo $enlaceRegistroEntradas['nombre'] ?></a></li>
                                 <li><a href="<?php echo $enlaceConsultaEntradas['urlCodificada'] ?>"><?php echo $enlaceConsultaEntradas['nombre'] ?></a></li>
-                                <li><a href="<?php echo $enlaceModificarEntradas['urlCodificada'] ?>"><?php echo $enlaceModificarEntradas['nombre'] ?></a></li>
-                                
-                                  
+                                <li><a href="<?php echo $enlaceModificarEntradas['urlCodificada'] ?>"><?php echo $enlaceModificarEntradas['nombre'] ?></a></li>  
                             </ul>
                         </div>
 
@@ -609,7 +635,8 @@ if ($nivel == '1') {
                             <h4>Salida de Elementos</h4>
                             <ul>
                                 <li><a href="<?php echo $enlaceRegistroSalidas['urlCodificada'] ?>"><?php echo $enlaceRegistroSalidas['nombre'] ?></a></li>
-                                <li><a href="<?php echo $enlaceModificarSalidas['urlCodificada'] ?>"><?php echo $enlaceModificarSalidas['nombre'] ?></a></li>  
+                                <li><a href="<?php echo $enlaceModificarSalidas['urlCodificada'] ?>"><?php echo $enlaceModificarSalidas['nombre'] ?></a></li>
+                                  
                             </ul>
                         </div>
                     </div><!-- /cbp-hrsub-inner -->
@@ -625,7 +652,6 @@ if ($nivel == '1') {
                                 <li><a href="<?php echo $enlaceRegistroElementos['urlCodificada'] ?>"><?php echo $enlaceRegistroElementos['nombre'] ?></a></li>
                                 <li><a href="<?php echo $enlaceModificarElementos['urlCodificada'] ?>"><?php echo $enlaceModificarElementos['nombre'] ?></a></li> 
                                 <li><a href="<?php echo $enlaceHojaVida['urlCodificada'] ?>"><?php echo $enlaceHojaVida['nombre'] ?></a></li>
-                                
                             </ul>
                         </div>
                         <div>
@@ -903,8 +929,7 @@ if ($nivel == '4') {
                             <ul>
                                 <li><a href="<?php echo $enlaceRegistroEntradas['urlCodificada'] ?>"><?php echo $enlaceRegistroEntradas['nombre'] ?></a></li>
                                 <!--li><a href="<?php echo $enlaceConsultaEntradas['urlCodificada'] ?>"><?php echo $enlaceConsultaEntradas['nombre'] ?></a></li-->
-                                <li><a href="<?php echo $enlaceModificarEntradas['urlCodificada'] ?>"><?php echo $enlaceModificarEntradas['nombre'] ?></a></li>
-                                <li><a href="<?php echo $enlaceActivarElementosActa['urlCodificada'] ?>"><?php echo $enlaceActivarElementosActa['nombre'] ?></a></li>  
+                                <li><a href="<?php echo $enlaceModificarEntradas['urlCodificada'] ?>"><?php echo $enlaceModificarEntradas['nombre'] ?></a></li>  
                             </ul>
                         </div>
 
@@ -912,7 +937,9 @@ if ($nivel == '4') {
                             <h4>Salida de Elementos</h4>
                             <ul>
                                 <li><a href="<?php echo $enlaceRegistroSalidas['urlCodificada'] ?>"><?php echo $enlaceRegistroSalidas['nombre'] ?></a></li>
-                                <li><a href="<?php echo $enlaceModificarSalidas['urlCodificada'] ?>"><?php echo $enlaceModificarSalidas['nombre'] ?></a></li>  
+                                <li><a href="<?php echo $enlaceModificarSalidas['urlCodificada'] ?>"><?php echo $enlaceModificarSalidas['nombre'] ?></a></li>
+                                
+                                  
                             </ul>
                         </div>
                     </div><!-- /cbp-hrsub-inner -->
