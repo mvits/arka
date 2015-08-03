@@ -98,7 +98,7 @@ class registrarForm {
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'encabezado';
 		$atributos ['id'] = $esteCampo;
-		$atributos ['tipo'] = 'warning';
+		$atributos ['tipo'] = 'information';
 		$atributos ['estilo'] = 'textoNotasFormulario';
 		$atributos ['mensaje'] = $this->lenguaje->getCadena ( $esteCampo );
 			
