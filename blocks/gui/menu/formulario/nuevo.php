@@ -147,7 +147,7 @@ $enlaceModificarElementos ['nombre'] = "Modificar y Anular Elementos";
 
 
 
-//Funcionario  Elementos
+//Periodo  Elementos
 $enlacePeriodoLevantamiento ['enlace'] = "pagina=periodoLevantamiento";
 $enlacePeriodoLevantamiento['enlace'] .= "&usuario=" . $miSesion->getSesionUsuarioId();
 
