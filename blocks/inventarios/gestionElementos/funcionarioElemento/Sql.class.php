@@ -191,12 +191,12 @@ class Sql extends \Sql {
 			case "Registrar_Observaciones_Elemento" :
 				
 				$cadenaSql = "INSERT INTO arka_movil.detalle_levantamiento( 
-									    funcionario,id_elemento_individual, observacion,fecha_registroalm,creador_observacion )";
+									    funcionario,id_elemento_individual, observacion,creador_observacion )";
 				$cadenaSql .= "VALUES ( ";
 				$cadenaSql .= "'" . $variable ['funcionario'] . "',";
 				$cadenaSql .= "'" . $variable ['id_elemento_individual'] . "',";
 				$cadenaSql .= "'" . $variable ['observacion'] . "',";
-				$cadenaSql .= "NULL,0) RETURNING  id_detallelevantamiento  ";
+				$cadenaSql .= "0) RETURNING  id_detallelevantamiento  ";
 				
 				break;
 			
