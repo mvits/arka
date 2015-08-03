@@ -34,6 +34,9 @@ class Funcion {
 	// return true;
 	// }
 	// }
+	function formCierre() {
+		include_once ($this->ruta . "/funcion/CierrePeriodo.php");
+	}
 	function formProcessor() {
 		include_once ($this->ruta . "/funcion/registrarPeriodo.php");
 	}
@@ -79,6 +82,12 @@ class Funcion {
 			switch ($_REQUEST ["opcion"]) {
 				case 'consultar' :
 					$this->consultarContrato ();
+					break;
+				
+				case 'CierrePeriodo' :
+					
+					
+					$this->formCierre ();
 					break;
 				
 				case 'ActualizarPeriodo' :

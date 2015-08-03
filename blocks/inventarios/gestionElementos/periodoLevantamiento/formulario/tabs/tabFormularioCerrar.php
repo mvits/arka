@@ -158,7 +158,7 @@ class registrarForm {
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-		$valorCodificado .= "&opcion=CerrarPeriodo";
+		$valorCodificado .= "&opcion=CierrePeriodo";
 		if ($resultado) {
 			$valorCodificado .= "&id_levantamiento=" . $resultado [0] [0];
 		}

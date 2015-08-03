@@ -28,12 +28,46 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
-			// id_periodolevantamiento, fecha_inicio, fecha_final, cierre_levantamiento,
-			// fecha_cierre, fecha_registro, estado_registro, vigencia)
-			// VALUES (?, ?, ?, ?,
-			// ?, ?, ?, ?);
+			// $cadenaSql = "SELECT DISTINCT ";
+			// $cadenaSql .= " eli.id_elemento_ind identificador_elemento_individual , eli.placa , tb.descripcion nombre_tipo_bienes,
+			// ele.tipo_bien tipo_bien,
+			// ele.marca marca,
+			// ele.serie serie,
+			// CASE eli.confirmada_existencia
+			// WHEN 't' THEN 'X'
+			// ELSE ' '
+			// END marca_existencia,
+			// \"FUN_NOMBRE\" nombre_funcionario,
+			// sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia,
+			// CASE
+			// WHEN tfs.descripcion IS NULL THEN 'Activo'
+			// ELSE tfs.descripcion
+			// END as estado_bien, ele.descripcion descripcion_elemento, eli.confirmada_existencia , eli.tipo_confirmada ";
+			// $cadenaSql .= "FROM elemento_individual eli ";
+			// $cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
+			// $cadenaSql .= "JOIN tipo_bienes tb ON tb.id_tipo_bienes = ele.tipo_bien ";
+			// $cadenaSql .= "LEFT JOIN estado_elemento est ON est.id_elemento_ind = eli.id_elemento_ind ";
+			// $cadenaSql .= "LEFT JOIN tipo_falt_sobr tfs ON tfs.id_tipo_falt_sobr = est.tipo_faltsobr ";
+			// $cadenaSql .= "LEFT JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= eli.funcionario ";
+			// $cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
+			// $cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
+			// $cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
+			// $cadenaSql .= "WHERE 1=1 ";
+			// $cadenaSql .= " AND tb.id_tipo_bienes <> 1 ";
+			// $cadenaSql .= " AND eli.funcionario= '" . $variable . "' ";
+			// $cadenaSql .= " ORDER BY dependencia DESC ; ";
 			
-			// estado_registro=false ; ";
+			case "Rescatar_Verificacion_Placas" :
+				
+				$cadenaSql = "SELECT DISTINCT ";
+				$cadenaSql .= "eli.placa, eli.funcionario, eli.confirmada_existencia  ";
+				$cadenaSql .= "FROM elemento_individual  eli ";
+				$cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
+				$cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes = ele.tipo_bien ";
+				$cadenaSql .= "WHERE 1=1 ";
+				$cadenaSql .= " AND tb.id_tipo_bienes <> 1 ";
+				
+				break;
 			
 			case "Actualizar_Periodos" :
 				$cadenaSql = " UPDATE arka_movil.periodo_levantamiento  ";
