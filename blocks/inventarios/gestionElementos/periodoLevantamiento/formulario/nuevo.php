@@ -32,9 +32,9 @@ unset ( $atributos );
 	// -------------------- Listado de Pestañas (Como lista No Ordenada) -------------------------------
 	
 	$items = array (
-			
+			"tabCerrar" => $this->lenguaje->getCadena ( "tabCerrar" ),
 			"tabCrear" => $this->lenguaje->getCadena ( "tabCrear" ),
-			"tabModificar" => $this->lenguaje->getCadena ( "tabModificar" )
+			"tabModificar" => $this->lenguaje->getCadena ( "tabModificar" )			
 			
 			 
 	);
@@ -42,6 +42,21 @@ unset ( $atributos );
 	$atributos ["estilo"] = "jqueryui";
 	$atributos ["pestañas"] = "true";
 	echo $this->miFormulario->listaNoOrdenada ( $atributos );
+
+	
+
+	$esteCampo = "tabCerrar";
+	$atributos ['id'] = $esteCampo;
+	$atributos ["estilo"] = "jqueryui";
+	$atributos ['tipoEtiqueta'] = 'inicio';
+	// $atributos ["leyenda"] = "Contratos ViceRectoria";
+	echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+	unset ( $atributos );
+	{
+	
+		include ($this->ruta . "formulario/tabs/tabFormularioCerrar.php");
+		// -----------------Fin Division para la pestaña 2-------------------------
+	}
 	
 	$esteCampo = "tabCrear";
 	$atributos ['id'] = $esteCampo;

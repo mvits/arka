@@ -8,14 +8,14 @@ $this->idioma["fecha_fin_cierre"] = "Fecha de Cierre Levatamiento:";
 $this->idioma["fecha_fin_cierreTitulo"] = "Seleccione Fecha Final de Levantamiento ";
 
 
-
+$this->idioma["tabCerrar"] = "Cierre Levantamiento";
 $this->idioma["tabCrear"] = "Registrar Periodo Levantamiento";
 $this->idioma["tabModificar"] = "Modificar Periodo Levantamiento";
 
 
 $this->idioma["botonActualizar"] = "Actualizar";
 
-
+$this->idioma["botonCerrar"] = "Cerrar Levantamiento Físico";
 
 
 
