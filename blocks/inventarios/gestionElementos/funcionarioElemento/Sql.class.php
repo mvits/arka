@@ -31,6 +31,14 @@ class Sql extends \Sql {
 			/**
 			 * Clausulas específicas
 			 */
+			
+			case "Verificar_Periodo" :
+				$cadenaSql = " SELECT *   ";
+				$cadenaSql .= " FROM  arka_movil.periodo_levantamiento ";
+				$cadenaSql .= "WHERE estado_registro=TRUE ;";
+				
+				break;
+			
 			case "buscarUsuario" :
 				$cadenaSql = "SELECT ";
 				$cadenaSql .= "FECHA_CREACION, ";
