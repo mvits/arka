@@ -4,7 +4,7 @@
 $this->idioma["fecha_inicio_cierre"] = "Fecha de Inicio Levantamiento :";
 $this->idioma["fecha_inicio_cierreTitulo"] = "Seleccione Fecha Inicial de Levantamiento ";
 
-$this->idioma["fecha_fin_cierre"] = "Fecha de Cierre Levatamiento:";
+$this->idioma["fecha_fin_cierre"] = "Fecha de Cierre Levantamiento:";
 $this->idioma["fecha_fin_cierreTitulo"] = "Seleccione Fecha Final de Levantamiento ";
 
 
