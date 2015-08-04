@@ -32,9 +32,9 @@ unset ( $atributos );
 	// -------------------- Listado de Pestañas (Como lista No Ordenada) -------------------------------
 	
 	$items = array (
-			"tabCerrar" => $this->lenguaje->getCadena ( "tabCerrar" ),
 			"tabCrear" => $this->lenguaje->getCadena ( "tabCrear" ),
-			"tabModificar" => $this->lenguaje->getCadena ( "tabModificar" )			
+			"tabModificar" => $this->lenguaje->getCadena ( "tabModificar" ),			
+			"tabCerrar" => $this->lenguaje->getCadena ( "tabCerrar" )
 			
 			 
 	);
@@ -57,6 +57,7 @@ unset ( $atributos );
 		include ($this->ruta . "formulario/tabs/tabFormularioCerrar.php");
 		// -----------------Fin Division para la pestaña 2-------------------------
 	}
+	echo $this->miFormulario->agrupacion ( 'fin' );
 	
 	$esteCampo = "tabCrear";
 	$atributos ['id'] = $esteCampo;

@@ -3,7 +3,7 @@ if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();
 }
-class registrarForm {
+class registrarFormularioCrear {
 	var $miConfigurador;
 	var $lenguaje;
 	var $miFormulario;
@@ -56,7 +56,7 @@ class registrarForm {
 		
 		// -------------------------------------------------------------------------------------------------
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
-		$esteCampo = $esteBloque ['nombre'];
+		$esteCampo ="CrearPeriodo";
 		$atributos ['id'] = $esteCampo;
 		$atributos ['nombre'] = $esteCampo;
 		
@@ -169,7 +169,7 @@ class registrarForm {
 		$atributos ["verificar"] = '';
 		$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
 		$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+		$atributos ['nombreFormulario'] = "CrearPeriodo";
 		$tab ++;
 		
 		// Aplica atributos globales al control
@@ -250,7 +250,7 @@ class registrarForm {
 	}
 }
 
-$miSeleccionador = new registrarForm ( $this->lenguaje, $this->miFormulario, $this->sql );
+$miSeleccionador = new registrarFormularioCrear ( $this->lenguaje, $this->miFormulario, $this->sql );
 
 $miSeleccionador->miForm ();
 ?>

@@ -27,7 +27,28 @@
 
 	   
 	   
-	   
+        // Asociar el widget de validación al formulario
+        $("#CrearPeriodo").validationEngine({
+            promptPosition : "centerRight", 
+            scroll: false,
+            autoHidePrompt: true,
+            autoHideDelay: 2000
+        });
+
+  $(function() {
+            $("#CrearPeriodo").submit(function() {
+                $resultado=$("#CrearPeriodo").validationEngine("validate");
+                
+                if ($resultado) {
+                
+                    return true;
+                }
+                return false;
+            });
+        });
+   
+  
+  
 
 
 // Asociar el widget tabs a la división cuyo id es tabs

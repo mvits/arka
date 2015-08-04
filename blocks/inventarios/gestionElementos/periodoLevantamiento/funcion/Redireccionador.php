@@ -7,9 +7,29 @@ if (! isset ( $GLOBALS ["autorizado"] )) {
 	exit ();
 }
 
+
 $miConfigurador = \Configurador::singleton ();
 
 switch ($opcion) {
+	
+	
+	
+	case "CerroPeriodo" :
+		$variable = "pagina=periodoLevantamiento";
+		$variable .= "&opcion=mensaje";
+		$variable .= "&mensaje=CerroPeriodo";
+		$variable .= "&fecha_inicio=" . $_REQUEST ['fecha_inicio_cierre'];
+		$variable .= "&fecha_final=" . $_REQUEST ['fecha_fin_cierre'];
+		break;
+	
+	case "noCerroPeriodo" :
+		$variable = "pagina=periodoLevantamiento";
+		$variable .= "&opcion=mensaje";
+		$variable .= "&mensaje=noCerroPeriodo";
+		break;
+	
+	
+	
 	
 	case "actualizoPeriodo" :
 		$variable = "pagina=periodoLevantamiento";
@@ -61,6 +81,7 @@ switch ($opcion) {
 foreach ( $_REQUEST as $clave => $valor ) {
 	unset ( $_REQUEST [$clave] );
 }
+
 
 $url = $miConfigurador->configuracion ["host"] . $miConfigurador->configuracion ["site"] . "/index.php?";
 $enlace = $miConfigurador->configuracion ['enlace'];

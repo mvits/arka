@@ -28,19 +28,46 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
-
+			case "Actualizar_Tabla_Periodo" :
+				$cadenaSql = " UPDATE arka_movil.periodo_levantamiento  ";
+				$cadenaSql .= " SET  fecha_cierre=' " . date ( 'Y-m-d' ) . "', ";
+				$cadenaSql .= "cierre_levantamiento=' TRUE  ";
+				$cadenaSql .= "WHERE estado_registro=TRUE ;  ";
+				
+				break;
 			
 			
+			case "Limpiar_Radicados" :
+				
+				$cadenaSql = "TRUNCATE TABLE  arka_movil.radicado_levantamiento  ";
+				
+				break;
 			
+			case "Limpiar_Elementos_Individuales" :
+				
+				$cadenaSql = "UPDATE elemento_individual  ";
+				$cadenaSql .= "SET confirmada_existencia='FALSE' ,tipo_confirmada=0; ";
+				
+				break;
 			
-// 			id_historial_pl, id_levantamiento, funcionario, placa, confirmacion_existencia,
-// 			id_documento_soporte, fecha_registro, estado)
-// 			VALUES (?, ?, ?, ?, ?,
-// 			?, ?, ?);
-
+			case "Registrar_Historial_Funcionario" :
+				
+				$cadenaSql = "INSERT INTO historial_levantamiento_funcionario(";
+				$cadenaSql .= " id_levantamiento, dependencia, funcionario,
+											num_elementos, aprobacion, radicacion, fecha_registro) ";
+				$cadenaSql .= " VALUES ( ";
+				$cadenaSql .= "' " . $variable [0] . "', ";
+				$cadenaSql .= "' " . $variable [1] . "', ";
+				$cadenaSql .= "' " . $variable [2] . "', ";
+				$cadenaSql .= "' " . $variable [3] . "', ";
+				$cadenaSql .= "' " . $variable [4] . "', ";
+				$cadenaSql .= "' " . $variable [5] . "', ";
+				$cadenaSql .= "' " . $variable [6] . "') ;";
+				
+				break;
 			
 			case "Registrar_Historial_Placas" :
-			
+				
 				$cadenaSql = "INSERT INTO historial_levantamiento_placa( ";
 				$cadenaSql .= "id_levantamiento, funcionario, placa, confirmacion_existencia, fecha_registro) ";
 				$cadenaSql .= " VALUES ( ";
@@ -49,43 +76,47 @@ class Sql extends \Sql {
 				$cadenaSql .= "' " . $variable [2] . "', ";
 				$cadenaSql .= "' " . $variable [3] . "', ";
 				$cadenaSql .= "' " . $variable [4] . "') ;";
-			
-				break;
 				
+				break;
+			
+			// SELECT
+			// eli.funcionario funcionario,
+			
+			// ad."ESF_CODIGO_DEP" id_dependencia,
+			// count(placa),
+			// CASE rl.estado_radicacion WHEN 'TRUE' THEN 'TRUE' ELSE 'FALSE' END radicacion,
+			// CASE eli.tipo_confirmada WHEN 1 THEN 'TRUE' ELSE 'FALSE' END aprobacion
+			// FROM elemento_individual eli
+			// JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen
+			// JOIN tipo_bienes tb ON tb.id_tipo_bienes = ele.tipo_bien
+			// LEFT JOIN arka_movil.radicado_levantamiento rl ON rl.funcionario = eli.funcionario
+			// LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento
+			// LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento
+			// LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE"
+			
+			// WHERE 1=1 AND tb.id_tipo_bienes <> 1
+			
+			// GROUP BY eli.funcionario , ad."ESF_CODIGO_DEP",rl.estado_radicacion,eli.tipo_confirmada ;
 			
 			case "Rescatar_Datos_Levantamiento" :
 				
-			$cadenaSql = "SELECT DISTINCT ";
-			$cadenaSql .= " eli.id_elemento_ind identificador_elemento_individual , eli.placa , tb.descripcion nombre_tipo_bienes,
-			ele.tipo_bien tipo_bien,
-			ele.marca marca,
-			ele.serie serie,
-			CASE eli.confirmada_existencia
-			WHEN 't' THEN 'X'
-			ELSE ' '
-			END marca_existencia,
-			\"FUN_NOMBRE\" nombre_funcionario,
-			sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia,
-			CASE
-			WHEN tfs.descripcion IS NULL THEN 'Activo'
-			ELSE tfs.descripcion
-			END as estado_bien, ele.descripcion descripcion_elemento, eli.confirmada_existencia , eli.tipo_confirmada ";
-			$cadenaSql .= "FROM elemento_individual eli ";
-			$cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
-			$cadenaSql .= "JOIN tipo_bienes tb ON tb.id_tipo_bienes = ele.tipo_bien ";
-			$cadenaSql .= "LEFT JOIN estado_elemento est ON est.id_elemento_ind = eli.id_elemento_ind ";
-			$cadenaSql .= "LEFT JOIN tipo_falt_sobr tfs ON tfs.id_tipo_falt_sobr = est.tipo_faltsobr ";
-			$cadenaSql .= "LEFT JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= eli.funcionario ";
-			$cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
-			$cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
-			$cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
-			$cadenaSql .= "WHERE 1=1 ";
-			$cadenaSql .= " AND tb.id_tipo_bienes <> 1 ";
-// 			$cadenaSql .= " AND eli.funcionario= '" . $variable . "' ";
-			$cadenaSql .= " ORDER BY dependencia DESC ; ";
-			
-			
-				
+				$cadenaSql = "SELECT   ";
+				$cadenaSql .= " eli.funcionario funcionario,
+				 ad.\"ESF_CODIGO_DEP\" id_dependencia,
+				count(placa),
+				CASE rl.estado_radicacion WHEN 'TRUE' THEN 'TRUE' ELSE 'FALSE' END radicacion,
+				CASE eli.tipo_confirmada WHEN 1 THEN 'TRUE' ELSE 'FALSE' END 	aprobacion  ";
+				$cadenaSql .= "FROM elemento_individual eli ";
+				$cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
+				$cadenaSql .= "JOIN tipo_bienes tb ON tb.id_tipo_bienes = ele.tipo_bien ";
+				$cadenaSql .= "LEFT JOIN  arka_movil.radicado_levantamiento rl ON rl.funcionario =  eli.funcionario ";
+				// $cadenaSql .= "LEFT JOIN tipo_falt_sobr tfs ON tfs.id_tipo_falt_sobr = est.tipo_faltsobr ";
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
+				$cadenaSql .= "WHERE 1=1 ";
+				$cadenaSql .= " AND tb.id_tipo_bienes <> 1  ";
+				$cadenaSql .= "GROUP BY eli.funcionario , ad.\"ESF_CODIGO_DEP\",rl.estado_radicacion,eli.tipo_confirmada ;";
 				break;
 			
 			case "Inhabilitar_periodos_anteriores" :
