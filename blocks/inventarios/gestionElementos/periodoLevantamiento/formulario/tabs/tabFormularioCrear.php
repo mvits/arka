@@ -182,7 +182,7 @@ class registrarFormularioCrear {
 		
 		if ($resultado){
 			
-			$mensaje = "Exite un Periodo de Levantamiento Vigente.<br>Inicio : ".$resultado[0]['fecha_inicio']."  y   Final : ".$resultado[0]['fecha_final'];
+			$mensaje = "Existe un Periodo de Levantamiento Vigente.<br>Inicio : ".$resultado[0]['fecha_inicio']."  y   Final : ".$resultado[0]['fecha_final'];
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'mensajeRegistro';
 			$atributos ['id'] = $esteCampo;
