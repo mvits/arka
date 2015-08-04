@@ -78,20 +78,6 @@ foreach ( $datos_levantamiento as $valor ) {
 
 
 
-
-
-
-$cadenaSql = $this->sql->cadena_sql ( "Limpiar_Elementos_Individuales" );
-
-$Limpieza_elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-
-
-$cadenaSql = $this->sql->cadena_sql ( "Limpiar_Radicados" );
-
-$Limpieza_radicados = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-
-
-
 $cadenaSql = $this->sql->cadena_sql ( "Actualizar_Tabla_Periodo" );
 
 $Actualizacion_Periodo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );

@@ -16,6 +16,20 @@ $resultado = '';
 
 $fechaActual = date ( 'Y-m-d' );
 
+
+$cadenaSql = $this->sql->cadena_sql ( "Limpiar_Elementos_Individuales" );
+
+$Limpieza_elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+
+
+$cadenaSql = $this->sql->cadena_sql ( "Limpiar_Radicados" );
+
+$Limpieza_radicados = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+
+
+
+
+
 $arreglo = array (
 		$_REQUEST ['fecha_inicio_cierre'],
 		$_REQUEST ['fecha_fin_cierre'],
