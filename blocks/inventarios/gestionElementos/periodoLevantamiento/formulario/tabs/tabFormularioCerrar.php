@@ -124,7 +124,7 @@ class registrarForm {
 		
 		if ($resultado == false) {
 			
-			$mensaje = "No Exite un Periodo de Levantamiento Vigente.<br>Para hacer un Cierre Efectivo de Levantamiento";
+			$mensaje = "No Existe un Periodo de Levantamiento Vigente.<br>Para hacer un Cierre Efectivo de Levantamiento";
 			;
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'mensajeRegistro';

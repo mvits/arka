@@ -56,13 +56,13 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_levantamiento, dependencia, funcionario,
 											num_elementos, aprobacion, radicacion, fecha_registro) ";
 				$cadenaSql .= " VALUES ( ";
-				$cadenaSql .= "' " . $variable [0] . "', ";
-				$cadenaSql .= "' " . $variable [1] . "', ";
-				$cadenaSql .= "' " . $variable [2] . "', ";
-				$cadenaSql .= "' " . $variable [3] . "', ";
-				$cadenaSql .= "' " . $variable [4] . "', ";
-				$cadenaSql .= "' " . $variable [5] . "', ";
-				$cadenaSql .= "' " . $variable [6] . "') ;";
+				$cadenaSql .= "'" . $variable [0] . "', ";
+				$cadenaSql .= "'" . $variable [1] . "', ";
+				$cadenaSql .= "'" . $variable [2] . "', ";
+				$cadenaSql .= "'" . $variable [3] . "', ";
+				$cadenaSql .= "'" . $variable [4] . "', ";
+				$cadenaSql .= "'" . $variable [5] . "', ";
+				$cadenaSql .= "'" . $variable [6] . "') ;";
 				
 				break;
 			
@@ -71,11 +71,11 @@ class Sql extends \Sql {
 				$cadenaSql = "INSERT INTO historial_levantamiento_placa( ";
 				$cadenaSql .= "id_levantamiento, funcionario, placa, confirmacion_existencia, fecha_registro) ";
 				$cadenaSql .= " VALUES ( ";
-				$cadenaSql .= "' " . $variable [0] . "', ";
-				$cadenaSql .= "' " . $variable [1] . "', ";
-				$cadenaSql .= "' " . $variable [2] . "', ";
-				$cadenaSql .= "' " . $variable [3] . "', ";
-				$cadenaSql .= "' " . $variable [4] . "') ;";
+				$cadenaSql .= "'" . $variable [0] . "', ";
+				$cadenaSql .= "'" . $variable [1] . "', ";
+				$cadenaSql .= "'" . $variable [2] . "', ";
+				$cadenaSql .= "'" . $variable [3] . "', ";
+				$cadenaSql .= "'" . $variable [4] . "') ;";
 				
 				break;
 			
@@ -112,10 +112,11 @@ class Sql extends \Sql {
 				$cadenaSql .= "LEFT JOIN  arka_movil.radicado_levantamiento rl ON rl.funcionario =  eli.funcionario ";
 				// $cadenaSql .= "LEFT JOIN tipo_falt_sobr tfs ON tfs.id_tipo_falt_sobr = est.tipo_faltsobr ";
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
-				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
+				$cadenaSql .= ' INNER JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
 				$cadenaSql .= "WHERE 1=1 ";
 				$cadenaSql .= " AND tb.id_tipo_bienes <> 1  ";
+				$cadenaSql .= " AND eli.funcionario <> 0  ";
 				$cadenaSql .= "GROUP BY eli.funcionario , ad.\"ESF_CODIGO_DEP\",rl.estado_radicacion,eli.tipo_confirmada ;";
 				break;
 			
@@ -135,6 +136,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes = ele.tipo_bien ";
 				$cadenaSql .= "WHERE 1=1 ";
 				$cadenaSql .= " AND tb.id_tipo_bienes <> 1 ";
+				$cadenaSql .= " AND eli.funcionario IS NOT NULL  ";
+				$cadenaSql .= " AND eli.funcionario <> 0 ";
 				
 				break;
 			

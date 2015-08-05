@@ -25,13 +25,14 @@ $cadenaSql = $this->sql->cadena_sql ( "Verificar_Periodo" );
 
 $periodo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 
+
 $periodo = $periodo [0];
 
 
 // ------ Historial Placas levatamiento Existencia ---------------
 $cadenaSql = $this->sql->cadena_sql ( "Inhabilitar_periodos_anteriores" );
 
-$inhabilitar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+// $inhabilitar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
 $cadenaSql = $this->sql->cadena_sql ( "Rescatar_Verificacion_Placas" );
 
@@ -51,6 +52,11 @@ foreach ( $verificacion_placas as $valor ) {
 	
 	$registro_historial_placas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 }
+
+
+
+
+
 
 $cadenaSql = $this->sql->cadena_sql ( "Rescatar_Datos_Levantamiento" );
 
@@ -73,7 +79,6 @@ foreach ( $datos_levantamiento as $valor ) {
 	
 	$registro_historial_Funcionario = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 }
-
 
 
 
@@ -103,6 +108,10 @@ $arreglo=array(
 
 
 $_REQUEST=array_merge($_REQUEST,$arreglo);
+
+
+
+
 
 if ($registro_historial_placas&&$registro_historial_Funcionario) {
 	$this->funcion->Redireccionador ( 'CerroPeriodo' );
