@@ -155,15 +155,20 @@ $enlacePeriodoLevantamiento ['urlCodificada'] = $this->miConfigurador->fabricaCo
 $enlacePeriodoLevantamiento ['nombre'] = "Periodo Levantamiento Físico";
 
 
-
-
-
 //Funcionario  Elementos
 $enlaceFuncionarioElementos ['enlace'] = "pagina=funcionarioElemento";
 $enlaceFuncionarioElementos['enlace'] .= "&usuario=" . $miSesion->getSesionUsuarioId();
 
 $enlaceFuncionarioElementos ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($enlaceFuncionarioElementos ['enlace'], $directorio);
 $enlaceFuncionarioElementos ['nombre'] = "Inventario Funcionarios";
+
+
+//Funcionario  Radicado Inventario
+$enlaceRadicadoFuncionarioElementos ['enlace'] = "pagina=radicadoLevantamiento";
+$enlaceRadicadoFuncionarioElementos['enlace'] .= "&usuario=" . $miSesion->getSesionUsuarioId();
+
+$enlaceRadicadoFuncionarioElementos ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($enlaceRadicadoFuncionarioElementos ['enlace'], $directorio);
+$enlaceRadicadoFuncionarioElementos ['nombre'] = "Radicado Inventario Funcionarios";
 
 
 // Consultar Elementos
@@ -482,7 +487,7 @@ if ($nivel == '0') {
                             <ul>
                                 <li><a href="<?php echo $enlacePeriodoLevantamiento['urlCodificada'] ?>"><?php echo $enlacePeriodoLevantamiento['nombre'] ?></a></li>
                                 <li><a href="<?php echo $enlaceFuncionarioElementos['urlCodificada'] ?>"><?php echo $enlaceFuncionarioElementos['nombre'] ?></a></li>
-                        
+                        		<li><a href="<?php echo $enlaceRadicadoFuncionarioElementos['urlCodificada'] ?>"><?php echo $enlaceRadicadoFuncionarioElementos['nombre'] ?></a></li>
                             </ul>
                         
                             <h4>Asignación de Elementos Contratistas</h4>
