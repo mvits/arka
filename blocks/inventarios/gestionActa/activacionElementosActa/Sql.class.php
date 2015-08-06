@@ -169,6 +169,18 @@ class Sql extends \Sql {
 			 * Modificar Elemento
 			 */
 				
+				
+
+				case "consultarEntrada" :
+					$cadenaSql = " SELECT en.* , cl.descripcion";
+					$cadenaSql .= " FROM entrada en  ";
+					$cadenaSql .= " JOIN clase_entrada cl ON cl.id_clase=en.clase_entrada ";
+					$cadenaSql .= "WHERE en.id_entrada=".$variable;
+					
+					break;
+					
+				
+				
 
 				case "buscar_placa_maxima" :
 					$cadenaSql = " SELECT  MAX(placa::FLOAT) placa_max ";

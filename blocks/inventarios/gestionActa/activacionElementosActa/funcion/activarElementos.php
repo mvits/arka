@@ -156,6 +156,8 @@ class RegistradorOrden {
 				$_REQUEST ['numero_acta'] ,
 				$_REQUEST['consecutivo_entrada']
 		);
+		var_dump($elemento_id);
+		var_dump($elemento);
 		if ($elemento && $elemento_id) {
 			
 			redireccion::redireccionar ( 'inserto', $datos );
