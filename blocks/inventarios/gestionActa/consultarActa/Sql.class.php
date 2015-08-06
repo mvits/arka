@@ -165,6 +165,33 @@ class Sql extends \Sql {
 			 * Modificar Elemento
 			 */
 			
+			case "ActualizarElementoImagen" :
+				
+				$cadenaSql = " UPDATE asignar_imagen_acta ";
+				$cadenaSql .= "SET  id_elemento_acta='" . $variable ['elemento'] . "', imagen='" . $variable ['imagen'] . "' ";
+				$cadenaSql .= "WHERE id_imagen='" . $variable ['id_imagen'] . "';";
+				
+				break;
+			
+			case "RegistrarElementoImagen" :
+				
+				$cadenaSql = " 	INSERT INTO asignar_imagen_acta(";
+				$cadenaSql .= " id_elemento_acta, imagen ) ";
+				$cadenaSql .= " VALUES (";
+				$cadenaSql .= "'" . $variable ['elemento'] . "',";
+				$cadenaSql .= "'" . $variable ['imagen'] . "') ";
+				$cadenaSql .= "RETURNING id_imagen; ";
+				
+				break;
+			
+			case 'consultarExistenciaImagen' :
+				
+				$cadenaSql = "SELECT id_imagen ";
+				$cadenaSql .= "FROM  asignar_imagen_acta ";
+				$cadenaSql .= "WHERE  id_elemento_acta ='" . $variable . "';";
+				
+				break;
+			
 			case "consultar_nivel_inventario" :
 				
 				$cadenaSql = "SELECT ce.elemento_id, ce.elemento_codigo||' - '||ce.elemento_nombre ";
@@ -172,7 +199,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
 				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
 				$cadenaSql .= "AND  ce.elemento_id > 0  ";
-                                    $cadenaSql .= "AND  ce.elemento_padre > 0  ";
+				$cadenaSql .= "AND  ce.elemento_padre > 0  ";
 				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
 				
 				break;

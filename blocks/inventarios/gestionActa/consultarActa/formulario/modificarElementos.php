@@ -337,9 +337,9 @@ class registrarForm {
 							$atributos ["tamanno"] = 500000;
 							$atributos ["validar"] = " ";
 							$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
-							// $atributos ["valor"] = $valorCodificado;
+// 							$atributos ["valor"] = $valorCodificado;
 							$atributos = array_merge ( $atributos, $atributosGlobales );
-// 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
+							echo $this->miFormulario->campoCuadroTexto ( $atributos );
 							unset ( $atributos );
 								
 							

@@ -24,22 +24,77 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+		
+		
+		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		//------- Registro de Imagen 
+		foreach ( $_FILES as $key => $values ) {
+					
+					$archivo [] = $_FILES [$key];
+				}
 		
-		// foreach ( $_FILES as $key => $values ) {
+				$archivoImagen = $archivo [0];
+				
+			
+				if ($archivoImagen ['error'] == 0) {
+					
+					if ($archivoImagen ['type'] != 'image/jpeg') {
+						redireccion::redireccionar ( 'noFormatoImagen' );
+						exit ();
+					}
+					
+					
+
+					$cadenaSql = $this->miSql->getCadenaSql ( 'consultarExistenciaImagen', $_REQUEST ['id_elemento_acta'] );
+					
+					$ExistenciaImagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
 		
-		// $archivoImagen = $_FILES [$key];
-		// }
-		
-		// if ($archivoImagen ['error'] == 0) {
-		
-		// if ($archivoImagen ['type'] != 'image/jpeg') {
-		// redireccion::redireccionar ( 'noFormatoImagen' );
-		// exit ();
-		// }
-		// }
-		
+					if($ExistenciaImagen){
+						
+						$data = base64_encode ( file_get_contents ( $archivoImagen ['tmp_name'] ) );
+							
+						$arreglo = array (
+								"id_imagen" => $ExistenciaImagen[0][0],
+								"elemento" => $_REQUEST['id_elemento_acta'],
+								"imagen" => $data
+						);
+							
+			
+						
+						$cadenaSql = $this->miSql->getCadenaSql ( 'ActualizarElementoImagen', $arreglo );
+							
+						$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+						
+					}else if($ExistenciaImagen==false){
+						
+						
+						$data = base64_encode ( file_get_contents ( $archivoImagen ['tmp_name'] ) );
+							
+						$arreglo = array (
+								"elemento" => $_REQUEST ['id_elemento_acta'],
+								"imagen" => $data
+						);
+						
+				
+						$cadenaSql = $this->miSql->getCadenaSql ( 'RegistrarElementoImagen', $arreglo );
+							
+						$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+						
+					}
+					
+					
+					
+					
+				}
+
+				
+	
+		//-------------------------------------		
+				
+				
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_iva', $_REQUEST ['iva'] );
 		
 		$valor_iva = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
