@@ -578,7 +578,7 @@ class registrarForm {
 						$atributos ['marco'] = true;
 						$atributos ['estiloMarco'] = '';
 						$atributos ["etiquetaObligatorio"] = true;
-						$atributos ['columnas'] = 2;
+						$atributos ['columnas'] = 1;
 						$atributos ['dobleLinea'] = 0;
 						$atributos ['tabIndex'] = $tab;
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -630,7 +630,7 @@ class registrarForm {
 						
 						// Aplica atributos globales al control
 						$atributos = array_merge ( $atributos, $atributosGlobales );
-						echo $this->miFormulario->campoCuadroTexto ( $atributos );
+// 						echo $this->miFormulario->campoCuadroTexto ( $atributos );
 						unset ( $atributos );
 						
 						// --------------- FIN CONTROL : Cuadro de Texto ---------------------------------------------------//

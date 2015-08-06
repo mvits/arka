@@ -172,6 +172,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
 				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
 				$cadenaSql .= "AND  ce.elemento_id > 0  ";
+                                    $cadenaSql .= "AND  ce.elemento_padre > 0  ";
 				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
 				
 				break;
@@ -372,7 +373,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "proveedor='" . $variable ['nit_proveedor'] . "',";
 				$cadenaSql .= "ordenador_gasto='" . $variable ['ordenador'] . "',";
 				$cadenaSql .= "fecha_revision='" . $variable ['fecha_revision'] . "',";
-				$cadenaSql .= "revisor='" . $variable ['revisor'] . "',";
+				$cadenaSql .= "revisor=NULL,";
 				$cadenaSql .= "observacionesacta='" . $variable ['observaciones'] . "',";
 				$cadenaSql .= "enlace_soporte='" . $variable ['enlace_soporte'] . "',";
 				$cadenaSql .= "nombre_soporte='" . $variable ['nombre_soporte'] . "',";
@@ -395,7 +396,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "proveedor='" . $variable ['nit_proveedor'] . "',";
 				$cadenaSql .= "ordenador_gasto='" . $variable ['ordenador'] . "',";
 				$cadenaSql .= "fecha_revision='" . $variable ['fecha_revision'] . "',";
-				$cadenaSql .= "revisor='" . $variable ['revisor'] . "',";
+				$cadenaSql .= "revisor=NULL,";
 				$cadenaSql .= "observacionesacta='" . $variable ['observaciones'] . "',";
 				$cadenaSql .= "estado_registro='" . $variable ['estado'] . "',";
 				$cadenaSql .= "fecha_registro='" . $variable ['fecha_registro'] . "', ";
