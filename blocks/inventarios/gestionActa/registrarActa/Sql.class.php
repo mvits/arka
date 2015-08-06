@@ -154,6 +154,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
 				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
 				$cadenaSql .= "AND  ce.elemento_id > 0  ";
+                                    $cadenaSql .= "AND  ce.elemento_padre > 0  ";
 				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
 				
 				break;
@@ -487,7 +488,7 @@ class Sql extends \Sql {
 				$cadenaSql .= (is_null ( $variable ['ordenador'] ) == true) ? ' NULL , ' : "'" . $variable ['ordenador'] . "',";
 				$cadenaSql .= "'" . $variable ['tipo_orden'] . "',";
 				$cadenaSql .= "'" . $variable ['fecha_revision'] . "',";
-				$cadenaSql .= "'" . $variable ['revisor'] . "',";
+				$cadenaSql .= "NULL,";
 				$cadenaSql .= "'" . $variable ['observacion'] . "',";
 				$cadenaSql .= (is_null($variable['enlace_soporte'])==true )? "NULL, ":"'" . $variable ['enlace_soporte'] . "',";
 				$cadenaSql .= (is_null($variable['nombre_soporte'])==true)?"NULL , ":"'" . $variable ['nombre_soporte'] . "',";
