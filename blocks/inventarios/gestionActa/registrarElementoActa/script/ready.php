@@ -3,7 +3,7 @@
 ?>
 
 // Asociar el widget de validación al formulario
-              $("#registrarElemento").validationEngine({
+              $("#registrarElementoActa").validationEngine({
             promptPosition : "centerRight", 
             scroll: false,
             autoHidePrompt: true,
@@ -12,8 +12,8 @@
 	
         
         $(function() {
-            $("#registrarElemento").submit(function() {
-                $resultado=$("#registrarElemento").validationEngine("validate");
+            $("#registrarElementoActa").submit(function() {
+                $resultado=$("#registrarElementoActa").validationEngine("validate");
                    
                 if ($resultado) {
                 
@@ -28,6 +28,19 @@
 			}, 10000); // <-- time in milliseconds
         
               
+
+  $('#<?php echo $this->campoSeguro('sedeConsulta')?>').width(290);              	 
+ $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2({
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
+              	 minimumInputLength: 3,
+              	 });  
+ 
+ $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2({
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
+              	 minimumInputLength: 3,
+              	 });              	            
+              	 			
+			
 $("#<?php echo $this->campoSeguro('clase')?>").select2();
 $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
 

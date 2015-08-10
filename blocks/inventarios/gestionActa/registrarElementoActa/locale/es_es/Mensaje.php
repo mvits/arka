@@ -2,6 +2,19 @@
 <?php
 
 // --Consulta Acta Recibido .----------------------------------------
+
+
+$this->idioma ["dependenciaConsulta"] ="Dependencia : ";
+$this->idioma ["dependenciaConsultaTitulo"] = "Ingrese Nombre Dependencia";
+
+
+$this->idioma ["sedeConsulta"] = "Sede : ";
+$this->idioma ["sedeConsultaTitulo"] = "Seleccione Sede";
+
+
+
+
+
 $this->idioma ["numero_acta"] = "Número Acta Recibido : ";
 $this->idioma ["numero_actaTitulo"] = "Ingrese Número Acta Recibido";
 

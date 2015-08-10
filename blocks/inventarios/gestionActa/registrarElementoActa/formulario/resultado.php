@@ -67,10 +67,43 @@ class registrarForm {
 			$nit = '';
 		}
 		
+		if (isset ( $_REQUEST ['sedeConsulta'] ) && $_REQUEST ['sedeConsulta'] != '') {
+			$sede = $_REQUEST ['sedeConsulta'];
+		} else {
+			$sede = '';
+		}
+		
+		if (isset ( $_REQUEST ['dependenciaConsulta'] ) && $_REQUEST ['dependenciaConsulta'] != '') {
+			$dependencia = $_REQUEST ['dependenciaConsulta'];
+		} else {
+			$dependencia = '';
+		}
+		
+		if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
+			$fecha_inicio = $_REQUEST ['fecha_inicio'];
+		} else {
+			$fecha_inicio = '';
+		}
+		
+		if (isset ( $_REQUEST ['fecha_final'] ) && $_REQUEST ['fecha_final'] != '') {
+			$fecha_final = $_REQUEST ['fecha_final'];
+		} else {
+			$fecha_final = '';
+		}
+		
+		
+		
+		
+		
+		
 		$arreglo = array (
 				'numero_acta' => $numeroActa,
 				'fecha' => $fechaRecibido,
-				'nit' => $nit 
+				'nit' => $nit,
+				'sede'=>$sede,
+				'dependencia'=>$dependencia,
+				'fecha_inicial'=>$fecha_inicio,
+				'fecha_final'=>$fecha_final
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActa', $arreglo );

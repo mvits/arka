@@ -1,5 +1,5 @@
 <?php
-use inventarios\gestionCompras\registrarOrdenCompra\Sql;
+use inventarios\gestionActa\registrarActa\Sql;
 
 $conexion = "inventarios";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -14,6 +14,17 @@ if ($_REQUEST ['funcion'] == 'SeleccionTipoBien') {
 	echo json_encode($resultadoItems);
 }
 
+if ($_REQUEST ['funcion'] == 'consultarDependencia') {
+
+
+	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciasConsultadas', $_REQUEST ['valor'] );
+
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+	$resultado = json_encode ( $resultado );
+
+	echo $resultado;
+}
 
 
 

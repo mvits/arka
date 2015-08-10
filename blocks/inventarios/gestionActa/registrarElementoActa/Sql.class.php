@@ -149,6 +149,31 @@ class Sql extends \Sql {
 			 * Clausulas Del Caso Uso.
 			 */
 			
+			case "dependenciasConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE sa.\"ESF_ID_SEDE\"='" . $variable . "' ";
+				$cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A'";
+				break;
+			
+			case "dependencias" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_ESTADO\"='A'";
+				
+				break;
+			
+			case "sede" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_sedes ";
+				$cadenaSql .= " WHERE   \"ESF_ESTADO\"='A' ";
+				$cadenaSql .= " AND    \"ESF_COD_SEDE\" >  0 ";
+				break;
+			
 			// ---- conulta Acta
 			case "consultar_id_acta" :
 				$cadenaSql = " SELECT id_actarecibido, id_actarecibido as acta_serial";
@@ -175,6 +200,22 @@ class Sql extends \Sql {
 				if ($variable ['nit'] != '') {
 					$cadenaSql .= " AND proveedor = '" . $variable ['nit'] . "' ";
 				}
+				
+				if ($variable ['sede'] != '') {
+					$cadenaSql .= " AND ar.sede = '" . $variable ['sede'] . "' ";
+				}
+				
+				if ($variable ['dependencia'] != '') {
+					$cadenaSql .= " AND ar.dependencia = '" . $variable ['dependencia'] . "' ";
+				}
+				
+				if ($variable ['fecha_inicial'] != '') {
+					$cadenaSql .= " AND ar.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
+					$cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
+				}
+				
+				
+				
 				
 				$cadenaSql .= " ; ";
 				
@@ -312,6 +353,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
 				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
 				$cadenaSql .= "AND  ce.elemento_id > 0  ";
+				$cadenaSql .= "AND  ce.elemento_padre > 0  ";
 				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
 				
 				break;
@@ -328,7 +370,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['elemento'] . "',";
 				$cadenaSql .= "'" . $variable ['imagen'] . "') ";
 				$cadenaSql .= "RETURNING id_imagen; ";
-				
 				
 				break;
 			
@@ -407,21 +448,17 @@ class Sql extends \Sql {
 				$cadenaSql .= "RETURNING  id_elemento_ac; ";
 				
 				break;
+			
+			case "ElementoImagen" :
 				
+				$cadenaSql = " 	INSERT INTO asignar_imagen_acta(";
+				$cadenaSql .= " id_elemento_acta, imagen ) ";
+				$cadenaSql .= " VALUES (";
+				$cadenaSql .= "'" . $variable ['elemento'] . "',";
+				$cadenaSql .= "'" . $variable ['imagen'] . "') ";
+				$cadenaSql .= "RETURNING id_imagen; ";
 				
-				case "ElementoImagen" :
-				
-					$cadenaSql = " 	INSERT INTO asignar_imagen_acta(";
-					$cadenaSql .= " id_elemento_acta, imagen ) ";
-					$cadenaSql .= " VALUES (";
-					$cadenaSql .= "'" . $variable ['elemento'] . "',";
-					$cadenaSql .= "'" . $variable ['imagen'] . "') ";
-					$cadenaSql .= "RETURNING id_imagen; ";
-				
-					break;
-						
-				
-				
+				break;
 			
 			case "ingresar_elemento_masivo" :
 				$cadenaSql = " INSERT INTO ";
