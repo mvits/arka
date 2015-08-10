@@ -43,6 +43,24 @@
         
         
         
+  $('#<?php echo $this->campoSeguro('sedeConsulta')?>').width(290);              	 
+ $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2({
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
+              	 minimumInputLength: 3,
+              	 });  
+ 
+ $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2({
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
+              	 minimumInputLength: 3,
+              	 });              	            
+              	 
+        
+        
+        
+        
+        
+        
+        
         $("#<?php echo $this->campoSeguro('sede') ?>").select2();
        
 		$("#<?php echo $this->campoSeguro('tipoBien') ?>").select2(); 

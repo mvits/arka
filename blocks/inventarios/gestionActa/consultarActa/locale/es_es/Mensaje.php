@@ -3,6 +3,24 @@
 
 //----------------------modificar Elemento
 
+$this->idioma ["dependenciaConsulta"] ="Dependencia";
+$this->idioma ["dependenciaConsultaTitulo"] = "Ingrese Nombre Dependencia";
+
+
+$this->idioma ["sedeConsulta"] = "Sede : ";
+$this->idioma ["sedeConsultaTitulo"] = "Seleccione Sede";
+
+
+
+
+
+$this->idioma ["dependencia"] = "  :";
+$this->idioma ["dependenciaTitulo"] = "Ingrese Nombre Dependencia";
+
+
+
+
+
 
 $this->idioma ["botonEliminarActa"] ="Eliminar Acta de Recibido";
 

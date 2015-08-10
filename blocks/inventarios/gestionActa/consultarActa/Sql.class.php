@@ -453,6 +453,20 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND proveedor = '" . $variable ['nit'] . "' ";
 				}
 				
+				if ($variable ['sede'] != '') {
+					$cadenaSql .= " AND ar.sede = '" . $variable ['sede'] . "' ";
+				}
+		
+				if ($variable ['dependencia'] != '') {
+					$cadenaSql .= " AND ar.dependencia = '" . $variable ['dependencia'] . "' ";
+				}
+				
+				if ($variable ['fecha_inicial'] != '') {
+					$cadenaSql .= " AND ar.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
+					$cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
+				}
+				
+				
 				$cadenaSql .= " ; ";
 				
 				break;
