@@ -32,8 +32,7 @@ class RegistradorOrden {
 				$elementos [] = $_REQUEST ['item_' . $i];
 			}
 		}
-		// var_dump ( $_REQUEST );
-		// var_dump ( $elementos );
+
 		
 		foreach ( $elementos as $i ) {
 			$id_elemento_acta = $i;
@@ -156,8 +155,7 @@ class RegistradorOrden {
 				$_REQUEST ['numero_acta'] ,
 				$_REQUEST['consecutivo_entrada']
 		);
-		var_dump($elemento_id);
-		var_dump($elemento);
+		
 		if ($elemento && $elemento_id) {
 			
 			redireccion::redireccionar ( 'inserto', $datos );
