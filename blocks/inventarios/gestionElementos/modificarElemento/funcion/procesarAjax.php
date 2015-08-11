@@ -40,7 +40,7 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
 		if ($resultado [$i] ['cierrecontable'] == 'f') {
 			
 			$cierreContable = "<center><a href='" . $variable . "'><u>modificar</u></a></center> ";
-			$anulacion = ($resultado [$i] ['estadoentrada'] == 2) ? "<center><a href='" . $variable2 . "'><u>anular</u></a></center>" : " ";
+			$anulacion = ($resultado [$i] ['estadoentrada'] == 1 && $resultado [$i] ['identificador_salida'] ==null  ) ? "<center><a href='" . $variable2 . "'><u>anular</u></a></center>" : " ";
 		}
 		if ($resultado [$i] ['cierrecontable'] == 't') {
 			

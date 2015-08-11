@@ -82,6 +82,8 @@ class registrarForm {
 		
 		$_REQUEST = array_merge ( $_REQUEST, $elemento [0], $arreglo );
 		
+		$polizasMostrar = 'none';
+		
 		if ($elemento [0] ['tipo_bien'] == 3) {
 			
 			$tipoDevolutivo = 'block';
@@ -452,7 +454,7 @@ class registrarForm {
 								$atributos ['validar'] = '';
 								
 								if (isset ( $_REQUEST [$esteCampo] )) {
-									$atributos ['valor'] = $_REQUEST [$esteCampo];
+									$atributos ['valor'] = ($_REQUEST [$esteCampo]=='0001-01-01')?NULL:$_REQUEST [$esteCampo];
 								} else {
 									$atributos ['valor'] = '';
 								}
@@ -483,7 +485,7 @@ class registrarForm {
 								$atributos ['validar'] = '';
 								
 								if (isset ( $_REQUEST [$esteCampo] )) {
-									$atributos ['valor'] = $_REQUEST [$esteCampo];
+									$atributos ['valor'] = ($_REQUEST [$esteCampo]=='0001-01-01')?NULL:$_REQUEST [$esteCampo];
 								} else {
 									$atributos ['valor'] = '';
 								}
