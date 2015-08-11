@@ -147,6 +147,17 @@ class Sql extends \Sql {
 			 * Clausulas Del Caso Uso.
 			 */
 			
+			case "buscar_placa_maxima" :
+				$cadenaSql = " SELECT  MAX(placa::FLOAT) placa_max ";
+				$cadenaSql .= " FROM elemento_individual ";
+				break;
+			
+			case "buscar_repetida_placa" :
+				$cadenaSql = " SELECT  count (placa) ";
+				$cadenaSql .= " FROM elemento_individual ";
+				$cadenaSql .= " WHERE placa ='" . $variable . "';";
+				break;
+			
 			case "idElementoMaxIndividual" :
 				
 				$cadenaSql = "SELECT max(id_elemento_ind) ";
@@ -289,7 +300,7 @@ class Sql extends \Sql {
 				if ($variable [7] != '') {
 					$cadenaSql .= " AND  entrada.id_entrada= '" . $variable [7] . "' ";
 				}
-
+				
 				break;
 			
 			case "consultarElementoParticular" :
@@ -398,6 +409,13 @@ class Sql extends \Sql {
 				$cadenaSql .= " SET  estado_registro='FALSE' ";
 				$cadenaSql .= " WHERE id_elemento_ind='" . $variable . "'  ";
 				
+				break;
+			
+			case "consultar_elementos_individuales_sin_placa" :
+				$cadenaSql = " SELECT id_elemento_ind  ";
+				$cadenaSql .= " FROM elemento_individual  ";
+				$cadenaSql .= " WHERE id_elemento_gen='" . $variable . "'  ";
+				$cadenaSql .= "AND  placa IS  NULL ;";
 				break;
 			
 			case "consultar_elementos_individuales" :
