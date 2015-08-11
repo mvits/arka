@@ -69,13 +69,14 @@ class Sql extends \Sql {
 			case "Registrar_Historial_Placas" :
 				
 				$cadenaSql = "INSERT INTO historial_levantamiento_placa( ";
-				$cadenaSql .= "id_levantamiento, funcionario, placa, confirmacion_existencia, fecha_registro) ";
+				$cadenaSql .= "id_levantamiento, funcionario, placa, confirmacion_existencia, fecha_registro, ubicacion ) ";
 				$cadenaSql .= " VALUES ( ";
 				$cadenaSql .= "'" . $variable [0] . "', ";
 				$cadenaSql .= "'" . $variable [1] . "', ";
 				$cadenaSql .= "'" . $variable [2] . "', ";
 				$cadenaSql .= "'" . $variable [3] . "', ";
-				$cadenaSql .= "'" . $variable [4] . "') ;";
+				$cadenaSql .= "'" . $variable [4] . "', ";
+				$cadenaSql .= "'" . $variable [5] . "') ;";
 				
 				break;
 			
@@ -130,12 +131,13 @@ class Sql extends \Sql {
 			case "Rescatar_Verificacion_Placas" :
 				
 				$cadenaSql = "SELECT DISTINCT ";
-				$cadenaSql .= "eli.placa, eli.funcionario, eli.confirmada_existencia  ";
+				$cadenaSql .= "eli.placa, eli.funcionario, eli.confirmada_existencia, eli.ubicacion_elemento  ";
 				$cadenaSql .= "FROM elemento_individual  eli ";
 				$cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
 				$cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes = ele.tipo_bien ";
 				$cadenaSql .= "WHERE 1=1 ";
 				$cadenaSql .= " AND tb.id_tipo_bienes <> 1 ";
+				$cadenaSql .= " AND 	eli.estado_registro = 'TRUE'  ";
 				$cadenaSql .= " AND eli.funcionario IS NOT NULL  ";
 				$cadenaSql .= " AND eli.funcionario <> 0 ";
 				

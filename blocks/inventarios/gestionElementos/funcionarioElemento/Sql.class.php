@@ -305,6 +305,7 @@ class Sql extends \Sql {
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
 				$cadenaSql .= "WHERE 1=1 ";
 				$cadenaSql .= " AND 	tb.id_tipo_bienes <> 1 ";
+				$cadenaSql .= " AND 	eli.estado_registro = 'TRUE'  ";
 				$cadenaSql .= " AND eli.funcionario= '" . $variable . "' ";
 				$cadenaSql .= " ORDER BY dependencia DESC   ;  ";
 				

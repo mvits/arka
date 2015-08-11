@@ -45,7 +45,8 @@ foreach ( $verificacion_placas as $valor ) {
 			$valor ['funcionario'],
 			$valor ['placa'],
 			$valor ['confirmada_existencia'],
-			date ( 'Y-m-d' ) 
+			date ( 'Y-m-d' ) ,
+			$valor ['ubicacion_elemento'],
 	);
 	
 	$cadenaSql = $this->sql->cadena_sql ( "Registrar_Historial_Placas", $arreglo );
