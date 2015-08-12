@@ -43,10 +43,7 @@ class registrarForm {
 		
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$conexion = "sicapital";
-		
-		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		
+	
 		$cadenaSql = $this->miSql->getCadenaSql ( 'polizas' );
 		
 		$resultado_polizas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -285,7 +282,7 @@ class registrarForm {
 									' ' 
 							) 
 					);
-					$matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					// $atributos['miniRegistro']=;
 					$atributos ['baseDatos'] = "inventarios";
@@ -401,13 +398,14 @@ class registrarForm {
 					$atributos ['anchoCaja'] = 52;
 					$atributos ['miEvento'] = '';
 					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "funcionarios" );
+					
 					$matrizItems = array (
 							array (
 									0,
 									' ' 
 							) 
 					);
-					$matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					// $atributos['miniRegistro']=;
 					$atributos ['baseDatos'] = "inventarios";

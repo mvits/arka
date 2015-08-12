@@ -227,16 +227,15 @@
 			       
 				$('#<?php echo $this->campoSeguro('nombre_supervisor')?>').width(300);			       
                $("#<?php echo $this->campoSeguro('nombre_supervisor')?>").select2({
-			   	 placeholder: "Search for a repository",
+			   	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
 			   	 minimumInputLength: 3,
-			
-			       }); 	
-$("#<?php echo $this->campoSeguro('rubro')?>").select2({
-			   	 placeholder: "Search for a repository",
-			   	 minimumInputLength: 3,
-			
 			       });
-			       
+			        	
+$("#<?php echo $this->campoSeguro('rubro')?>").select2({
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
+              	 minimumInputLength: 3,
+              	 });
+                 
 			       
 			       
 $('#<?php echo $this->campoSeguro('sede')?>').width(300);

@@ -183,18 +183,18 @@ class Sql extends \Sql {
 			
 			case "cargoSuper" :
 				
-				$cadenaSql = "SELECT FUN_CARGO ";
-				$cadenaSql .= "FROM FUNCIONARIOS ";
-				$cadenaSql .= "WHERE FUN_ESTADO='A' ";
-				$cadenaSql .= "AND FUN_IDENTIFICACION='" . $variable . "' ";
+				$cadenaSql = "SELECT \"FUN_CARGO\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_funcionarios  ";
+				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
+				$cadenaSql .= "AND \"FUN_IDENTIFICACION\"='" . $variable . "' ";
 				
 				break;
 			
 			case "funcionarios" :
 				
-				$cadenaSql = "SELECT FUN_IDENTIFICACION, FUN_IDENTIFICACION ||' - '|| FUN_NOMBRE ";
-				$cadenaSql .= "FROM FUNCIONARIOS ";
-				$cadenaSql .= "WHERE FUN_ESTADO='A' ";
+				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\", \"FUN_IDENTIFICACION\" ||' - '|| \"FUN_NOMBRE\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_funcionarios ";
+				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
 				
 				break;
 			
@@ -304,8 +304,10 @@ class Sql extends \Sql {
 				break;
 			
 			case "rubros" :
-				$cadenaSql = " SELECT RUB_IDENTIFICADOR, RUB_RUBRO ||' - '|| RUB_NOMBRE_RUBRO ";
-				$cadenaSql .= " FROM RUBROS ";
+				$cadenaSql = " SELECT \"RUB_IDENTIFICADOR\", \"RUB_RUBRO\" ||' - '|| \"RUB_NOMBRE_RUBRO\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_rubros ";
+				$cadenaSql .= "WHERE \"RUB_VIGENCIA\"='".date('Y')."';";
+				
 				
 				break;
 			
