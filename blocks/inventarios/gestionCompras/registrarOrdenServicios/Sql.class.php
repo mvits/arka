@@ -169,9 +169,9 @@ class Sql extends \Sql {
 				break;
 			
 			case "informacion_proveedor" :
-				$cadenaSql = " SELECT PRO_RAZON_SOCIAL,PRO_NIT,PRO_DIRECCION,PRO_TELEFONO  ";
-				$cadenaSql .= " FROM PROVEEDORES  ";
-				$cadenaSql .= " WHERE PRO_NIT='" . $variable . "' ";
+				$cadenaSql = " SELECT \"PRO_RAZON_SOCIAL\",\"PRO_NIT\",\"PRO_DIRECCION\",\"PRO_TELEFONO\"  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+				$cadenaSql .= " WHERE \"PRO_NIT\"='" . $variable . "' ";
 				
 				break;
 			

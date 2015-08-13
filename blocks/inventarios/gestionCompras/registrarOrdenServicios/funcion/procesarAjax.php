@@ -410,10 +410,9 @@ if ($_REQUEST ['funcion'] == 'consultarCargoSuper') {
 
 if ($_REQUEST ['funcion'] == 'SeleccionProveedor') {
 
-	$conexion = "sicapital";
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	
 	$cadenaSql = $this->sql->getCadenaSql ( 'informacion_proveedor', $_REQUEST ['proveedor'] );
-	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 	$resultado = json_encode ( $resultadoItems [0] );
 

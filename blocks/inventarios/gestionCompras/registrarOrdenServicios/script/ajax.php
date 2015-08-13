@@ -266,7 +266,7 @@ function datosInfo(elem, request, response){
 	  $.ajax({
 	    url: "<?php echo $urlFinal18?>",
 	    dataType: "json",
-	    data: { proveedor:$("#<?php echo $this->campoSeguro('selec_proveedor')?>").val()},
+	    data: { proveedor:$("#<?php echo $this->campoSeguro('id_proveedor')?>").val()},
 	    success: function(data){ 
 
 	    		if(data[0]!='null'){
@@ -525,6 +525,7 @@ function valorLetras(elem, request, response){
 $(function() {
 
 
+
 	$( "#<?php echo $this->campoSeguro('selec_proveedor')?>" ).keyup(function() {
 
     	
@@ -535,18 +536,31 @@ $(function() {
 
 
 
+
+	
+
+	
+
+
     $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").autocomplete({
     	minChars: 3,
     	serviceUrl: '<?php echo $urlFinalProveedor; ?>',
     	onSelect: function (suggestion) {
         	
     	        $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val(suggestion.data);
+
+    	    	datosInfo();
+    	        
     	    }
                 
     });
-    
-	
 
+
+
+
+
+      
+    
 
     $("#<?php echo $this->campoSeguro('vigencia_contratista')?>").change(function() {
     	
@@ -655,18 +669,7 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 
 		      });
 
-	    $("#<?php echo $this->campoSeguro('selec_proveedor')?>").change(function(){
 
-	    	if($("#<?php echo $this->campoSeguro('selec_proveedor')?>").val()!=''){
-	    		datosInfo();
-			}else{
-				
-				}
-
-		      });
-	      
-
-	      
 
 
 	    $("#<?php echo $this->campoSeguro('sede_super')?>").change(function(){
