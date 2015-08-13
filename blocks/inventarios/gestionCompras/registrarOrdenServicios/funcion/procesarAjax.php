@@ -287,12 +287,10 @@ if ($_REQUEST ['funcion'] == 'SeleccionOrdenador') {
 
 
 if ($_REQUEST ['funcion'] == 'SeleccionCargo') {
-	$conexion = "sicapital";
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
+
 	$cadenaSql = $this->sql->getCadenaSql ( 'informacion_cargo_jefe', $_REQUEST ['cargo'] );
 	
-	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	$resultado =json_encode($resultadoItems [0])  ;
 
@@ -399,13 +397,10 @@ if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 
 if ($_REQUEST ['funcion'] == 'consultarCargoSuper') {
 
-	$conexion = "sicapital";
-
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 
 	$cadenaSql = $this->sql->getCadenaSql ( 'cargoSuper', $_REQUEST['valor'] );
-	$resultado = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 
 	$resultado = json_encode ( $resultado[0]);
@@ -423,6 +418,27 @@ if ($_REQUEST ['funcion'] == 'SeleccionProveedor') {
 	$resultado = json_encode ( $resultadoItems [0] );
 
 	echo $resultado;
+}
+
+
+if ($_REQUEST ['funcion'] == 'consultaProveedor') {
+
+
+
+
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_Proveedores', $_GET ['query'] );
+
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+	foreach ( $resultadoItems as $key => $values ) {
+		$keys = array (
+				'value',
+				'data'
+		);
+		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
+	}
+
+	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
 }
 
 

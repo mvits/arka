@@ -175,9 +175,17 @@ class Sql extends \Sql {
 				
 				break;
 			
+			case "buscar_Proveedores" :
+				$cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+				$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
+				$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
+				
+				break;
+			
 			case "proveedores" :
-				$cadenaSql = " SELECT PRO_NIT,PRO_NIT||' - '||PRO_RAZON_SOCIAL AS proveedor ";
-				$cadenaSql .= " FROM PROVEEDORES ";
+				$cadenaSql = " SELECT \"PRO_NIT\",\"PRO_NIT\"||' - '||\"PRO_RAZON_SOCIAL\" AS proveedor ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor ";
 				
 				break;
 			
@@ -306,8 +314,7 @@ class Sql extends \Sql {
 			case "rubros" :
 				$cadenaSql = " SELECT \"RUB_IDENTIFICADOR\", \"RUB_RUBRO\" ||' - '|| \"RUB_NOMBRE_RUBRO\" ";
 				$cadenaSql .= "FROM arka_parametros.arka_rubros ";
-				$cadenaSql .= "WHERE \"RUB_VIGENCIA\"='".date('Y')."';";
-				
+				$cadenaSql .= "WHERE \"RUB_VIGENCIA\"='" . date ( 'Y' ) . "';";
 				
 				break;
 			
