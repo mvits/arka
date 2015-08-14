@@ -235,24 +235,25 @@ class Sql extends \Sql {
 				break;
 			
 			case "vigencia_disponibilidad" :
-				$cadenaSql = "SELECT DIS_VIGENCIA AS valor, DIS_VIGENCIA AS vigencia  ";
-				$cadenaSql .= "FROM DISPONIBILIDAD ";
-				$cadenaSql .= "GROUP BY DIS_VIGENCIA";
+				$cadenaSql = "SELECT \"DIS_VIGENCIA\" AS valor, \"DIS_VIGENCIA\" AS vigencia  ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal ";
+				$cadenaSql .= "GROUP BY \"DIS_VIGENCIA\" ORDER BY  \"DIS_VIGENCIA\"  DESC; ";
 				break;
 			
 			case "buscar_disponibilidad" :
-				$cadenaSql = "SELECT DISTINCT DIS_IDENTIFICADOR AS identificador,DIS_NUMERO_DISPONIBILIDAD AS numero ";
-				$cadenaSql .= "FROM DISPONIBILIDAD ";
-				$cadenaSql .= "WHERE DIS_VIGENCIA='" . $variable . "'";
+				$cadenaSql = "SELECT DISTINCT \"DIS_IDENTIFICADOR\" AS identificador,\"DIS_NUMERO_DISPONIBILIDAD\" AS numero ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
+				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable . "'";
+				$cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" ;";
 				
 				break;
 			
 			case "info_disponibilidad" :
-				$cadenaSql = "SELECT DISTINCT TO_CHAR(DIS_FECHA_REGISTRO,'yyyy-mm-dd') AS FECHA,  DIS_VALOR ";
-				$cadenaSql .= "FROM DISPONIBILIDAD  ";
-				$cadenaSql .= "WHERE DIS_VIGENCIA='" . $variable [1] . "' ";
-				$cadenaSql .= "AND  DIS_IDENTIFICADOR='" . $variable [0] . "' ";
-				$cadenaSql .= "AND ROWNUM = 1 ";
+				$cadenaSql = "SELECT DISTINCT \"DIS_FECHA_REGISTRO\" AS FECHA, \"DIS_VALOR\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
+				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [1] . "' ";
+				$cadenaSql .= "AND  \"DIS_IDENTIFICADOR\"='" . $variable [0] . "' ";
+// 				$cadenaSql .= "AND ROWNUM = 1 ";
 				
 				break;
 			

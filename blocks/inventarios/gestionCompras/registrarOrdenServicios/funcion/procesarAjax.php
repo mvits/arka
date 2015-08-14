@@ -301,11 +301,9 @@ if ($_REQUEST ['funcion'] == 'SeleccionCargo') {
 
 if ($_REQUEST ['funcion'] == 'disponibilidades') {
 
-	$conexion = "sicapital";
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_disponibilidad', $_REQUEST ['vigencia'] );
-	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 	$resultado = json_encode ( $resultadoItems );
 
@@ -314,16 +312,14 @@ if ($_REQUEST ['funcion'] == 'disponibilidades') {
 
 if ($_REQUEST ['funcion'] == 'Infodisponibilidades') {
 
-	$conexion = "sicapital";
 
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 	$arreglo = array (
 			$_REQUEST ['disponibilidad'],
 			$_REQUEST ['vigencia']
 	);
 
 	$cadenaSql = $this->sql->getCadenaSql ( 'info_disponibilidad', $arreglo );
-	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 
 	$resultado = json_encode ( $resultadoItems [0]);

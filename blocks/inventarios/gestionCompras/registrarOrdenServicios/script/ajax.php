@@ -744,13 +744,17 @@ function disponibilidades(elem, request, response){
 	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('diponibilidad')?>");
 	            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].IDENTIFICADOR+"'>"+data[ indice ].NUMERO+"</option>").appendTo("#<?php echo $this->campoSeguro('diponibilidad')?>");
+	            	$("<option value='"+data[ indice ].identificador+"'>"+data[ indice ].numero+"</option>").appendTo("#<?php echo $this->campoSeguro('diponibilidad')?>");
 	            	
 	            });
 	            $("#<?php echo $this->campoSeguro('diponibilidad')?>").removeAttr('disabled');
 
+
+
+
+	            $('#<?php echo $this->campoSeguro('diponibilidad')?>').width(300);	
 	            $("#<?php echo $this->campoSeguro('diponibilidad')?>").select2({
-	          		 placeholder: "Search for a repository",
+	          		 placeholder: "Ingrese Mínimo 1 Caracter",
 	           		 minimumInputLength: 1	,
 	               });
 	            

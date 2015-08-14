@@ -243,7 +243,7 @@ $("#<?php echo $this->campoSeguro('sede_super')?>").select2();
 
 
 $("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").select2();
-$('#<?php echo $this->campoSeguro('diponibilidad')?>').attr('disabled','');
+$('#<?php echo $this->campoSeguro('diponibilidad')?>').select2();
 
 $('#<?php echo $this->campoSeguro('dependencia_solicitante')?>').width(350);
 $("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").select2();
@@ -254,7 +254,7 @@ $('#<?php echo $this->campoSeguro('dependencia_supervisor')?>').width(350);
 $("#<?php echo $this->campoSeguro('dependencia_supervisor')?>").select2(); 
 
 $("#<?php echo $this->campoSeguro('vigencia_registro')?>").select2();
-$("#<?php echo $this->campoSeguro('registro')?>").attr('disabled',''); 
+$("#<?php echo $this->campoSeguro('registro')?>").select2();
 
 $("#<?php echo $this->campoSeguro('vigencia_contratista')?>").select2();
 $('#<?php echo $this->campoSeguro('nombreContratista')?>').attr("style", "width: 60px '");
