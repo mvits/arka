@@ -593,6 +593,7 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 		if($("#<?php echo $this->campoSeguro('diponibilidad')?>").val()!=''){
 		
 			infodisponibilidades();	
+			registrosP();
 		
 		}else{}
 		
@@ -602,18 +603,7 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 
 
 
-			$("#<?php echo $this->campoSeguro('vigencia_registro')?>").change(function() {
-				
-				if($("#<?php echo $this->campoSeguro('vigencia_registro')?>").val()!=''){
-			
-					registrosP();	
-			
-				}else{}
-			
-			
-			});
-			
-			
+
 			
 			$("#<?php echo $this->campoSeguro('registro')?>").change(function() {
 			
@@ -796,12 +786,45 @@ function disponibilidades(elem, request, response){
 		};
 
 
+
+
+		function registrosPresupuestales(elem, request, response){
+			  $.ajax({
+			    url: "<?php echo $urlFinal12?>",
+			    dataType: "json",
+			    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
+				    disponibilidad:$("#<?php echo $this->campoSeguro('diponibilidad')?>").val()},
+			    success: function(data){ 
+				    
+			        if(data[0]!="null"){
+			        	$("#<?php echo $this->campoSeguro('fecha_diponibilidad')?>").val(data[0]);
+				    	$("#<?php echo $this->campoSeguro('valor_disponibilidad')?>").val(data[1]);
+					
+				    	valorLetrasDis();
+		
+			            
+				        }
+
+			        
+
+
+				     }
+				                    
+			   });
+			};
+
+
+
+		
+
+
 		function registrosP(elem, request, response){
 			
 			  $.ajax({
 			    url: "<?php echo $urlFinal13?>",
 			    dataType: "json",
-			    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_registro')?>").val()},
+			    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
+				    disponibilidad:$("#<?php echo $this->campoSeguro('diponibilidad')?>").val()},
 			    success: function(data){ 
 			        if(data[0]!=" "){
 
@@ -809,16 +832,13 @@ function disponibilidades(elem, request, response){
 			            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('registro')?>");
 			            $.each(data , function(indice,valor){
 
-			            	$("<option value='"+data[ indice ].IDENTIFICADOR+"'>"+data[ indice ].NUMERO+"</option>").appendTo("#<?php echo $this->campoSeguro('registro')?>");
+			            	$("<option value='"+data[ indice ].identificador+"'>"+data[ indice ].numero+"</option>").appendTo("#<?php echo $this->campoSeguro('registro')?>");
 			            	
 			            });
 			            
 			            $("#<?php echo $this->campoSeguro('registro')?>").removeAttr('disabled');
 			            
-			            $("#<?php echo $this->campoSeguro('registro')?>").select2({
-			          		 placeholder: "Search for a repository",
-			           		 minimumInputLength: 1	,
-			               });
+			            $("#<?php echo $this->campoSeguro('registro')?>").select2();
 			          
 			            
 				        }
@@ -836,8 +856,8 @@ function disponibilidades(elem, request, response){
 				  $.ajax({
 				    url: "<?php echo $urlFinal14?>",
 				    dataType: "json",
-				    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_registro')?>").val(),
-					    disponibilidad:$("#<?php echo $this->campoSeguro('registro')?>").val()},
+				    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
+					    		registro:$("#<?php echo $this->campoSeguro('registro')?>").val()},
 				    success: function(data){ 
 					    
 				        if(data[0]!="null"){

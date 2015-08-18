@@ -28,7 +28,7 @@ $this->idioma ["valorL_registroTitulo"] = "Valor en Letras  Registro Presupuesta
 
 // --
 
-$this->idioma ["vigencia_disponibilidad"] = "Vigencia Disponibilidad : ";
+$this->idioma ["vigencia_disponibilidad"] = "Vigencia :";
 $this->idioma ["vigencia_disponibilidadTitulo"] = "Seleccione Vigencia";
 
 $this->idioma ["diponibilidad"] = "Número Disponibilidad : ";

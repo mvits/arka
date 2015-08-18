@@ -1048,7 +1048,7 @@ class registrarForm {
 					$atributos ["etiquetaObligatorio"] = true;
 					$atributos ['tab'] = $tab ++;
 					$atributos ['seleccion'] = - 1;
-					$atributos ['anchoEtiqueta'] = 220;
+					$atributos ['anchoEtiqueta'] = 200;
 					$atributos ['evento'] = '';
 					if (isset ( $_REQUEST [$esteCampo] )) {
 						$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -1439,7 +1439,7 @@ class registrarForm {
 				echo $this->miFormulario->agrupacion ( 'fin' );
 				
 				
-				exit;
+				
 				
 				// $esteCampo = "Encargados";
 				// $atributos ['id'] = $esteCampo;
