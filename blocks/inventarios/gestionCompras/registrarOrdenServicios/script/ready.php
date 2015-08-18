@@ -191,7 +191,9 @@
 			   	 minimumInputLength: 3,
 			
 			       });
+			$('#<?php echo $this->campoSeguro('asignacionOrdenador')?>').width(300);			       
           $("#<?php echo $this->campoSeguro('asignacionOrdenador')?>").select2();
+          $("#<?php echo $this->campoSeguro('tipo_orden')?>").select2();
 		    
         
                

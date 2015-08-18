@@ -17,8 +17,7 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=confirma";
-				$variable .= "&numero_orden=" . $valor [0];
-				$variable .= "&fecha_orden=" . $valor [1];
+				$variable .= "&datos=".$valor;
 				
 				
 				break;

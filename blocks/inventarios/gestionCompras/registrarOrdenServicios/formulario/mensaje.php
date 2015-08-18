@@ -155,8 +155,7 @@ class registrarForm {
 				
 				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'confirma') {
 					
-					$mensaje = "Se Registro la Orden de Servicios <br> Número de Orden Servicios: " . $_REQUEST ['numero_orden'] . "  
-							<br>Fecha : " . $_REQUEST ['fecha_orden'];
+					$mensaje = "SE REGISTRO ".$_REQUEST['datos'];
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -177,14 +176,14 @@ class registrarForm {
 					$atributos ["estilo"] = "marcoBotones";
 					echo $this->miFormulario->division ( "inicio", $atributos );
 					
-					$this->botonDocumento ( $tab, 2 );
+// 					$this->botonDocumento ( $tab, 2 );	
 					$this->botonRegresar ( $tab, 2 );
 					
 					echo $this->miFormulario->division ( 'fin' );
 				}
 				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'error') {
 					
-					$mensaje = "No Se Pudo Hacer Registro la Orden de Servicios";
+					$mensaje = "NO SE PUDO REGISTRAR ORDEN";
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';

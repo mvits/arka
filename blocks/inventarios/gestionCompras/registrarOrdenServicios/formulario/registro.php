@@ -118,10 +118,45 @@ class registrarForm {
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = "Registrar Orden de Servicios";
+			$atributos ["leyenda"] = "Registrar Orden ";
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			unset ( $atributos );
 			{
+				
+				
+				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+				$esteCampo = 'tipo_orden';
+				$atributos ['columnas'] = 2;
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['evento'] = '';
+				$atributos ['deshabilitado'] = false;
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['tab'] = $tab;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['validar'] = 'required';
+				$atributos ['limitar'] = true;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['anchoEtiqueta'] = 190;
+					
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = - 1;
+				}
+					
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "tipo_orden" );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				$atributos ['matrizItems'] = $matrizItems;
+					
+				// Utilizar lo siguiente cuando no se pase un arreglo:
+				// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
+				// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
+				$tab ++;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
 				
 				$esteCampo = "AgrupacionSolicitante";
 				$atributos ['id'] = $esteCampo;
@@ -912,7 +947,7 @@ class registrarForm {
 					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoCuadroTexto ( $atributos );
+// 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 					
@@ -961,7 +996,7 @@ class registrarForm {
 					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoCuadroLista ( $atributos );
+// 					echo $this->miFormulario->campoCuadroLista ( $atributos );
 					unset ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 					
@@ -994,7 +1029,7 @@ class registrarForm {
 					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoCuadroTexto ( $atributos );
+// 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -1026,7 +1061,7 @@ class registrarForm {
 					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoCuadroTexto ( $atributos );
+// 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
@@ -1478,14 +1513,14 @@ class registrarForm {
 					$atributos ['limitar'] = 1;
 					$atributos ['anchoCaja'] = 40;
 					$atributos ['miEvento'] = '';
-					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "ordenador_gasto" );
+					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "tipoComprador" );
 					$matrizItems = array (
 							array (
 									0,
 									' ' 
 							) 
 					);
-					$matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					// $atributos['miniRegistro']=;
 					$atributos ['baseDatos'] = "inventarios";

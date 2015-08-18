@@ -1,6 +1,16 @@
 <?php
 $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaje.php";
 
+
+
+
+
+
+$this->idioma ["tipo_orden"] ="Tipo de Orden  : ";
+$this->idioma ["tipo_ordenTitulo"] ="Seleccione Tipo de Orden ";
+
+
+
 $this->idioma ["sede"] ="Sede : ";
 $this->idioma ["sedeTitulo"] ="Seleccione Sede";
 
@@ -88,7 +98,7 @@ $this->idioma ["telefono_contratistaTitulo"] = "Ingrese Teléfono Fijo del Contr
 $this->idioma ["cargo_contratista"] = "Cargo :";
 $this->idioma ["cargo_contratistaTitulo"] = "Ingrese Cargo del Contratista";
 
-$this->idioma ["objeto_contrato"] = "Objeto General :";
+$this->idioma ["objeto_contrato"] = "";
 $this->idioma ["objeto_contratoTitulo"] = "Modifique o Ingrese Objeto General del Contrato";
 
 $this->idioma ["duracion"] = "Duración (en Dias) :";
