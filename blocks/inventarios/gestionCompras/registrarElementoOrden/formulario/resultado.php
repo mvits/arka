@@ -102,9 +102,9 @@ class registrarForm {
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrden', $arreglo );
-		
+		echo $cadenaSql;
 		$Orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
+		var_dump($Orden);
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
 		$atributos ['id'] = $esteCampo;
@@ -154,7 +154,7 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Consultar  Actas Recibido";
+		$atributos ["leyenda"] = "Consulta de Ordenes";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
 		if ($Orden) {

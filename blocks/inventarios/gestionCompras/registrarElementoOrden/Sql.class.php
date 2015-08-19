@@ -182,36 +182,40 @@ class Sql extends \Sql {
 				$cadenaSql .= " ORDER BY  id_actarecibido DESC;  ";
 				break;
 			
-			case "consultarActa" :
+			case "consultarOrden" :
 				$cadenaSql = "SELECT DISTINCT ";
-				$cadenaSql .= "id_actarecibido,se.\"ESF_SEDE\" as sede, dep.\"ESF_DEP_ENCARGADA\" as dependencia, fecha_recibido, apr.\"PRO_NIT\" ||' - '|| apr.\"PRO_RAZON_SOCIAL\" as  proveedor,";
-				$cadenaSql .= "fecha_revision,revisor,observacionesacta ";
-				$cadenaSql .= "FROM registro_actarecibido ar ";
-				$cadenaSql .= "LEFT JOIN arka_parametros.arka_proveedor apr ON apr.\"PRO_NIT\" =  CAST(ar.proveedor AS CHAR(50))  ";
-				$cadenaSql .= "JOIN  arka_parametros.arka_dependencia dep ON dep.\"ESF_CODIGO_DEP\" = ar.dependencia	 ";
-				$cadenaSql .= "JOIN  arka_parametros.arka_sedes se ON se.\"ESF_ID_SEDE\" = ar.sede	 ";
+				$cadenaSql .= "ro.id_orden,se.\"ESF_SEDE\" as sede, dep.\"ESF_DEP_ENCARGADA\" as dependencia, ro.fecha_registro,
+								 cn.identificacion ||' - '|| cn.nombre_razon_social as  proveedor,
+						         tc.descripcion tipo_contrato,
+						         CASE ro.tipo_orden 
+										WHEN 1 THEN ro.vigencia || ' - ' ||ro.consecutivo_compras 
+										WHEN 9 THEn ro.vigencia || ' - ' ||ro.consecutivo_servicio
+								 END identificador ";
+				$cadenaSql .= "FROM orden ro ";
+				$cadenaSql .= "JOIN contratista_servicios cn ON cn.id_contratista =  ro.id_contratista  ";
+				$cadenaSql .= "JOIN  tipo_contrato tc ON tc.id_tipo = ro.tipo_orden	 ";
+				$cadenaSql .= "JOIN  arka_parametros.arka_dependencia dep ON dep.\"ESF_CODIGO_DEP\" = ro.dependencia_solicitante	 ";
+				$cadenaSql .= "JOIN  arka_parametros.arka_sedes se ON se.\"ESF_ID_SEDE\" = ro.sede	 ";
 				$cadenaSql .= "WHERE 1 = 1 ";
-				$cadenaSql .= "AND estado_registro = 1 ";
-				if ($variable ['numero_acta'] != '') {
-					$cadenaSql .= " AND id_actarecibido = '" . $variable ['numero_acta'] . "' ";
+				$cadenaSql .= "AND ro.estado = 't' ";
+				if ($variable ['tipo_orden'] != '') {
+					$cadenaSql .= " AND or.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
 				}
-				if ($variable ['fecha'] != '') {
-					$cadenaSql .= " AND fecha_recibido = '" . $variable ['fecha'] . "' ";
-				}
+	
 				if ($variable ['nit'] != '') {
-					$cadenaSql .= " AND proveedor = '" . $variable ['nit'] . "' ";
+					$cadenaSql .= " AND cn.identificacion = '" . $variable ['nit'] . "' ";
 				}
 				
 				if ($variable ['sede'] != '') {
-					$cadenaSql .= " AND ar.sede = '" . $variable ['sede'] . "' ";
+					$cadenaSql .= " AND ro.sede = '" . $variable ['sede'] . "' ";
 				}
 				
 				if ($variable ['dependencia'] != '') {
-					$cadenaSql .= " AND ar.dependencia = '" . $variable ['dependencia'] . "' ";
+					$cadenaSql .= " AND ro.dependencia_solicitante = '" . $variable ['dependencia'] . "' ";
 				}
 				
 				if ($variable ['fecha_inicial'] != '') {
-					$cadenaSql .= " AND ar.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
+					$cadenaSql .= " AND ro.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
 				}
 				
