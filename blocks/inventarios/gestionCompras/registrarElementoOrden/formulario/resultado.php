@@ -48,17 +48,13 @@ class registrarForm {
 		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		var_dump($_REQUEST);
+
 		
-		if (isset ( $_REQUEST ['fecha_recibido'] ) && $_REQUEST ['fecha_recibido'] != '') {
-			$fechaRecibido = $_REQUEST ['fecha_recibido'];
+		if (isset ( $_REQUEST ['tipo_orden'] ) && $_REQUEST ['tipo_orden'] != '') {
+			$tipo_orden = $_REQUEST ['tipo_orden'];
 		} else {
-			$fechaRecibido = '';
-		}
-		
-		if (isset ( $_REQUEST ['numero_acta'] ) && $_REQUEST ['numero_acta'] != '') {
-			$numeroActa = $_REQUEST ['numero_acta'];
-		} else {
-			$numeroActa = '';
+			$tipo_orden = '';
 		}
 		
 		if (isset ( $_REQUEST ['id_proveedor'] ) && $_REQUEST ['id_proveedor'] != '') {
@@ -97,8 +93,7 @@ class registrarForm {
 		
 		
 		$arreglo = array (
-				'numero_acta' => $numeroActa,
-				'fecha' => $fechaRecibido,
+				'tipo_orden' => $tipo_orden,
 				'nit' => $nit,
 				'sede'=>$sede,
 				'dependencia'=>$dependencia,
@@ -106,9 +101,9 @@ class registrarForm {
 				'fecha_final'=>$fecha_final
 		);
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActa', $arreglo );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrden', $arreglo );
 		
-		$Acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$Orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -162,7 +157,7 @@ class registrarForm {
 		$atributos ["leyenda"] = "Consultar  Actas Recibido";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
-		if ($Acta) {
+		if ($Orden) {
 			
 			echo "<table id='tablaTitulos'>";
 			
@@ -212,7 +207,7 @@ class registrarForm {
 			// echo $this->miFormulario->marcoAgrupacion("fin");
 		} else {
 			
-			$mensaje = "No Se Encontraron<br>Actas de Recibido";
+			$mensaje = "No Se Encontraron<br>Ordenes.";
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'mensajeRegistro';

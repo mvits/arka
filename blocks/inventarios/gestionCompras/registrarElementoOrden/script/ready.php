@@ -54,6 +54,9 @@ $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
  $('#<?php echo $this->campoSeguro('numero_factura')?>').attr('disabled','');
  $('#<?php echo $this->campoSeguro('fecha_factura')?>').attr('disabled','');
  
+ 
+ 
+ $("#<?php echo $this->campoSeguro('tipo_orden')?>").select2();
  $("#<?php echo $this->campoSeguro('nivel')?>").select2();
  $("#<?php echo $this->campoSeguro('numero_entrada')?>").select2();
  

@@ -12,6 +12,10 @@ $this->idioma ["sedeConsulta"] = "Sede : ";
 $this->idioma ["sedeConsultaTitulo"] = "Seleccione Sede";
 
 
+$this->idioma ["tipo_orden"] = "Tipo Orden : ";
+$this->idioma ["tipo_ordenTitulo"] = "Seleccion Tipo Orden" ;
+
+
 
 
 

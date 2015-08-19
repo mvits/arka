@@ -1,6 +1,7 @@
 <?php
 
-namespace inventarios\gestionActa\registrarElementoActa;
+
+namespace inventarios\gestionCompras\registrarElementoOrden;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
@@ -213,9 +214,6 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND ar.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
 				}
-				
-				
-				
 				
 				$cadenaSql .= " ; ";
 				
@@ -546,6 +544,15 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
 				$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
 				$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
+				
+				break;
+			
+			case "tipo_orden" :
+				
+				$cadenaSql = " 	SELECT 	id_tipo , descripcion ";
+				$cadenaSql .= " FROM tipo_contrato ";
+				$cadenaSql .= " WHERE id_tipo =  1 ";
+				$cadenaSql .= "OR   id_tipo =  9  ";
 				
 				break;
 		}

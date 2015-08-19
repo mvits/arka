@@ -1,9 +1,9 @@
 <?php
 
-namespace inventarios\gestionActa\registrarElementoActa;
+namespace inventarios\gestionCompras\registrarElementoOrden;
 
 
-use inventarios\gestionActa\registrarElementoActa\funcion\redireccion;
+use inventarios\gestionCompras\registrarElementoOrden\funcion\redireccion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
