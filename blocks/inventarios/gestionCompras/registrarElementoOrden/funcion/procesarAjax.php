@@ -1,5 +1,5 @@
 <?php
-use inventarios\gestionActa\registrarActa\Sql;
+use inventarios\gestionCompras\registrarElementoOrden\Sql;
 
 $conexion = "inventarios";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -49,6 +49,21 @@ if ($_REQUEST ['funcion'] == 'consultaProveedor') {
 }
 
 
+
+
+if ($_REQUEST ['funcion'] == 'consultarNumeroOrden') {
+
+
+
+
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_numero_orden', $_REQUEST ['valor'] );
+
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+	$resultado = json_encode ( $resultado );
+	
+	echo $resultado;
+}
 
 
 

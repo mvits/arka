@@ -117,7 +117,7 @@ class registrarForm {
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'tipo_orden';
-		$atributos ['columnas'] = 1;
+		$atributos ['columnas'] = 2;
 		$atributos ['nombre'] = $esteCampo;
 		$atributos ['id'] = $esteCampo;
 		$atributos ['evento'] = '';
@@ -148,6 +148,52 @@ class registrarForm {
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
+		
+		
+		
+		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+		$esteCampo = 'numero_orden';
+		$atributos ['columnas'] = 2;
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['id'] = $esteCampo;
+		$atributos ['seleccion'] = - 1;
+		$atributos ['evento'] = '';
+		$atributos ['deshabilitado'] = true;
+		$atributos ["etiquetaObligatorio"] = false;
+		$atributos ['tab'] = $tab;
+		$atributos ['tamanno'] = 1;
+		$atributos ['estilo'] = 'jqueryui';
+		$atributos ['validar'] = '';
+		$atributos ['limitar'] = false;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['anchoEtiqueta'] = 213;
+		
+		if (isset ( $Acta [0] [$esteCampo] )) {
+			$atributos ['valor'] = $Acta [0] [$esteCampo];
+		} else {
+			$atributos ['valor'] = '';
+		}
+		
+		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_id_acta" );
+		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+		
+		$arreglo = array (
+				array (
+						'',
+						'Sin Orden  Registradas'
+				)
+		);
+		
+		$matrizItems = $arreglo;
+		$atributos ['matrizItems'] = $matrizItems;
+		// Utilizar lo siguiente cuando no se pase un arreglo:
+		// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
+		// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
+		$tab ++;
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroLista ( $atributos );
+		unset ( $atributos );
+		
 		
 
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------

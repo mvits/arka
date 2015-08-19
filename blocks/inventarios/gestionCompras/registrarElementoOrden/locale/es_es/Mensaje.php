@@ -12,9 +12,13 @@ $this->idioma ["sedeConsulta"] = "Sede : ";
 $this->idioma ["sedeConsultaTitulo"] = "Seleccione Sede";
 
 
+$this->idioma ["numero_orden"] = "Vigencia y/o Número Orden : ";
+$this->idioma ["numero_ordenTitulo"] = "Seleccion Tipo Orden" ;
+
+
+
 $this->idioma ["tipo_orden"] = "Tipo Orden : ";
 $this->idioma ["tipo_ordenTitulo"] = "Seleccion Tipo Orden" ;
-
 
 
 

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace inventarios\gestionCompras\registrarElementoOrden;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
@@ -199,9 +198,14 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE 1 = 1 ";
 				$cadenaSql .= "AND ro.estado = 't' ";
 				if ($variable ['tipo_orden'] != '') {
-					$cadenaSql .= " AND or.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
+					$cadenaSql .= " AND ro.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
 				}
-	
+
+				if ($variable ['numero_orden'] != '') {
+					$cadenaSql .= " AND ro.id_orden = '" . $variable ['numero_orden'] . "' ";
+				}
+				
+				
 				if ($variable ['nit'] != '') {
 					$cadenaSql .= " AND cn.identificacion = '" . $variable ['nit'] . "' ";
 				}
@@ -557,6 +561,19 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM tipo_contrato ";
 				$cadenaSql .= " WHERE id_tipo =  1 ";
 				$cadenaSql .= "OR   id_tipo =  9  ";
+				
+				break;
+			
+			case "buscar_numero_orden" :
+				
+				$cadenaSql = " 	SELECT 	id_orden ,
+								 CASE tipo_orden 
+										WHEN 1 THEN vigencia || ' - ' || consecutivo_compras 
+										WHEN 9 THEn vigencia || ' - ' || consecutivo_servicio
+								 END  valor  ";
+				$cadenaSql .= " FROM orden ";
+				$cadenaSql .= " WHERE tipo_orden ='".$variable."';";
+				
 				
 				break;
 		}

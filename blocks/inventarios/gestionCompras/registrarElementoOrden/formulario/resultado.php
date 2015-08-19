@@ -51,6 +51,12 @@ class registrarForm {
 		var_dump($_REQUEST);
 
 		
+		
+		if (isset ( $_REQUEST ['numero_orden'] ) && $_REQUEST ['numero_orden'] != '') {
+			$numero_orden = $_REQUEST ['numero_orden'];
+		} else {
+			$numero_orden = '';
+		}
 		if (isset ( $_REQUEST ['tipo_orden'] ) && $_REQUEST ['tipo_orden'] != '') {
 			$tipo_orden = $_REQUEST ['tipo_orden'];
 		} else {
@@ -87,13 +93,10 @@ class registrarForm {
 			$fecha_final = '';
 		}
 		
-		
-		
-		
-		
-		
+
 		$arreglo = array (
 				'tipo_orden' => $tipo_orden,
+				'numero_orden' => $numero_orden,
 				'nit' => $nit,
 				'sede'=>$sede,
 				'dependencia'=>$dependencia,
@@ -102,9 +105,9 @@ class registrarForm {
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrden', $arreglo );
-		echo $cadenaSql;
+		
 		$Orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		var_dump($Orden);
+		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
 		$atributos ['id'] = $esteCampo;
@@ -163,31 +166,29 @@ class registrarForm {
 			
 			echo "<thead>
                              <tr>
-                                <th>Número Acta Recibido</th>
-                    			<th>Sede</th>            
-            					<th>Dependencia</th>
-                                <th>Fecha Recibido</th>
-                                 <th>Proveedor</th>
-                                <th>Observaciones</th>
-			        			<th>Cargar Elementos</th>
+                                <th>Tipo Orden</th>
+                    			<th>Vigencia y/o<br>Número Orden</th>            
+            					<th>Identificación<br>Nombre Contratista</th>
+                                <th>Sede</th>
+                                <th>Dependencia</th>
+                                <th>Cargar Elementos</th>
                                 
                              </tr>
             </thead>
             <tbody>";
 			
-			for($i = 0; $i < count ( $Acta ); $i ++) {
+			for($i = 0; $i < count ( $Orden ); $i ++) {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=cargarElemento";
-				$variable .= "&numero_acta=" . $Acta [$i] [0];
+				$variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$mostrarHtml = "<tr>
-                    <td><center>" . $Acta [$i] ['id_actarecibido'] . "</center></td>
-                    <td><center>" . $Acta [$i] ['sede'] . "</center></td>		
-                    <td><center>" . $Acta [$i] ['dependencia'] . "</center></td>
-                    <td><center>" . $Acta [$i] ['fecha_recibido'] . "</center></td>
-                    <td><center>" . $Acta [$i] ['proveedor'] . "</center></td>
-                    <td><center>" . $Acta [$i] ['observacionesacta'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['tipo_contrato'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['identificador'] . "</center></td>		
+                    <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['sede'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['dependencia'] . "</center></td>
                     <td><center>
                     	<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/item.png' width='15px'>
