@@ -20,9 +20,7 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-		
-		// var_dump ( $_REQUEST );
-		// exit ();
+
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -48,9 +46,7 @@ class registrarForm {
 		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		var_dump($_REQUEST);
 
-		
 		
 		if (isset ( $_REQUEST ['numero_orden'] ) && $_REQUEST ['numero_orden'] != '') {
 			$numero_orden = $_REQUEST ['numero_orden'];
@@ -181,6 +177,7 @@ class registrarForm {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=cargarElemento";
 				$variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
+				$variable .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] ."<br>VIGENCIA Y/O ŃUMERO ORDEN : ".$Orden [$i] ['identificador'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$mostrarHtml = "<tr>

@@ -104,7 +104,7 @@ class registrarForm {
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = "Registrar Elemento Acta  de Recibido N# " .$_REQUEST['numero_acta'];
+			$atributos ["leyenda"] = $_REQUEST['mensaje_titulo'];
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			unset ( $atributos );
 			{
@@ -905,7 +905,7 @@ class registrarForm {
 			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=registrar";
-			$valorCodificado .= "&numero_acta=" . $_REQUEST ['numero_acta'];
+			$valorCodificado .= "&id_orden=" . $_REQUEST ['id_orden'];
 			
 			
 			/**
