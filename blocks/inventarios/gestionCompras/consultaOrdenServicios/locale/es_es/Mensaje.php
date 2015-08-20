@@ -13,6 +13,16 @@ $this->idioma ["nitproveedorTitulo"] ="Seleccione Tipo Orden";
 
 
 
+$this->idioma ["sedeConsulta"] ="Sede: ";
+$this->idioma ["sedeConsultaTitulo"] ="Seleccione Sede";
+
+
+$this->idioma ["dependenciaConsulta"] ="Dependencia : ";
+$this->idioma ["dependenciaConsultaTitulo"] ="Seleccione Dependencia";
+
+
+
+
 
 
 
@@ -26,8 +36,8 @@ $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaj
 $this->idioma ["informacion_fecha"] ="Fecha de Registro De Orden :";
 
 
-$this->idioma ["sedeConsulta"] ="Sede: ";
-$this->idioma ["sedeConsultaTitulo"] ="Seleccione Sede";
+$this->idioma ["sede"] ="Sede: ";
+$this->idioma ["sedeTitulo"] ="Seleccione Sede";
 
 
 $this->idioma ["sede_super"] ="Sede: ";
@@ -121,7 +131,7 @@ $this->idioma ["vigencia_contratistaTitulo"] ="Seleccione Vigencia Contratista";
 $this->idioma ["contratista_consulta"] ="Nit y/o Identificación Contratista :";
 $this->idioma ["contratista_consultaTitulo"] ="Ingrese Nit";
 
-$this->idioma ["fecha_inicio"] ="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspFecha Inicial : ";
+$this->idioma ["fecha_inicio"] ="Fecha Inicial : ";
 $this->idioma ["fecha_inicioTitulo"] ="Seleccione Fecha Inicial";
 
 $this->idioma ["fecha_final"] ="Fecha Final : ";

@@ -189,7 +189,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND  ESF_ID_ESPACIO='" . $variable . "' ";
 				break;
 			
-			
 			case "proveedores" :
 				$cadenaSql = " SELECT PRO_NIT,PRO_NIT||' - '||PRO_RAZON_SOCIAL AS proveedor ";
 				$cadenaSql .= " FROM PROVEEDORES ";
@@ -657,6 +656,35 @@ class Sql extends \Sql {
 				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
 				$cadenaSql .= " WHERE ad.\"ESF_ESTADO\"='A'";
 				
+				break;
+			
+			case "buscar_numero_orden" :
+				
+				$cadenaSql = " 	SELECT 	id_orden ,
+								 CASE tipo_orden
+										WHEN 1 THEN vigencia || ' - ' || consecutivo_compras
+										WHEN 9 THEn vigencia || ' - ' || consecutivo_servicio
+								 END  valor  ";
+				$cadenaSql .= " FROM orden ";
+				$cadenaSql .= " WHERE tipo_orden ='" . $variable . "';";
+				
+				break;
+			
+			case "buscar_Proveedores" :
+				$cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+				$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
+				$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
+				
+				break;
+			
+			case "dependenciasConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE sa.\"ESF_ID_SEDE\"='" . $variable . "' ";
+				$cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A'";
 				break;
 		}
 		return $cadenaSql;

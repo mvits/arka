@@ -29,6 +29,17 @@
                 "sPaginationType": "full_numbers"
                  } );
 
+                             
+
+        $("#<?php echo $this->campoSeguro('tipo_orden')?>").select2();
+		$("#<?php echo $this->campoSeguro('numero_orden')?>").select2();
+		                     
+		                                          
+        $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2();
+		$("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2();
+		                     
+                     
+                     
         
                      
         $("#<?php echo $this->campoSeguro('proveedorContratista')?>").select2();
