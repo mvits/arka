@@ -1,13 +1,33 @@
 <?php
+
+//................
+
+$this->idioma ["tipo_orden"] ="Tipo Orden: ";
+$this->idioma ["tipo_ordenTitulo"] ="Seleccione Tipo Orden";
+
+
+
+
+$this->idioma ["nitproveedor"] ="NIT y/o Nombre :<br>Razón Social";
+$this->idioma ["nitproveedorTitulo"] ="Seleccione Tipo Orden";
+
+
+
+
+
+
+
+// /..............
+
+
 $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaje.php";
 
-$this->idioma ["informacion_numero"] ="# Número de Orden de Servicios :";
 
 $this->idioma ["informacion_fecha"] ="Fecha de Registro De Orden :";
 
 
-$this->idioma ["sede"] ="Sede: ";
-$this->idioma ["sedeTitulo"] ="Seleccione Sede";
+$this->idioma ["sedeConsulta"] ="Sede: ";
+$this->idioma ["sedeConsultaTitulo"] ="Seleccione Sede";
 
 
 $this->idioma ["sede_super"] ="Sede: ";
@@ -108,8 +128,8 @@ $this->idioma ["fecha_final"] ="Fecha Final : ";
 $this->idioma ["fecha_finalTitulo"] ="Seleccione Fecha Final";
 
 
-$this->idioma ["numero_orden"] ="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspNúmero de Orden:<br>Servicio";
-$this->idioma ["numero_ordenTitulo"] ="Ingrese Número Orden Servicio";
+$this->idioma ["numero_orden"] ="Vigencia y/o Número Orden :";
+$this->idioma ["numero_ordenTitulo"] ="Seleccione Vigencia y/o Número Orden";
 
 
 $this->idioma ["nit"] ="Nit o Identificación : ";

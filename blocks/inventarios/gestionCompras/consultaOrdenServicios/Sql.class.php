@@ -189,20 +189,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND  ESF_ID_ESPACIO='" . $variable . "' ";
 				break;
 			
-			case "sede" :
-				$cadenaSql = "SELECT DISTINCT  ESF_ID_SEDE, ESF_SEDE ";
-				$cadenaSql .= " FROM ESPACIOS_FISICOS ";
-				$cadenaSql .= " WHERE   ESF_ESTADO='A'";
-				
-				break;
-			
-			case "dependencias" :
-				$cadenaSql = "SELECT DISTINCT  ESF_ID_ESPACIO, ESF_NOMBRE_ESPACIO ";
-				$cadenaSql .= " FROM ESPACIOS_FISICOS ";
-				$cadenaSql .= " WHERE ESF_ID_SEDE='" . $variable . "' ";
-				$cadenaSql .= " AND  ESF_ESTADO='A'";
-				
-				break;
 			
 			case "proveedores" :
 				$cadenaSql = " SELECT PRO_NIT,PRO_NIT||' - '||PRO_RAZON_SOCIAL AS proveedor ";
@@ -645,6 +631,31 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND fecha_registro BETWEEN CAST ( '" . $variable [3] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable [4] . "' AS DATE)  ";
 				}
+				
+				break;
+			
+			case "tipo_orden" :
+				
+				$cadenaSql = " 	SELECT 	id_tipo , descripcion ";
+				$cadenaSql .= " FROM tipo_contrato ";
+				$cadenaSql .= " WHERE id_tipo =  1 ";
+				$cadenaSql .= "OR   id_tipo =  9  ";
+				
+				break;
+			
+			case "sede" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_sedes ";
+				$cadenaSql .= " WHERE   \"ESF_ESTADO\"='A' ";
+				$cadenaSql .= " AND    \"ESF_COD_SEDE\" >  0 ";
+				break;
+			
+			case "dependencias" :
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_ESTADO\"='A'";
 				
 				break;
 		}
