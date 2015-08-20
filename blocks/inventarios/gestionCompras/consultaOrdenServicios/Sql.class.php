@@ -606,33 +606,6 @@ class Sql extends \Sql {
 				
 				break;
 			
-			case "consultarOrden" :
-				
-				$cadenaSql = "SELECT DISTINCT ";
-				$cadenaSql .= "id_orden_servicio, orden_servicio.fecha_registro,  ";
-				$cadenaSql .= "dependencia_solicitante ,  cs.identificacion ||' - '|| cs.nombre_razon_social contratista  ";
-				$cadenaSql .= "FROM orden_servicio ";
-				$cadenaSql .= "JOIN contratista_servicios  cs ON cs.id_contratista = orden_servicio.id_contratista ";
-				// $cadenaSql .= "JOIN contratista_servicios ON contratista_servicios.id_contratista = orden_servicio.id_contratista ";
-				$cadenaSql .= "WHERE 1=1 AND estado='TRUE' ";
-				
-				if ($variable [0] != '') {
-					$cadenaSql .= " AND id_orden_servicio = '" . $variable [0] . "'";
-				}
-				if ($variable [1] != '') {
-					$cadenaSql .= " AND  orden_servicio.id_contratista= '" . $variable [1] . "'";
-				}
-				if ($variable [2] != '') {
-					$cadenaSql .= " AND  dependencia_solicitante= '" . $variable [2] . "'";
-				}
-				
-				if ($variable [3] != '') {
-					$cadenaSql .= " AND fecha_registro BETWEEN CAST ( '" . $variable [3] . "' AS DATE) ";
-					$cadenaSql .= " AND  CAST ( '" . $variable [4] . "' AS DATE)  ";
-				}
-				
-				break;
-			
 			case "tipo_orden" :
 				
 				$cadenaSql = " 	SELECT 	id_tipo , descripcion ";
@@ -685,6 +658,69 @@ class Sql extends \Sql {
 				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
 				$cadenaSql .= " WHERE sa.\"ESF_ID_SEDE\"='" . $variable . "' ";
 				$cadenaSql .= " AND  ad.\"ESF_ESTADO\"='A'";
+				break;
+			
+			case "consultarOrden" :
+				$cadenaSql = "SELECT DISTINCT ";
+				$cadenaSql .= "ro.id_orden,se.\"ESF_SEDE\" as sede, dep.\"ESF_DEP_ENCARGADA\" as dependencia, ro.fecha_registro,
+								 cn.identificacion ||' - '|| cn.nombre_razon_social as  proveedor,
+						         tc.descripcion tipo_contrato,
+						         CASE ro.tipo_orden
+										WHEN 1 THEN ro.vigencia || ' - ' ||ro.consecutivo_compras
+										WHEN 9 THEn ro.vigencia || ' - ' ||ro.consecutivo_servicio
+								 END identificador ";
+				$cadenaSql .= "FROM orden ro ";
+				$cadenaSql .= "JOIN contratista_servicios cn ON cn.id_contratista =  ro.id_contratista  ";
+				$cadenaSql .= "JOIN  tipo_contrato tc ON tc.id_tipo = ro.tipo_orden	 ";
+				$cadenaSql .= "JOIN  arka_parametros.arka_dependencia dep ON dep.\"ESF_CODIGO_DEP\" = ro.dependencia_solicitante	 ";
+				$cadenaSql .= "JOIN  arka_parametros.arka_sedes se ON se.\"ESF_ID_SEDE\" = ro.sede	 ";
+				$cadenaSql .= "WHERE 1 = 1 ";
+				$cadenaSql .= "AND ro.estado = 't' ";
+				if ($variable ['tipo_orden'] != '') {
+					$cadenaSql .= " AND ro.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
+				}
+				
+				if ($variable ['numero_orden'] != '') {
+					$cadenaSql .= " AND ro.id_orden = '" . $variable ['numero_orden'] . "' ";
+				}
+				
+				if ($variable ['nit'] != '') {
+					$cadenaSql .= " AND cn.identificacion = '" . $variable ['nit'] . "' ";
+				}
+				
+				if ($variable ['sede'] != '') {
+					$cadenaSql .= " AND ro.sede = '" . $variable ['sede'] . "' ";
+				}
+				
+				if ($variable ['dependencia'] != '') {
+					$cadenaSql .= " AND ro.dependencia_solicitante = '" . $variable ['dependencia'] . "' ";
+				}
+				
+				if ($variable ['fecha_inicial'] != '') {
+					$cadenaSql .= " AND ro.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
+					$cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
+				}
+				
+				$cadenaSql .= " ; ";
+				
+				break;
+			
+			case "consultarElementos" :
+				$cadenaSql = "SELECT *   ";
+				$cadenaSql .= " FROM elemento_acta_recibido ";
+				$cadenaSql .= " WHERE id_orden ='" . $variable . "';";
+				
+				break;
+			
+			case "consultarElementosOrden" :
+				$cadenaSql = "SELECT  ela.*, ct.elemento_nombre nivel_nombre, tb.descripcion nombre_tipo, iv.descripcion nombre_iva ";
+				$cadenaSql .= "FROM elemento_acta_recibido ela ";
+				$cadenaSql .= "JOIN  grupo.catalogo_elemento ct ON ct.elemento_id=ela.nivel ";
+				$cadenaSql .= "JOIN  tipo_bienes tb ON tb.id_tipo_bienes=ela.tipo_bien ";
+				$cadenaSql .= "JOIN  aplicacion_iva iv ON iv.id_iva=ela.iva  ";
+				$cadenaSql .= "WHERE id_orden ='" . $variable . "'  ";
+				$cadenaSql .= "AND  ela.estado=true ";
+				
 				break;
 		}
 		return $cadenaSql;
