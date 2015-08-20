@@ -398,7 +398,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " elemento_acta_recibido(
 							             fecha_registro, nivel, tipo_bien, descripcion, 
 							            cantidad, unidad, valor, iva, subtotal_sin_iva, total_iva, total_iva_con, 
-							             marca, serie, id_acta) ";
+							             marca, serie, id_orden) ";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= "'" . $variable [1] . "',";
@@ -423,7 +423,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "  fecha_registro, nivel, tipo_bien, descripcion,
 											 cantidad, unidad, valor, iva, subtotal_sin_iva, total_iva, total_iva_con,
 											 tipo_poliza, fecha_inicio_pol, fecha_final_pol, marca, serie,
-											 id_acta)";
+											 id_orden)";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= "'" . $variable [1] . "',";

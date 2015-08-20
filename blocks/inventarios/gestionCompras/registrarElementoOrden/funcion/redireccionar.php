@@ -1,6 +1,6 @@
 <?
 
-namespace inventarios\gestionActa\registrarElementoActa\funcion;
+namespace inventarios\gestionActa\registrarElementoOrden\funcion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("index.php");
@@ -17,8 +17,9 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=cargarElemento";
 				$variable .= "&mensaje=registro";
-				$variable .= "&numero_acta=" . $valor [0];
-				$variable .= "&fecha_orden=" . $valor [1];
+				$variable .= "&mensaje_titulo=" . $valor [0];
+				$variable .= "&id_orden=" . $valor [1];
+				$variable .= "&fecha_orden=" . $valor [2];
 				break;
 			
 			case "inserto_cargue_masivo" :
@@ -26,7 +27,8 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=confirmaMasivo";
-				$variable .= "&numero_acta=".$valor[0];
+				$variable .= "&id_orden=" . $valor [1];
+				$variable .= "&mensaje_titulo=" . $valor [0];
 				break;
 			
 			case "noFormatoImagen" :
@@ -52,8 +54,10 @@ class redireccion {
 			
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=mensaje";
+				$variable .= "&opcion=cargarElemento";
 				$variable .= "&mensaje=error";
+				$variable .= "&mensaje_titulo=" . $valor [0];
+				$variable .= "&id_orden=" . $valor [1];
 				
 				break;
 			

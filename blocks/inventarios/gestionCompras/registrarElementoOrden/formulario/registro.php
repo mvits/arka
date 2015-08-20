@@ -36,7 +36,7 @@ class registrarForm {
 		
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionActa/";
 		$rutaBloque .= $esteBloque ['nombre'];
-		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/gestionActa/" . $esteBloque ['nombre'] . "/plantilla/archivo_elementos.xlsx";
+		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/gestionCompras/" . $esteBloque ['nombre'] . "/plantilla/archivo_elementos.xlsx";
 		
 		$atributosGlobales ['campoSeguro'] = 'true';
 		
@@ -906,6 +906,7 @@ class registrarForm {
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=registrar";
 			$valorCodificado .= "&id_orden=" . $_REQUEST ['id_orden'];
+			$valorCodificado .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 			
 			
 			/**
@@ -1004,7 +1005,7 @@ class registrarForm {
 				{
 					
 					if ($_REQUEST ['mensaje'] == 'registro') {
-						$atributos ['mensaje'] = "<center>Se Cargo Elemento Acta  de Recibido N# : " . $_REQUEST ['numero_acta'] . "<br>Fecha : " . $_REQUEST ['fecha_orden'] . "</center>";
+						$atributos ['mensaje'] = "<center>SE CARGO ELEMENTO ". $_REQUEST ['mensaje_titulo'] . "<br>Fecha : " . date('Y-m-d') . "</center>";
 						$atributos ["estilo"] = 'success';
 					} else {
 						$atributos ['mensaje'] = "<center>Error al Cargar Elemento Verifique los Datos</center>";
@@ -1081,7 +1082,7 @@ class registrarForm {
 					$atributos ['redirLugar'] = true;
 					echo $this->miFormulario->enlace ( $atributos );
 					unset ( $atributos );
-					
+				/*	
 					$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 					$variable = "pagina=registrarSalidas";
 					$variable .= "&opcion=activarElementos";
@@ -1100,9 +1101,10 @@ class registrarForm {
 					$atributos ['ancho'] = '10%';
 					$atributos ['alto'] = '10%';
 					$atributos ['redirLugar'] = true;
-// 					echo $this->miFormulario->enlace ( $atributos );
+					echo $this->miFormulario->enlace ( $atributos );
 					unset ( $atributos );
 					
+					*/
 					// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 					
 					// ---------------- FIN SECCION: División ----------------------------------------------------------

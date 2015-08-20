@@ -124,8 +124,8 @@ class registrarForm {
 				
 				if (isset($_REQUEST ['mensaje'])&&$_REQUEST ['mensaje'] == 'confirmaMasivo') {
 						
-					$mensaje = "Se Cargo con Exito los  Elementos  del  Archivo<br>
-									Número de Acta : ".$_REQUEST['numero_acta']."	
+					$mensaje = "SE CARGO CON EXITO LOS ELEMENTOS DEL ARCHIVO<br>"
+							 .$_REQUEST['mensaje_titulo']."	
 							<br>Fecha  Registro : " . date ( 'Y-m-d' );
 						
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------

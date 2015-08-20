@@ -31,7 +31,6 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		var_dump($_REQUEST);exit;
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -158,7 +157,8 @@ class RegistradorOrden {
 				}
 				
 				$datos = array (
-						$_REQUEST ['numero_acta'],
+						$_REQUEST ['mensaje_titulo'],
+						$_REQUEST ['id_orden'],
 						$fechaActual 
 				);
 				
@@ -186,11 +186,12 @@ class RegistradorOrden {
 				
 				if ($elemento) {
 					
-					redireccion::redireccionar ( 'inserto', $datos );
+					\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'inserto', $datos );
+					
 					exit ();
 				} else {
 					
-					redireccion::redireccionar ( 'noInserto', $datos );
+					\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'noInserto', $datos );
 					
 					exit ();
 				}
@@ -201,9 +202,9 @@ class RegistradorOrden {
 					
 					$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 					// ** Ruta a directorio ******
-					$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionActa/";
+					$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionCompras/";
 					$rutaBloque .= $esteBloque ['nombre'];
-					$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/gestionActa/" . $esteBloque ['nombre'];
+					$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/gestionCompras/" . $esteBloque ['nombre'];
 					
 					$ingreso = 0;
 					
@@ -228,7 +229,7 @@ class RegistradorOrden {
 					$trozos = explode ( ".", $archivo ['name'] );
 					$extension = end ( $trozos );
 					
-					if ($extension == 'xlsx' ) {
+					if ($extension == 'xlsx') {
 						
 						if ($archivo) {
 							// obtenemos los datos del archivo
@@ -245,11 +246,12 @@ class RegistradorOrden {
 								if (copy ( $archivo ['tmp_name'], $ruta_absoluta )) {
 									$status = "Archivo subido: <b>" . $archivo1 . "</b>";
 								} else {
-									redireccion::redireccionar ( 'noArchivoCarga' );
+									
+									\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'noArchivoCarga' );
 									exit ();
 								}
 							} else {
-								redireccion::redireccionar ( 'noArchivoCarga' );
+								\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'noArchivoCarga' );
 								exit ();
 							}
 						}
@@ -450,23 +452,26 @@ class RegistradorOrden {
 							}
 							
 							$datos = array (
-									$_REQUEST ['numero_acta'],
+									$_REQUEST ['mensaje_titulo'],
+									$_REQUEST ['id_orden'],
 									$fechaActual 
 							);
 							
-							if ($elemento_id && $_REQUEST ['numero_acta']) {
+							
+							if ($elemento_id && $_REQUEST ['id_orden']) {
 								
-								redireccion::redireccionar ( 'inserto_cargue_masivo', $datos );
+								\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'inserto_cargue_masivo', $datos );
 								exit ();
 							} else {
 								
-								redireccion::redireccionar ( 'noInserto', $datos );
+								\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'noInserto', $datos );
 								exit ();
 							}
 						}
 					} else {
 						
-						redireccion::redireccionar ( 'noExtension' );
+						
+						\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'noExtension');
 						
 						exit ();
 					}
