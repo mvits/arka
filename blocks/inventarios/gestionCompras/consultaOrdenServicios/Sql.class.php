@@ -668,12 +668,13 @@ class Sql extends \Sql {
 						         CASE ro.tipo_orden
 										WHEN 1 THEN ro.vigencia || ' - ' ||ro.consecutivo_compras
 										WHEN 9 THEn ro.vigencia || ' - ' ||ro.consecutivo_servicio
-								 END identificador ";
+								 END identificador, ela.id_orden validacion ";
 				$cadenaSql .= "FROM orden ro ";
 				$cadenaSql .= "JOIN contratista_servicios cn ON cn.id_contratista =  ro.id_contratista  ";
 				$cadenaSql .= "JOIN  tipo_contrato tc ON tc.id_tipo = ro.tipo_orden	 ";
 				$cadenaSql .= "JOIN  arka_parametros.arka_dependencia dep ON dep.\"ESF_CODIGO_DEP\" = ro.dependencia_solicitante	 ";
 				$cadenaSql .= "JOIN  arka_parametros.arka_sedes se ON se.\"ESF_ID_SEDE\" = ro.sede	 ";
+				$cadenaSql .= "LEFT JOIN  elemento_acta_recibido ela ON ela.id_orden = ro.id_orden	 ";
 				$cadenaSql .= "WHERE 1 = 1 ";
 				$cadenaSql .= "AND ro.estado = 't' ";
 				if ($variable ['tipo_orden'] != '') {

@@ -20,7 +20,7 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-
+		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -46,7 +46,6 @@ class registrarForm {
 		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
 		
 		if (isset ( $_REQUEST ['numero_orden'] ) && $_REQUEST ['numero_orden'] != '') {
 			$numero_orden = $_REQUEST ['numero_orden'];
@@ -89,15 +88,14 @@ class registrarForm {
 			$fecha_final = '';
 		}
 		
-
 		$arreglo = array (
 				'tipo_orden' => $tipo_orden,
 				'numero_orden' => $numero_orden,
 				'nit' => $nit,
-				'sede'=>$sede,
-				'dependencia'=>$dependencia,
-				'fecha_inicial'=>$fecha_inicio,
-				'fecha_final'=>$fecha_final
+				'sede' => $sede,
+				'dependencia' => $dependencia,
+				'fecha_inicial' => $fecha_inicio,
+				'fecha_final' => $fecha_final 
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrden', $arreglo );
@@ -178,26 +176,23 @@ class registrarForm {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=modicarOrden";
 				$variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
-				$variable .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] ."<br>VIGENCIA Y/O NÚMERO ORDEN : ".$Orden [$i] ['identificador'];
+				$variable .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['identificador'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$variable_elementos = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable_elementos .= "&opcion=consultaElementos";
 				$variable_elementos .= "&id_orden=" . $Orden [$i] ['id_orden'];
-				$variable_elementos .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] ."<br>VIGENCIA Y/O NÚMERO ORDEN : ".$Orden [$i] ['identificador'];
+				$variable_elementos .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['identificador'];
 				$variable_elementos = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable_elementos, $directorio );
-
-				
 				
 				$variable_documento = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable_documento .= "&opcion=generarDocumento";
 				$variable_documento .= "&id_orden=" . $Orden [$i] ['id_orden'];
-				$variable_documento .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] ."<br>VIGENCIA Y/O NÚMERO ORDEN : ".$Orden [$i] ['identificador'];
+				$variable_documento .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['identificador'];
 				$variable_documento = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable_documento, $directorio );
 				
-				
-				
-				
+				$elemento = (is_null($Orden[$i]['validacion'])==true)?'':"<a href='" . $variable_elementos . "'><img src='" . $rutaBloque . "/css/images/update.png' width='15px'></a>";
+				$documento =(is_null($Orden[$i]['validacion'])==true)?'': "<a href='" . $variable_documento . "'><img src='" . $rutaBloque . "/css/images/documento.png' width='15px'></a>";
 				
 				$mostrarHtml = "<tr>
                     <td><center>" . $Orden [$i] ['tipo_contrato'] . "</center></td>
@@ -210,16 +205,8 @@ class registrarForm {
                             <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
                         </a>
                   	</center> </td>
- 				    <td><center>
-                    	<a href='" . $variable_elementos . "'>
-                            <img src='" . $rutaBloque . "/css/images/update.png' width='15px'>
-                        </a>
-                  	</center> </td>        		
-                       <td><center>
-                    	<a>
-                            <img src='" . $rutaBloque . "/css/images/documento.png' width='15px'>
-                        </a>
-                  	</center> </td>         		
+ 				    <td><center>" . $elemento . "</center> </td>        		
+                    <td><center>" . $documento . "</center> </td>         		
                          </tr>";
 				echo $mostrarHtml;
 				unset ( $mostrarHtml );
