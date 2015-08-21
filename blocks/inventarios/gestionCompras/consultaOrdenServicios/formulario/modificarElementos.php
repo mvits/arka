@@ -21,7 +21,7 @@ class registrarForm {
 	}
 	function miForm() {
 		echo "Modificando Elmentos Orden";
-		var_dump($_REQUEST);exit;
+		var_dump($_REQUEST);
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -156,7 +156,7 @@ class registrarForm {
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = "Modificar Elemento de Acta de Recibido N#" .$_REQUEST ['numero_acta'];;
+			$atributos ["leyenda"] = "MODIFICAR ELEMENTO ".$_REQUEST['mensaje_titulo'];
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			unset ( $atributos );
 			{

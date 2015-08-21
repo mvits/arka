@@ -723,6 +723,13 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND  ela.estado=true ";
 				
 				break;
+			
+			case "consultarElemento" :
+				$cadenaSql = "SELECT  * ";
+				$cadenaSql .= "FROM arka_inventarios.elemento_acta_recibido ";
+				$cadenaSql .= "WHERE  id_elemento_ac ='" . $variable . "'  ;";
+				
+				break;
 		}
 		return $cadenaSql;
 	}

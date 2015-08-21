@@ -130,13 +130,15 @@ class registrarForm {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=modificarElementos";
 				$variable .= "&id_elemento_acta=" . $ElementosOrden [$i] ['id_elemento_ac'];
-				$variable .= "&numero_acta=" . $_REQUEST ['id_orden'];
+				$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
+				$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$variable1 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable1 .= "&opcion=eliminarElementos";
 				$variable1 .= "&id_elemento_acta=" . $ElementosOrden [$i] ['id_elemento_ac'];
 				$variable1 .= "&id_orden=" .$_REQUEST ['id_orden'];
+				$variable1 .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 				$variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
 				
 				$mostrarHtml = "<tr>
