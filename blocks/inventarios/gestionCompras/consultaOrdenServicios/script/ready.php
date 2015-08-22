@@ -35,6 +35,9 @@
  		$("#<?php echo $this->campoSeguro('iva')?>").select2();
  		
  		
+
+ 		
+ 		
  		     $( "#<?php echo $this->campoSeguro('tipo_poliza')?>" ).change(function() {
             switch($("#<?php echo $this->campoSeguro('tipo_poliza')?>").val())
             {

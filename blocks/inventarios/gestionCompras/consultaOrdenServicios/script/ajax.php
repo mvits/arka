@@ -826,7 +826,40 @@ function valorLetras(elem, request, response){
 
 $(function() {
 
+    $( "#<?php echo $this->campoSeguro('cantidad')?>" ).keyup(function() {
+        
+        $("#<?php echo $this->campoSeguro('valor')?>").val('');
+        $("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
+        $("#<?php echo $this->campoSeguro('total_iva')?>").val('');
+        $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
+        
+      });  
 
+
+
+    $( "#<?php echo $this->campoSeguro('valor')?>" ).keyup(function() {
+    	$("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
+        $("#<?php echo $this->campoSeguro('total_iva')?>").val('');
+        $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
+        
+        cantidad=Number($("#<?php echo $this->campoSeguro('cantidad')?>").val());
+        valor=Number($("#<?php echo $this->campoSeguro('valor')?>").val());
+        
+        precio = cantidad * valor;
+  
+  
+        if (precio==0){
+       				 $("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
+        }else{        
+        $("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val(precio);
+	    }
+
+      }); 
+	
+    
+
+
+	
 
     $("#<?php echo $this->campoSeguro('sedeConsulta')?>").change(function(){
     	if($("#<?php echo $this->campoSeguro('sedeConsulta')?>").val()!=''){
