@@ -29,6 +29,35 @@
                 "sPaginationType": "full_numbers"
                  } );
 
+$('#<?php echo $this->campoSeguro('dependencia_solicitante')?>').width(350);
+$("#<?php echo $this->campoSeguro('dependencia_solicitante')?>").select2();                 
+
+$('#<?php echo $this->campoSeguro('sede_super')?>').width(300);
+$("#<?php echo $this->campoSeguro('sede_super')?>").select2();
+
+$('#<?php echo $this->campoSeguro('dependencia_supervisor')?>').width(350);
+$("#<?php echo $this->campoSeguro('dependencia_supervisor')?>").select2(); 
+
+$('#<?php echo $this->campoSeguro('asignacionOrdenador')?>').width(300);			       
+$("#<?php echo $this->campoSeguro('asignacionOrdenador')?>").select2();
+
+$('#<?php echo $this->campoSeguro('nombre_supervisor')?>').width(300);			       
+               $("#<?php echo $this->campoSeguro('nombre_supervisor')?>").select2({
+			   	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
+			   	 minimumInputLength: 3,
+			       });
+			   
+
+
+$("#<?php echo $this->campoSeguro('rubro')?>").select2({
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
+              	 minimumInputLength: 3,
+              	 });                             
+                             
+                             
+                             
+                             
+                             
                              
  		$("#<?php echo $this->campoSeguro('nivel')?>").select2();
  		$("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2(); 
