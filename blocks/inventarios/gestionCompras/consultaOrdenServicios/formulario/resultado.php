@@ -174,7 +174,7 @@ class registrarForm {
 			
 			for($i = 0; $i < count ( $Orden ); $i ++) {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-				$variable .= "&opcion=modicarOrden";
+				$variable .= "&opcion=modificarOrden";
 				$variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
 				$variable .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['identificador'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );

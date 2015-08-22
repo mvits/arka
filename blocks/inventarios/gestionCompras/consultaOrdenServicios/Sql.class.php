@@ -149,14 +149,6 @@ class Sql extends \Sql {
 			 * Clausulas Del Caso Uso.
 			 */
 			
-			case "funcionarios" :
-				
-				$cadenaSql = "SELECT FUN_IDENTIFICACION, FUN_IDENTIFICACION ||' - '|| FUN_NOMBRE ";
-				$cadenaSql .= "FROM FUNCIONARIOS ";
-				$cadenaSql .= "WHERE FUN_ESTADO='A' ";
-				
-				break;
-			
 			case "dependenciasArreglo" :
 				
 				$cadenaSql = "SELECT DISTINCT ESF_ID_ESPACIO,ESF_NOMBRE_ESPACIO ";
@@ -241,9 +233,9 @@ class Sql extends \Sql {
 				break;
 			
 			case "vigencia_disponibilidad" :
-				$cadenaSql = "SELECT DIS_VIGENCIA AS valor, DIS_VIGENCIA AS vigencia  ";
-				$cadenaSql .= "FROM DISPONIBILIDAD ";
-				$cadenaSql .= "GROUP BY DIS_VIGENCIA";
+				$cadenaSql = "SELECT \"DIS_VIGENCIA\" AS valor, \"DIS_VIGENCIA\" AS vigencia  ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal ";
+				$cadenaSql .= "GROUP BY \"DIS_VIGENCIA\" ORDER BY  \"DIS_VIGENCIA\"  DESC; ";
 				break;
 			
 			case "buscar_disponibilidad" :
@@ -337,12 +329,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "descripcion ";
 				$cadenaSql .= " FROM";
 				$cadenaSql .= " tipo_cargo ; ";
-				break;
-			
-			case "rubros" :
-				$cadenaSql = " SELECT RUB_IDENTIFICADOR, RUB_RUBRO ||' - '|| RUB_NOMBRE_RUBRO ";
-				$cadenaSql .= " FROM RUBROS ";
-				
 				break;
 			
 			case "dependencia" :
@@ -853,6 +839,31 @@ class Sql extends \Sql {
 				$cadenaSql .= " SET ";
 				$cadenaSql .= " estado='false'  ";
 				$cadenaSql .= " WHERE id_elemento_ac='" . $variable . "'";
+				break;
+			
+			// -- Modificar orden
+			
+			case "rubros" :
+				$cadenaSql = " SELECT \"RUB_IDENTIFICADOR\", \"RUB_RUBRO\" ||' - '|| \"RUB_NOMBRE_RUBRO\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_rubros ";
+				$cadenaSql .= "WHERE \"RUB_VIGENCIA\"='" . date ( 'Y' ) . "';";
+				
+				break;
+			
+			case "funcionarios" :
+				
+				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\", \"FUN_IDENTIFICACION\" ||' - '|| \"FUN_NOMBRE\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_funcionarios ";
+				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
+				
+				break;
+			
+			case "tipoComprador" :
+				
+				$cadenaSql = " 	SELECT \"ORG_IDENTIFICACION\",\"ORG_ORDENADOR_GASTO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_ordenadores ";
+				$cadenaSql .= " WHERE \"ORG_ESTADO\"='A' ";
+				
 				break;
 		}
 		return $cadenaSql;
