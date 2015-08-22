@@ -1,5 +1,5 @@
 <?php
-use  inventarios\gestionCompras\consultaOrdenServicios\Sql;
+use inventarios\gestionCompras\consultaOrdenServicios\Sql;
 
 
 $conexion = "inventarios";
@@ -15,19 +15,19 @@ class EnLetras {
 		$Ent = "";
 		$Frc = "";
 		$Signo = "";
-
+		
 		if (floatVal ( $x ) < 0)
 			$Signo = $this->Neg . " ";
 		else
 			$Signo = "";
-
+		
 		if (intval ( number_format ( $x, 2, '.', '' ) ) != $x) // <- averiguar si tiene decimales
 			$s = number_format ( $x, 2, '.', '' );
 		else
 			$s = number_format ( $x, 0, '.', '' );
-
+		
 		$Pto = strpos ( $s, $this->Dot );
-
+		
 		if ($Pto === false) {
 			$Ent = $s;
 			$Frc = $this->Void;
@@ -35,7 +35,7 @@ class EnLetras {
 			$Ent = substr ( $s, 0, $Pto );
 			$Frc = substr ( $s, $Pto + 1 );
 		}
-
+		
 		if ($Ent == $this->Zero || $Ent == $this->Void)
 			$s = "Cero ";
 		elseif (strlen ( $Ent ) > 7) {
@@ -43,12 +43,12 @@ class EnLetras {
 		} else {
 			$s = $this->SubValLetra ( intval ( $Ent ) );
 		}
-
+		
 		if (substr ( $s, - 9, 9 ) == "Millones " || substr ( $s, - 7, 7 ) == "Millón ")
 			$s = $s . "de ";
-
+		
 		$s = $s . $Moneda;
-
+		
 		if ($Frc != $this->Void) {
 			$s = $s . " Con " . $this->SubValLetra ( intval ( $Frc ) ) . "Centavos";
 			// $s = $s . " " . $Frc . "/100";
@@ -62,33 +62,33 @@ class EnLetras {
 		$x = "";
 		$Rtn = "";
 		$Tem = "";
-
+		
 		$x = trim ( "$numero" );
 		$n = strlen ( $x );
-
+		
 		$Tem = $this->Void;
 		$i = $n;
-
+		
 		while ( $i > 0 ) {
 			$Tem = $this->Parte ( intval ( substr ( $x, $n - $i, 1 ) . str_repeat ( $this->Zero, $i - 1 ) ) );
 			If ($Tem != "Cero")
-			$Rtn .= $Tem . $this->SP;
+				$Rtn .= $Tem . $this->SP;
 			$i = $i - 1;
 		}
-
+		
 		// --------------------- GoSub FiltroMil ------------------------------
 		$Rtn = str_replace ( " Mil Mil", " Un Mil", $Rtn );
 		while ( 1 ) {
 			$Ptr = strpos ( $Rtn, "Mil " );
 			If (! ($Ptr === false)) {
 				If (! (strpos ( $Rtn, "Mil ", $Ptr + 1 ) === false))
-				$this->ReplaceStringFrom ( $Rtn, "Mil ", "", $Ptr );
+					$this->ReplaceStringFrom ( $Rtn, "Mil ", "", $Ptr );
 				else
 					break;
 			} else
 				break;
 		}
-
+		
 		// --------------------- GoSub FiltroCiento ------------------------------
 		$Ptr = - 1;
 		do {
@@ -97,11 +97,11 @@ class EnLetras {
 				$Tem = substr ( $Rtn, $Ptr + 5, 1 );
 				if ($Tem == "M" || $Tem == $this->Void)
 					;
-					else
-						$this->ReplaceStringFrom ( $Rtn, "Cien", "Ciento", $Ptr );
+				else
+					$this->ReplaceStringFrom ( $Rtn, "Cien", "Ciento", $Ptr );
 			}
 		} while ( ! ($Ptr === false) );
-
+		
 		// --------------------- FiltroEspeciales ------------------------------
 		$Rtn = str_replace ( "Diez Un", "Once", $Rtn );
 		$Rtn = str_replace ( "Diez Dos", "Doce", $Rtn );
@@ -121,14 +121,14 @@ class EnLetras {
 		$Rtn = str_replace ( "Veinte Siete", "Veintisiete", $Rtn );
 		$Rtn = str_replace ( "Veinte Ocho", "Veintiocho", $Rtn );
 		$Rtn = str_replace ( "Veinte Nueve", "Veintinueve", $Rtn );
-
+		
 		// --------------------- FiltroUn ------------------------------
 		If (substr ( $Rtn, 0, 1 ) == "M")
-		$Rtn = "Un " . $Rtn;
-		// --------------------- Adicionar Y ------------------------------
+			$Rtn = "Un " . $Rtn;
+			// --------------------- Adicionar Y ------------------------------
 		for($i = 65; $i <= 88; $i ++) {
 			If ($i != 77)
-			$Rtn = str_replace ( "a " . Chr ( $i ), "* y " . Chr ( $i ), $Rtn );
+				$Rtn = str_replace ( "a " . Chr ( $i ), "* y " . Chr ( $i ), $Rtn );
 		}
 		$Rtn = str_replace ( "*", "a", $Rtn );
 		return ($Rtn);
@@ -233,16 +233,16 @@ class EnLetras {
 					$t = "Millón";
 					break;
 			}
-				
+			
 			If ($t == $this->Void) {
 				$i = $i + 1;
 				$x = $x / 1000;
 				If ($x == 0)
-				$i = 0;
+					$i = 0;
 			} else
 				break;
 		} while ( $i != 0 );
-
+		
 		$Rtn = $t;
 		Switch ($i) {
 			Case 0 :
@@ -263,16 +263,15 @@ class EnLetras {
 }
 
 if ($_REQUEST ['funcion'] == 'letrasNumeros') {
-
+	
 	$funcionLetras = new EnLetras ();
-
-	$Letras =  $funcionLetras->ValorEnLetras ( $_REQUEST ['valor'], '( $Pesos ).' ) ;
-
+	
+	$Letras = $funcionLetras->ValorEnLetras ( $_REQUEST ['valor'], '( $Pesos ).' );
+	
 	$Letras = json_encode ( $Letras );
-
+	
 	echo $Letras;
 }
-
 
 if ($_REQUEST ['funcion'] == 'SeleccionOrdenador') {
 	$conexion = "sicapital";
@@ -280,12 +279,10 @@ if ($_REQUEST ['funcion'] == 'SeleccionOrdenador') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'informacion_ordenador', $_REQUEST ['ordenador'] );
 	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	$resultado =json_encode($resultadoItems [0])  ;
-
+	$resultado = json_encode ( $resultadoItems [0] );
+	
 	echo $resultado;
 }
-
-
 
 if ($_REQUEST ['funcion'] == 'SeleccionCargo') {
 	$conexion = "sicapital";
@@ -295,184 +292,159 @@ if ($_REQUEST ['funcion'] == 'SeleccionCargo') {
 	
 	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
-	$resultado =json_encode($resultadoItems [0])  ;
-
+	$resultado = json_encode ( $resultadoItems [0] );
+	
 	echo $resultado;
 }
 
-
-
 if ($_REQUEST ['funcion'] == 'disponibilidades') {
-
+	
 	$conexion = "sicapital";
 	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
+	
 	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_disponibilidad', $_REQUEST ['vigencia'] );
 	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
+	
 	$resultado = json_encode ( $resultadoItems );
-
+	
 	echo $resultado;
 }
 
 if ($_REQUEST ['funcion'] == 'Infodisponibilidades') {
-
+	
 	$conexion = "sicapital";
-
+	
 	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 	$arreglo = array (
 			$_REQUEST ['disponibilidad'],
-			$_REQUEST ['vigencia']
+			$_REQUEST ['vigencia'] 
 	);
-
+	
 	$cadenaSql = $this->sql->getCadenaSql ( 'info_disponibilidad', $arreglo );
 	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-
-	$resultado = json_encode ( $resultadoItems [0]);
-
+	
+	$resultado = json_encode ( $resultadoItems [0] );
+	
 	echo $resultado;
 }
 
-
 if ($_REQUEST ['funcion'] == 'registroPresupuestal') {
-
+	
 	$conexion = "sicapital";
 	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
+	
 	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_registro', $_REQUEST ['vigencia'] );
-
+	
 	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
+	
 	$resultado = json_encode ( $resultadoItems );
-
+	
 	echo $resultado;
 }
 
 if ($_REQUEST ['funcion'] == 'Inforegistro') {
-
+	
 	$conexion = "sicapital";
-
+	
 	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 	$arreglo = array (
 			$_REQUEST ['disponibilidad'],
-			$_REQUEST ['vigencia']
+			$_REQUEST ['vigencia'] 
 	);
-
+	
 	$cadenaSql = $this->sql->getCadenaSql ( 'info_registro', $arreglo );
 	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-
-	$resultado = json_encode ( $resultadoItems [0]);
-
+	
+	$resultado = json_encode ( $resultadoItems [0] );
+	
 	echo $resultado;
 }
-
-
 
 if ($_REQUEST ['funcion'] == 'consultarContratistas') {
-
+	
 	$conexion = "sicapital";
-
+	
 	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
-
-	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_contratista', $_REQUEST['vigencia'] );
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_contratista', $_REQUEST ['vigencia'] );
 	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-
-	$resultado = json_encode ( $resultadoItems);
-
+	
+	$resultado = json_encode ( $resultadoItems );
+	
 	echo $resultado;
 }
 
-
-
-
-
 if ($_REQUEST ['funcion'] == 'SeleccionProveedor') {
-
+	
 	$conexion = "sicapital";
 	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 	$cadenaSql = $this->sql->getCadenaSql ( 'informacion_proveedor', $_REQUEST ['proveedor'] );
 	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
+	
 	$resultado = json_encode ( $resultadoItems [0] );
-
+	
 	echo $resultado;
-	
-	
 }
 
-
-
 if ($_REQUEST ['funcion'] == 'consultarCargoSuper') {
-
+	
 	$conexion = "sicapital";
-
+	
 	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
-
-	$cadenaSql = $this->sql->getCadenaSql ( 'cargoSuper', $_REQUEST['valor'] );
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'cargoSuper', $_REQUEST ['valor'] );
 	$resultado = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-
-	$resultado = json_encode ( $resultado[0]);
-
+	
+	$resultado = json_encode ( $resultado [0] );
+	
 	echo $resultado;
 }
 if ($_REQUEST ['funcion'] == 'consultarNumeroOrden') {
-
-
 	
-
-
 	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_numero_orden', $_REQUEST ['valor'] );
-
+	
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
+	
 	$resultado = json_encode ( $resultado );
-
+	
 	echo $resultado;
 }
 
-
-
-
 if ($_REQUEST ['funcion'] == 'consultaProveedor') {
-
-
-
-
+	
 	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_Proveedores', $_GET ['query'] );
-
+	
 	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
+	
 	foreach ( $resultadoItems as $key => $values ) {
 		$keys = array (
 				'value',
-				'data'
+				'data' 
 		);
 		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
 	}
-
+	
 	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
 }
 
-
 if ($_REQUEST ['funcion'] == 'consultarDependencia') {
-
-
+	
 	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciasConsultadas', $_REQUEST ['valor'] );
-
+	
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
+	
 	$resultado = json_encode ( $resultado );
-
+	
 	echo $resultado;
 }
 
-
-
+if ($_REQUEST ['funcion'] == 'SeleccionTipoBien') {
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'ConsultaTipoBien', $_REQUEST ['valor'] );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $resultadoItems [0];
+	
+	echo json_encode ( $resultadoItems );
+}
 
 ?>

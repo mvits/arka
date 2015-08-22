@@ -730,6 +730,41 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE  id_elemento_ac ='" . $variable . "'  ;";
 				
 				break;
+			
+			case "consultar_nivel_inventario" :
+				
+				$cadenaSql = "SELECT ce.elemento_id, ce.elemento_codigo||' - '||ce.elemento_nombre ";
+				$cadenaSql .= "FROM grupo.catalogo_elemento  ce ";
+				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
+				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
+				$cadenaSql .= "AND  ce.elemento_id > 0  ";
+				$cadenaSql .= "AND  ce.elemento_padre > 0  ";
+				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
+				
+				break;
+			
+			case "consultar_tipo_poliza" :
+				
+				$cadenaSql = "SELECT id_tipo_poliza, descripcion ";
+				$cadenaSql .= "FROM arka_inventarios.tipo_poliza;";
+				
+				break;
+			
+			case "consultar_tipo_iva" :
+				
+				$cadenaSql = "SELECT id_iva, descripcion ";
+				$cadenaSql .= "FROM arka_inventarios.aplicacion_iva;";
+				
+				break;
+			
+			case "ConsultaTipoBien" :
+				
+				$cadenaSql = "SELECT  ce.elemento_tipobien , tb.descripcion  ";
+				$cadenaSql .= "FROM grupo.catalogo_elemento ce ";
+				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
+				$cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
+				
+				break;
 		}
 		return $cadenaSql;
 	}
