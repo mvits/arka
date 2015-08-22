@@ -11,7 +11,6 @@ class redireccion {
 		$miConfigurador = \Configurador::singleton ();
 		$miPaginaActual = $miConfigurador->getVariableConfiguracion ( "pagina" );
 		
-		
 		switch ($opcion) {
 			
 			case "ActualizoElemento" :
@@ -25,6 +24,20 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=noActualizoElemento";
+				
+				break;
+			
+			case "eliminoElemento" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=eliminoElemento";
+				
+				break;
+			
+			case "noeliminoElemento" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=noeliminoElemento";
 				
 				break;
 			

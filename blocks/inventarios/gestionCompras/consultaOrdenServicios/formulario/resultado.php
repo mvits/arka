@@ -191,7 +191,7 @@ class registrarForm {
 				$variable_documento .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['identificador'];
 				$variable_documento = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable_documento, $directorio );
 				
-				$elemento = (is_null($Orden[$i]['validacion'])==true)?'':"<a href='" . $variable_elementos . "'><img src='" . $rutaBloque . "/css/images/update.png' width='15px'></a>";
+				$elemento = (is_null($Orden[$i]['validacion'])==true)?'':(($Orden[$i]['estado_elementos']=='t')?"<a href='" . $variable_elementos . "'><img src='" . $rutaBloque . "/css/images/update.png' width='15px'></a>":'');
 				$documento =(is_null($Orden[$i]['validacion'])==true)?'': "<a href='" . $variable_documento . "'><img src='" . $rutaBloque . "/css/images/documento.png' width='15px'></a>";
 				
 				$mostrarHtml = "<tr>

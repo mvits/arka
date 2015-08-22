@@ -1,4 +1,12 @@
 <?php
+
+//-- Eliminar Elementos
+
+
+$this->idioma ["botonEliminar"] = "Eliminar Elemento ";
+
+
+
 // -- Modificar Elementos
 $this->idioma ["botonAceptarElemento"] = "Actualizar Elemento ";
 

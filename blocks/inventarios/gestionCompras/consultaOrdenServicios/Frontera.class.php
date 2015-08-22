@@ -66,6 +66,10 @@ class Frontera {
 				case "modificarElementos" :
 					include_once ($this->ruta . "/formulario/modificarElementos.php");
 					break;
+				
+				case "eliminarElementos" :
+					include_once ($this->ruta . "/formulario/eliminarElementos.php");
+					break;
 			}
 		} else {
 			$_REQUEST ['opcion'] = "mostrar";
