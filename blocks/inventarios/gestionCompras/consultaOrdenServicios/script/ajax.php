@@ -355,7 +355,7 @@ function consultarDependenciaConsultada(elem, request, response){
 	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta')?>");
 	            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].ESF_CODIGO_DEP+"'>"+data[ indice ].ESF_DEP_ENCARGADA+"</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta')?>");
+	            	$("<option value='"+data[ indice ].valor+"'>"+data[ indice ].dep_enc+"</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta')?>");
 	            	
 	            });
 	            
@@ -449,7 +449,7 @@ function consultarDependenciaSuper(elem, request, response){
 
 	function consultarDependencia(elem, request, response){
 		  $.ajax({
-		    url: "<?php echo $urlFinal16?>",
+		    url: "<?php echo $urlFinalConsultaDependencia?>",
 		    dataType: "json",
 		    data: { valor:$("#<?php echo $this->campoSeguro('sede')?>").val()},
 		    success: function(data){ 
@@ -462,7 +462,7 @@ function consultarDependenciaSuper(elem, request, response){
 		            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante')?>");
 		            $.each(data , function(indice,valor){
 
-		            	$("<option value='"+data[ indice ].ESF_ID_ESPACIO+"'>"+data[ indice ].ESF_NOMBRE_ESPACIO+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante')?>");
+		            	$("<option value='"+data[ indice ].valor+"'>"+data[ indice ].dep_enc+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante')?>");
 		            	
 		            });
 		            
@@ -549,7 +549,7 @@ function consultarDependenciaSuper(elem, request, response){
 
 		function consultarDependenciaSuper(elem, request, response){
 			  $.ajax({
-			    url: "<?php echo $urlFinal16?>",
+			    url: "<?php echo $urlFinalConsultaDependencia?>",
 			    dataType: "json",
 			    data: { valor:$("#<?php echo $this->campoSeguro('sede_super')?>").val()},
 			    success: function(data){ 
@@ -562,7 +562,7 @@ function consultarDependenciaSuper(elem, request, response){
 			            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_supervisor')?>");
 			            $.each(data , function(indice,valor){
 
-			            	$("<option value='"+data[ indice ].ESF_ID_ESPACIO+"'>"+data[ indice ].ESF_NOMBRE_ESPACIO+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_supervisor')?>");
+			            	$("<option value='"+data[ indice ].valor+"'>"+data[ indice ].dep_enc+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_supervisor')?>");
 			            	
 			            });
 			            
@@ -585,7 +585,7 @@ function consultarDependenciaSuper(elem, request, response){
 
 function consultarDependencia(elem, request, response){
 	  $.ajax({
-	    url: "<?php echo $urlFinal16?>",
+	    url: "<?php echo $urlFinalConsultaDependencia?>",
 	    dataType: "json",
 	    data: { valor:$("#<?php echo $this->campoSeguro('sede')?>").val()},
 	    success: function(data){ 
@@ -598,7 +598,7 @@ function consultarDependencia(elem, request, response){
 	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante')?>");
 	            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].ESF_ID_ESPACIO+"'>"+data[ indice ].ESF_NOMBRE_ESPACIO+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante')?>");
+	            	$("<option value='"+data[ indice ].valor+"'>"+data[ indice ].dep_enc+"</option>").appendTo("#<?php echo $this->campoSeguro('dependencia_solicitante')?>");
 	            	
 	            });
 	            

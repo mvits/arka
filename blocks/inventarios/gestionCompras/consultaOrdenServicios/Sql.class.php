@@ -467,8 +467,9 @@ class Sql extends \Sql {
 				$cadenaSql = " UPDATE supervisor_servicios ";
 				$cadenaSql .= " SET nombre='" . $variable [0] . "', ";
 				$cadenaSql .= " cargo='" . $variable [1] . "', ";
-				$cadenaSql .= " dependencia='" . $variable [2] . "' ";
-				$cadenaSql .= "  WHERE id_supervisor='" . $variable [3] . "';";
+				$cadenaSql .= " dependencia='" . $variable [2] . "', ";
+				$cadenaSql .= " sede='" . $variable [3] . "' ";
+				$cadenaSql .= "  WHERE id_supervisor='" . $variable [4] . "';";
 				
 				break;
 			
@@ -645,7 +646,7 @@ class Sql extends \Sql {
 				break;
 			
 			case "dependenciasConsultadas" :
-				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" valor , \"ESF_DEP_ENCARGADA\" dep_enc ";
 				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
 				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
 				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";

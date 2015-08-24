@@ -50,7 +50,8 @@ class RegistradorOrden {
 				$_REQUEST ['nombre_supervisor'],
 				$_REQUEST ['cargo_supervisor'],
 				$_REQUEST ['dependencia_supervisor'],
-				$_REQUEST['supervisor']
+				$_REQUEST ['sede_super'],
+				$_REQUEST['supervisor'],
 		);
 		
 		// Actualizar Supervisor
