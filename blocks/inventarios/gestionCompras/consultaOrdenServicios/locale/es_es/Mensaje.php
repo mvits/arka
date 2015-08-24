@@ -263,7 +263,7 @@ $this->idioma ["contratista"] = "Contratista";
 
 $this->idioma ["ordenadorGasto"] = "Ordenador Gasto";
 
-$this->idioma ["botonAceptar"] = "Actualizar Orden de Servicios";
+$this->idioma ["botonAceptar"] = "Actualizar Orden";
 $this->idioma ["botonCancelar"] = "Cancelar";
 $this->idioma ["botonContinuar"] = "Continuar";
 $this->idioma ["botonConsultar"] = "Consultar";

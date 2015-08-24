@@ -295,10 +295,10 @@ class Sql extends \Sql {
 				break;
 			
 			case "informacion_ordenador" :
-				$cadenaSql = " SELECT ORG_NOMBRE,ORG_IDENTIFICADOR  ";
-				$cadenaSql .= " FROM ORDENADORES_GASTO ";
-				$cadenaSql .= " WHERE  ORG_IDENTIFICADOR='" . $variable . "'";
-				$cadenaSql .= " AND  ORG_ESTADO='A' ";
+				$cadenaSql = " SELECT \"ORG_NOMBRE\",\"ORG_IDENTIFICACION\" , \"ORG_TIPO_ORDENADOR\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_ordenadores ";
+				$cadenaSql .= " WHERE  \"ORG_IDENTIFICACION\"='" . $variable . "' ";
+				$cadenaSql .= " AND \"ORG_ESTADO\"='A' ";
 				
 				break;
 			
@@ -494,46 +494,54 @@ class Sql extends \Sql {
 				
 				break;
 			
+			// UPDATE orden
+			// SET id_orden=?, tipo_orden=?, vigencia=?, consecutivo_servicio=?,
+			// consecutivo_compras=?, fecha_registro=?, info_presupuestal=?,
+			// dependencia_solicitante=?, sede=?, rubro=?, objeto_contrato=?,
+			// poliza1=?, poliza2=?, poliza3=?, poliza4=?, duracion_pago=?,
+			// fecha_inicio_pago=?, fecha_final_pago=?, forma_pago=?, id_contratista=?,
+			// id_supervisor=?, id_ordenador_encargado=?, tipo_ordenador=?,
+			// estado=?
+			// WHERE <condition>;
+			
 			case "actualizarOrden" :
 				$cadenaSql = " UPDATE ";
-				$cadenaSql .= " orden_servicio ";
+				$cadenaSql .= " orden ";
 				$cadenaSql .= " SET ";
 				$cadenaSql .= " dependencia_solicitante='" . $variable [0] . "', ";
-				$cadenaSql .= " rubro='" . $variable [1] . "', ";
-				$cadenaSql .= " objeto_contrato='" . $variable [2] . "', ";
+				$cadenaSql .= " sede='" . $variable [1] . "', ";
+				$cadenaSql .= " rubro='" . $variable [2] . "', ";
+				$cadenaSql .= " objeto_contrato='" . $variable [3] . "', ";
 				
-				if ($variable [3] != '') {
-					$cadenaSql .= " poliza1='" . $variable [3] . "', ";
+				if ($variable [4] != '') {
+					$cadenaSql .= " poliza1='" . $variable [4] . "', ";
 				} else {
 					$cadenaSql .= " poliza1='0', ";
 				}
-				if ($variable [4] != '') {
-					$cadenaSql .= " poliza2='" . $variable [4] . "', ";
+				if ($variable [5] != '') {
+					$cadenaSql .= " poliza2='" . $variable [5] . "', ";
 				} else {
 					$cadenaSql .= " poliza2='0', ";
 				}
 				
-				if ($variable [5] != '') {
-					$cadenaSql .= " poliza3='" . $variable [5] . "', ";
+				if ($variable [6] != '') {
+					$cadenaSql .= " poliza3='" . $variable [6] . "', ";
 				} else {
 					$cadenaSql .= " poliza3='0', ";
 				}
-				if ($variable [6] != '') {
-					$cadenaSql .= " poliza4='" . $variable [6] . "', ";
+				if ($variable [7] != '') {
+					$cadenaSql .= " poliza4='" . $variable [7] . "', ";
 				} else {
 					$cadenaSql .= " poliza4='0', ";
 				}
 				
-				$cadenaSql .= " duracion_pago='" . $variable [7] . "', ";
-				$cadenaSql .= " fecha_inicio_pago='" . $variable [8] . "', ";
-				$cadenaSql .= " fecha_final_pago='" . $variable [9] . "', ";
-				$cadenaSql .= " forma_pago='" . $variable [10] . "', ";
-				$cadenaSql .= " total_preliminar='" . $variable [11] . "', ";
-				$cadenaSql .= " iva='" . $variable [12] . "', ";
-				$cadenaSql .= " total='" . $variable [13] . "', ";
-				$cadenaSql .= " id_ordenador_encargado='" . $variable [14] . "', ";
-				$cadenaSql .= " sede='" . $variable [16] . "' ";
-				$cadenaSql .= "  WHERE id_orden_servicio='" . $variable [15] . "';";
+				$cadenaSql .= " duracion_pago='" . $variable [8] . "', ";
+				$cadenaSql .= " fecha_inicio_pago='" . $variable [9] . "', ";
+				$cadenaSql .= " fecha_final_pago='" . $variable [10] . "', ";
+				$cadenaSql .= " forma_pago='" . $variable [11] . "', ";
+				$cadenaSql .= " id_ordenador_encargado='" . $variable [12] . "', ";
+				$cadenaSql .= " tipo_ordenador='" . $variable [13] . "'  ";
+				$cadenaSql .= "  WHERE id_orden='" . $variable [14] . "';";
 				
 				break;
 			
@@ -894,7 +902,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN  arka_parametros.arka_ordenadores org ON org.\"ORG_IDENTIFICACION\"=ro.id_ordenador_encargado  ";
 				$cadenaSql .= "WHERE id_orden ='" . $variable . "'  ";
 				$cadenaSql .= "AND  ro.estado=true ";
-				echo $cadenaSql;
+				
 				break;
 			
 			case "dependencias_consulta" :

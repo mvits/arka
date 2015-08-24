@@ -273,19 +273,17 @@ if ($_REQUEST ['funcion'] == 'letrasNumeros') {
 }
 
 if ($_REQUEST ['funcion'] == 'SeleccionOrdenador') {
-	$conexion = "sicapital";
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'informacion_ordenador', $_REQUEST ['ordenador'] );
-	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	$resultado = json_encode ( $resultadoItems [0] );
 	
 	echo $resultado;
 }
 
 if ($_REQUEST ['funcion'] == 'SeleccionCargo') {
-	$conexion = "sicapital";
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'informacion_cargo_jefe', $_REQUEST ['cargo'] );
 	
@@ -339,7 +337,6 @@ if ($_REQUEST ['funcion'] == 'registroPresupuestal') {
 
 if ($_REQUEST ['funcion'] == 'Inforegistro') {
 	
-
 	$arreglo = array (
 			$_REQUEST ['registro'],
 			$_REQUEST ['vigencia'] 
@@ -355,9 +352,9 @@ if ($_REQUEST ['funcion'] == 'Inforegistro') {
 
 if ($_REQUEST ['funcion'] == 'consultarContratistas') {
 	
-	$conexion = "sicapital";
 	
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	
+	
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_contratista', $_REQUEST ['vigencia'] );
 	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );

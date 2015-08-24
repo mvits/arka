@@ -46,11 +46,12 @@ class redireccion {
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=actualizo";
 				$variable .= "&numero_orden=" . $valor [0];
+				$variable .= "&mensaje_titulo=" . $valor [1];
 				break;
 			
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=noactualizo";
+				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=error";
 				
 				break;

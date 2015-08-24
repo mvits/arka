@@ -20,7 +20,7 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-		echo "Modificar Ornden";
+// 		echo "Modificar Ornden";
 // 		var_dump ( $_REQUEST );
 		
 		// Rescatar los datos de este bloque
@@ -207,7 +207,7 @@ class registrarForm {
 				// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
 				$tab ++;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoCuadroLista ( $atributos );
+// 				echo $this->miFormulario->campoCuadroLista ( $atributos );
 				unset ( $atributos );
 				
 				$esteCampo = "AgrupacionSolicitante";
@@ -1604,7 +1604,8 @@ class registrarForm {
 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
 					
-					$atributos ["id"] = "id_ordenador"; // No cambiar este nombre
+					$esteCampo='id_ordenador';
+					$atributos ["id"] = $esteCampo; // No cambiar este nombre
 					$atributos ["tipo"] = "hidden";
 					$atributos ['estilo'] = '';
 					$atributos ["obligatorio"] = false;
@@ -1620,7 +1621,10 @@ class registrarForm {
 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
 					
-					$atributos ["id"] = "tipo_ordenador"; // No cambiar este nombre
+					
+					
+					$esteCampo='tipo_ordenador';
+					$atributos ["id"] = $esteCampo; // No cambiar este nombre
 					$atributos ["tipo"] = "hidden";
 					$atributos ['estilo'] = '';
 					$atributos ["obligatorio"] = false;
@@ -1804,7 +1808,13 @@ class registrarForm {
 			$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-			$valorCodificado .= "&opcion=registrarOrden";
+			$valorCodificado .= "&opcion=modificarOrden";
+			$valorCodificado .= "&id_orden=".$_REQUEST['id_orden'];
+			$valorCodificado .= "&mensaje_titulo=".$_REQUEST['mensaje_titulo'];
+			$valorCodificado .= "&contratista=".$Orden['id_contratista'];
+			$valorCodificado .= "&supervisor=".$Orden['id_supervisor'];
+			$valorCodificado .= "&info_presupuestal=".$Orden['info_presupuestal'];
+			
 			$valorCodificado .= "&seccion=" . $tiempo;
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.

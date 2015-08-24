@@ -44,17 +44,13 @@ class RegistradorOrden {
 			redireccion::redireccionar ( 'notextos' );
 		}
 		
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenServicios', $_REQUEST ['numero_orden'] );
-		$orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
 
 		
 		$datosSupervisor = array (
 				$_REQUEST ['nombre_supervisor'],
 				$_REQUEST ['cargo_supervisor'],
 				$_REQUEST ['dependencia_supervisor'],
-				$orden[0]['id_supervisor'] 
+				$_REQUEST['supervisor']
 		);
 		
 		// Actualizar Supervisor
@@ -67,7 +63,7 @@ class RegistradorOrden {
 				$_REQUEST ['direccion_contratista'],
 				$_REQUEST ['telefono_contratista'],
 				$_REQUEST ['cargo_contratista'],
-				$orden[0]['id_contratista']
+				$_REQUEST['contratista']
 		);
 		
 		// Actualizar Contratista
@@ -81,12 +77,12 @@ class RegistradorOrden {
 				$_REQUEST ['valor_disponibilidad'],
 				$_REQUEST ['fecha_diponibilidad'],
 				$_REQUEST ['valorLetras_disponibilidad'],
-				$_REQUEST ['vigencia_registro'],
+				$_REQUEST ['vigencia_disponibilidad'],
 				$_REQUEST ['registro'],
 				$_REQUEST ['valor_registro'],
 				$_REQUEST ['fecha_registro'],
 				$_REQUEST ['valorL_registro'],
-				$orden [0]['info_presupuestal']
+				$_REQUEST['info_presupuestal']
 		);
 		
 		
@@ -98,32 +94,35 @@ class RegistradorOrden {
 		
 		
 		
-// 
+
 			// Actualizar Orden
+			
+		
+		
+		
+
+		
 		
 		$datosOrden = array (
 				$_REQUEST['dependencia_solicitante'],
+				$_REQUEST['sede'],
 				$_REQUEST['rubro'],				
 				$_REQUEST ['objeto_contrato'],
-				isset ( $_REQUEST ['polizaA'] ),
-				isset ( $_REQUEST ['polizaB'] ),
-				isset ( $_REQUEST ['polizaC'] ),
-				isset ( $_REQUEST ['polizaD'] ),
+				isset ( $_REQUEST ['poliza1'] ),
+				isset ( $_REQUEST ['poliza2'] ),
+				isset ( $_REQUEST ['poliza3'] ),
+				isset ( $_REQUEST ['poliza4'] ),
 				$_REQUEST ['duracion'],
 				$_REQUEST ['fecha_inicio_pago'],
 				$_REQUEST ['fecha_final_pago'],
 				$_REQUEST ['forma_pago'],
-				$_REQUEST ['total_preliminar'],
-				$_REQUEST ['iva'],
-				$_REQUEST ['total'],
 				$_REQUEST['id_ordenador'],
-				$_REQUEST['numero_orden'],
-				$_REQUEST['sede']
+				$_REQUEST['tipo_ordenador'],
+				$_REQUEST['id_orden'],
+				
 		);
 		
 	
-
-
 		$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarOrden', $datosOrden );
 
   
@@ -131,9 +130,10 @@ class RegistradorOrden {
 
 
 		$datos = array (
-				$_REQUEST ['numero_orden'] 
+				$_REQUEST ['id_orden'],
+				$_REQUEST['mensaje_titulo'] 
 		);
-		
+	
 		if ($id_orden == true) {
 			
 			redireccion::redireccionar ( 'inserto', $datos );

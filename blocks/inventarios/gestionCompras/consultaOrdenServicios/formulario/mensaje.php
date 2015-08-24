@@ -104,7 +104,7 @@ class registrarForm {
 				
 				if ($_REQUEST ['mensaje'] == 'noActualizoElemento') {
 				
-					$mensaje = "No se realizo la Actualización del Elemento";
+					$mensaje = "NO SE REALIZO LA ACTUALIZACION DEL ELEMENTO";
 				
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -122,7 +122,7 @@ class registrarForm {
 				}
 				if ($_REQUEST ['mensaje'] == 'ActualizoElemento') {
 					
-					$mensaje = "Se Actualizo Elemento con Exito.";
+					$mensaje = "SE ACTUALIZO EL ELEMENTO DE LA ORDEN.";
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -143,7 +143,7 @@ class registrarForm {
 				
 				if ($_REQUEST ['mensaje'] == 'eliminoElemento') {
 				
-					$mensaje = "Se Elimino el  Elemento de la Orden.";
+					$mensaje = "SE ELIMINO EL ELEMENTO DE LA ORDEN.";
 				
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -166,7 +166,7 @@ class registrarForm {
 				
 				if ($_REQUEST ['mensaje'] == 'noeliminoElemento') {
 				
-					$mensaje = "No Se Pudo Eliminar el Elemento de la Orden";
+					$mensaje = "NO SE PUDO ELIMINAR ELEMENTO DE LA ORDEN";
 				
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -186,7 +186,7 @@ class registrarForm {
 				
 				if ($_REQUEST ['mensaje'] == 'actualizo') {
 					
-					$mensaje = "Se Actualizo la Orden de Servicios <br> Número de Orden Servicios: " . $_REQUEST ['numero_orden'] . "";
+					$mensaje = "SE ACTUALIZO LA ".$_REQUEST['mensaje_titulo'];
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -204,7 +204,7 @@ class registrarForm {
 				}
 				if ($_REQUEST ['mensaje'] == 'error') {
 					
-					$mensaje = "No Se Pudo Hacer Actualizar la Orden de Servicios";
+					$mensaje = "NO SE PUDO ACTUALIZAR LA ORDEN";
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
