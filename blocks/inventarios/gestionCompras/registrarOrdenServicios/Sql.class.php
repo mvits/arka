@@ -362,11 +362,12 @@ class Sql extends \Sql {
 			
 			case "insertarSupervisor" :
 				$cadenaSql = " INSERT INTO supervisor_servicios(";
-				$cadenaSql .= " nombre,cargo, dependencia) ";
+				$cadenaSql .= " nombre,cargo, dependencia,sede) ";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= "'" . $variable [1] . "',";
-				$cadenaSql .= "'" . $variable [2] . "') ";
+				$cadenaSql .= "'" . $variable [2] . "',";
+				$cadenaSql .= "'" . $variable [3] . "') ";
 				$cadenaSql .= "RETURNING  id_supervisor; ";
 				break;
 			

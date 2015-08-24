@@ -42,7 +42,9 @@ class RegistradorOrden {
 		$datosSupervisor = array (
 				$_REQUEST ['nombre_supervisor'],
 				$_REQUEST ['cargo_supervisor'],
-				$_REQUEST ['dependencia_supervisor'] 
+				$_REQUEST ['dependencia_supervisor'],
+				$_REQUEST ['sede_super'],
+				
 		);
 		
 		// Registro Supervisor
@@ -149,9 +151,7 @@ class RegistradorOrden {
 		$consecutivos_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$consecutivo_orden = $consecutivos_orden [0];
-		var_dump(		
-		$consecutivo_orden);
-		exit;
+
 		if ($consecutivo_orden) {
 			
 			foreach ( $consecutivo_orden as $valor ) {
