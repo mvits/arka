@@ -848,6 +848,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM arka_parametros.arka_rubros ";
 				$cadenaSql .= "WHERE \"RUB_VIGENCIA\"='" . date ( 'Y' ) . "';";
 				
+				
 				break;
 			
 			case "funcionarios" :
@@ -884,14 +885,27 @@ class Sql extends \Sql {
 								ipo.numero_regis,
 								ipo.valor_regis,
 								ipo.fecha_regis,
-								ipo.letras_regis  ";
+								ipo.letras_regis,
+								 \"ORG_NOMBRE\" nombre_ordenador ";
 				
 				$cadenaSql .= "FROM orden ro ";
 				$cadenaSql .= "JOIN  supervisor_servicios  sp ON sp.id_supervisor=ro.id_supervisor  ";
 				$cadenaSql .= "JOIN  contratista_servicios  cs ON cs.id_contratista=ro.id_contratista  ";
 				$cadenaSql .= "JOIN  informacion_presupuestal_orden ipo ON ipo.id_informacion=ro.info_presupuestal  ";
+				$cadenaSql .= "JOIN  arka_parametros.arka_ordenadores org ON org.\"ORG_IDENTIFICACION\"=ro.id_ordenador_encargado  ";
 				$cadenaSql .= "WHERE id_orden ='" . $variable . "'  ";
 				$cadenaSql .= "AND  ro.estado=true ";
+				
+				break;
+			
+			case "dependencias_consulta" :
+				
+				$cadenaSql = "SELECT DISTINCT  \"ESF_CODIGO_DEP\" , \"ESF_DEP_ENCARGADA\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_dependencia ad ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_ESTADO\"='A'";
+				$cadenaSql .= " AND sa.\"ESF_ID_SEDE\"='".$variable."'";
 				
 				break;
 		}
