@@ -20,8 +20,8 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-// 		echo "Modificar Ornden";
-// 		var_dump ( $_REQUEST );
+		// echo "Modificar Ornden";
+		// var_dump ( $_REQUEST );
 		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
@@ -49,7 +49,7 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'ConsultarInformacionOrden', $_REQUEST ['id_orden'] );
 		
 		$Orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-// 		var_dump ( $Orden );
+		// var_dump ( $Orden );
 		
 		$Orden = $Orden [0];
 		
@@ -91,8 +91,10 @@ class registrarForm {
 				'asignacionOrdenador' => $Orden ['id_ordenador_encargado'],
 				'nombreOrdenador' => $Orden ['nombre_ordenador'],
 				'id_ordenador' => $Orden ['id_ordenador_encargado'],
-				'tipo_ordenador' => $Orden ['tipo_ordenador'] 
-		);
+				'tipo_ordenador' => $Orden ['tipo_ordenador'],
+				'unidad_ejecutora' => $Orden ['unidad_ejecutora'] 
+		)
+		;
 		
 		// var_dump($arreglo);
 		
@@ -207,7 +209,7 @@ class registrarForm {
 				// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
 				$tab ++;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
-// 				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				// echo $this->miFormulario->campoCuadroLista ( $atributos );
 				unset ( $atributos );
 				
 				$esteCampo = "AgrupacionSolicitante";
@@ -1158,6 +1160,50 @@ class registrarForm {
 					echo $this->miFormulario->campoCuadroLista ( $atributos );
 					unset ( $atributos );
 					
+					$esteCampo = "unidad_ejecutora";
+					$atributos ['nombre'] = $esteCampo;
+					$atributos ['id'] = $esteCampo;
+					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos ["etiquetaObligatorio"] = true;
+					$atributos ['tab'] = $tab ++;
+					$atributos ['anchoEtiqueta'] = 150;
+					$atributos ['evento'] = '';
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['seleccion'] = 1;
+					}
+					$atributos ['deshabilitado'] = false;
+					$atributos ['columnas'] = 2;
+					$atributos ['tamanno'] = 1;
+					$atributos ['ajax_function'] = "";
+					$atributos ['ajax_control'] = $esteCampo;
+					$atributos ['estilo'] = "jqueryui";
+					$atributos ['validar'] = "required";
+					$atributos ['limitar'] = 1;
+					$atributos ['anchoCaja'] = 27;
+					$atributos ['miEvento'] = '';
+					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "Unidad_Ejecutoria" );
+					$matrizItems = array (
+							array (
+									0,
+									' ' 
+							) 
+					);
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					
+					$atributos ['matrizItems'] = $matrizItems;
+					// $atributos['miniRegistro']=;
+					// $atributos ['baseDatos'] = "sicapital";
+					// $atributos ['baseDatos'] = "inventarios";
+					
+					// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
+					
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					unset ( $atributos );
+					
 					$esteCampo = "AgrupacionCertificadoPresupuestal";
 					$atributos ['id'] = $esteCampo;
 					$atributos ['leyenda'] = "Certificado de Disponibilidad Presupuestal";
@@ -1201,7 +1247,7 @@ class registrarForm {
 						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 						
 						$atributos ['matrizItems'] = $matrizItems;
-// 						var_dump($matrizItems);	
+						// var_dump($matrizItems);
 						// $atributos['miniRegistro']=;
 						
 						// $atributos ['baseDatos'] = "inventarios";
@@ -1604,7 +1650,7 @@ class registrarForm {
 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
 					
-					$esteCampo='id_ordenador';
+					$esteCampo = 'id_ordenador';
 					$atributos ["id"] = $esteCampo; // No cambiar este nombre
 					$atributos ["tipo"] = "hidden";
 					$atributos ['estilo'] = '';
@@ -1621,9 +1667,7 @@ class registrarForm {
 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
 					
-					
-					
-					$esteCampo='tipo_ordenador';
+					$esteCampo = 'tipo_ordenador';
 					$atributos ["id"] = $esteCampo; // No cambiar este nombre
 					$atributos ["tipo"] = "hidden";
 					$atributos ['estilo'] = '';
@@ -1809,11 +1853,11 @@ class registrarForm {
 			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=modificarOrden";
-			$valorCodificado .= "&id_orden=".$_REQUEST['id_orden'];
-			$valorCodificado .= "&mensaje_titulo=".$_REQUEST['mensaje_titulo'];
-			$valorCodificado .= "&contratista=".$Orden['id_contratista'];
-			$valorCodificado .= "&supervisor=".$Orden['id_supervisor'];
-			$valorCodificado .= "&info_presupuestal=".$Orden['info_presupuestal'];
+			$valorCodificado .= "&id_orden=" . $_REQUEST ['id_orden'];
+			$valorCodificado .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+			$valorCodificado .= "&contratista=" . $Orden ['id_contratista'];
+			$valorCodificado .= "&supervisor=" . $Orden ['id_supervisor'];
+			$valorCodificado .= "&info_presupuestal=" . $Orden ['info_presupuestal'];
 			
 			$valorCodificado .= "&seccion=" . $tiempo;
 			/**

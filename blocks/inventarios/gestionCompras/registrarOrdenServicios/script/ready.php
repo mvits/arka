@@ -205,13 +205,16 @@
 			   	 minimumInputLength: 3,
 			       });
 			        	
+			        	
+			        	
+			        	
 $("#<?php echo $this->campoSeguro('rubro')?>").select2({
              	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });
       
       
-
+$("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").select2();
 			       
 $('#<?php echo $this->campoSeguro('sede')?>').width(300);
 $("#<?php echo $this->campoSeguro('sede')?>").select2();

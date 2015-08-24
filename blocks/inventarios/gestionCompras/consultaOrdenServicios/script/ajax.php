@@ -1115,7 +1115,8 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 	    	  $.ajax({
 	    	    url: "<?php echo $urlFinal10?>",
 	    	    dataType: "json",
-	    	    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val()},
+	    	    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
+	    	    		unidad:$("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").val()},
 	    	    success: function(data){ 
 	    	        if(data[0]!=" "){
 

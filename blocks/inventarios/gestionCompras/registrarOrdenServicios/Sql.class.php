@@ -243,8 +243,10 @@ class Sql extends \Sql {
 			case "buscar_disponibilidad" :
 				$cadenaSql = "SELECT DISTINCT \"DIS_NUMERO_DISPONIBILIDAD\" AS identificador,\"DIS_NUMERO_DISPONIBILIDAD\" AS numero ";
 				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
-				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable . "'";
+				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable[0] . "' ";
+				$cadenaSql .= "AND \"DIS_UNIDAD_EJECUTORA\"='" . $variable[1]. "' ";
 				$cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" DESC ;";
+				
 				
 				break;
 			
@@ -398,15 +400,15 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [4] . "') ";
 				$cadenaSql .= "RETURNING  id_encargado; ";
 				break;
-				
-// 				INSERT
-// 				orden(
-//             id_orden, tipo_orden, vigencia, consecutivo_servicio, consecutivo_compras, 
-//             fecha_registro, info_presupuestal, dependencia_solicitante, sede, 
-//             rubro, objeto_contrato, poliza1, poliza2, poliza3, poliza4, duracion_pago, 
-//             fecha_inicio_pago, fecha_final_pago, forma_pago, id_ordenador_encargado, 
-//             estado)
-// 				;
+			
+			// INSERT
+			// orden(
+			// id_orden, tipo_orden, vigencia, consecutivo_servicio, consecutivo_compras,
+			// fecha_registro, info_presupuestal, dependencia_solicitante, sede,
+			// rubro, objeto_contrato, poliza1, poliza2, poliza3, poliza4, duracion_pago,
+			// fecha_inicio_pago, fecha_final_pago, forma_pago, id_ordenador_encargado,
+			// estado)
+			// ;
 			
 			case "insertarOrden" :
 				$cadenaSql = " INSERT INTO ";
@@ -426,8 +428,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [7] . "',";
 				$cadenaSql .= "'" . $variable [8] . "',";
 				$cadenaSql .= "'" . $variable [9] . "',";
-				
-				
 				
 				if ($variable [10] != '') {
 					$cadenaSql .= "'" . $variable [10] . "',";
@@ -467,7 +467,7 @@ class Sql extends \Sql {
 				$cadenaSql = " INSERT INTO informacion_presupuestal_orden( ";
 				$cadenaSql .= " vigencia_dispo, numero_dispo, valor_disp, fecha_dip,
 								letras_dispo, vigencia_regis, numero_regis, valor_regis, fecha_regis,
-								letras_regis, fecha_registro)";
+								letras_regis, fecha_registro,unidad_ejecutora)";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [1] . "',";
 				$cadenaSql .= "'" . $variable [2] . "',";
@@ -479,8 +479,10 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [8] . "',";
 				$cadenaSql .= "'" . $variable [9] . "',";
 				$cadenaSql .= "'" . $variable [10] . "',";
-				$cadenaSql .= "'" . $variable [0] . "') ";
+				$cadenaSql .= "'" . $variable [0] . "',";
+				$cadenaSql .= "'" . $variable [11] . "') ";
 				$cadenaSql .= "RETURNING  id_informacion; ";
+				
 				break;
 			
 			case "consultarDependencia" :
@@ -581,6 +583,13 @@ class Sql extends \Sql {
 				$cadenaSql = " 	SELECT max(consecutivo_servicio)  ";
 				$cadenaSql .= " FROM orden ";
 				$cadenaSql .= " WHERE vigencia ='" . $variable . "';";
+				
+				break;
+			
+			case "Unidad_Ejecutoria" :
+				
+				$cadenaSql = " SELECT DISTINCT \"DIS_UNIDAD_EJECUTORA\" valor ,\"DIS_UNIDAD_EJECUTORA\" descripcion  ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal; ";
 				
 				break;
 		}

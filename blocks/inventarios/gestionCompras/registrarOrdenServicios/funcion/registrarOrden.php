@@ -32,20 +32,22 @@ class RegistradorOrden {
 		if ($_REQUEST ['objeto_contrato'] == '') {
 			
 			redireccion::redireccionar ( 'notextos' );
+			exit ();
 		}
 		
 		if ($_REQUEST ['forma_pago'] == '') {
 			
 			redireccion::redireccionar ( 'notextos' );
+			exit ();
 		}
 		
 		$datosSupervisor = array (
 				$_REQUEST ['nombre_supervisor'],
 				$_REQUEST ['cargo_supervisor'],
 				$_REQUEST ['dependencia_supervisor'],
-				$_REQUEST ['sede_super'],
-				
-		);
+				$_REQUEST ['sede_super'] 
+		)
+		;
 		
 		// Registro Supervisor
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarSupervisor', $datosSupervisor );
@@ -77,7 +79,8 @@ class RegistradorOrden {
 				$_REQUEST ['registro'],
 				$_REQUEST ['valor_registro'],
 				$_REQUEST ['fecha_registro'],
-				$_REQUEST ['valorL_registro'] 
+				$_REQUEST ['valorL_registro'],
+				$_REQUEST ['unidad_ejecutora'] 
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarInformacionPresupuestal', $arreglo );
@@ -144,7 +147,7 @@ class RegistradorOrden {
 				$id_ContratistaC [0] [0],
 				$id_supervisor [0] [0],
 				$_REQUEST ['id_ordenador'],
-				$_REQUEST['tipo_ordenador'] 
+				$_REQUEST ['tipo_ordenador'] 
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarOrden', $datosOrden );
@@ -152,7 +155,7 @@ class RegistradorOrden {
 		$consecutivos_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$consecutivo_orden = $consecutivos_orden [0];
-
+		
 		if ($consecutivo_orden) {
 			
 			foreach ( $consecutivo_orden as $valor ) {
@@ -162,12 +165,14 @@ class RegistradorOrden {
 				}
 			}
 			
-			$datos="NÚMERO DE ".$nombre." # ".$consecutivo."<br> Y VIGENCIA ".date('Y');
+			$datos = "NÚMERO DE " . $nombre . " # " . $consecutivo . "<br> Y VIGENCIA " . date ( 'Y' );
 			
 			redireccion::redireccionar ( 'inserto', $datos );
+			exit ();
 		} else {
 			
 			redireccion::redireccionar ( 'noInserto', $datos );
+			exit ();
 		}
 	}
 	function resetForm() {

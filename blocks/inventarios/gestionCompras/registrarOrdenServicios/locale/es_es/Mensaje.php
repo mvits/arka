@@ -6,6 +6,10 @@ $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaj
 
 
 
+
+$this->idioma ["unidad_ejecutora"] ="Unidad Ejecutoria: ";
+$this->idioma ["unidad_ejecutoraTitulo"] ="Seleccione Unidad Ejecutoria ";
+
 $this->idioma ["tipo_orden"] ="Tipo de Orden  : ";
 $this->idioma ["tipo_ordenTitulo"] ="Seleccione Tipo de Orden ";
 

@@ -296,7 +296,7 @@ if ($_REQUEST ['funcion'] == 'SeleccionCargo') {
 
 if ($_REQUEST ['funcion'] == 'disponibilidades') {
 	
-	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_disponibilidad', $_REQUEST ['vigencia'] );
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_disponibilidad',array($_REQUEST ['vigencia'],$_REQUEST['unidad']));
 	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	$resultado = json_encode ( $resultadoItems );

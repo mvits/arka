@@ -83,7 +83,8 @@ class RegistradorOrden {
 				$_REQUEST ['valor_registro'],
 				$_REQUEST ['fecha_registro'],
 				$_REQUEST ['valorL_registro'],
-				$_REQUEST['info_presupuestal']
+				$_REQUEST['info_presupuestal'],
+				$_REQUEST['unidad_ejecutora']
 		);
 		
 		

@@ -55,7 +55,7 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2({
               	 });                             
                              
                              
-                             
+$("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").select2();                             
                              
                              
                              
@@ -197,11 +197,15 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2({
 		$("#<?php echo $this->campoSeguro('sede')?>").select2();
 		                     
 		$('#<?php echo $this->campoSeguro('orden_consulta')?>').select2();
-                     
+        
+        $('#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>').width(100);             
         $("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").select2();
+        $('#<?php echo $this->campoSeguro('diponibilidad')?>').width(150);
 		$('#<?php echo $this->campoSeguro('diponibilidad')?>').select2();
 		
+		
 		$("#<?php echo $this->campoSeguro('vigencia_registro')?>").select2();
+		$('#<?php echo $this->campoSeguro('registro')?>').width(150);
 		$("#<?php echo $this->campoSeguro('registro')?>").select2(); 
 		
 		$("#<?php echo $this->campoSeguro('vigencia_contratista')?>").select2();

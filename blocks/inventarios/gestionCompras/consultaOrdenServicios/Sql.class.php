@@ -241,10 +241,13 @@ class Sql extends \Sql {
 			case "buscar_disponibilidad" :
 				$cadenaSql = "SELECT DISTINCT \"DIS_NUMERO_DISPONIBILIDAD\" AS identificador,\"DIS_NUMERO_DISPONIBILIDAD\" AS numero ";
 				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
-				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable . "'";
+				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [0] . "' ";
+				$cadenaSql .= "AND \"DIS_UNIDAD_EJECUTORA\"='" . $variable [1] . "' ";
 				$cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" DESC ;";
 				
 				break;
+				
+				
 			case "info_disponibilidad" :
 				$cadenaSql = "SELECT DISTINCT \"DIS_FECHA_REGISTRO\" AS FECHA, \"DIS_VALOR\" ";
 				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
@@ -557,7 +560,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " numero_regis='" . $variable [6] . "', ";
 				$cadenaSql .= " valor_regis='" . $variable [7] . "', ";
 				$cadenaSql .= " fecha_regis='" . $variable [8] . "', ";
-				$cadenaSql .= " letras_regis='" . $variable [9] . "' ";
+				$cadenaSql .= " letras_regis='" . $variable [9] . "', ";
+				$cadenaSql .= " unidad_ejecutora='" . $variable [11] . "' ";
 				$cadenaSql .= "  WHERE id_informacion='" . $variable [10] . "';";
 				
 				break;
@@ -894,6 +898,7 @@ class Sql extends \Sql {
 								ipo.valor_regis,
 								ipo.fecha_regis,
 								ipo.letras_regis,
+								ipo.unidad_ejecutora,
 								 \"ORG_NOMBRE\" nombre_ordenador ";
 				
 				$cadenaSql .= "FROM orden ro ";
@@ -930,6 +935,13 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
 				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable . "'";
 				$cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" DESC ;";
+				
+				break;
+			
+			case "Unidad_Ejecutoria" :
+				
+				$cadenaSql = " SELECT DISTINCT \"DIS_UNIDAD_EJECUTORA\" valor ,\"DIS_UNIDAD_EJECUTORA\" descripcion  ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal; ";
 				
 				break;
 		}

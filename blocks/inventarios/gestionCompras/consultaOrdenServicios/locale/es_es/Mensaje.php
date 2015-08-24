@@ -5,6 +5,8 @@
 
 $this->idioma ["botonEliminar"] = "Eliminar Elemento ";
 
+$this->idioma ["unidad_ejecutora"] ="Unidad Ejecutoria: ";
+$this->idioma ["unidad_ejecutoraTitulo"] ="Seleccione Unidad Ejecutoria ";
 
 
 // -- Modificar Elementos
