@@ -865,6 +865,35 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE \"ORG_ESTADO\"='A' ";
 				
 				break;
+			
+			case "ConsultarInformacionOrden" :
+				$cadenaSql = "SELECT  ro.* ,
+								cs.nombre_razon_social contratista,
+						        cs.identificacion,
+								cs.telefono,
+								cs.cargo cargo_c,
+								cs.direccion,
+								sp.nombre supervisor ,
+								sp.cargo cargo_s,
+								sp.dependencia dp_supervisor,
+								ipo.vigencia_dispo,
+								ipo.numero_dispo,
+								ipo.valor_disp, 
+								ipo.fecha_dip,
+								ipo.letras_dispo,
+								ipo.numero_regis,
+								ipo.valor_regis,
+								ipo.fecha_regis,
+								ipo.letras_regis  ";
+				
+				$cadenaSql .= "FROM orden ro ";
+				$cadenaSql .= "JOIN  supervisor_servicios  sp ON sp.id_supervisor=ro.id_supervisor  ";
+				$cadenaSql .= "JOIN  contratista_servicios  cs ON cs.id_contratista=ro.id_contratista  ";
+				$cadenaSql .= "JOIN  informacion_presupuestal_orden ipo ON ipo.id_informacion=ro.info_presupuestal  ";
+				$cadenaSql .= "WHERE id_orden ='" . $variable . "'  ";
+				$cadenaSql .= "AND  ro.estado=true ";
+				
+				break;
 		}
 		return $cadenaSql;
 	}

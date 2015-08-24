@@ -46,6 +46,46 @@ class registrarForm {
 		
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'ConsultarInformacionOrden', $_REQUEST['id_orden'] );
+		
+		$Orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		var_dump($Orden);
+		
+		
+		
+		$Orden=$Orden[0];
+		
+		$arreglo=array(
+			'tipo_orden'=>$Orden['tipo_orden'],
+ 			'sede'=>$Orden['sede'],
+				'dependencia_solicitante'=>$Orden['dependencia_solicitante'],
+				'rubro'=>$Orden['rubro'],
+				'dependencia_supervisor'=>$Orden['dp_supervisor'],
+				'nombre_supervisor'=>$Orden['supervisor'],
+				'cargo_supervisor'=>$Orden['cargo_s'],
+				'selec_proveedor'=>$Orden['identificacion']." - ".$Orden['contratista'],
+				'id_proveedor'=>$Orden['identificacion'],
+				'nombre_razon_contratista'=>$Orden['contratista'],
+				'identifcacion_contratista'=>$Orden['identificacion'],
+				'direccion_contratista'=>$Orden['direccion'],
+				'telefono_contratista'=>$Orden['telefono'],
+				'cargo_contratista'=>$Orden['cargo_c'],
+				'objeto_contrato'=>$Orden['objeto_contrato'],
+				'poliza1'=>$Orden['poliza1'],
+				'poliza2'=>$Orden['poliza2'],
+				'poliza3'=>$Orden['poliza3'],
+				'poliza4'=>$Orden['poliza4'],
+				
+				
+				
+				
+				
+		);
+		
+		
+		
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'polizas' );
 		
 		$resultado_polizas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -1558,7 +1598,7 @@ class registrarForm {
 					$atributos ['deshabilitado'] = false;
 					$atributos ['tamanno'] = 39;
 					$atributos ['maximoTamanno'] = '';
-					$atributos ['anchoEtiqueta'] = 102;
+					$atributos ['anchoEtiqueta'] = 95;
 					$tab ++;
 					
 					// Aplica atributos globales al control
