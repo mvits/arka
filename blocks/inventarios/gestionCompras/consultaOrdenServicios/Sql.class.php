@@ -909,7 +909,7 @@ class Sql extends \Sql {
 				
 				break;
 			
-			case "buscar_registro" :
+			case "registro_consultas" :
 				$cadenaSql = "SELECT  \"REP_IDENTIFICADOR\" AS identificador,\"REP_IDENTIFICADOR\" AS numero ";
 				$cadenaSql .= "FROM arka_parametros.arka_registropresupuestal ";
 				$cadenaSql .= "WHERE \"REP_VIGENCIA\"='" . $variable [0] . "'";
