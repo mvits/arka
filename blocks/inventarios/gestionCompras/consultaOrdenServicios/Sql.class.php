@@ -848,7 +848,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM arka_parametros.arka_rubros ";
 				$cadenaSql .= "WHERE \"RUB_VIGENCIA\"='" . date ( 'Y' ) . "';";
 				
-				
 				break;
 			
 			case "funcionarios" :
@@ -868,7 +867,7 @@ class Sql extends \Sql {
 				break;
 			
 			case "ConsultarInformacionOrden" :
-				$cadenaSql = "SELECT  ro.* ,
+				$cadenaSql = "SELECT DISTINCT ro.* ,
 								cs.nombre_razon_social contratista,
 						        cs.identificacion,
 								cs.telefono,
@@ -877,6 +876,7 @@ class Sql extends \Sql {
 								sp.nombre supervisor ,
 								sp.cargo cargo_s,
 								sp.dependencia dp_supervisor,
+								sp.sede sd_supervisor,
 								ipo.vigencia_dispo,
 								ipo.numero_dispo,
 								ipo.valor_disp, 
@@ -895,7 +895,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN  arka_parametros.arka_ordenadores org ON org.\"ORG_IDENTIFICACION\"=ro.id_ordenador_encargado  ";
 				$cadenaSql .= "WHERE id_orden ='" . $variable . "'  ";
 				$cadenaSql .= "AND  ro.estado=true ";
-				
+				echo $cadenaSql;
 				break;
 			
 			case "dependencias_consulta" :
@@ -905,7 +905,23 @@ class Sql extends \Sql {
 				$cadenaSql .= " JOIN  arka_parametros.arka_espaciosfisicos ef ON  ef.\"ESF_ID_ESPACIO\"=ad.\"ESF_ID_ESPACIO\" ";
 				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
 				$cadenaSql .= " WHERE ad.\"ESF_ESTADO\"='A'";
-				$cadenaSql .= " AND sa.\"ESF_ID_SEDE\"='".$variable."'";
+				$cadenaSql .= " AND sa.\"ESF_ID_SEDE\"='" . $variable . "'";
+				
+				break;
+			
+			case "buscar_registro" :
+				$cadenaSql = "SELECT  \"REP_IDENTIFICADOR\" AS identificador,\"REP_IDENTIFICADOR\" AS numero ";
+				$cadenaSql .= "FROM arka_parametros.arka_registropresupuestal ";
+				$cadenaSql .= "WHERE \"REP_VIGENCIA\"='" . $variable [0] . "'";
+				$cadenaSql .= "AND  \"REP_NUMERO_DISPONIBILIDAD\"='" . $variable [1] . "'";
+				
+				break;
+			
+			case "disponibilidades_consultas" :
+				$cadenaSql = "SELECT DISTINCT \"DIS_NUMERO_DISPONIBILIDAD\" AS identificador,\"DIS_NUMERO_DISPONIBILIDAD\" AS numero ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
+				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable . "'";
+				$cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" DESC ;";
 				
 				break;
 		}
