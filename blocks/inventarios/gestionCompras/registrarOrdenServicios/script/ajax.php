@@ -501,6 +501,7 @@ function valorLetras(elem, request, response){
 
 		    			$("#<?php echo $this->campoSeguro('nombreOrdenador')?>").val(data[0]);
 		    			$("#<?php echo $this->campoSeguro('id_ordenador')?>").val(data[1]);
+		    			$("#<?php echo $this->campoSeguro('tipo_ordenador')?>").val(data[2]);
 								    			
 			    		}else{
 

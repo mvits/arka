@@ -286,7 +286,7 @@ class Sql extends \Sql {
 				
 				break;
 			case "informacion_ordenador" :
-				$cadenaSql = " SELECT \"ORG_NOMBRE\",\"ORG_IDENTIFICACION\"  ";
+				$cadenaSql = " SELECT \"ORG_NOMBRE\",\"ORG_IDENTIFICACION\" , \"ORG_TIPO_ORDENADOR\" ";
 				$cadenaSql .= " FROM arka_parametros.arka_ordenadores ";
 				$cadenaSql .= " WHERE  \"ORG_IDENTIFICACION\"='" . $variable . "' ";
 				$cadenaSql .= " AND \"ORG_ESTADO\"='A' ";
@@ -414,7 +414,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "tipo_orden, vigencia, consecutivo_servicio, consecutivo_compras, 
 								            fecha_registro, info_presupuestal, dependencia_solicitante, sede, 
 								            rubro, objeto_contrato, poliza1, poliza2, poliza3, poliza4, duracion_pago, 
-								            fecha_inicio_pago, fecha_final_pago, forma_pago,id_contratista,id_supervisor, id_ordenador_encargado )";
+								            fecha_inicio_pago, fecha_final_pago, forma_pago,id_contratista,id_supervisor, id_ordenador_encargado, tipo_ordenador)";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= "'" . $variable [1] . "',";
@@ -457,7 +457,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [17] . "',";
 				$cadenaSql .= "'" . $variable [18] . "',";
 				$cadenaSql .= "'" . $variable [19] . "',";
-				$cadenaSql .= "'" . $variable [20] . "') ";
+				$cadenaSql .= "'" . $variable [20] . "',";
+				$cadenaSql .= "'" . $variable [21] . "') ";
 				$cadenaSql .= "RETURNING  consecutivo_compras,consecutivo_servicio  ; ";
 				
 				break;

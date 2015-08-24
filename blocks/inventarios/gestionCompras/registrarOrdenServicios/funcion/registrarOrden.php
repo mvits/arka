@@ -143,7 +143,8 @@ class RegistradorOrden {
 				$_REQUEST ['forma_pago'],
 				$id_ContratistaC [0] [0],
 				$id_supervisor [0] [0],
-				$_REQUEST ['id_ordenador'] 
+				$_REQUEST ['id_ordenador'],
+				$_REQUEST['tipo_ordenador'] 
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarOrden', $datosOrden );
