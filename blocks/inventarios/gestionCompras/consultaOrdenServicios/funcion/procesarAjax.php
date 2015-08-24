@@ -1,7 +1,6 @@
 <?php
 use inventarios\gestionCompras\consultaOrdenServicios\Sql;
 
-
 $conexion = "inventarios";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 class EnLetras {
@@ -299,11 +298,8 @@ if ($_REQUEST ['funcion'] == 'SeleccionCargo') {
 
 if ($_REQUEST ['funcion'] == 'disponibilidades') {
 	
-	$conexion = "sicapital";
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
 	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_disponibilidad', $_REQUEST ['vigencia'] );
-	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	$resultado = json_encode ( $resultadoItems );
 	
@@ -312,16 +308,13 @@ if ($_REQUEST ['funcion'] == 'disponibilidades') {
 
 if ($_REQUEST ['funcion'] == 'Infodisponibilidades') {
 	
-	$conexion = "sicapital";
-	
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 	$arreglo = array (
 			$_REQUEST ['disponibilidad'],
 			$_REQUEST ['vigencia'] 
 	);
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'info_disponibilidad', $arreglo );
-	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	$resultado = json_encode ( $resultadoItems [0] );
 	
@@ -330,12 +323,14 @@ if ($_REQUEST ['funcion'] == 'Infodisponibilidades') {
 
 if ($_REQUEST ['funcion'] == 'registroPresupuestal') {
 	
-	$conexion = "sicapital";
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	$arreglo = array (
+			$_REQUEST ['vigencia'],
+			$_REQUEST ['disponibilidad'] 
+	);
 	
-	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_registro', $_REQUEST ['vigencia'] );
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_registro', $arreglo );
 	
-	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	$resultado = json_encode ( $resultadoItems );
 	
@@ -344,16 +339,14 @@ if ($_REQUEST ['funcion'] == 'registroPresupuestal') {
 
 if ($_REQUEST ['funcion'] == 'Inforegistro') {
 	
-	$conexion = "sicapital";
-	
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+
 	$arreglo = array (
-			$_REQUEST ['disponibilidad'],
+			$_REQUEST ['registro'],
 			$_REQUEST ['vigencia'] 
 	);
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'info_registro', $arreglo );
-	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	$resultado = json_encode ( $resultadoItems [0] );
 	
@@ -376,10 +369,9 @@ if ($_REQUEST ['funcion'] == 'consultarContratistas') {
 
 if ($_REQUEST ['funcion'] == 'SeleccionProveedor') {
 	
-	$conexion = "sicapital";
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 	$cadenaSql = $this->sql->getCadenaSql ( 'informacion_proveedor', $_REQUEST ['proveedor'] );
-	$resultadoItems = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	$resultado = json_encode ( $resultadoItems [0] );
 	
@@ -388,12 +380,9 @@ if ($_REQUEST ['funcion'] == 'SeleccionProveedor') {
 
 if ($_REQUEST ['funcion'] == 'consultarCargoSuper') {
 	
-	$conexion = "sicapital";
-	
-	$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-	
 	$cadenaSql = $this->sql->getCadenaSql ( 'cargoSuper', $_REQUEST ['valor'] );
-	$resultado = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	$resultado = json_encode ( $resultado [0] );
 	

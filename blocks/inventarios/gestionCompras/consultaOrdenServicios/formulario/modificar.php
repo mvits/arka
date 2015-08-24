@@ -21,7 +21,7 @@ class registrarForm {
 	}
 	function miForm() {
 		echo "Modificar Ornden";
-		var_dump ( $_REQUEST );
+// 		var_dump ( $_REQUEST );
 		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
@@ -49,7 +49,7 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'ConsultarInformacionOrden', $_REQUEST ['id_orden'] );
 		
 		$Orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		// var_dump ( $Orden );
+// 		var_dump ( $Orden );
 		
 		$Orden = $Orden [0];
 		
@@ -90,7 +90,8 @@ class registrarForm {
 				'valorL_registro' => $Orden ['letras_regis'],
 				'asignacionOrdenador' => $Orden ['id_ordenador_encargado'],
 				'nombreOrdenador' => $Orden ['nombre_ordenador'],
-				'id_ordenador' => $Orden ['id_ordenador_encargado'] 
+				'id_ordenador' => $Orden ['id_ordenador_encargado'],
+				'tipo_ordenador' => $Orden ['tipo_ordenador'] 
 		);
 		
 		// var_dump($arreglo);
@@ -1200,6 +1201,7 @@ class registrarForm {
 						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 						
 						$atributos ['matrizItems'] = $matrizItems;
+// 						var_dump($matrizItems);	
 						// $atributos['miniRegistro']=;
 						
 						// $atributos ['baseDatos'] = "inventarios";
@@ -1534,13 +1536,12 @@ class registrarForm {
 					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 					$atributos ["etiquetaObligatorio"] = true;
 					$atributos ['tab'] = $tab ++;
-					$atributos ['seleccion'] = - 1;
 					$atributos ['anchoEtiqueta'] = 160;
 					$atributos ['evento'] = '';
 					if (isset ( $_REQUEST [$esteCampo] )) {
-						$atributos ['valor'] = $_REQUEST [$esteCampo];
+						$atributos ['seleccion'] = $_REQUEST [$esteCampo];
 					} else {
-						$atributos ['valor'] = '';
+						$atributos ['seleccion'] = - 1;
 					}
 					$atributos ['deshabilitado'] = false;
 					$atributos ['columnas'] = 2;
@@ -1561,6 +1562,7 @@ class registrarForm {
 					);
 					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
+					
 					// $atributos['miniRegistro']=;
 					$atributos ['baseDatos'] = "inventarios";
 					// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
@@ -1608,7 +1610,28 @@ class registrarForm {
 					$atributos ["obligatorio"] = false;
 					$atributos ['marco'] = true;
 					$atributos ["etiqueta"] = "";
-					$atributos ["valor"] = '';
+					
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['valor'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['valor'] = '';
+					}
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroTexto ( $atributos );
+					unset ( $atributos );
+					
+					$atributos ["id"] = "tipo_ordenador"; // No cambiar este nombre
+					$atributos ["tipo"] = "hidden";
+					$atributos ['estilo'] = '';
+					$atributos ["obligatorio"] = false;
+					$atributos ['marco'] = true;
+					$atributos ["etiqueta"] = "";
+					
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['valor'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['valor'] = '';
+					}
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );

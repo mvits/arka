@@ -32,7 +32,7 @@ $cadenaACodificar6 .= "&action=index.php";
 $cadenaACodificar6 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar6 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar6 .= $cadenaACodificar . "&funcion=SeleccionOrdenador";
-$cadenaACodificar6 .="&tiempo=".$_REQUEST['tiempo'];
+$cadenaACodificar6 .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 // Codificar las variables
 $enlace6 = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
@@ -41,8 +41,6 @@ $cadena6 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $ca
 // URL definitiva
 $urlFinal6 = $url . $cadena6;
 
-
-
 // Variables
 $cadenaACodificar7 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificar7 .= "&procesarAjax=true";
@@ -50,7 +48,7 @@ $cadenaACodificar7 .= "&action=index.php";
 $cadenaACodificar7 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar7 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar7 .= $cadenaACodificar . "&funcion=SeleccionCargo";
-$cadenaACodificar7 .="&tiempo=".$_REQUEST['tiempo'];
+$cadenaACodificar7 .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 // Codificar las variables
 $enlace7 = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
@@ -58,7 +56,6 @@ $cadena7 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $ca
 
 // URL definitiva
 $urlFinal7 = $url . $cadena7;
-
 
 // Variables
 $cadenaACodificar9 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -75,7 +72,6 @@ $cadena9 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $ca
 
 // URL definitiva
 $urlFinal9 = $url . $cadena9;
-
 
 // Variables
 $cadenaACodificar10 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -109,7 +105,6 @@ $cadena12 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 // URL definitiva
 $urlFinal12 = $url . $cadena12;
 
-
 // Variables
 $cadenaACodificar13 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificar13 .= "&procesarAjax=true";
@@ -125,8 +120,6 @@ $cadena13 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 
 // URL definitiva
 $urlFinal13 = $url . $cadena13;
-
-
 
 // Variables
 $cadenaACodificar14 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -144,7 +137,6 @@ $cadena14 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 // URL definitiva
 $urlFinal14 = $url . $cadena14;
 
-
 // Variables
 $cadenaACodificar15 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificar15 .= "&procesarAjax=true";
@@ -160,7 +152,6 @@ $cadena15 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 
 // URL definitiva
 $urlFinal15 = $url . $cadena15;
-
 
 // Variables
 $cadenaACodificar16 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -178,8 +169,6 @@ $cadena16 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 // URL definitiva
 $urlFinal16 = $url . $cadena16;
 
-
-
 // Variables
 $cadenaACodificar17 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificar17 .= "&procesarAjax=true";
@@ -195,7 +184,6 @@ $cadena17 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 
 // URL definitiva
 $urlFinal17 = $url . $cadena17;
-
 
 // Variables
 $cadenaACodificar18 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -213,10 +201,6 @@ $cadena18 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 // URL definitiva
 $urlFinal18 = $url . $cadena18;
 
-
-
-
-
 // Variables
 $cadenaACodificarNumeroOrden = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificarNumeroOrden .= "&procesarAjax=true";
@@ -232,9 +216,6 @@ $cadenaNumeroOrden = $this->miConfigurador->fabricaConexiones->crypto->codificar
 
 // URL definitiva
 $urlFinalNumeroOrden = $url . $cadenaNumeroOrden;
-
-
-
 
 // Variables
 $cadenaACodificarProveedor = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -252,8 +233,6 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 // URL definitiva
 $urlFinalProveedor = $url . $cadena;
 
-
-
 // Variables
 $cadenaACodificarConsultaDependencia = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificarConsultaDependencia .= "&procesarAjax=true";
@@ -270,7 +249,6 @@ $cadena16 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 // URL definitiva
 $urlFinalConsultaDependencia = $url . $cadena16;
 
-
 // Variables
 $cadenaACodificarTipoBien = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificarTipoBien .= "&procesarAjax=true";
@@ -286,8 +264,6 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 
 // URL definitiva
 $urlFinalTipobien = $url . $cadena;
-
-
 
 ?>
 <script type='text/javascript'>
@@ -529,7 +505,7 @@ function consultarDependenciaSuper(elem, request, response){
 		  $.ajax({
 		    url: "<?php echo $urlFinal18?>",
 		    dataType: "json",
-		    data: { proveedor:$("#<?php echo $this->campoSeguro('selec_proveedor')?>").val()},
+		    data: { proveedor:$("#<?php echo $this->campoSeguro('id_proveedor')?>").val()},
 		    success: function(data){ 
 
 		    		if(data[0]!='null'){
@@ -826,6 +802,45 @@ function valorLetras(elem, request, response){
 
 $(function() {
 
+
+
+
+//----
+
+
+	$( "#<?php echo $this->campoSeguro('selec_proveedor')?>" ).keyup(function() {
+
+    	
+    	$('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val($('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val().toUpperCase());
+
+    	
+            });
+
+
+
+
+	
+
+	
+
+
+    $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").autocomplete({
+    	minChars: 3,
+    	serviceUrl: '<?php echo $urlFinalProveedor; ?>',
+    	onSelect: function (suggestion) {
+        	
+    	        $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val(suggestion.data);
+
+    	    	datosInfo();
+    	        
+    	    }
+                
+    });
+
+
+//----
+	
+
     $( "#<?php echo $this->campoSeguro('cantidad')?>" ).keyup(function() {
         
         $("#<?php echo $this->campoSeguro('valor')?>").val('');
@@ -937,15 +952,6 @@ $(function() {
 
 	      });
 
-    $("#<?php echo $this->campoSeguro('selec_proveedor')?>").change(function(){
-
-    	if($("#<?php echo $this->campoSeguro('selec_proveedor')?>").val()!=''){
-    		datosInfo();
-		}else{
-			
-			}
-
-	      });
 
 
     $("#<?php echo $this->campoSeguro('vigencia_contratista')?>").change(function() {
@@ -990,6 +996,7 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 		if($("#<?php echo $this->campoSeguro('diponibilidad')?>").val()!=''){
 		
 			infodisponibilidades();	
+			registrosP();
 		
 		}else{}
 		
@@ -999,16 +1006,10 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 
 
 
-			$("#<?php echo $this->campoSeguro('vigencia_registro')?>").change(function() {
-				
-				if($("#<?php echo $this->campoSeguro('vigencia_registro')?>").val()!=''){
+
+
 			
-					registrosP();	
-			
-				}else{}
-			
-			
-			});
+	
 			
 			
 			
@@ -1121,7 +1122,7 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 	    	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('diponibilidad')?>");
 	    	            $.each(data , function(indice,valor){
 
-	    	            	$("<option value='"+data[ indice ].IDENTIFICADOR+"'>"+data[ indice ].NUMERO+"</option>").appendTo("#<?php echo $this->campoSeguro('diponibilidad')?>");
+	    	            	$("<option value='"+data[ indice ].identificador+"'>"+data[ indice ].numero+"</option>").appendTo("#<?php echo $this->campoSeguro('diponibilidad')?>");
 	    	            	
 	    	            });
 	    	            $("#<?php echo $this->campoSeguro('diponibilidad')?>").removeAttr('disabled');
@@ -1171,65 +1172,64 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 
 	    		function registrosP(elem, request, response){
 	    			
-	    			  $.ajax({
-	    			    url: "<?php echo $urlFinal13?>",
-	    			    dataType: "json",
-	    			    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_registro')?>").val()},
-	    			    success: function(data){ 
-	    			        if(data[0]!=" "){
+	  			  $.ajax({
+	  			    url: "<?php echo $urlFinal13?>",
+	  			    dataType: "json",
+	  			    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
+	  				    disponibilidad:$("#<?php echo $this->campoSeguro('diponibilidad')?>").val()},
+	  			    success: function(data){ 
+	  			        if(data[0]!=" "){
 
-	    			            $("#<?php echo $this->campoSeguro('registro')?>").html('');
-	    			            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('registro')?>");
-	    			            $.each(data , function(indice,valor){
+	  			            $("#<?php echo $this->campoSeguro('registro')?>").html('');
+	  			            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('registro')?>");
+	  			            $.each(data , function(indice,valor){
 
-	    			            	$("<option value='"+data[ indice ].IDENTIFICADOR+"'>"+data[ indice ].NUMERO+"</option>").appendTo("#<?php echo $this->campoSeguro('registro')?>");
-	    			            	
-	    			            });
-	    			            
-	    			            $("#<?php echo $this->campoSeguro('registro')?>").removeAttr('disabled');
-	    			            
-	    			            $("#<?php echo $this->campoSeguro('registro')?>").select2({
-	    			          		 placeholder: "Search for a repository",
-	    			           		 minimumInputLength: 1	,
-	    			               });
-	    			          
-	    			            
-	    				        }
+	  			            	$("<option value='"+data[ indice ].identificador+"'>"+data[ indice ].numero+"</option>").appendTo("#<?php echo $this->campoSeguro('registro')?>");
+	  			            	
+	  			            });
+	  			            
+	  			            $("#<?php echo $this->campoSeguro('registro')?>").removeAttr('disabled');
+	  			            
+	  			            $("#<?php echo $this->campoSeguro('registro')?>").select2();
+	  			          
+	  			            
+	  				        }
 
-	    			        
+	  			        
 
 
-	    				     }
-	    				                    
-	    			   });
-	    			};
+	  				     }
+	  				                    
+	  			   });
+	  			};
 
 
-	    			function inforegistrosP(elem, request, response){
-	    				  $.ajax({
-	    				    url: "<?php echo $urlFinal14?>",
-	    				    dataType: "json",
-	    				    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_registro')?>").val(),
-	    					    disponibilidad:$("#<?php echo $this->campoSeguro('registro')?>").val()},
-	    				    success: function(data){ 
-	    					    
-	    				        if(data[0]!="null"){
-	    				        	$("#<?php echo $this->campoSeguro('fecha_registro')?>").val(data[0]);
-	    					    	$("#<?php echo $this->campoSeguro('valor_registro')?>").val(data[1]);
-	    						
-	    					    	valorLetrasReg();
-	    			
-	    				            
-	    					        }
 
-	    				        
+				function inforegistrosP(elem, request, response){
+					  $.ajax({
+					    url: "<?php echo $urlFinal14?>",
+					    dataType: "json",
+					    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
+						    		registro:$("#<?php echo $this->campoSeguro('registro')?>").val()},
+					    success: function(data){ 
+						    
+					        if(data[0]!="null"){
+					        	$("#<?php echo $this->campoSeguro('fecha_registro')?>").val(data[0]);
+						    	$("#<?php echo $this->campoSeguro('valor_registro')?>").val(data[1]);
+							
+						    	valorLetrasReg();
+				
+					            
+						        }
+
+					        
 
 
-	    					     }
-	    					                    
-	    				   });
-	    				};
-
+						     }
+						                    
+					   });
+					};
+	  			
 	    		
 	    				function contratistasC(elem, request, response){
 	    					
