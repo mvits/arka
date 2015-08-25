@@ -804,7 +804,18 @@ function valorLetras(elem, request, response){
 $(function() {
 
 
+    $("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").change(function() {
+    	
+		if($("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").val()!=''){
 
+			disponibilidades();	
+
+		}else{}
+
+
+ });
+
+	
 
 //----
 
