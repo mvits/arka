@@ -589,6 +589,19 @@ $(function() {
 
 
 
+
+    $("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").change(function() {
+    	
+		if($("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").val()!=''){
+
+			disponibilidades();	
+
+		}else{}
+
+
+ });
+
+
 $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 
 		if($("#<?php echo $this->campoSeguro('diponibilidad')?>").val()!=''){
