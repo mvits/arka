@@ -255,7 +255,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
 				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [1] . "' ";
 				$cadenaSql .= "AND  \"DIS_IDENTIFICADOR\"='" . $variable [0] . "' ";
-				// $cadenaSql .= "AND ROWNUM = 1 ";
+				$cadenaSql .= "AND  \"DIS_UNIDAD_EJECUTORA\"='" . $variable [2] . "' ";
+
 				
 				break;
 			
@@ -271,6 +272,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM arka_parametros.arka_registropresupuestal ";
 				$cadenaSql .= "WHERE \"REP_VIGENCIA\"='" . $variable [0] . "'";
 				$cadenaSql .= "AND  \"REP_NUMERO_DISPONIBILIDAD\"='" . $variable [1] . "'";
+				$cadenaSql .= "AND  \"REP_UNIDAD_EJECUTORA\"='" . $variable [2] . "'";
 				
 				break;
 			

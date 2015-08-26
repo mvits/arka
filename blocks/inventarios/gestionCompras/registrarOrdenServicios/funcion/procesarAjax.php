@@ -309,7 +309,8 @@ if ($_REQUEST ['funcion'] == 'Infodisponibilidades') {
 	
 	$arreglo = array (
 			$_REQUEST ['disponibilidad'],
-			$_REQUEST ['vigencia'] 
+			$_REQUEST ['vigencia'],
+			$_REQUEST ['unidad'] 
 	);
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'info_disponibilidad', $arreglo );
@@ -324,7 +325,8 @@ if ($_REQUEST ['funcion'] == 'registroPresupuestal') {
 	
 	$arreglo = array (
 			$_REQUEST ['vigencia'],
-			$_REQUEST ['disponibilidad'] 
+			$_REQUEST ['disponibilidad'],
+			$_REQUEST ['unidad']
 	)
 	;
 	
