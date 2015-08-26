@@ -324,7 +324,8 @@ if ($_REQUEST ['funcion'] == 'registroPresupuestal') {
 	
 	$arreglo = array (
 			$_REQUEST ['vigencia'],
-			$_REQUEST ['disponibilidad'] 
+			$_REQUEST ['disponibilidad'],
+			$_REQUEST ['unidad']
 	);
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_registro', $arreglo );

@@ -1189,7 +1189,8 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 	  			    url: "<?php echo $urlFinal13?>",
 	  			    dataType: "json",
 	  			    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
-	  				    disponibilidad:$("#<?php echo $this->campoSeguro('diponibilidad')?>").val()},
+	  				    disponibilidad:$("#<?php echo $this->campoSeguro('diponibilidad')?>").val(),
+	  				  unidad:$("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").val()},
 	  			    success: function(data){ 
 	  			        if(data[0]!=" "){
 
