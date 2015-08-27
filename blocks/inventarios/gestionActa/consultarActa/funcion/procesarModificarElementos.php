@@ -190,7 +190,7 @@ class RegistradorOrden {
 			
 			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		}
-		
+// 		 echo $cadenaSql;exit;
 		
 		
 		// if ($archivoImagen ['type'] == 'image/jpeg') {

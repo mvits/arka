@@ -70,21 +70,20 @@ class registrarForm {
 			$fechaFinal = '';
 		}
 		
-		if (isset ( $_REQUEST ['numero_orden'] ) && $_REQUEST ['numero_orden'] != '') {
-			$numeroOrden = $_REQUEST ['numero_orden'];
-		} else {
-			$numeroOrden = '';
-		}
-		
-		$arreglo = array (
-				$fechaInicio,
-				$fechaFinal,
-				$numeroOrden 
-		);
+
+
 		
 		switch ($tipo_orden) {
 			case 1 :
-				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenServicios', $arreglo );
+				
+
+				$arreglo = array (
+						$fechaInicio,
+						$fechaFinal,
+						9
+				);
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'OrdenConsultada', $arreglo );
 				
 				$resultado_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
@@ -92,7 +91,15 @@ class registrarForm {
 				break;
 			
 			case 2 :
-				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenCompra', $arreglo );
+				
+				$arreglo = array (
+						$fechaInicio,
+						$fechaFinal,
+						1
+				);
+				
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'OrdenConsultada', $arreglo );
 				$cadenaSql;
 				$resultado_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
@@ -109,12 +116,17 @@ class registrarForm {
 				
 				$datos=serialize($datos);
 				redireccion::redireccionar ( 'registrar', $datos );
+				
 				$titulo = "Otros";
+				exit();
 				break;
 			
 			default :
 				break;
 		}
+		
+		
+		
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -176,8 +188,8 @@ class registrarForm {
 			echo "<thead>
                 <tr>
                 <th>Fecha Orden</th>
-                <th>Número Orden </th>
-		<th>Seleccionar</th>
+                <th>Número Orden <br> Vigencia </th>
+				<th>Seleccionar</th>
                 </tr>
             </thead>
             <tbody>";
@@ -188,14 +200,14 @@ class registrarForm {
 				$variable .= "&opcion=asociarActa";
 				// $variable .= "&usuario=" . $miSesion->getSesionUsuarioId ();
 				$variable .= "&numero_orden=" . $resultado_orden [$i] [0];
-				$variable .= "&tipo_orden=" . $resultado_orden [$i] [0];
+				$variable .= "&tipo_orden=" . $_REQUEST['tipoOrden'];
 				$variable .= "&fecha_orden=" . $resultado_orden [$i] [1];
-				$variable .= "&titulo=" . $titulo;
+				$variable .= "&mensaje_titulo=" . $titulo .":  ".$resultado_orden [$i] ['identificador'] ;
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$mostrarHtml = "<tr>
                     <td><center>" . $resultado_orden [$i] [1] . "</center></td>
-                    <td><center>" . $resultado_orden [$i] [0] . "</center></td>
+                    <td><center>" . $resultado_orden [$i] ['identificador'] . "</center></td>
                     <td><center>
                     	<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>

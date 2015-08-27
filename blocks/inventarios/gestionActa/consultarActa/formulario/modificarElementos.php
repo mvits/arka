@@ -436,7 +436,7 @@ class registrarForm {
 							
 							$atributos ['evento'] = '';
 							$atributos ['deshabilitado'] = false;
-							$atributos ["etiquetaObligatorio"] = true;
+							$atributos ["etiquetaObligatorio"] = false;
 							$atributos ['tab'] = $tab;
 							$atributos ['tamanno'] = 1;
 							$atributos ['estilo'] = 'jqueryui';

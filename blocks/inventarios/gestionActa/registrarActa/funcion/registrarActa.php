@@ -102,11 +102,11 @@ class RegistradorActa {
 			
 			switch ($_REQUEST ['tipoOrden']) {
 				
-				case "Orden de Servicios" :
+				case 1 :
 					$tipoOrden = 1;
 					break;
 				
-				case "Orden de Compra" :
+				case 2 :
 					$tipoOrden = 2;
 					break;
 			}
@@ -134,17 +134,45 @@ class RegistradorActa {
 				'identificador_contrato' => ($_REQUEST ['numeroContrato'] != '') ? $_REQUEST ['numeroContrato'] : NULL 
 		);
 		
-		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarActa', $datosActa );
 		
-		
 		$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		if (isset ( $_REQUEST ['numero_orden'] )) {
+			
+			// Rescatar los Elementos acta
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'ConsultaElementosOrden', $_REQUEST ['numero_orden'] );
+			
+			$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			// Registrar al acta lo elementos de la Orden
+			
+			foreach ( $elementos as $valor ) {
+				
+				
+				$arreglo=array (
+						$valor [0],
+						$id_acta [0] [0] 
+				);
+				
+				
+				
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'RegistrarActaElementos', array (
+						$valor [0],
+						$id_acta [0] [0] 
+				) );
+				
+				$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+				
+			}
+		}
 		
 		$datos = array (
 				$id_acta [0] [0],
 				$fechaActual 
 		);
-		
 		
 		if ($id_acta) {
 			
@@ -156,7 +184,6 @@ class RegistradorActa {
 			
 			exit ();
 		}
-
 	}
 	function resetForm() {
 		foreach ( $_REQUEST as $clave => $valor ) {
