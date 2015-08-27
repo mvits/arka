@@ -158,16 +158,20 @@ class RegistradorOrden {
 		
 		if ($consecutivo_orden) {
 			
-			foreach ( $consecutivo_orden as $valor ) {
+			
+			for($i=0;$i<=1;$i++){
 				
-				if (! is_null ( $valor )) {
-					$consecutivo = $valor;
+				if (! is_null ( $consecutivo_orden[$i] )) {
+					$consecutivo = $consecutivo_orden[$i];
 				}
+				
 			}
+			
+
 			
 			$datos = "NÚMERO DE " . $nombre . " # " . $consecutivo . "<br> Y VIGENCIA " . date ( 'Y' );
 			
-			redireccion::redireccionar ( 'inserto', $datos );
+			redireccion::redireccionar ( 'inserto', array($datos,$consecutivo_orden[2]) );
 			exit ();
 		} else {
 			

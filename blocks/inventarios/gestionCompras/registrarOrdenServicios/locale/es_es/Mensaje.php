@@ -1,29 +1,21 @@
 <?php
 $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaje.php";
 
+$this->idioma ["desicion"] = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp¿ Que desea realizar ?";
 
+$this->idioma ["unidad_ejecutora"] = "Unidad Ejecutoria: ";
+$this->idioma ["unidad_ejecutoraTitulo"] = "Seleccione Unidad Ejecutoria ";
 
+$this->idioma ["tipo_orden"] = "Tipo de Orden  : ";
+$this->idioma ["tipo_ordenTitulo"] = "Seleccione Tipo de Orden ";
 
+$this->idioma ["sede"] = "Sede : ";
+$this->idioma ["sedeTitulo"] = "Seleccione Sede";
 
+$this->idioma ["sede_super"] = "Sede : ";
+$this->idioma ["sede_superTitulo"] = "Seleccione Sede";
 
-
-$this->idioma ["unidad_ejecutora"] ="Unidad Ejecutoria: ";
-$this->idioma ["unidad_ejecutoraTitulo"] ="Seleccione Unidad Ejecutoria ";
-
-$this->idioma ["tipo_orden"] ="Tipo de Orden  : ";
-$this->idioma ["tipo_ordenTitulo"] ="Seleccione Tipo de Orden ";
-
-
-
-$this->idioma ["sede"] ="Sede : ";
-$this->idioma ["sedeTitulo"] ="Seleccione Sede";
-
-
-$this->idioma ["sede_super"] ="Sede : ";
-$this->idioma ["sede_superTitulo"] ="Seleccione Sede";
-
-
-$this->idioma ["botonDocumento"] ="Generar Documento PDF";
+$this->idioma ["botonDocumento"] = "Generar Documento PDF";
 // --
 $this->idioma ["vigencia_registro"] = "Vigencia Registro : ";
 $this->idioma ["vigencia_registroTitulo"] = "Seleccione Vigencia Registro";
@@ -59,18 +51,11 @@ $this->idioma ["fecha_diponibilidadTitulo"] = "Ingrese Fecha Disponibilidad Pres
 
 // --
 
-
-$this->idioma ["vigencia_contratista"] ="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspVigencia Contratista: ";
-$this->idioma ["vigencia_contratistaTitulo"] ="Seleccione Vigencia Contratista";
-
-
-
-
+$this->idioma ["vigencia_contratista"] = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspVigencia Contratista: ";
+$this->idioma ["vigencia_contratistaTitulo"] = "Seleccione Vigencia Contratista";
 
 $this->idioma ["selec_proveedor"] = "Proveedor y/o Contratista:";
 $this->idioma ["selec_proveedorTitulo"] = "Seleccione Proveedor y/o Contratista";
-
-
 
 $this->idioma ["dependencia_solicitante"] = "Dependencia :";
 $this->idioma ["dependencia_solicitanteTitulo"] = "Seleccione Dependencia";
@@ -174,12 +159,14 @@ $this->idioma ["jefeSeccion"] = "Jefe de Sección";
 $this->idioma ["contratista"] = "Contratista";
 
 $this->idioma ["ordenadorGasto"] = "Ordenador Gasto";
+
+$this->idioma ["botonElemento"] = "Cargar Elementos";
 // ________________________________________________
 $this->idioma ["botonAceptar"] = "Guardar";
 $this->idioma ["botonCancelar"] = "Cancelar";
-$this->idioma ["botonContinuar"] = "Continuar";
+$this->idioma ["botonContinuar"] = "Salir";
 
-$this->idioma ["botonRegresar"] ="< < Regresar";
+$this->idioma ["botonRegresar"] = "< < Regresar";
 
 $this->idioma ["division1Titulo"] = "Seleccione Fecha Disponibilidad Presupuestal";
 

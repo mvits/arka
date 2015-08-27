@@ -461,7 +461,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [19] . "',";
 				$cadenaSql .= "'" . $variable [20] . "',";
 				$cadenaSql .= "'" . $variable [21] . "') ";
-				$cadenaSql .= "RETURNING  consecutivo_compras,consecutivo_servicio  ; ";
+				$cadenaSql .= "RETURNING  consecutivo_compras,consecutivo_servicio,id_orden  ; ";
 				
 				break;
 			
