@@ -101,9 +101,24 @@ class registrarForm {
 			
 			{
 				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'confirma') {
-					
+			
 					$mensaje = "Se Registro el Acta de Recibido <br> Número de Acta: " . $_REQUEST ['numero_acta'] . "  
 							<br>Fecha Acta: " . $_REQUEST ['fecha_acta'];
+					
+					
+					
+					if($_REQUEST['orden']!=0){
+						
+						
+						$nombre=($_REQUEST['orden']== 1)?'Servicios.':'Compra.';
+						
+						
+						$mensaje .="<br> Se han Cargado los Elementos Registrados en la Orden de ".$nombre;
+						
+						
+						
+						
+					}
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';

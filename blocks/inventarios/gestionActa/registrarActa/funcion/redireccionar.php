@@ -18,6 +18,7 @@ class redireccion {
 				$variable .= "&mensaje=confirma";
 				$variable .= "&numero_acta=" . $valor [0];
 				$variable .= "&fecha_acta=" . $valor [1];
+				$variable .= "&orden=" . $valor [2];
 				break;
 			
 			case "noInserto" :

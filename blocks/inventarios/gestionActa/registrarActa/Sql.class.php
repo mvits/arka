@@ -319,22 +319,23 @@ class Sql extends \Sql {
 			
 			case "OrdenConsultada" :
 				$cadenaSql = "SELECT DISTINCT ";
-				$cadenaSql .= "id_orden, orden.fecha_registro,  ";
-				$cadenaSql .= "identificacion, dependencia_solicitante , sede,
-								CASE tipo_orden
-										WHEN 1 THEN vigencia || ' - ' ||consecutivo_compras
-										WHEN 9 THEn vigencia || ' - ' ||consecutivo_servicio
-								 END identificador ";
+				$cadenaSql .= "orden.id_orden, orden.fecha_registro,  ";
+				$cadenaSql .= "identificacion, dependencia_solicitante , orden.sede,
+								CASE orden.tipo_orden
+										WHEN 1 THEN orden.vigencia || ' - ' ||orden.consecutivo_compras
+										WHEN 9 THEn orden.vigencia || ' - ' ||orden.consecutivo_servicio
+								 END identificador, 
+								id_actarecibido ";
 				$cadenaSql .= "FROM orden ";
-				// $cadenaSql .= "JOIN solicitante_servicios ON solicitante_servicios.id_solicitante = orden_servic io.dependencia_solicitante ";
+				$cadenaSql .= "LEFT JOIN registro_actarecibido ar ON ar.numero_orden = orden.id_orden ";
 				$cadenaSql .= "JOIN contratista_servicios ON contratista_servicios.id_contratista = orden.id_contratista ";
 				$cadenaSql .= "WHERE 1=1";
 				if ($variable [0] != '') {
-					$cadenaSql .= " AND orden_servicio.fecha_registro BETWEEN CAST ( '" . $variable [0] . "' AS DATE) ";
+					$cadenaSql .= " AND orden.fecha_registro BETWEEN CAST ( '" . $variable [0] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable [1] . "' AS DATE)  ";
 				}
 				if ($variable [2] != '') {
-					$cadenaSql .= " AND tipo_orden = '" . $variable [2] . "'";
+					$cadenaSql .= " AND orden.tipo_orden = '" . $variable [2] . "'";
 				}
 				
 				break;
@@ -495,7 +496,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['observacion'] . "',";
 				$cadenaSql .= (is_null ( $variable ['enlace_soporte'] ) == true) ? "NULL, " : "'" . $variable ['enlace_soporte'] . "',";
 				$cadenaSql .= (is_null ( $variable ['nombre_soporte'] ) == true) ? "NULL , " : "'" . $variable ['nombre_soporte'] . "',";
-				$cadenaSql .= "'" . $variable ['numero_orden'] . "',";
+				$cadenaSql .= "" . $variable ['numero_orden'] . ", ";
 				$cadenaSql .= "'" . $variable ['estado'] . "',";
 				$cadenaSql .= "'" . $variable ['fecha_registro'] . "',";
 				$cadenaSql .= (is_null ( $variable ['identificador_contrato'] ) == true) ? "NULL ) " : "'" . $variable ['identificador_contrato'] . "') ";

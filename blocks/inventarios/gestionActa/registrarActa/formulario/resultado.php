@@ -127,7 +127,6 @@ class registrarForm {
 		
 		
 		
-		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
 		$atributos ['id'] = $esteCampo;
@@ -205,14 +204,14 @@ class registrarForm {
 				$variable .= "&mensaje_titulo=" . $titulo .":  ".$resultado_orden [$i] ['identificador'] ;
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
+				$desicion=(is_null($resultado_orden [$i] ['id_actarecibido'])==true)?"<a href='" . $variable . "'>
+                            <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'> </a>":"Ya ExisteActa de Recibido Asociada";
+                       
+				
 				$mostrarHtml = "<tr>
                     <td><center>" . $resultado_orden [$i] [1] . "</center></td>
                     <td><center>" . $resultado_orden [$i] ['identificador'] . "</center></td>
-                    <td><center>
-                    	<a href='" . $variable . "'>
-                            <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'>
-                        </a>
-                  	</center> </td>
+                    <td><center>".$desicion."</center> </td>
            
                 </tr>";
 				echo $mostrarHtml;

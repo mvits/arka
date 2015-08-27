@@ -128,7 +128,7 @@ class RegistradorActa {
 				'observacion' => $_REQUEST ['observacionesActa'],
 				'estado' => 1,
 				'tipo_orden' => $tipoOrden,
-				'numero_orden' => (isset ( $_REQUEST ['numero_orden'] )) ? $_REQUEST ['numero_orden'] : 0,
+				'numero_orden' => (isset ( $_REQUEST ['numero_orden'] )) ? "'".$_REQUEST ['numero_orden']."'" : "NULL",
 				'enlace_soporte' => $destino1,
 				'nombre_soporte' => $archivo1,
 				'identificador_contrato' => ($_REQUEST ['numeroContrato'] != '') ? $_REQUEST ['numeroContrato'] : NULL 
@@ -171,7 +171,8 @@ class RegistradorActa {
 		
 		$datos = array (
 				$id_acta [0] [0],
-				$fechaActual 
+				$fechaActual,
+				$tipoOrden
 		);
 		
 		if ($id_acta) {
