@@ -295,6 +295,7 @@ $this->idioma ["botonCancelar"] = "Cancelar";
 $this->idioma ["botonContinuar"] = "Salir";
 $this->idioma ["botonSalida"] = "Generar Salida";
 $this->idioma ["botonConsultar"] = "Consultar";
+$this->idioma ["botonElemento"] = "Cargar Elementos";
 $this->idioma ["botonRegresar"] = "<< Regresar";
 
 // ________________________________________________

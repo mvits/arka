@@ -69,50 +69,6 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		$atributos ["leyenda"] = "Consultar y Cargar Elementos Orden";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-		
-		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-		$esteCampo = 'numero_orden';
-		$atributos ['columnas'] = 1;
-		$atributos ['nombre'] = $esteCampo;
-		$atributos ['id'] = $esteCampo;
-		$atributos ['seleccion'] = - 1;
-		$atributos ['evento'] = '';
-		$atributos ['deshabilitado'] = false;
-		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['tab'] = $tab;
-		$atributos ['tamanno'] = 1;
-		$atributos ['estilo'] = 'jqueryui';
-		$atributos ['validar'] = '';
-		$atributos ['limitar'] = false;
-		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['anchoEtiqueta'] = 213;
-		
-		if (isset ( $Acta [0] [$esteCampo] )) {
-			$atributos ['valor'] = $Acta [0] [$esteCampo];
-		} else {
-			$atributos ['valor'] = '';
-		}
-		
-		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_id_acta" );
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-		
-		$arreglo = array (
-				array (
-						'',
-						'Sin Actas  Registradas' 
-				) 
-		);
-		
-		$matrizItems = $matrizItems [0] [0] != '' ? $matrizItems : $arreglo;
-		$atributos ['matrizItems'] = $matrizItems;
-		// Utilizar lo siguiente cuando no se pase un arreglo:
-		// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
-		// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
-		$tab ++;
-		$atributos = array_merge ( $atributos, $atributosGlobales );
-		// echo $this->miFormulario->campoCuadroLista ( $atributos );
-		unset ( $atributos );
-		
 
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -205,7 +161,7 @@ class registrarForm {
 		$atributos ['estilo'] = 'jqueryui';
 		$atributos ['marco'] = true;
 		$atributos ['estiloMarco'] = '';
-		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ["etiquetaObligatorio"] = false;
 		$atributos ['columnas'] = 1;
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;

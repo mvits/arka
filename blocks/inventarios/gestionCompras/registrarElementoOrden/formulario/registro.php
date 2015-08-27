@@ -20,7 +20,8 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-		
+		 
+		 
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -994,7 +995,7 @@ class registrarForm {
 			$atributos ['tipoEtiqueta'] = 'inicio';
 			echo $this->miFormulario->formulario ( $atributos );
 			{
-				
+				var_dump($_REQUEST);
 				$esteCampo = "marcoDatosBasicosMensaje";
 				$atributos ['id'] = $esteCampo;
 				$atributos ["estilo"] = "jqueryui";
@@ -1082,11 +1083,14 @@ class registrarForm {
 					$atributos ['redirLugar'] = true;
 					echo $this->miFormulario->enlace ( $atributos );
 					unset ( $atributos );
-				/*	
+				
 					$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-					$variable = "pagina=registrarSalidas";
-					$variable .= "&opcion=activarElementos";
-					$variable .= "&numero_acta=".$_REQUEST['numero_acta'];
+					$variable = "pagina=registrarActa";
+					$variable .= "&opcion=asociarActa";
+					$variable .= "&numero_orden=".$_REQUEST['id_orden'];
+					$variable .= "&fecha_orden=".$_REQUEST['fecha_orden'];
+					$variable .= "&mensaje_titulo=".$_REQUEST['mensaje_titulo'];
+					
 					
 					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 					
@@ -1097,14 +1101,14 @@ class registrarForm {
 					$atributos ['enlace'] = $variable;
 					$atributos ['tabIndex'] = 1;
 					$atributos ['estilo'] = 'textoSubtitulo';
-					$atributos ['enlaceTexto'] = "<< Activar Elementos  Acta de  Recibido >>";
+					$atributos ['enlaceTexto'] = "<< Registrar  Acta de  Recibido >>";
 					$atributos ['ancho'] = '10%';
 					$atributos ['alto'] = '10%';
 					$atributos ['redirLugar'] = true;
 					echo $this->miFormulario->enlace ( $atributos );
 					unset ( $atributos );
 					
-					*/
+					
 					// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 					
 					// ---------------- FIN SECCION: División ----------------------------------------------------------
