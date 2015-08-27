@@ -205,7 +205,7 @@ class registrarForm {
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$desicion=(is_null($resultado_orden [$i] ['id_actarecibido'])==true)?"<a href='" . $variable . "'>
-                            <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'> </a>":"Ya ExisteActa de Recibido Asociada";
+                            <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'> </a>":"Existe Acta de Recibido Asociada";
                        
 				
 				$mostrarHtml = "<tr>
