@@ -995,7 +995,7 @@ class registrarForm {
 			$atributos ['tipoEtiqueta'] = 'inicio';
 			echo $this->miFormulario->formulario ( $atributos );
 			{
-				var_dump($_REQUEST);
+				
 				$esteCampo = "marcoDatosBasicosMensaje";
 				$atributos ['id'] = $esteCampo;
 				$atributos ["estilo"] = "jqueryui";
@@ -1105,7 +1105,7 @@ class registrarForm {
 					$atributos ['ancho'] = '10%';
 					$atributos ['alto'] = '10%';
 					$atributos ['redirLugar'] = true;
-					echo $this->miFormulario->enlace ( $atributos );
+// 					echo $this->miFormulario->enlace ( $atributos );
 					unset ( $atributos );
 					
 					

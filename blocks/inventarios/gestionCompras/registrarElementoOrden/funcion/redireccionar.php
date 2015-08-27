@@ -29,6 +29,7 @@ class redireccion {
 				$variable .= "&mensaje=confirmaMasivo";
 				$variable .= "&id_orden=" . $valor [1];
 				$variable .= "&mensaje_titulo=" . $valor [0];
+				$variable .= "&fecha_orden=" . $valor [2];
 				break;
 			
 			case "noFormatoImagen" :
@@ -89,6 +90,15 @@ class redireccion {
 				$variable .= "&opcion=Salida";
 				$variable .= "&numero_entrada=" . $valor;
 				$variable .= "&datosGenerales=" . $valor1;
+				break;
+			
+			case "RegistrarActa" :
+				
+				$variable = "pagina=registrarActa";
+				$variable .= "&opcion=asociarActa";
+				$variable .= "&mensaje_titulo=" . $valor ['mensaje_titulo'];
+				$variable .= "&numero_orden=" . $valor ['id_orden'];
+				$variable .= "&fecha_orden=" . date('Y-m-d');
 				break;
 		}
 		

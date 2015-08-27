@@ -70,7 +70,7 @@ class Bloque implements \Bloque {
 		$this->miLenguaje = new Lenguaje ();
 	}
 	public function bloque() {
-// 		var_dump($_REQUEST);exit;
+
 		
 		
 		if (isset ( $_REQUEST ['botonCancelar'] ) && $_REQUEST ['botonCancelar'] == "true") {

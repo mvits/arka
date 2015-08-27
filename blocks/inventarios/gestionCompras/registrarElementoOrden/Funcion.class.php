@@ -2,7 +2,6 @@
 
 namespace inventarios\gestionCompras\registrarElementoOrden;
 
-
 use inventarios\gestionCompras\registrarElementoOrden\funcion\redireccion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
@@ -32,8 +31,6 @@ class Funcion {
 	var 
 
 	$crypto;
-
-
 	function funcionEjemplo() {
 		include_once ($this->ruta . "/funcion/funcionEjemplo.php");
 	}
@@ -59,6 +56,11 @@ class Funcion {
 		// Importante: Es adecuado que sea una variable llamada opcion o action la que guie el procesamiento:
 		if (isset ( $_REQUEST ['procesarAjax'] )) {
 			$this->procesarAjax ();
+		} elseif (isset ( $_REQUEST ["botonActa"] ) && $_REQUEST ["botonActa"] = 'true') {
+			
+			\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'RegistrarActa', $_REQUEST );
+			
+			exit ();
 		} elseif (isset ( $_REQUEST ["opcion"] )) {
 			
 			switch ($_REQUEST ['opcion']) {
@@ -68,19 +70,18 @@ class Funcion {
 					break;
 				
 				case "redireccionar" :
-
-					if (isset ( $_REQUEST ["botonContinuar"] ) && $_REQUEST ['botonContinuar'] == 'true') {
 					
+					if (isset ( $_REQUEST ["botonContinuar"] ) && $_REQUEST ['botonContinuar'] == 'true') {
+						
 						redireccion::redireccionar ( 'Salir' );
-						exit;
+						exit ();
 					}
 					
 					if (isset ( $_REQUEST ["botonSalida"] ) && $_REQUEST ['botonSalida'] == 'true') {
 						
-						redireccion::redireccionar ( 'SalidaElemento', $_REQUEST ['numero_entrada'],$_REQUEST ['datosGenerales'] );
-						exit;
+						redireccion::redireccionar ( 'SalidaElemento', $_REQUEST ['numero_entrada'], $_REQUEST ['datosGenerales'] );
+						exit ();
 					}
-					
 					
 					break;
 			}
