@@ -317,6 +317,24 @@ class registrarForm {
 							$atributos = array_merge ( $atributos, $atributosGlobales );
 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
 							unset ( $atributos );
+							
+							$esteCampo = "imagenElemento";
+							$atributos ["id"] = $esteCampo; // No cambiar este nombre
+							$atributos ["nombre"] = $esteCampo;
+							$atributos ["tipo"] = "file";
+							$atributos ["obligatorio"] = true;
+							$atributos ["etiquetaObligatorio"] = false;
+							$atributos ["tabIndex"] = $tab ++;
+							$atributos ["columnas"] = 1;
+							$atributos ["estilo"] = "textoIzquierda";
+							$atributos ["anchoEtiqueta"] = 215;
+							$atributos ["tamanno"] = 500000;
+							$atributos ["validar"] = " ";
+							$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
+							// $atributos ["valor"] = $valorCodificado;
+							$atributos = array_merge ( $atributos, $atributosGlobales );
+							echo $this->miFormulario->campoCuadroTexto ( $atributos );
+							unset ( $atributos );
 						}
 						echo $this->miFormulario->agrupacion ( "fin" );
 						unset ( $atributos );
@@ -454,7 +472,7 @@ class registrarForm {
 								$atributos ['validar'] = '';
 								
 								if (isset ( $_REQUEST [$esteCampo] )) {
-									$atributos ['valor'] = ($_REQUEST [$esteCampo]=='0001-01-01')?NULL:$_REQUEST [$esteCampo];
+									$atributos ['valor'] = ($_REQUEST [$esteCampo] == '0001-01-01') ? NULL : $_REQUEST [$esteCampo];
 								} else {
 									$atributos ['valor'] = '';
 								}
@@ -485,7 +503,7 @@ class registrarForm {
 								$atributos ['validar'] = '';
 								
 								if (isset ( $_REQUEST [$esteCampo] )) {
-									$atributos ['valor'] = ($_REQUEST [$esteCampo]=='0001-01-01')?NULL:$_REQUEST [$esteCampo];
+									$atributos ['valor'] = ($_REQUEST [$esteCampo] == '0001-01-01') ? NULL : $_REQUEST [$esteCampo];
 								} else {
 									$atributos ['valor'] = '';
 								}

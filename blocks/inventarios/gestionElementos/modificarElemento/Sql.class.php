@@ -274,8 +274,9 @@ class Sql extends \Sql {
 					$cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
 				}
 				$cadenaSql .= "AND entrada.cierre_contable='f' ";
+				$cadenaSql .= "AND elemento_individual.estado_registro='TRUE' ";
 				$cadenaSql .= "AND   entrada.estado_registro='t' ";
-				// $cadenaSql .= "AND entrada.estado_entrada = 1 ";
+				
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND elemento.fecha_registro BETWEEN CAST ( '" . $variable [0] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable [1] . "' AS DATE)  ";
@@ -618,6 +619,33 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM grupo.catalogo_elemento ce ";
 				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
 				$cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
+				
+				break;
+			
+			case 'consultarExistenciaImagen' :
+				
+				$cadenaSql = "SELECT num_registro  ";
+				$cadenaSql .= "FROM  arka_movil.asignar_imagen ";
+				$cadenaSql .= "WHERE  id_elemento ='" . $variable . "';";
+				
+				break;
+			
+			case "RegistrarElementoImagen" :
+				
+				$cadenaSql = " 	INSERT INTO arka_movil.asignar_imagen(";
+				$cadenaSql .= " id_elemento, imagen ,prioridad) ";
+				$cadenaSql .= " VALUES (";
+				$cadenaSql .= "'" . $variable ['elemento'] . "',";
+				$cadenaSql .= "'" . $variable ['imagen'] . "',";
+				$cadenaSql .= "1) ";
+				$cadenaSql .= "RETURNING num_registro; ";
+				
+				break;
+			case "ActualizarElementoImagen" :
+				
+				$cadenaSql = " UPDATE arka_movil.asignar_imagen  ";
+				$cadenaSql .= "SET  id_elemento='" . $variable ['elemento'] . "', imagen='" . $variable ['imagen'] . "' ";
+				$cadenaSql .= "WHERE num_registro='" . $variable ['id_imagen'] . "';";
 				
 				break;
 		}

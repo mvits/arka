@@ -27,6 +27,58 @@ class RegistradorOrden {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		foreach ( $_FILES as $key => $values ) {
+			
+			$archivo [] = $_FILES [$key];
+		}
+		
+		$archivoImagen = $archivo [0];
+		
+		if ($archivoImagen ['error'] == 0) {
+			
+			if ($archivoImagen ['type'] != 'image/jpeg') {
+				
+				redireccion::redireccionar ( 'noFormatoImagen');
+				
+				exit ();
+			}
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarExistenciaImagen', $_REQUEST ['id_elemento'] );
+			
+			$ExistenciaImagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			if ($ExistenciaImagen) {
+				
+				$data = base64_encode ( file_get_contents ( $archivoImagen ['tmp_name'] ) );
+				
+				$arreglo = array (
+						"id_imagen" => $ExistenciaImagen [0] [0],
+						"elemento" => $_REQUEST ['id_elemento'],
+						"imagen" => $data 
+				);
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'ActualizarElementoImagen', $arreglo );
+				
+				$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+				
+				
+			} else if ($ExistenciaImagen == false) {
+				 
+				$data = base64_encode ( file_get_contents ( $archivoImagen ['tmp_name'] ) );
+				
+				$arreglo = array (
+						"elemento" => $_REQUEST ['id_elemento'],
+						"imagen" => $data 
+				);
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'RegistrarElementoImagen', $arreglo );
+				
+				$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+				
+			}
+		}
+		
+		
 		// --------------------- Cambio de tipo de Elemento
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'Informacion_Elemento', $_REQUEST ['id_elemento'] );
@@ -167,7 +219,7 @@ class RegistradorOrden {
 					$elemento_id_max_indiv = $elemento_id [$i] [0] [0] + 1;
 				}
 			} else if ($info_elemento ['tipo_bien'] == 1 && ($_REQUEST ['id_tipo_bien'] == 2 || $_REQUEST ['id_tipo_bien'] == 3)) {
-				echo "stiv  entro de nuevo";
+				
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_elementos_individuales_sin_placa', $_REQUEST ['id_elemento'] );
 				

@@ -2,6 +2,7 @@
 $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaje.php";
 
 
+$this->idioma ["imagenElemento"] ="Imagen : ";
 
 $this->idioma ["numero_entrada"] ="Vigencia y/o Número Entrada : ";
 $this->idioma ["numero_entradaTitulo"] ="Seleccione Vigencia y/o Número Entrada ";
