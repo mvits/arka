@@ -1,5 +1,4 @@
 <?
-
 $ruta = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
 
 $host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/plugin/html2pfd/";
@@ -25,10 +24,8 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function documento() {
+// 		var_dump ( $_REQUEST );
 		
-		var_dump($_REQUEST);
-		
-
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -37,11 +34,11 @@ class RegistradorOrden {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenDocumento', $_REQUEST ['id_orden'] );
 		
 		$orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		var_dump($orden);exit;
+// 		var_dump ( $orden );
 		$orden = $orden [0];
 		
 		
-		
+		$tipo_orden=($orden['tipo_orden']=='1')?"ORDEN DE COMPRA":(($orden['tipo_orden'])?"ORDEN DE SERVICIOS":" "); 
 		
 		
 		
@@ -49,33 +46,31 @@ class RegistradorOrden {
 		$info_presupuestal = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$info_presupuestal = $info_presupuestal [0];
 		
-
+// 		var_dump ( $info_presupuestal );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarRubro', $orden ['rubro'] );
-		$rubro = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$rubro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$rubro = $rubro [0];
-
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarDependencia', $orden ['dependencia_solicitante'] );
-		$dependencia_solicitante = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		$dependencia_solicitante = $dependencia_solicitante [0];
-
 		
-		
+// 		var_dump ( $rubro );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarSupervisor', $orden ['id_supervisor'] );
 		$supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$supervisor = $supervisor [0];
 		
+// 		var_dump ( $supervisor );
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarDependenciaSupervisor', $supervisor ['dependencia'] );
-		$dependencia_supervisor = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		$dependencia_supervisor = $dependencia_supervisor [0];
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarDependenciaSupervisor', $supervisor ['dependencia'] );
+		// $dependencia_supervisor = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		// $dependencia_supervisor = $dependencia_supervisor [0];
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarCosntraistaServicios', $orden['id_contratista'] );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarCosntraistaServicios', $orden ['id_contratista'] );
 		$datosContratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$datosContratista=$datosContratista[0];
-
+		$datosContratista = $datosContratista [0];
+		
+// 		var_dump ( $datosContratista );
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'polizas' );
 		$polizas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$polizas = $polizas [0];
@@ -85,23 +80,34 @@ class RegistradorOrden {
 		$poliza3 = ($orden ['poliza3'] != 'f') ? 'X' : ' ';
 		$poliza4 = ($orden ['poliza4'] != 'f') ? 'X' : ' ';
 		
-
+		// $arreglo = array (
+		// $orden ['id_contratista_encargado'],
+		// $orden ['vig_contratista']
+		// );
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarContratistaDocumento', $arreglo );
+		// $contratista = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		// $contratista = $contratista [0];
 		
-// 		$arreglo = array (
-// 				$orden ['id_contratista_encargado'],
-// 				$orden ['vig_contratista'] 
-// 		);
-// 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarContratistaDocumento', $arreglo );
-// 		$contratista = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-// 		$contratista = $contratista [0];
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenador_gasto', array (
+				$orden ['id_ordenador_encargado'],
+				$orden ['tipo_ordenador'] 
+		) );
 		
-		
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenador_gasto', $orden['id_ordenador_encargado'] );
-		$ordenador = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$ordenador = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$ordenador = $ordenador [0];
+// 		var_dump($ordenador);
 		
-
+		
+		
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosOrden', $_REQUEST ['id_orden'] );
+		
+		$ElementosOrden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		
+// 		var_dump($ElementosOrden);
+		
+		
 		$contenidoPagina = "
 <style type=\"text/css\">
     table { 
@@ -161,7 +167,7 @@ class RegistradorOrden {
 	                  		
        		<table style='width:100%;'>
             <tr> 
-			<td style='width:50%;'>ORDEN DE SERVICIOS Nro.  " . $_REQUEST ['orden_consulta'] . "</td>
+			<td style='width:50%;'>".$tipo_orden." VIGENCIA Y NÚMERO  " . $orden ['identificador_consecutivo'] . "</td>
 			<td style='width:50%;text-aling=right;'>FECHA DE ORDEN :  " . $orden ['fecha_registro'] . "</td> 			
  		 	</tr>
 		    </table>
@@ -175,8 +181,8 @@ class RegistradorOrden {
 
 		    <table style='width:100%;'>
 			<tr> 
-			<td style='width:50%;'>Dependencia : ".$dependencia_solicitante[1]." </td>
-			<td style='width:50%;'>Rubro: ".$rubro[0]."</td>		
+			<td style='width:50%;'>Dependencia : " . $orden ['nombre_dependencia'] . " </td>
+			<td style='width:50%;'>Rubro: " . $rubro [0] . "</td>		
 			</tr>
 			</table>	
 
@@ -188,14 +194,14 @@ class RegistradorOrden {
 
 			<table style='width:100%;'>		
 			<tr> 
-			<td style='width:50%;'>Nombre : ".$supervisor['nombre']." </td>
-			<td style='width:50%;'>Cargo : ".$supervisor['cargo']." </td>
+			<td style='width:50%;'>Nombre : " . $supervisor ['nombre'] . " </td>
+			<td style='width:50%;'>Cargo : " . $supervisor ['cargo'] . " </td>
 			</tr>
 			</table>
 					
 		    <table style='width:100%;'>
 			<tr> 
-			<td style='width:100%;'>Dependencia : ".rtrim($dependencia_supervisor[1])." </td>
+			<td style='width:100%;'>Dependencia : " . rtrim ( $supervisor ['nombre_dependencia'] ) . " </td>
 			</tr>						
 			</table>	
 
@@ -211,18 +217,18 @@ class RegistradorOrden {
 
             <table style='width:100%;'>
 			<tr> 
-			<td style='width:50%;'>Nombre o Razón Social : ".$datosContratista['nombre_razon_social']." </td>
-			<td style='width:50%;'>Cedula o Nit : ".$datosContratista['identificacion']." </td>
+			<td style='width:50%;'>Nombre o Razón Social : " . $datosContratista ['nombre_razon_social'] . " </td>
+			<td style='width:50%;'>Cedula o Nit : " . $datosContratista ['identificacion'] . " </td>
 			</tr>
 			<tr> 
-			<td style='width:50%;'>Dirección : ".$datosContratista['direccion']." </td>
-			<td style='width:50%;'>Telefono : ".$datosContratista['telefono']." </td>
+			<td style='width:50%;'>Dirección : " . $datosContratista ['direccion'] . " </td>
+			<td style='width:50%;'>Telefono : " . $datosContratista ['telefono'] . " </td>
 			</tr>		
 			</table>	
 
 			<table style='width:100%;'>
 			<tr> 
-			<td style='width:100%;'>Cargo : ".$datosContratista['cargo']."</td>
+			<td style='width:100%;'>Cargo : " . $datosContratista ['cargo'] . "</td>
 			</tr>
          	</table>			
 					
@@ -237,7 +243,7 @@ class RegistradorOrden {
 			<td style='width:100%;'>Objeto General : </td>
 			</tr>
 			<tr> 
-			<td style='width:100%;text-align:justify;font-size: 8px;font-size-adjust: 0.3;'>".$orden[4]." </td>
+			<td style='width:100%;text-align:justify;font-size: 8px;font-size-adjust: 0.3;'>" . $orden ['objeto_contrato'] . " </td>
 			</tr>		
 			</table>			
 			
@@ -268,25 +274,19 @@ class RegistradorOrden {
 
 		    <table style='width:100%;'>
 			<tr> 
-			<td style='width:33.31%;'>Fecha Inicio:  ".$orden['fecha_inicio_pago']."</td>
-			<td style='width:33.31%;'>Fecha Final:  ".$orden['fecha_final_pago']."</td>
-			<td style='width:33.31%;'>Duración (en Dias):  ".$orden['duracion_pago']."</td>		
+			<td style='width:33.31%;'>Fecha Inicio:  " . $orden ['fecha_inicio_pago'] . "</td>
+			<td style='width:33.31%;'>Fecha Final:  " . $orden ['fecha_final_pago'] . "</td>
+			<td style='width:33.31%;'>Duración (en Dias):  " . $orden ['duracion_pago'] . "</td>		
 			</tr>
          	</table>	 
 
             <table style='width:100%;'>
 			<tr> 
-			<td style='width:100%;text-align:justify;'>Forma de Pago :  ".$orden['forma_pago']."</td>
+			<td style='width:100%;text-align:justify;'>Forma de Pago :  " . $orden ['forma_pago'] . "</td>
 			</tr>
          	</table>
 
-			<table style='width:100%;'>
-			<tr> 
-			<td style='width:33.31%;'>Total Preliminar :  $ ".$orden['total_preliminar']."</td>
-			<td style='width:33.31%;'>Total Iva :  $ ".$orden['iva']."</td>
-			<td style='width:33.31%;'>Total :  $ ".$orden['total']."</td>		
-			</tr>
-         	</table>	 		
+
 			
 			<table style='width:100%;'>
 			<tr> 
@@ -296,35 +296,35 @@ class RegistradorOrden {
 
 			<table style='width:100%;'>
 			<tr> 
-			<td style='width:50%;'>Vigencia (Disponibilidad) :   ".$info_presupuestal['vigencia_dispo']."</td>
-			<td style='width:50%;'>Número (Disponibilidad) :   ".$info_presupuestal['numero_dispo']."</td>
+			<td style='width:50%;'>Vigencia (Disponibilidad) :   " . $info_presupuestal ['vigencia_dispo'] . "</td>
+			<td style='width:50%;'>Número (Disponibilidad) :   " . $info_presupuestal ['numero_dispo'] . "</td>
 			</tr>
 			<tr> 
-			<td style='width:50%;'>Valor (Disponibilidad) :   $  ".$info_presupuestal['valor_disp']."</td>
-			<td style='width:50%;'>Fecha (Disponibilidad) :   ".$info_presupuestal['fecha_dip']."</td>
+			<td style='width:50%;'>Valor (Disponibilidad) :   $  " . $info_presupuestal ['valor_disp'] . "</td>
+			<td style='width:50%;'>Fecha (Disponibilidad) :   " . $info_presupuestal ['fecha_dip'] . "</td>
 			</tr>		
          	</table>		
 					
     		<table style='width:100%;'>
 			<tr> 
-			<td style='width:100%;'>Valor en Letras (Disponibilidad) :  ".$info_presupuestal['letras_dispo']."</td>
+			<td style='width:100%;'>Valor en Letras (Disponibilidad) :  " . $info_presupuestal ['letras_dispo'] . "</td>
 			</tr>
          	</table>		
 
 			<table style='width:100%;'>
 			<tr> 
-			<td style='width:50%;'>Vigencia (Registro) :   ".$info_presupuestal['vigencia_regis']."</td>
-			<td style='width:50%;'>Número (Registro) :   ".$info_presupuestal['numero_regis']."</td>
+			<td style='width:50%;'>Vigencia (Registro) :   " . $info_presupuestal ['vigencia_regis'] . "</td>
+			<td style='width:50%;'>Número (Registro) :   " . $info_presupuestal ['numero_regis'] . "</td>
 			</tr>
 			<tr> 
-			<td style='width:50%;'>Valor (Registro) :  $  ".$info_presupuestal['valor_regis']."</td>
-			<td style='width:50%;'>Fecha (Registro) :   ".$info_presupuestal['fecha_regis']."</td>
+			<td style='width:50%;'>Valor (Registro) :  $  " . $info_presupuestal ['valor_regis'] . "</td>
+			<td style='width:50%;'>Fecha (Registro) :   " . $info_presupuestal ['fecha_regis'] . "</td>
 			</tr>		
          	</table>		
 					
     		<table style='width:100%;'>
 			<tr> 
-			<td style='width:100%;'>Valor en Letras (Registro) :  ".$info_presupuestal['letras_regis']."</td>
+			<td style='width:100%;'>Valor en Letras (Registro) :  " . $info_presupuestal ['letras_regis'] . "</td>
 			</tr>
          	</table>		
 
@@ -338,15 +338,15 @@ class RegistradorOrden {
 			</tr>
 			<tr>
 			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>FIRMA CONTRATISTA</td>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $ordenador[1]. "</td>
+			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $ordenador [1] . "</td>
 			</tr>
 			<tr>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>NOMBRE: " . $datosContratista['nombre_razon_social'] . "</td>
+			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>NOMBRE: " . $datosContratista ['nombre_razon_social'] . "</td>
 			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>ORDENADOR GASTO</td>
 			</tr>
 			<tr>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>C.C: " .$datosContratista['identificacion']. "</td>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $ordenador[0]. "</td>
+			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>C.C: " . $datosContratista ['identificacion'] . "</td>
+			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $ordenador [0] . "</td>
 			</tr>							
 			</table>		
 					
@@ -365,11 +365,10 @@ class RegistradorOrden {
 		
 		$contenidoPagina .= "</page>";
 		
-		// echo $contenidoPagina;exit;
+// 		echo $contenidoPagina;exit;
 		return $contenidoPagina;
 	}
 }
-
 
 $miRegistrador = new RegistradorOrden ( $this->lenguaje, $this->sql, $this->funcion );
 
@@ -380,7 +379,7 @@ $html2pdf = new \HTML2PDF ( 'P', 'LETTER', 'es', true, 'UTF-8' );
 $html2pdf->pdf->SetDisplayMode ( 'fullpage' );
 $html2pdf->WriteHTML ( $textos );
 
-$html2pdf->Output ( 'Servicios_Nro_'.$_REQUEST['orden_consulta'].'_'.date ( "Y-m-d" ).'.pdf', 'D' );
+$html2pdf->Output (   date ( "Y-m-d" ) . '.pdf', 'D' );
 
 ?>
 

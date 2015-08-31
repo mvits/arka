@@ -214,9 +214,9 @@ class Sql extends \Sql {
 				break;
 			
 			case "consultarRubro" :
-				$cadenaSql = " SELECT RUB_NOMBRE_RUBRO ";
-				$cadenaSql .= " FROM RUBROS ";
-				$cadenaSql .= " WHERE  RUB_IDENTIFICADOR='" . $variable . "'";
+				$cadenaSql = " SELECT \"RUB_NOMBRE_RUBRO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_rubros  ";
+				$cadenaSql .= " WHERE  \"RUB_IDENTIFICADOR\"='" . $variable . "'";
 				
 				break;
 			
@@ -375,10 +375,14 @@ class Sql extends \Sql {
 			// _________________________________________________
 			
 			case "consultarOrdenDocumento" :
-				$cadenaSql = "SELECT DISTINCT  fecha_registro, info_presupuestal, dependencia_solicitante,sede,
+				$cadenaSql = "SELECT DISTINCT  tipo_orden,vigencia,
+							         CASE tipo_orden
+										WHEN 1 THEN vigencia || ' - ' ||consecutivo_compras
+										WHEN 9 THEn vigencia || ' - ' ||consecutivo_servicio
+								 END identificador_consecutivo , fecha_registro, info_presupuestal, dependencia_solicitante,sede,
 				rubro, objeto_contrato, poliza1, poliza2, poliza3, poliza4, duracion_pago,
 				fecha_inicio_pago, fecha_final_pago, forma_pago, id_contratista,
-				id_ordenador_encargado, id_supervisor, estado, sd.\"ESF_SEDE\" nombre_sede , ad.\"ESF_DEP_ENCARGADA\" nombre_dependencia ";
+				id_ordenador_encargado, tipo_ordenador,id_supervisor, estado, sd.\"ESF_SEDE\" nombre_sede , ad.\"ESF_DEP_ENCARGADA\" nombre_dependencia ";
 				$cadenaSql .= "FROM orden  ";
 				$cadenaSql .= "JOIN  arka_parametros.arka_dependencia ad ON ad.\"ESF_CODIGO_DEP\"=orden.dependencia_solicitante  ";
 				$cadenaSql .= "JOIN  arka_parametros.arka_sedes  sd ON sd	.\"ESF_ID_SEDE\"=orden.sede  ";
@@ -413,16 +417,18 @@ class Sql extends \Sql {
 				break;
 			
 			case "consultarOrdenador_gasto" :
-				$cadenaSql = " 	SELECT ORG_ORDENADOR_GASTO,ORG_NOMBRE ";
-				$cadenaSql .= " FROM ORDENADORES_GASTO ";
-				$cadenaSql .= " WHERE ORG_IDENTIFICADOR ='" . $variable . "'";
-				$cadenaSql .= " AND ORG_ESTADO='A' ";
+				$cadenaSql = " 	SELECT \"ORG_ORDENADOR_GASTO\",\"ORG_NOMBRE\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_ordenadores     ";
+				$cadenaSql .= " WHERE     \"ORG_IDENTIFICACION\" ='" . $variable [0]. "'";
+				$cadenaSql .= " AND       \"ORG_TIPO_ORDENADOR\"  ='" . $variable[1] . "'";
+				
 				break;
 			
 			case "consultarSupervisor" :
 				$cadenaSql = " SELECT ";
-				$cadenaSql .= "  nombre, cargo, dependencia";
-				$cadenaSql .= " FROM supervisor_servicios ";
+				$cadenaSql .= "  nombre, cargo, dependencia,  ad.\"ESF_DEP_ENCARGADA\" nombre_dependencia ";
+				$cadenaSql .= " FROM supervisor_servicios sp ";
+				$cadenaSql .= "JOIN  arka_parametros.arka_dependencia ad ON ad.\"ESF_CODIGO_DEP\"=sp.dependencia  ";
 				$cadenaSql .= " WHERE id_supervisor='" . $variable . "'";
 				
 				break;
