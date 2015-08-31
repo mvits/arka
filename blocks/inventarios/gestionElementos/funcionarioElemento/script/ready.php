@@ -11,6 +11,10 @@
 	         });
 	
         
+        
+        
+        
+        
         $(function() {
             $("#funcionarioElemento").submit(function() {
                 $resultado=$("#funcionarioElemento").validationEngine("validate");
@@ -25,6 +29,25 @@
             });
         });
 
+         $(function() {
+         
+         
+    $( "#ventanaEmergente" ).dialog({
+						  height: 470,
+						  width: 900,
+						  title: "Información Levantamiento Físico",
+				});
+				
+				
+				$("#abrir").button().click(function () {
+							$("#ventanaEmergente").dialog("open");
+						});
+
+				
+				
+  });
+        
+        
                $('#tablaTitulos').dataTable( {
 					"sScrollY": "350px",
 					 "bScrollCollapse": true,

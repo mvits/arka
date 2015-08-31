@@ -96,6 +96,12 @@ class registrarForm {
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		// ------------------Division para los botones-------------------------
+		$atributos ["id"] = "ventanaEmergente";
+		$atributos ["estilo"] = " ";
+		echo $this->miFormulario->division ( "inicio", $atributos );
+		
+		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'encabezado';
 		$atributos ['id'] = $esteCampo;
@@ -108,6 +114,12 @@ class registrarForm {
 		// Aplica atributos globales al control
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->cuadroMensaje ( $atributos );
+		unset($atributos);
+		
+		echo $this->miFormulario->division ( "fin" );
+		unset($atributos);
+		
+		echo "<button id=\"abrir\">Información Levantamiento</button>";
 		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
