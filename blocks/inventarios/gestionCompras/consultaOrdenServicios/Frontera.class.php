@@ -37,6 +37,7 @@ class Frontera {
 		$this->funcion = $funcion;
 	}
 	function html() {
+		echo "Frontera estoy";
 		include_once ("core/builder/FormularioHtml.class.php");
 		
 		$this->ruta = $this->miConfigurador->getVariableConfiguracion ( "rutaBloque" );

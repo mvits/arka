@@ -25,21 +25,19 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function documento() {
-// 		var_dump($_REQUEST);exit;
 		
-		
+		var_dump($_REQUEST);
 		
 
-		$conexion = "sicapital";
-		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( 'rutaUrlBloque' );
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenServiciosDocumento', $_REQUEST ['orden_consulta'] );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenDocumento', $_REQUEST ['id_orden'] );
+		
 		$orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		var_dump($orden);exit;
 		$orden = $orden [0];
 		
 		

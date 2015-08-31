@@ -185,11 +185,22 @@ class registrarForm {
 				$variable_elementos .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['identificador'];
 				$variable_elementos = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable_elementos, $directorio );
 				
-				$variable_documento = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+// 				$variable_documento = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+// 				$variable_documento .= "&opcion=generarDocumento";
+// 				$variable_documento .= "&id_orden=" . $Orden [$i] ['id_orden'];
+// 				$variable_documento .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['identificador'];
+// 				$variable_documento = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable_documento, $directorio );
+				
+				$variable_documento = "action=" . $esteBloque ["nombre"];
+				$variable_documento .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+				$variable_documento .= "&bloque=" . $esteBloque ['nombre'];
+				$variable_documento .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 				$variable_documento .= "&opcion=generarDocumento";
 				$variable_documento .= "&id_orden=" . $Orden [$i] ['id_orden'];
 				$variable_documento .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['identificador'];
 				$variable_documento = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable_documento, $directorio );
+				
+				
 				
 				$elemento = (is_null($Orden[$i]['validacion'])==true)?'':(($Orden[$i]['estado_elementos']=='t')?"<a href='" . $variable_elementos . "'><img src='" . $rutaBloque . "/css/images/update.png' width='15px'></a>":'');
 				$documento =(is_null($Orden[$i]['validacion'])==true)?'': "<a href='" . $variable_documento . "'><img src='" . $rutaBloque . "/css/images/documento.png' width='15px'></a>";

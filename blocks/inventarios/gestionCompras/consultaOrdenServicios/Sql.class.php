@@ -374,14 +374,15 @@ class Sql extends \Sql {
 			
 			// _________________________________________________
 			
-			case "consultarOrdenServiciosDocumento" :
-				$cadenaSql = "SELECT  fecha_registro, info_presupuestal, dependencia_solicitante,
+			case "consultarOrdenDocumento" :
+				$cadenaSql = "SELECT DISTINCT  fecha_registro, info_presupuestal, dependencia_solicitante,sede,
 				rubro, objeto_contrato, poliza1, poliza2, poliza3, poliza4, duracion_pago,
-				fecha_inicio_pago, fecha_final_pago, forma_pago, total_preliminar,
-				iva, total, id_contratista,
-				id_ordenador_encargado, id_supervisor, estado ";
-				$cadenaSql .= "FROM orden_servicio  ";
-				$cadenaSql .= "WHERE  id_orden_servicio='" . $variable . "';";
+				fecha_inicio_pago, fecha_final_pago, forma_pago, id_contratista,
+				id_ordenador_encargado, id_supervisor, estado, sd.\"ESF_SEDE\" nombre_sede , ad.\"ESF_DEP_ENCARGADA\" nombre_dependencia ";
+				$cadenaSql .= "FROM orden  ";
+				$cadenaSql .= "JOIN  arka_parametros.arka_dependencia ad ON ad.\"ESF_CODIGO_DEP\"=orden.dependencia_solicitante  ";
+				$cadenaSql .= "JOIN  arka_parametros.arka_sedes  sd ON sd	.\"ESF_ID_SEDE\"=orden.sede  ";
+				$cadenaSql .= "WHERE  id_orden='" . $variable . "';";
 				
 				break;
 			

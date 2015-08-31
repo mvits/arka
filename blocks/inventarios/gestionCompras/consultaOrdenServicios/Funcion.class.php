@@ -81,7 +81,6 @@ class Funcion {
 			$this->procesarAjax ();
 		} elseif (isset ( $_REQUEST ["opcion"] )) {
 			
-			// var_dump($_REQUEST);exit;
 			switch ($_REQUEST ['opcion']) {
 				
 				case 'modificarOrden' :
@@ -96,8 +95,7 @@ class Funcion {
 					$this->eliminarElementoOrden ();
 					break;
 				
-				case 'documento' :
-					
+				case 'generarDocumento' :
 					$this->documentoPdf ();
 					break;
 			}
