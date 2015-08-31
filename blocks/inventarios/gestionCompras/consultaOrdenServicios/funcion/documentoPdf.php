@@ -23,9 +23,28 @@ class RegistradorOrden {
 		$this->miSql = $sql;
 		$this->miFuncion = $funcion;
 	}
-	function documento() {
-// 		var_dump ( $_REQUEST );
+	
+	function tipo_orden(){
 		
+		$conexion = "inventarios";
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+			
+		
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenDocumento', $_REQUEST ['id_orden'] );
+		
+		$orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		// var_dump ( $orden );
+		$orden = $orden [0];
+		
+		$tipo_orden = ($orden ['tipo_orden'] == '1') ? "ORDEN DE COMPRA" : (($orden ['tipo_orden']) ? "ORDEN DE SERVICIOS" : " ");
+		$tipo_orden.="  ".$orden['identificador_consecutivo'];
+		
+		return $tipo_orden;
+	}
+	
+	function documento() {
+		// var_dump ( $_REQUEST );
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -34,31 +53,28 @@ class RegistradorOrden {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrdenDocumento', $_REQUEST ['id_orden'] );
 		
 		$orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-// 		var_dump ( $orden );
+		// var_dump ( $orden );
 		$orden = $orden [0];
 		
-		
-		$tipo_orden=($orden['tipo_orden']=='1')?"ORDEN DE COMPRA":(($orden['tipo_orden'])?"ORDEN DE SERVICIOS":" "); 
-		
-		
+		$tipo_orden = ($orden ['tipo_orden'] == '1') ? "ORDEN DE COMPRA" : (($orden ['tipo_orden']) ? "ORDEN DE SERVICIOS" : " ");
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'informacionPresupuestal', $orden ['info_presupuestal'] );
 		$info_presupuestal = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$info_presupuestal = $info_presupuestal [0];
 		
-// 		var_dump ( $info_presupuestal );
+		// var_dump ( $info_presupuestal );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarRubro', $orden ['rubro'] );
 		$rubro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$rubro = $rubro [0];
 		
-// 		var_dump ( $rubro );
+		// var_dump ( $rubro );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarSupervisor', $orden ['id_supervisor'] );
 		$supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$supervisor = $supervisor [0];
 		
-// 		var_dump ( $supervisor );
+		// var_dump ( $supervisor );
 		
 		// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarDependenciaSupervisor', $supervisor ['dependencia'] );
 		// $dependencia_supervisor = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -69,7 +85,7 @@ class RegistradorOrden {
 		
 		$datosContratista = $datosContratista [0];
 		
-// 		var_dump ( $datosContratista );
+		// var_dump ( $datosContratista );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'polizas' );
 		$polizas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -95,18 +111,13 @@ class RegistradorOrden {
 		
 		$ordenador = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$ordenador = $ordenador [0];
-// 		var_dump($ordenador);
-		
-		
-		
+		// var_dump($ordenador);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosOrden', $_REQUEST ['id_orden'] );
 		
 		$ElementosOrden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		
-// 		var_dump($ElementosOrden);
-		
+		// var_dump($ElementosOrden);exit;
 		
 		$contenidoPagina = "
 <style type=\"text/css\">
@@ -167,7 +178,7 @@ class RegistradorOrden {
 	                  		
        		<table style='width:100%;'>
             <tr> 
-			<td style='width:50%;'>".$tipo_orden." VIGENCIA Y NÚMERO  " . $orden ['identificador_consecutivo'] . "</td>
+			<td style='width:50%;'>" . $tipo_orden . " VIGENCIA Y NÚMERO  " . $orden ['identificador_consecutivo'] . "</td>
 			<td style='width:50%;text-aling=right;'>FECHA DE ORDEN :  " . $orden ['fecha_registro'] . "</td> 			
  		 	</tr>
 		    </table>
@@ -243,7 +254,7 @@ class RegistradorOrden {
 			<td style='width:100%;'>Objeto General : </td>
 			</tr>
 			<tr> 
-			<td style='width:100%;text-align:justify;font-size: 8px;font-size-adjust: 0.3;'>" . $orden ['objeto_contrato'] . " </td>
+			<td style='width:100%;text-align:justify;font-size: 6px;font-size-adjust: 0.3;'>" . $orden ['objeto_contrato'] . " </td>
 			</tr>		
 			</table>			
 			
@@ -265,8 +276,9 @@ class RegistradorOrden {
 			<td style='width:10%;text-align:center;'>" . $poliza4 . "</td>		
 			</tr>					
 			</table>	
-					
-		    <table style='width:100%;'>
+			";
+		
+		$contenidoPagina .= "<table style='width:100%;'>
 			<tr> 
 			<td style='width:100%;'><b>Información Referente Pago</b></td>
 			</tr>
@@ -360,12 +372,65 @@ class RegistradorOrden {
 		
 </page_footer> 
 					
-					
+						</page>
 				";
 		
-		$contenidoPagina .= "</page>";
+		$contenidoPagina .= "<page backtop='5mm' backbottom='5mm' backleft='10mm' backright='10mm'>";
 		
-// 		echo $contenidoPagina;exit;
+		$contenidoPagina .= "
+	<table style='width:100%;'>
+		<tr>
+		<td style='width:100%;text-align=center;'>Elementos Orden</td>
+		</tr>
+		</table>
+		<table style='width:100%;'>
+		<tr>
+		<td style='width:10%;text-align=center;'>Nivel</td>
+		<td style='width:15%;text-align=center;'>Unidad/Medida</td>
+		<td style='width:20%;text-align=center;'>Cantidad</td>
+		<td style='width:30%;text-align=center;'>Descripción</td>
+		<td style='width:8.3%;text-align=center;'>Valor Unitario($)</td>
+		<td style='width:8.3%;text-align=center;'>Iva</td>
+		<td style='width:8.3%;text-align=center;'>Total</td>
+		</tr>
+		</table>
+		<table style='width:100%;'>";
+		
+		$sumatoria = 0;
+		foreach ( $ElementosOrden as $valor => $it ) {
+			$contenidoPagina .= "<tr>";
+			$contenidoPagina .= "<td style='width:10%;text-align=center;'>" . $it ['elemento_nombre'] . "</td>";
+			$contenidoPagina .= "<td style='width:15%;text-align=center;'>" . $it ['unidad'] . "</td>";
+			$contenidoPagina .= "<td style='width:20%;text-align=center;'>" . $it ['cantidad'] . "</td>";
+			$contenidoPagina .= "<td style='width:30%;text-align=justify;'>" . $it ['descripcion'] . "</td>";
+			$contenidoPagina .= "<td style='width:8.3%;text-align=center;'>$ " . $it ['valor'] . "</td>";
+			$contenidoPagina .= "<td style='width:8.3%;text-align=center;'>" . $it ['nombre_iva'] . "</td>";
+			$contenidoPagina .= "<td style='width:8.3%;text-align=center;'>$ " . $it ['total_iva_con'] . "</td>";
+			$contenidoPagina .= "</tr>";
+			
+			$sumatoria = $sumatoria + $it ['total_iva_con'];
+		}
+		
+		$contenidoPagina .= "</table>";
+		
+		$contenidoPagina .= "		<table style='width:100%;'>
+		<tr>
+		
+		<td style='width:91.7%;text-align=center;'>TOTAL  : </td>
+		<td style='width:8.3%;text-align=center;'>$" . $sumatoria . "</td>
+		</tr>
+		</table>";
+		
+		$contenidoPagina .= "<page_footer  backleft='10mm' backright='10mm'>
+												<table style='width:100%;'>		
+												<tr>
+												<td style='width:100%;text-align:justify;'><font size='1px'>Observaciones: para el respectivo pago la factura y/o cuenta de cobro debe coincidir en valores, cantidades y razón social, con la presente orden de servicio. igualmente se debe anexar el recibido a satisfacción del servicio, pago de aportes parafiscal y/o seguridad social del mes de facturación y certificación bancaria con el numero de cuenta para realizar la transferencia bancaria.</font></td>	
+												</tr>
+												</table>
+											</page_footer> 
+				</page>";
+		
+		// echo $contenidoPagina;exit;
 		return $contenidoPagina;
 	}
 }
@@ -373,13 +438,14 @@ class RegistradorOrden {
 $miRegistrador = new RegistradorOrden ( $this->lenguaje, $this->sql, $this->funcion );
 
 $textos = $miRegistrador->documento ();
+$tipo_orden= $miRegistrador->tipo_orden ();
 
 ob_start ();
 $html2pdf = new \HTML2PDF ( 'P', 'LETTER', 'es', true, 'UTF-8' );
 $html2pdf->pdf->SetDisplayMode ( 'fullpage' );
 $html2pdf->WriteHTML ( $textos );
 
-$html2pdf->Output (   date ( "Y-m-d" ) . '.pdf', 'D' );
+$html2pdf->Output ( $tipo_orden. '.pdf', 'D' );
 
 ?>
 

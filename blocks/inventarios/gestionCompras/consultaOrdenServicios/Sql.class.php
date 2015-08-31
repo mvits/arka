@@ -719,7 +719,7 @@ class Sql extends \Sql {
 				break;
 			
 			case "consultarElementosOrden" :
-				$cadenaSql = "SELECT  ela.*, ct.elemento_nombre nivel_nombre, tb.descripcion nombre_tipo, iv.descripcion nombre_iva ";
+				$cadenaSql = "SELECT  ela.*, ct.elemento_nombre nivel_nombre, tb.descripcion nombre_tipo, iv.descripcion nombre_iva,elemento_nombre  ";
 				$cadenaSql .= "FROM elemento_acta_recibido ela ";
 				$cadenaSql .= "JOIN  grupo.catalogo_elemento ct ON ct.elemento_id=ela.nivel ";
 				$cadenaSql .= "JOIN  tipo_bienes tb ON tb.id_tipo_bienes=ela.tipo_bien ";
