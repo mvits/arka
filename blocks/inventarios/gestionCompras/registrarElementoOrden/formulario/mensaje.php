@@ -73,7 +73,7 @@ class registrarForm {
 			$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			var_dump($_REQUEST);
+			
 			$variable = "pagina=" . $miPaginaActual;
 			$variable .= "&opcion=cargarElemento";
 			$variable .= "&id_orden=" .$_REQUEST['id_orden'];
