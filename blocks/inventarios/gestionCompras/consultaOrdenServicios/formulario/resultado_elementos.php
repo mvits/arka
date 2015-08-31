@@ -80,8 +80,19 @@ class registrarForm {
 		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
+
+		$arreglo=unserialize($_REQUEST['arreglo']);
+		
 		
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&opcion=ConsultarOrden";
+		$variable .= "&numero_orden=" .$arreglo['numero_orden'];
+		$variable .= "&tipo_orden=" .$arreglo['tipo_orden'];
+		$variable .= "&id_proveedor=" .$arreglo['nit'];
+		$variable .= "&sedeConsulta=" .$arreglo['sede'];
+		$variable .= "&dependenciaConsulta=" .$arreglo['dependencia'];
+		$variable .= "&fecha_inicio=" .$arreglo['fecha_inicial'];
+		$variable .= "&fecha_final=" .$arreglo['fecha_final'];
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
@@ -131,6 +142,7 @@ class registrarForm {
 				$variable .= "&opcion=modificarElementos";
 				$variable .= "&id_elemento_acta=" . $ElementosOrden [$i] ['id_elemento_ac'];
 				$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
+				$variable .= "&arreglo=" .$_REQUEST ['arreglo'];
 				$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
@@ -138,6 +150,7 @@ class registrarForm {
 				$variable1 .= "&opcion=eliminarElementos";
 				$variable1 .= "&id_elemento_acta=" . $ElementosOrden [$i] ['id_elemento_ac'];
 				$variable1 .= "&id_orden=" .$_REQUEST ['id_orden'];
+				$variable1 .= "&arreglo=" .$_REQUEST ['arreglo'];
 				$variable1 .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 				$variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
 				

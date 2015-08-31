@@ -21,7 +21,7 @@ class registrarForm {
 	}
 	function miForm() {
 		// echo "Modificar Ornden";
-		// var_dump ( $_REQUEST );
+// 		var_dump ( $_REQUEST );
 		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
@@ -152,7 +152,18 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
+			$arreglo=unserialize($_REQUEST['arreglo']);
+			
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&opcion=ConsultarOrden";
+			$variable .= "&numero_orden=" .$arreglo['numero_orden'];
+			$variable .= "&tipo_orden=" .$arreglo['tipo_orden'];
+			$variable .= "&id_proveedor=" .$arreglo['nit'];
+			$variable .= "&sedeConsulta=" .$arreglo['sede'];
+			$variable .= "&dependenciaConsulta=" .$arreglo['dependencia'];
+			$variable .= "&fecha_inicio=" .$arreglo['fecha_inicial'];
+			$variable .= "&fecha_final=" .$arreglo['fecha_final'];
+				
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -1837,7 +1848,7 @@ class registrarForm {
 			 * En algunas ocasiones es útil pasar variables entre las diferentes páginas.
 			 * SARA permite realizar esto a través de tres
 			 * mecanismos:
-			 * (a). Registrando las variables como variables de sesión. Estarán disponibles durante toda la sesión de usuario. Requiere acceso a
+			 * (a). Registrando las variables como variables de sesión. Estarán dilesn de usuario. Requiere acceso a
 			 * la base de datos.
 			 * (b). Incluirlas de manera codificada como campos de los formularios. Para ello se utiliza un campo especial denominado
 			 * formsara, cuyo valor será una cadena codificada que contiene las variables.
@@ -1858,7 +1869,7 @@ class registrarForm {
 			$valorCodificado .= "&contratista=" . $Orden ['id_contratista'];
 			$valorCodificado .= "&supervisor=" . $Orden ['id_supervisor'];
 			$valorCodificado .= "&info_presupuestal=" . $Orden ['info_presupuestal'];
-			
+			$valorCodificado .= "&arreglo=" .$_REQUEST['arreglo'];
 			$valorCodificado .= "&seccion=" . $tiempo;
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.

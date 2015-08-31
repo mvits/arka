@@ -20,6 +20,7 @@ class redireccion {
 				$variable .= "&mensaje_titulo=" . $valor [0];
 				$variable .= "&id_orden=" . $valor [1];
 				$variable .= "&fecha_orden=" . $valor [2];
+				$variable .= "&arreglo=" . $valor [3];
 				break;
 			
 			case "inserto_cargue_masivo" :
@@ -30,6 +31,7 @@ class redireccion {
 				$variable .= "&id_orden=" . $valor [1];
 				$variable .= "&mensaje_titulo=" . $valor [0];
 				$variable .= "&fecha_orden=" . $valor [2];
+				$variable .= "&arreglo=" . $valor [3];
 				break;
 			
 			case "noFormatoImagen" :

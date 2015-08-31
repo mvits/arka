@@ -58,8 +58,6 @@ class registrarForm {
 		
 		$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		
-		
 		switch ($elemento [0] ['tipo_bien']) {
 			
 			case '1' :
@@ -74,8 +72,7 @@ class registrarForm {
 				break;
 		}
 		
-// if($elemento[0]['tipo_']){}
-		
+		// if($elemento[0]['tipo_']){}
 		
 		$arreglo = array (
 				"fecha_inicio" => $elemento [0] ['fecha_inicio_pol'],
@@ -126,14 +123,20 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		{
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
-			
+			var_dump($_REQUEST);
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			
 			$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+			$arreglo = unserialize ( $_REQUEST ['arreglo'] );
 			
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&opcion=consultaElementos";
+			$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
+			$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+			$variable .= "&arreglo=" . $_REQUEST ['arreglo'];
+
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -150,12 +153,11 @@ class registrarForm {
 			
 			unset ( $atributos );
 			
-			
 			$esteCampo = "marcoDatosBasicos";
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = "MODIFICAR ELEMENTO ".$_REQUEST['mensaje_titulo'];
+			$atributos ["leyenda"] = "MODIFICAR ELEMENTO " . $_REQUEST ['mensaje_titulo'];
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			unset ( $atributos );
 			{
@@ -324,7 +326,6 @@ class registrarForm {
 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
 							unset ( $atributos );
 							
-							
 							$esteCampo = "imagenElemento";
 							$atributos ["id"] = $esteCampo; // No cambiar este nombre
 							$atributos ["nombre"] = $esteCampo;
@@ -338,13 +339,10 @@ class registrarForm {
 							$atributos ["tamanno"] = 500000;
 							$atributos ["validar"] = " ";
 							$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
-// 							$atributos ["valor"] = $valorCodificado;
+							// $atributos ["valor"] = $valorCodificado;
 							$atributos = array_merge ( $atributos, $atributosGlobales );
 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
 							unset ( $atributos );
-								
-							
-							
 						}
 						echo $this->miFormulario->agrupacion ( "fin" );
 						unset ( $atributos );
@@ -746,9 +744,9 @@ class registrarForm {
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 						$atributos ['anchoEtiqueta'] = 213;
 						// Valores a mostrar en el control
-// 						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_bodega" );
-// 						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-// 						$atributos ['matrizItems'] = $matrizItems;
+						// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_bodega" );
+						// $matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						// $atributos ['matrizItems'] = $matrizItems;
 						
 						// Utilizar lo siguiente cuando no se pase un arreglo:
 						// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
@@ -918,6 +916,9 @@ class registrarForm {
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=procesarModificarElementos";
 			$valorCodificado .= "&id_elemento_acta=" . $_REQUEST ['id_elemento_acta'];
+			$valorCodificado .= "&id_orden=" . $_REQUEST ['id_orden'];
+			$valorCodificado .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+			$valorCodificado .= "&arreglo=" . $_REQUEST ['arreglo'];
 			
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.

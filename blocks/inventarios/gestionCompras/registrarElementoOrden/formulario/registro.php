@@ -85,9 +85,23 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
+			
+			$arreglo=unserialize($_REQUEST['arreglo']);
+			
+			
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&opcion=ConsultarActa";
+			$variable .= "&numero_orden=" .$arreglo['numero_orden'];
+			$variable .= "&tipo_orden=" .$arreglo['tipo_orden'];
+			$variable .= "&id_proveedor=" .$arreglo['nit'];
+			$variable .= "&sedeConsulta=" .$arreglo['sede'];
+			$variable .= "&dependenciaConsulta=" .$arreglo['dependencia'];
+			$variable .= "&fecha_inicio=" .$arreglo['fecha_inicial'];
+			$variable .= "&fecha_final=" .$arreglo['fecha_final'];
+			
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+			
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
@@ -908,6 +922,7 @@ class registrarForm {
 			$valorCodificado .= "&opcion=registrar";
 			$valorCodificado .= "&id_orden=" . $_REQUEST ['id_orden'];
 			$valorCodificado .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+			$valorCodificado .= "&arreglo=" .$_REQUEST['arreglo'];
 			
 			
 			/**

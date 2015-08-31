@@ -159,7 +159,8 @@ class RegistradorOrden {
 				$datos = array (
 						$_REQUEST ['mensaje_titulo'],
 						$_REQUEST ['id_orden'],
-						$fechaActual 
+						$fechaActual ,
+						$_REQUEST['arreglo']
 				);
 				
 				//
@@ -454,7 +455,8 @@ class RegistradorOrden {
 							$datos = array (
 									$_REQUEST ['mensaje_titulo'],
 									$_REQUEST ['id_orden'],
-									$fechaActual 
+									$fechaActual ,
+									$_REQUEST['arreglo']
 							);
 							
 							

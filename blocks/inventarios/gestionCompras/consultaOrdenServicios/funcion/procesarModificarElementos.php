@@ -21,7 +21,6 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-			
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		// ------- Registro de Imagen
@@ -71,10 +70,6 @@ class RegistradorOrden {
 			}
 		}
 		
-		
-		
-		
-
 		// -------------------------------------
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_iva', $_REQUEST ['iva'] );
@@ -188,13 +183,20 @@ class RegistradorOrden {
 		// $imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		// }
 		
+		$arreglo = array (
+				$_REQUEST ['id_orden'],
+				$_REQUEST ['mensaje_titulo'],
+				$_REQUEST ['arreglo'] 
+		)
+		;
+		
 		if ($elemento) {
 			
-			redireccion::redireccionar ( 'ActualizoElemento' );
+			redireccion::redireccionar ( 'ActualizoElemento', $arreglo );
 			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noActualizoElemento' );
+			redireccion::redireccionar ( 'noActualizoElemento', $arreglo );
 			exit ();
 		}
 	}

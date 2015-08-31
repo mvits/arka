@@ -133,7 +133,8 @@ class RegistradorOrden {
 
 		$datos = array (
 				$_REQUEST ['id_orden'],
-				$_REQUEST['mensaje_titulo'] 
+				$_REQUEST['mensaje_titulo'],
+				$_REQUEST['arreglo']
 		);
 	
 		if ($id_orden == true) {
