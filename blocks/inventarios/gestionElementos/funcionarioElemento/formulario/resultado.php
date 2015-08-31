@@ -119,7 +119,7 @@ class registrarForm {
 		echo $this->miFormulario->division ( "fin" );
 		unset($atributos);
 		
-		echo "<button id=\"abrir\">Información Levantamiento</button>";
+		echo "<button id=\"abrir\">Ver Instrucciones</button>";
 		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;

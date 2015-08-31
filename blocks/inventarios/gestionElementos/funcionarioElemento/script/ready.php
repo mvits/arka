@@ -36,6 +36,8 @@
 						  height: 470,
 						  width: 900,
 						  title: "Información Levantamiento Físico",
+						  autoOpen: false,
+						  
 				});
 				
 				
