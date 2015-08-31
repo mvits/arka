@@ -271,6 +271,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
 				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
 				$cadenaSql .= "AND  ce.elemento_id > 0  ";
+                                    $cadenaSql .= "AND  ce.elemento_padre > 0  ";
 				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
 				
 				
