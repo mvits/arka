@@ -456,7 +456,7 @@ class RegistradorOrden {
 									$_REQUEST ['mensaje_titulo'],
 									$_REQUEST ['id_orden'],
 									$fechaActual ,
-									$_REQUEST['arreglo']
+									(!isset($_REQUEST['registroOrden']))?$_REQUEST['arreglo']:$_REQUEST['registroOrden'],
 							);
 							
 							

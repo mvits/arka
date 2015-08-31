@@ -125,7 +125,7 @@ class registrarForm {
 			
 			$variable = "pagina=" . $miPaginaActual;
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			
+// 			var_dump($_REQUEST);
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
 			$atributos ['id'] = $esteCampo;
@@ -155,7 +155,7 @@ class registrarForm {
 					
 					
 					
-					$mensaje = "SE REGISTRO " . $_REQUEST ['datos'];
+					$mensaje = "SE REGISTRO " . $_REQUEST ['mensaje_titulo'];
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -304,7 +304,7 @@ class registrarForm {
 		
 		if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'confirma') {
 			$valorCodificado .= "&id_orden=" . $_REQUEST ['id_orden'];
-			$valorCodificado .= "&mensajeTitulo=" . $_REQUEST ['datos'];
+			$valorCodificado .= "&mensajeTitulo=" . $_REQUEST ['mensaje_titulo'];
 		}
 		
 		/**

@@ -20,8 +20,7 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-		 
-		 
+		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -54,7 +53,6 @@ class registrarForm {
 		
 		$seccion ['tiempo'] = $tiempo;
 		
-		
 		$conexion = "inventarios";
 		
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -85,23 +83,29 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
-			
-			$arreglo=unserialize($_REQUEST['arreglo']);
-			
-			
-			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			$variable = "pagina=" . $miPaginaActual;
-			$variable .= "&opcion=ConsultarActa";
-			$variable .= "&numero_orden=" .$arreglo['numero_orden'];
-			$variable .= "&tipo_orden=" .$arreglo['tipo_orden'];
-			$variable .= "&id_proveedor=" .$arreglo['nit'];
-			$variable .= "&sedeConsulta=" .$arreglo['sede'];
-			$variable .= "&dependenciaConsulta=" .$arreglo['dependencia'];
-			$variable .= "&fecha_inicio=" .$arreglo['fecha_inicial'];
-			$variable .= "&fecha_final=" .$arreglo['fecha_final'];
+			if (isset ( $_REQUEST ['registroOrden'] ) && $_REQUEST ['registroOrden'] = 'true') {
+				
+				$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+				$variable = "pagina=registrarOrdenServicios";
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=confirma";
+				$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
+				$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+			} else {
+				$arreglo = unserialize ( $_REQUEST ['arreglo'] );
+				$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=ConsultarActa";
+				$variable .= "&numero_orden=" . $arreglo ['numero_orden'];
+				$variable .= "&tipo_orden=" . $arreglo ['tipo_orden'];
+				$variable .= "&id_proveedor=" . $arreglo ['nit'];
+				$variable .= "&sedeConsulta=" . $arreglo ['sede'];
+				$variable .= "&dependenciaConsulta=" . $arreglo ['dependencia'];
+				$variable .= "&fecha_inicio=" . $arreglo ['fecha_inicial'];
+				$variable .= "&fecha_final=" . $arreglo ['fecha_final'];
+			}
 			
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
@@ -119,7 +123,7 @@ class registrarForm {
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = $_REQUEST['mensaje_titulo'];
+			$atributos ["leyenda"] = $_REQUEST ['mensaje_titulo'];
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			unset ( $atributos );
 			{
@@ -922,9 +926,12 @@ class registrarForm {
 			$valorCodificado .= "&opcion=registrar";
 			$valorCodificado .= "&id_orden=" . $_REQUEST ['id_orden'];
 			$valorCodificado .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
-			$valorCodificado .= "&arreglo=" .$_REQUEST['arreglo'];
 			
-			
+			if (! isset ( $_REQUEST ['registroOrden'] )) {
+				$valorCodificado .= "&arreglo=" . $_REQUEST ['arreglo'];
+			} else {
+				$valorCodificado .= "&registroOrden='true'";
+			}
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.
 			 * Para ello utiliza la hora en que es creado el formulario para
@@ -1021,7 +1028,7 @@ class registrarForm {
 				{
 					
 					if ($_REQUEST ['mensaje'] == 'registro') {
-						$atributos ['mensaje'] = "<center>SE CARGO ELEMENTO ". $_REQUEST ['mensaje_titulo'] . "<br>Fecha : " . date('Y-m-d') . "</center>";
+						$atributos ['mensaje'] = "<center>SE CARGO ELEMENTO " . $_REQUEST ['mensaje_titulo'] . "<br>Fecha : " . date ( 'Y-m-d' ) . "</center>";
 						$atributos ["estilo"] = 'success';
 					} else {
 						$atributos ['mensaje'] = "<center>Error al Cargar Elemento Verifique los Datos</center>";
@@ -1098,14 +1105,13 @@ class registrarForm {
 					$atributos ['redirLugar'] = true;
 					echo $this->miFormulario->enlace ( $atributos );
 					unset ( $atributos );
-				
+					
 					$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 					$variable = "pagina=registrarActa";
 					$variable .= "&opcion=asociarActa";
-					$variable .= "&numero_orden=".$_REQUEST['id_orden'];
-					$variable .= "&fecha_orden=".$_REQUEST['fecha_orden'];
-					$variable .= "&mensaje_titulo=".$_REQUEST['mensaje_titulo'];
-					
+					$variable .= "&numero_orden=" . $_REQUEST ['id_orden'];
+					$variable .= "&fecha_orden=" . $_REQUEST ['fecha_orden'];
+					$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 					
 					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 					
@@ -1120,9 +1126,8 @@ class registrarForm {
 					$atributos ['ancho'] = '10%';
 					$atributos ['alto'] = '10%';
 					$atributos ['redirLugar'] = true;
-// 					echo $this->miFormulario->enlace ( $atributos );
+					// echo $this->miFormulario->enlace ( $atributos );
 					unset ( $atributos );
-					
 					
 					// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 					

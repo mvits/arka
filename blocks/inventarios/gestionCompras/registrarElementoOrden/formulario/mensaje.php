@@ -73,13 +73,23 @@ class registrarForm {
 			$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			
-			$variable = "pagina=" . $miPaginaActual;
-			$variable .= "&opcion=cargarElemento";
-			$variable .= "&id_orden=" .$_REQUEST['id_orden'];
-			$variable .= "&mensaje_titulo=" .$_REQUEST['mensaje_titulo'];
-			$variable .= "&arreglo=" .$_REQUEST['arreglo'];
-						
+			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+			if (isset ( $_REQUEST ['registroOrden'] ) && $_REQUEST ['registroOrden'] = 'true') {
+				
+
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=cargarElemento";
+				$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
+				$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+				$variable .= "&registroOrden=true";
+			} else {
+				
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=cargarElemento";
+				$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
+				$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+				$variable .= "&arreglo=" . $_REQUEST ['arreglo'];
+			}
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -316,7 +326,7 @@ class registrarForm {
 				
 				// Aplica atributos globales al control
 				$atributos = array_merge ( $atributos, $atributosGlobales );
-// 				echo $this->miFormulario->campoBoton ( $atributos );
+				// echo $this->miFormulario->campoBoton ( $atributos );
 				unset ( $atributos );
 			}
 			

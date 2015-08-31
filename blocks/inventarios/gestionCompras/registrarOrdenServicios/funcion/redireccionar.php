@@ -17,7 +17,7 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=confirma";
-				$variable .= "&datos=" . $valor [0];
+				$variable .= "&mensaje_titulo=" . $valor [0];
 				$variable .= "&id_orden=" . $valor [1];
 				
 				break;
@@ -47,6 +47,7 @@ class redireccion {
 				$variable .= "&opcion=cargarElemento";
 				$variable .= "&id_orden=" . $valor [0];
 				$variable .= "&mensaje_titulo=" . $valor [1];
+				$variable .= "&registroOrden=true";
 				
 				break;
 		}
