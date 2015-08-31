@@ -186,7 +186,8 @@ class RegistradorOrden {
 		$arreglo = array (
 				$_REQUEST ['id_orden'],
 				$_REQUEST ['mensaje_titulo'],
-				$_REQUEST ['arreglo'] 
+				$_REQUEST ['arreglo'],
+				$_REQUEST['id_elemento_acta'] 
 		)
 		;
 		

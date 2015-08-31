@@ -123,7 +123,7 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		{
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
-			var_dump($_REQUEST);
+			
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			
 			$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );

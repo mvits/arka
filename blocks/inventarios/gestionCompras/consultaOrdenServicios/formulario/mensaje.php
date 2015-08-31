@@ -78,16 +78,27 @@ class registrarForm {
 			
 			switch ($_REQUEST ['mensaje']) {
 				case 'actualizo' :
-					$opcion = 'modificarOrden';
+					$opcion = "&opcion=modificarOrden";
+					$opcion .= "&id_orden=" . $_REQUEST ['numero_orden'];
+					$opcion .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+					$opcion .= "&arreglo=" . $_REQUEST ['arreglo'];
+					
+					break;
+				
+				case 'ActualizoElemento' :
+					
+					$opcion = "&opcion=modificarElementos";
+					$opcion .= "&id_orden=" . $_REQUEST ['id_orden'];
+					$opcion .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+					$opcion .= "&arreglo=" . $_REQUEST ['arreglo'];
+					$opcion .= "&id_elemento_acta=" . $_REQUEST ['id_elemento_acta'];
+					
 					break;
 			}
 			
 			var_dump ( $_REQUEST );
 			$variable = "pagina=" . $miPaginaActual;
-			$variable .= "&opcion=".$opcion;
-			$variable .= "&id_orden=" . $_REQUEST ['numero_orden'];
-			$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
-			$variable .= "&arreglo=" . $_REQUEST ['arreglo'];
+			$variable .= $opcion;
 			
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
