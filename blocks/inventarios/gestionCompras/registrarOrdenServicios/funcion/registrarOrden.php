@@ -45,13 +45,15 @@ class RegistradorOrden {
 				$_REQUEST ['nombre_supervisor'],
 				$_REQUEST ['cargo_supervisor'],
 				$_REQUEST ['dependencia_supervisor'],
-				$_REQUEST ['sede_super'] 
-		)
+				$_REQUEST ['sede_super'],
+				
+				)
 		;
+		
 		
 		// Registro Supervisor
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarSupervisor', $datosSupervisor );
-		$id_supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$id_supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$datosSupervisor,'insertarSupervisor');
 		
 		$datosContratistaC = array (
 				$_REQUEST ['nombre_razon_contratista'],
@@ -64,7 +66,7 @@ class RegistradorOrden {
 		// Registro Contratista
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarContratista', $datosContratistaC );
 		
-		$id_ContratistaC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$id_ContratistaC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$datosContratistaC,'insertarContratista');
 		
 		// Registro Orden
 		
@@ -85,7 +87,7 @@ class RegistradorOrden {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarInformacionPresupuestal', $arreglo );
 		
-		$info_presupuestal = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$info_presupuestal = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo,'insertarInformacionPresupuestal');
 		// var_dump ( $_REQUEST );
 		
 		switch ($_REQUEST ['tipo_orden']) {
@@ -112,7 +114,7 @@ class RegistradorOrden {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consecutivo_servicios', date ( 'Y' ) );
 				
-				$consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				$consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda");
 				$consecutivo_compra = 'NULL';
 				if (is_null ( $consecutivo [0] [0] )) {
 					
@@ -152,7 +154,7 @@ class RegistradorOrden {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarOrden', $datosOrden );
 		
-		$consecutivos_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$consecutivos_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$datosOrden,'insertarOrden');
 		
 		$consecutivo_orden = $consecutivos_orden [0];
 		

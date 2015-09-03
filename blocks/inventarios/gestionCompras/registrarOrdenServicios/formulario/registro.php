@@ -32,7 +32,7 @@ class registrarForm {
 		 * Si se utiliza esta técnica es necesario realizar un mezcla entre este arreglo y el específico en cada control:
 		 * $atributos= array_merge($atributos,$atributosGlobales);
 		 */
-		
+		 
 		$atributosGlobales ['campoSeguro'] = 'true';
 		
 		$_REQUEST ['tiempo'] = time ();
@@ -1806,6 +1806,7 @@ class registrarForm {
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=registrarOrden";
 			$valorCodificado .= "&seccion=" . $tiempo;
+			$valorCodificado .= "&usuario=" . $_REQUEST['usuario'];
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.
 			 * Para ello utiliza la hora en que es creado el formulario para
