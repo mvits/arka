@@ -181,6 +181,7 @@ class registrarForm {
 				$variable .= "&opcion=cargarElemento";
 				$variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
 				$variable .= "&arreglo=" . $arreglo;
+				$variable .= "&usuario=" . $_REQUEST['usuario'];
 				$variable .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] ."<br>VIGENCIA Y/O NÚMERO ORDEN : ".$Orden [$i] ['identificador'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				

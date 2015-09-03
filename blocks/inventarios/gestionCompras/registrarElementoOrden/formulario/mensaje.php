@@ -74,22 +74,27 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			if (isset ( $_REQUEST ['registroOrden'] ) && $_REQUEST ['registroOrden'] = 'true') {
+			
+// 			if (isset ( $_REQUEST ['registroOrden'] ) && $_REQUEST ['registroOrden'] = 'true') {
 				
 
-				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=cargarElemento";
-				$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
-				$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
-				$variable .= "&registroOrden=true";
-			} else {
+// 				$variable = "pagina=" . $miPaginaActual;
+// 				$variable .= "&opcion=cargarElemento";
+// 				$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
+// 				$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+// 				$variable .= "&registroOrden=true";
+// 			} else {
 				
-				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=cargarElemento";
-				$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
-				$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
-				$variable .= "&arreglo=" . $_REQUEST ['arreglo'];
-			}
+// 				$variable = "pagina=" . $miPaginaActual;
+// 				$variable .= "&opcion=cargarElemento";
+// 				$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
+// 				$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+// 				$variable .= "&arreglo=" . $_REQUEST ['arreglo'];
+// 			}
+			
+			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=" . $_REQUEST['usuario'];
+			
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -114,6 +119,26 @@ class registrarForm {
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			
 			{
+				
+
+				if (isset($_REQUEST ['mensaje'])&&$_REQUEST ['mensaje'] == 'datosVacios') {
+				
+					$mensaje = "Verifique el Archivo .xlsx. <br>Existen Datos Vacios";
+				
+					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+					$esteCampo = 'mensajeRegistro';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['tipo'] = 'error';
+					$atributos ['estilo'] = 'textoCentrar';
+					$atributos ['mensaje'] = $mensaje;
+				
+					$tab ++;
+				
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+				}
 				
 				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'confirma') {
 					
