@@ -174,6 +174,15 @@ $urlFinalTipoBien = $url . $cadena;
 
 
 ?>
+
+
+<script lenguage="JavaScript">
+function regresar()
+{
+window.history.go(-1)	
+}
+</script>
+
 <script type='text/javascript'>
 
 

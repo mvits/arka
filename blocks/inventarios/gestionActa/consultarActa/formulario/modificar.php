@@ -41,7 +41,6 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		
 		// Limpia Items Tabla temporal
 		$cadenaSql = $this->miSql->getCadenaSql ( 'limpiar_tabla_items' );
 		$resultado_secuencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -54,7 +53,6 @@ class registrarForm {
 		
 		$seccion ['tiempo'] = $tiempo;
 		
-
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActaM', $_REQUEST ['numero_acta'] );
 		
 		$Acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -111,9 +109,27 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
+			$valorCodificado = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
+			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+			$valorCodificado .= "&opcion=ConsultarActa";
+			
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&opcion=ConsultarActa";
+			if (isset ( $_REQUEST ['arreglo'] )) {
+				$arreglo = unserialize ( $_REQUEST ['arreglo'] );
+				$variable .= "&numero_acta=" . $arreglo ['numero_acta'];
+				$variable .= "&id_proveedor=" . $arreglo ['nit'];
+				$variable .= "&fecha_recibido=" . $arreglo ['fecha'];
+				$variable .= "&sedeConsulta=" . $arreglo ['sede'];
+				$variable .= "&dependenciaConsulta=" . $arreglo ['dependencia'];
+				$variable .= "&fecha_inicio=" . $arreglo ['fecha_inicial'];
+				$variable .= "&fecha_final=" . $arreglo ['fecha_final'];
+			}
+			
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
+			$url = htmlspecialchars ( $_SERVER ['HTTP_REFERER'] );
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
 			$atributos ['id'] = $esteCampo;
@@ -125,7 +141,6 @@ class registrarForm {
 			$atributos ['alto'] = '10%';
 			$atributos ['redirLugar'] = true;
 			echo $this->miFormulario->enlace ( $atributos );
-			
 			unset ( $atributos );
 			
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
@@ -442,12 +457,12 @@ class registrarForm {
 					
 					// ----------------------------------------------- Items ------------------------------------//
 					
-// 					$esteCampo = "descripcionFactura";
-// 					$atributos ['id'] = $esteCampo;
-// 					$atributos ['leyenda'] = $this->lenguaje->getCadena ( $esteCampo );
-// 					echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
-// 					{
-// 						?>
+					// $esteCampo = "descripcionFactura";
+					// $atributos ['id'] = $esteCampo;
+					// $atributos ['leyenda'] = $this->lenguaje->getCadena ( $esteCampo );
+					// echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+					// {
+					// 					?>
 <!--  <center>
 	<table id="tablaContenido">
 		<tr>
@@ -457,9 +472,9 @@ class registrarForm {
 	<div id="barraNavegacion"></div>
 </center> -->
 <?php
-// 					}
-// 					echo $this->miFormulario->agrupacion ( 'fin' );
-// 					unset ( $atributos );
+					// }
+					// echo $this->miFormulario->agrupacion ( 'fin' );
+					// unset ( $atributos );
 					
 					$esteCampo = "ordenadorGasto";
 					$atributos ['id'] = $esteCampo;
@@ -630,7 +645,7 @@ class registrarForm {
 						
 						// Aplica atributos globales al control
 						$atributos = array_merge ( $atributos, $atributosGlobales );
-// 						echo $this->miFormulario->campoCuadroTexto ( $atributos );
+						// echo $this->miFormulario->campoCuadroTexto ( $atributos );
 						unset ( $atributos );
 						
 						// --------------- FIN CONTROL : Cuadro de Texto ---------------------------------------------------//
@@ -810,6 +825,7 @@ class registrarForm {
 				$valorCodificado .= "&opcion=modificarActa";
 				$valorCodificado .= "&seccion=" . $tiempo;
 				$valorCodificado .= "&id_acta=" . $_REQUEST ['numero_acta'];
+				$valorCodificado .= "&arreglo=" . $_REQUEST ['arreglo'];
 				
 				/**
 				 * SARA permite que los nombres de los campos sean dinámicos.

@@ -57,8 +57,6 @@ class registrarForm {
 		
 		$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		
-		
 		switch ($elemento [0] ['tipo_bien']) {
 			
 			case '1' :
@@ -73,8 +71,7 @@ class registrarForm {
 				break;
 		}
 		
-// if($elemento[0]['tipo_']){}
-		
+		// if($elemento[0]['tipo_']){}
 		
 		$arreglo = array (
 				"fecha_inicio" => $elemento [0] ['fecha_inicio_pol'],
@@ -134,11 +131,15 @@ class registrarForm {
 			
 			$variable = "pagina=" . $miPaginaActual;
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+			function regresar() {
+				history . back ();
+			}
 			
+			$url = htmlspecialchars ( $_SERVER ['HTTP_REFERER'] );
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
 			$atributos ['id'] = $esteCampo;
-			$atributos ['enlace'] = $variable;
+			$atributos ['enlace'] = $url;
 			$atributos ['tabIndex'] = 1;
 			$atributos ['estilo'] = 'textoSubtitulo';
 			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -149,12 +150,12 @@ class registrarForm {
 			
 			unset ( $atributos );
 			
-			
 			$esteCampo = "marcoDatosBasicos";
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = "Modificar Elemento de Acta de Recibido N#" .$_REQUEST ['numero_acta'];;
+			$atributos ["leyenda"] = "Modificar Elemento de Acta de Recibido N#" . $_REQUEST ['numero_acta'];
+			;
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			unset ( $atributos );
 			{
@@ -323,7 +324,6 @@ class registrarForm {
 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
 							unset ( $atributos );
 							
-							
 							$esteCampo = "imagenElemento";
 							$atributos ["id"] = $esteCampo; // No cambiar este nombre
 							$atributos ["nombre"] = $esteCampo;
@@ -337,13 +337,10 @@ class registrarForm {
 							$atributos ["tamanno"] = 500000;
 							$atributos ["validar"] = " ";
 							$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
-// 							$atributos ["valor"] = $valorCodificado;
+							// $atributos ["valor"] = $valorCodificado;
 							$atributos = array_merge ( $atributos, $atributosGlobales );
 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
 							unset ( $atributos );
-								
-							
-							
 						}
 						echo $this->miFormulario->agrupacion ( "fin" );
 						unset ( $atributos );
@@ -745,9 +742,9 @@ class registrarForm {
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 						$atributos ['anchoEtiqueta'] = 213;
 						// Valores a mostrar en el control
-// 						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_bodega" );
-// 						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-// 						$atributos ['matrizItems'] = $matrizItems;
+						// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_bodega" );
+						// $matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						// $atributos ['matrizItems'] = $matrizItems;
 						
 						// Utilizar lo siguiente cuando no se pase un arreglo:
 						// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';

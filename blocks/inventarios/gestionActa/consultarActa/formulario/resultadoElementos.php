@@ -78,10 +78,30 @@ class registrarForm {
 		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
+		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		
 		$variable = "pagina=" . $miPaginaActual;
-		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+		$variable .= "&opcion=ConsultarActa";
+		if (isset ( $_REQUEST ['arreglo'] )) {
+			$arreglo = unserialize ( $_REQUEST ['arreglo'] );
+			$variable .= "&numero_acta=" . $arreglo ['numero_acta'];
+			$variable .= "&id_proveedor=" . $arreglo ['nit'];
+			$variable .= "&fecha_recibido=" . $arreglo ['fecha'];
+			$variable .= "&sedeConsulta=" . $arreglo ['sede'];
+			$variable .= "&dependenciaConsulta=" . $arreglo ['dependencia'];
+			$variable .= "&fecha_inicio=" . $arreglo ['fecha_inicial'];
+			$variable .= "&fecha_final=" . $arreglo ['fecha_final'];
+		}
+		
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+		
+		$url_actual = "http://" . $_SERVER ["SERVER_NAME"] . $_SERVER ["REQUEST_URI"];
+		// echo $url_actual;
+		
+		$url = '<input type="button" value="No, Modificar" onClick="JavaScript:regresar();">';
+		// echo $url;
+		
+		$url = htmlspecialchars ( $_SERVER ['HTTP_REFERER'] );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'botonRegresar';
@@ -94,7 +114,6 @@ class registrarForm {
 		$atributos ['alto'] = '10%';
 		$atributos ['redirLugar'] = true;
 		echo $this->miFormulario->enlace ( $atributos );
-		
 		unset ( $atributos );
 		
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
@@ -103,7 +122,7 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Modificar Elementos  Acta Recibido  N# " .$_REQUEST ['numero_acta'];
+		$atributos ["leyenda"] = "Modificar Elementos  Acta Recibido  N# " . $_REQUEST ['numero_acta'];
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
 		if ($ActaElementos) {
@@ -134,7 +153,7 @@ class registrarForm {
 				$variable1 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable1 .= "&opcion=eliminarElementos";
 				$variable1 .= "&id_elemento_acta=" . $ActaElementos [$i] ['id_elemento_ac'];
-				$variable1 .= "&numero_acta=" .$_REQUEST ['numero_acta'];
+				$variable1 .= "&numero_acta=" . $_REQUEST ['numero_acta'];
 				$variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
 				
 				$mostrarHtml = "<tr>

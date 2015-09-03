@@ -70,8 +70,16 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
 			$variable = "pagina=" . $miPaginaActual;
+			
+			if ($_REQUEST ['mensaje'] == 'actualizo') {
+				
+				$variable .= "&opcion=modificar";
+				$variable .= "&numero_acta=" . $_REQUEST ['numero_acta'];
+				$variable .= "&arreglo=" . $_REQUEST['arreglo'];
+			}
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
+			$url = htmlspecialchars ( $_SERVER ['HTTP_REFERER'] );
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
 			$atributos ['id'] = $esteCampo;
@@ -83,7 +91,6 @@ class registrarForm {
 			$atributos ['alto'] = '10%';
 			$atributos ['redirLugar'] = true;
 			echo $this->miFormulario->enlace ( $atributos );
-			
 			unset ( $atributos );
 			
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
@@ -135,18 +142,18 @@ class registrarForm {
 				}
 				
 				if ($_REQUEST ['mensaje'] == 'ActualizoElemento') {
-						
-					$mensaje = "Se Actualizo Elemento con Exito." ;
-						
+					
+					$mensaje = "Se Actualizo Elemento con Exito.";
+					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['tipo'] = 'success';
 					$atributos ['estilo'] = 'textoCentrar';
 					$atributos ['mensaje'] = $mensaje;
-						
+					
 					$tab ++;
-						
+					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->cuadroMensaje ( $atributos );
@@ -154,47 +161,42 @@ class registrarForm {
 				}
 				
 				if ($_REQUEST ['mensaje'] == 'eliminoElemento') {
-				
-					$mensaje = "Se Elimino el  Elemento con Exito del Acta de Recibido." ;
-				
+					
+					$mensaje = "Se Elimino el  Elemento con Exito del Acta de Recibido.";
+					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['tipo'] = 'success';
 					$atributos ['estilo'] = 'textoCentrar';
 					$atributos ['mensaje'] = $mensaje;
-				
+					
 					$tab ++;
-				
+					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->cuadroMensaje ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
 				
-				
-				
-
-				
 				if ($_REQUEST ['mensaje'] == 'noeliminoElemento') {
-						
+					
 					$mensaje = "No Se Pudo Eliminar el Elemento del Acta de Recibido";
-						
+					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['tipo'] = 'error';
 					$atributos ['estilo'] = 'textoCentrar';
 					$atributos ['mensaje'] = $mensaje;
-						
+					
 					$tab ++;
-						
+					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->cuadroMensaje ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
-				
 				
 				if ($_REQUEST ['mensaje'] == 'error') {
 					
@@ -235,24 +237,23 @@ class registrarForm {
 				}
 				
 				if ($_REQUEST ['mensaje'] == 'noActualizoElemento') {
-						
+					
 					$mensaje = "No se realizo la Actualización del Elemento";
-						
+					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['tipo'] = 'error';
 					$atributos ['estilo'] = 'textoCentrar';
 					$atributos ['mensaje'] = $mensaje;
-						
+					
 					$tab ++;
-						
+					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->cuadroMensaje ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
-				
 				
 				if ($_REQUEST ['mensaje'] == 'errorEliminar') {
 					

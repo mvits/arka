@@ -117,7 +117,8 @@ class RegistradorOrden {
 
 		$datos = array (
 				$_REQUEST ['id_acta'],
-				$fechaActual 
+				$fechaActual ,
+				$_REQUEST['arreglo']
 		);
 
 		

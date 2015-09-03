@@ -17,6 +17,7 @@ class redireccion {
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=actualizo";
 				$variable .= "&numero_acta=" . $valor [0];
+				$variable .= "&arreglo=" . $valor [2];
 				break;
 			
 			case "noInserto" :

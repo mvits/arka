@@ -33,7 +33,7 @@ class registrarForm {
 		
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/";
-		$rutaBloque .= $esteBloque ['grupo'] . $esteBloque ['nombre'];
+		$rutaBloque .= $esteBloque ['grupo'] . "/".$esteBloque ['nombre'];
 		
 		// ---------------- SECCION: Parámetros Globales del Formulario ----------------------------------
 		/**
@@ -93,23 +93,20 @@ class registrarForm {
 			$fecha_final = '';
 		}
 		
-		
 		$arreglo = array (
 				'numero_acta' => $numeroActa,
 				'fecha' => $fechaRecibido,
 				'nit' => $nit,
-				'sede'=>$sede,
-				'dependencia'=>$dependencia,
-				'fecha_inicial'=>$fecha_inicio,
-				'fecha_final'=>$fecha_final
+				'sede' => $sede,
+				'dependencia' => $dependencia,
+				'fecha_inicial' => $fecha_inicio,
+				'fecha_final' => $fecha_final 
 		);
-		
-		
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActa', $arreglo );
 		
 		$Acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
+		$arreglo=serialize($arreglo);
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
 		$atributos ['id'] = $esteCampo;
@@ -139,10 +136,11 @@ class registrarForm {
 		$variable = "pagina=" . $miPaginaActual;
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
+		$url = htmlspecialchars ( $_SERVER ['HTTP_REFERER'] );
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'botonRegresar';
 		$atributos ['id'] = $esteCampo;
-		$atributos ['enlace'] = $variable;
+		$atributos ['enlace'] = $url;
 		$atributos ['tabIndex'] = 1;
 		$atributos ['estilo'] = 'textoSubtitulo';
 		$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -150,7 +148,6 @@ class registrarForm {
 		$atributos ['alto'] = '10%';
 		$atributos ['redirLugar'] = true;
 		echo $this->miFormulario->enlace ( $atributos );
-		
 		unset ( $atributos );
 		
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
@@ -185,16 +182,21 @@ class registrarForm {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=modificar";
 				$variable .= "&numero_acta=" . $Acta [$i] [0];
+				$variable .= "&arreglo=" .$arreglo;
+				
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$variable2 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable2 .= "&opcion=eliminarActa";
 				$variable2 .= "&numero_acta=" . $Acta [$i] [0];
+				$variable2 .= "&arreglo=" .$arreglo;
+				
 				$variable2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable2, $directorio );
 				
 				$variable1 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable1 .= "&opcion=consultarElementosActa";
 				$variable1 .= "&numero_acta=" . $Acta [$i] [0];
+				$variable1 .= "&arreglo=" .$arreglo;
 				$variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActaElementos', $Acta [$i] [0] );
