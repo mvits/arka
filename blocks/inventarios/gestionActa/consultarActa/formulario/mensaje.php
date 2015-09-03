@@ -75,11 +75,21 @@ class registrarForm {
 				
 				$variable .= "&opcion=modificar";
 				$variable .= "&numero_acta=" . $_REQUEST ['numero_acta'];
-				$variable .= "&arreglo=" . $_REQUEST['arreglo'];
+				$variable .= "&arreglo=" . $_REQUEST ['arreglo'];
+			} else if ($_REQUEST ['mensaje'] == 'elimino') {
+				
+				$variable .= "&opcion=eliminarActa";
+				$variable .= "&numero_acta=" . $_REQUEST ['numero_acta'];
+				$variable .= "&arreglo=" . $_REQUEST ['arreglo'];
+			} else if ($_REQUEST ['mensaje'] == 'eliminoElemento') {
+				
+				$variable .= "&opcion=eliminarElementos";
+				$variable .= "&id_elemento_acta=" . $_REQUEST['id_elemento_acta'];
+				$variable .= "&numero_acta=" . $_REQUEST ['numero_acta'];
+				
 			}
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
-			$url = htmlspecialchars ( $_SERVER ['HTTP_REFERER'] );
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
 			$atributos ['id'] = $esteCampo;

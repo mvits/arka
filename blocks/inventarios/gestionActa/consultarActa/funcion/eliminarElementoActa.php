@@ -24,23 +24,23 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'eliminarElementoActa', $_REQUEST ['id_elemento_acta'] );
 		$eliminado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		
-		
-	
 		if ($eliminado) {
 			
-			redireccion::redireccionar ( 'eliminoElemento' );
-			exit;
+			redireccion::redireccionar ( 'eliminoElemento', array (
+					$_REQUEST ['id_elemento_acta'],
+					$_REQUEST ['numero_acta'] 
+			) );
+			exit ();
 		} else {
 			
 			redireccion::redireccionar ( 'noeliminoElemento' );
-			exit;
+			exit ();
 		}
 	}
 	function resetForm() {

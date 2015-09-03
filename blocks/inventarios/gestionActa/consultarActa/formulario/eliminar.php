@@ -74,10 +74,21 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
 			$variable = "pagina=" . $miPaginaActual;
-			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-				
+			$variable .= "&opcion=ConsultarActa";
+			if (isset ( $_REQUEST ['arreglo'] )) {
+				$arreglo = unserialize ( $_REQUEST ['arreglo'] );
+				$variable .= "&numero_acta=" . $arreglo ['numero_acta'];
+				$variable .= "&id_proveedor=" . $arreglo ['nit'];
+				$variable .= "&fecha_recibido=" . $arreglo ['fecha'];
+				$variable .= "&sedeConsulta=" . $arreglo ['sede'];
+				$variable .= "&dependenciaConsulta=" . $arreglo ['dependencia'];
+				$variable .= "&fecha_inicio=" . $arreglo ['fecha_inicial'];
+				$variable .= "&fecha_final=" . $arreglo ['fecha_final'];
+			}
 			
-			$url = htmlspecialchars($_SERVER['HTTP_REFERER']);
+			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+			
+			$url = htmlspecialchars ( $_SERVER ['HTTP_REFERER'] );
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
 			$atributos ['id'] = $esteCampo;
@@ -90,8 +101,6 @@ class registrarForm {
 			$atributos ['redirLugar'] = true;
 			echo $this->miFormulario->enlace ( $atributos );
 			unset ( $atributos );
-				
-			
 			
 			$esteCampo = "marcoDatosBasicos";
 			$atributos ['id'] = $esteCampo;
@@ -203,6 +212,7 @@ class registrarForm {
 			$valorCodificado .= "&opcion=eliminarActa";
 			$valorCodificado .= "&seccion=" . $tiempo;
 			$valorCodificado .= "&numero_acta=" . $_REQUEST ['numero_acta'];
+			$valorCodificado .= "&arreglo=" . $_REQUEST ['arreglo'];
 			
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.

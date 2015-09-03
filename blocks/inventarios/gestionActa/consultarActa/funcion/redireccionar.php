@@ -30,7 +30,8 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=elimino";
-				$variable .= "&numero_acta=" . $valor;
+				$variable .= "&numero_acta=" . $valor[0];
+				$variable .= "&arreglo=" . $valor[1];
 				break;
 			
 			case "noFormatoImagen" :
@@ -44,7 +45,8 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=eliminoElemento";
-				
+				$variable .= "&id_elemento_acta=".$valor[0];
+				$variable .= "&numero_acta=".$valor[1];
 				break;
 			
 			case "noeliminoElemento" :

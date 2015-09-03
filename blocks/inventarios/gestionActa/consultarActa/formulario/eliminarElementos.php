@@ -190,7 +190,7 @@ class registrarForm {
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=eliminarElementoActa";
 			$valorCodificado .= "&id_elemento_acta=" . $_REQUEST ['id_elemento_acta'];
-			
+			$valorCodificado .= "&numero_acta=" . $_REQUEST ['numero_acta'];			
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.
 			 * Para ello utiliza la hora en que es creado el formulario para
