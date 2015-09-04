@@ -96,7 +96,7 @@ class registrarForm {
 					break;
 			}
 			
-			var_dump ( $_REQUEST );
+			
 			$variable = "pagina=" . $miPaginaActual;
 			$variable .= $opcion;
 			

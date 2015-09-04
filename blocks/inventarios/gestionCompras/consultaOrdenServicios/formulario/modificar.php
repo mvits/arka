@@ -1870,7 +1870,9 @@ class registrarForm {
 			$valorCodificado .= "&supervisor=" . $Orden ['id_supervisor'];
 			$valorCodificado .= "&info_presupuestal=" . $Orden ['info_presupuestal'];
 			$valorCodificado .= "&arreglo=" .$_REQUEST['arreglo'];
+			$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 			$valorCodificado .= "&seccion=" . $tiempo;
+			
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.
 			 * Para ello utiliza la hora en que es creado el formulario para

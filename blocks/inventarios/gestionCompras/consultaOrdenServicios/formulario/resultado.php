@@ -180,6 +180,7 @@ class registrarForm {
 				$variable .= "&opcion=modificarOrden";
 				$variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
 				$variable .= "&arreglo=" . $arreglo;
+				$variable .= "&usuario=".$_REQUEST['usuario'];
 				$variable .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['identificador'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
@@ -187,6 +188,7 @@ class registrarForm {
 				$variable_elementos .= "&opcion=consultaElementos";
 				$variable_elementos .= "&id_orden=" . $Orden [$i] ['id_orden'];
 				$variable_elementos .= "&arreglo=" . $arreglo;
+				$variable_elementos .= "&usuario=".$_REQUEST['usuario'];
 				$variable_elementos .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['identificador'];
 				$variable_elementos = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable_elementos, $directorio );
 				
@@ -202,6 +204,7 @@ class registrarForm {
 				$variable_documento .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 				$variable_documento .= "&opcion=generarDocumento";
 				$variable_documento .= "&id_orden=" . $Orden [$i] ['id_orden'];
+				$variable_documento .= "&usuario=".$_REQUEST['usuario'];
 				$variable_documento .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] . "<br>VIGENCIA Y/O NÚMERO ORDEN : " . $Orden [$i] ['identificador'];
 				$variable_documento = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable_documento, $directorio );
 				

@@ -425,11 +425,13 @@ class Sql extends \Sql {
 				break;
 			
 			case "consultarSupervisor" :
-				$cadenaSql = " SELECT ";
-				$cadenaSql .= "  nombre, cargo, dependencia,  ad.\"ESF_DEP_ENCARGADA\" nombre_dependencia ";
+				$cadenaSql = " SELECT DISTINCT";
+				$cadenaSql .= "  fn.\"FUN_NOMBRE\" nombre, cargo, dependencia,  ad.\"ESF_DEP_ENCARGADA\" nombre_dependencia ";
 				$cadenaSql .= " FROM supervisor_servicios sp ";
 				$cadenaSql .= "JOIN  arka_parametros.arka_dependencia ad ON ad.\"ESF_CODIGO_DEP\"=sp.dependencia  ";
+				$cadenaSql .= "JOIN  arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"::text=sp.nombre  ";
 				$cadenaSql .= " WHERE id_supervisor='" . $variable . "'";
+				
 				
 				break;
 			

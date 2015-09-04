@@ -73,7 +73,7 @@ class registrarForm {
 		$atributos ['marco'] = false;
 		$tab = 1;
 		// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
-		
+		 
 		// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		echo $this->miFormulario->formulario ( $atributos );
@@ -103,6 +103,7 @@ class registrarForm {
 				$variable .= "&dependenciaConsulta=" . $arreglo ['dependencia'];
 				$variable .= "&fecha_inicio=" . $arreglo ['fecha_inicial'];
 				$variable .= "&fecha_final=" . $arreglo ['fecha_final'];
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 			}
 			
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );

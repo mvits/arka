@@ -35,7 +35,6 @@ class RegistradorOrden {
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$fechaActual = date ( 'Y-m-d' );
-		
 		switch ($_REQUEST ['tipo_registro']) {
 			
 			case '1' :
@@ -184,7 +183,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ElementoImagen', $arreglo );
 					
-					$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo,'ingresar_elemento_tipo_2');
+					$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo,'ElementoImagen');
 				}
 				
 				if ($elemento) {
@@ -416,7 +415,7 @@ class RegistradorOrden {
 									);
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 									
-									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo,'ingresar_elemento_tipo_1'); 
 								} else if ($datos [$i] ['Tipo_Bien'] == 2) {
 									
 									$arreglo = array (
@@ -438,7 +437,7 @@ class RegistradorOrden {
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 									
-									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,'ingresar_elemento_tipo_1'); 
 								} else if ($datos [$i] ['Tipo_Bien'] == 3) {
 									
 									if ($datos [$i] ['Tipo_poliza'] == 0) {
@@ -487,7 +486,7 @@ class RegistradorOrden {
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
 									
-									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,'ingresar_elemento_tipo_2');
 								}
 							}
 							
@@ -495,7 +494,9 @@ class RegistradorOrden {
 									$_REQUEST ['mensaje_titulo'],
 									$_REQUEST ['id_orden'],
 									date ( 'Y-m-d' ),
-									(! isset ( $_REQUEST ['registroOrden'] )) ? $_REQUEST ['arreglo'] : $_REQUEST ['registroOrden'] 
+									(! isset ( $_REQUEST ['registroOrden'] )) ? $_REQUEST ['arreglo'] : $_REQUEST ['registroOrden'],
+									$_REQUEST['usuario'] 
+									
 							);
 							
 							if ($elemento_id && $_REQUEST ['id_orden']) {

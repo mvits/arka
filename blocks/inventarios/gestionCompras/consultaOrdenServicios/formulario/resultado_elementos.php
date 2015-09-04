@@ -143,6 +143,7 @@ class registrarForm {
 				$variable .= "&id_elemento_acta=" . $ElementosOrden [$i] ['id_elemento_ac'];
 				$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
 				$variable .= "&arreglo=" .$_REQUEST ['arreglo'];
+				$variable .= "&usuario=".$_REQUEST['usuario'];
 				$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
@@ -151,6 +152,7 @@ class registrarForm {
 				$variable1 .= "&id_elemento_acta=" . $ElementosOrden [$i] ['id_elemento_ac'];
 				$variable1 .= "&id_orden=" .$_REQUEST ['id_orden'];
 				$variable1 .= "&arreglo=" .$_REQUEST ['arreglo'];
+				$variable1 .= "&usuario=".$_REQUEST['usuario'];
 				$variable1 .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 				$variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
 				
