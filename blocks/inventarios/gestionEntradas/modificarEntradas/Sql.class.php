@@ -198,6 +198,16 @@ class Sql extends \Sql {
 				
 				break;
 			
+			case "clase_entrada_consulta" :
+				
+				$cadenaSql = "SELECT ";
+				$cadenaSql .= "id_clase, descripcion  ";
+				$cadenaSql .= "FROM clase_entrada ";
+// 				$cadenaSql .= "WHERE id_clase > 1 ";
+				$cadenaSql .= "ORDER BY  descripcion ASC  ;";
+				
+				break;
+			
 			case "tipo_contrato" :
 				
 				$cadenaSql = "SELECT ";

@@ -19,13 +19,14 @@ class redireccion {
 				$variable .= "&consecutivo=" . $valor [1] . " - (" . date ( 'Y' ) . ")";
 				$variable .= "&numero_entrada=" . $valor [0];
 				$variable .= "&numero_acta=" . $valor [2];
+				$variable .= "&usuario=" . $valor[3];
 				break;
 			
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=noactualizo";
 				$variable .= "&mensaje=error";
-				
+				$variable .= "&usuario=" . $valor;
 				break;
 			
 			case "NoObservaciones" :
@@ -62,7 +63,8 @@ class redireccion {
 				$variable = "pagina=registrarElemento";
 				$variable .= "&opcion=cargarElemento";
 				$variable .= "&entradaDirecta=" . TRUE;
-				$variable .= "&numero_entrada=" . $valor;
+				$variable .= "&numero_entrada=" . $valor[0];
+				$variable .= "&usuario=" . $valor[1];
 				break;
 			
 			case "ActivarElementos" :
@@ -72,6 +74,7 @@ class redireccion {
 				$variable .= "&numero_acta=" . $valor[2];
 				$variable .= "&numero_entrada=" .$valor[0];
 				$variable .= "&consecutivo_entrada=" .$valor[1];
+				$variable .= "&usuario=" . $valor[3];
 				break;
 		}
 		

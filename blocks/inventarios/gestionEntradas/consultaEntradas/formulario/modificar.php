@@ -22,7 +22,7 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-		
+		  
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -65,6 +65,8 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		{
 			
+			
+			
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			
 			$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
@@ -97,7 +99,7 @@ class registrarForm {
 			
 			if (empty ( $items )) {
 				
-				\inventarios\gestionEntradas\consultaEntradas\funcion\redireccion::redireccionar ( 'noEntradas' );
+				\inventarios\gestionEntradas\consultaEntradas\funcion\redireccion::redireccionar ( 'noEntradas',$_REQUEST['usuario']);
 				exit;
 			}
 			
@@ -108,6 +110,7 @@ class registrarForm {
 				$elementos_info [$key] = $datosEntrada [0];
 			}
 			
+			
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 			
 			$esteCampo = "AgrupacionGeneral";
@@ -116,7 +119,7 @@ class registrarForm {
 			echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 			{
 				if ($elementos_info) {
-					echo $this->miFormulario->tablaReporte ( $elementos_info );
+					echo $this->miFormulario->tablaReporte ( $elementos_info,true );
 				}
 			}
 			
@@ -254,6 +257,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=modificar";
+		$valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
 		$valorCodificado .= "&datos_entradas=" . base64_encode ( serialize ( $items ) );
 		
 		/**

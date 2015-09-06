@@ -1,6 +1,7 @@
 <?php
 
 namespace inventarios\gestionEntradas\registrarEntradas;
+
 use inventarios\gestionEntradas\registrarEntradas\funcion\redireccion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
@@ -86,34 +87,36 @@ class Funcion {
 					if (isset ( $_REQUEST ["botonRegistrar"] ) && $_REQUEST ['botonRegistrar'] == 'true') {
 						
 						redireccion::redireccionar ( 'Registrar' );
-						exit();
+						exit ();
 					}
 					
 					if (isset ( $_REQUEST ["botonContinuar"] ) && $_REQUEST ['botonContinuar'] == 'true') {
 						
 						redireccion::redireccionar ( 'Salir' );
-						exit;
+						exit ();
 					}
 					
 					if (isset ( $_REQUEST ["botonCargarElemento"] ) && $_REQUEST ['botonCargarElemento'] == 'true') {
 						
-						redireccion::redireccionar ( 'CargarElemento', $_REQUEST ['id_entrada'] );
-						exit;
+						redireccion::redireccionar ( 'CargarElemento', array (
+								$_REQUEST ['id_entrada'],
+								$_REQUEST ['usuario'] 
+						) );
+						exit ();
 					}
 					
 					if (isset ( $_REQUEST ["botonActivarElementos"] ) && $_REQUEST ['botonActivarElementos'] == 'true') {
 						
-						$array=array(
-								$_REQUEST['numero_entrada'],
-								$_REQUEST['consecutivo_entrada'],
-								$_REQUEST['numero_acta'],
-								
-								
-						);
-						redireccion::redireccionar ('ActivarElementos', $array);
-						exit;
+						$array = array (
+								$_REQUEST ['numero_entrada'],
+								$_REQUEST ['consecutivo_entrada'],
+								$_REQUEST ['numero_acta'], 
+								$_REQUEST['usuario']
+						)
+						;
+						redireccion::redireccionar ( 'ActivarElementos', $array );
+						exit ();
 					}
-					
 					
 					break;
 			}

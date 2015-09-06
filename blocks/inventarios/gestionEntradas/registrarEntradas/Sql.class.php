@@ -405,7 +405,7 @@ class Sql extends \Sql {
 				$cadenaSql .= (is_null($variable[7])==true)?"NULL,":"'" . $variable [7] . "',";
 				$cadenaSql .= (is_null($variable[8])==true)?"NULL,":"'" . $variable [8] . "',";
 				$cadenaSql .= (is_null($variable[9])==true)?"NULL,":"'" . $variable [9] . "',";
-				$cadenaSql .= "'" . $variable [10] . "',";
+				$cadenaSql .= "" . $variable [10] . ",";
 				$cadenaSql .= "'" . $variable [11] . "',";
 				$cadenaSql .= (is_null($variable[12])==true)?"NULL,":"'" . $variable [12] . "',";
 				$cadenaSql .= "'" . $variable [13] . "',";

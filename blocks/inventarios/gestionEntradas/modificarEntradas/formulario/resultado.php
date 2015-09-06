@@ -88,8 +88,7 @@ class registrarForm {
 				$fechaFinal,
 				$clase,
 				$proveedor 
-		)
-		;
+		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntrada', $arreglo );
 		
@@ -123,6 +122,7 @@ class registrarForm {
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=" . $_REQUEST ['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -165,7 +165,7 @@ class registrarForm {
 			for($i = 0; $i < count ( $entrada ); $i ++) {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=modificar";
-				// $variable .= "&usuario=" . $miSesion->getSesionUsuarioId ();
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				$variable .= "&numero_entrada=" . $entrada [$i] [0];
 				
 				if ($entrada [$i] [3] == 0) {
@@ -174,23 +174,21 @@ class registrarForm {
 							$entrada [$i] [4],
 							$entrada [$i] [1],
 							$entrada [$i] [2],
-							$entrada [$i] ['nit']='NO APLICA',
-							$entrada [$i] ['razon_social']='NO APLICA',
+							$entrada [$i] ['nit'] = 'NO APLICA',
+							$entrada [$i] ['razon_social'] = 'NO APLICA' 
 					);
-					$entrada [$i] ['nit']='NO APLICA';
-					$entrada [$i] ['razon_social']='NO APLICA';
-					
+					$entrada [$i] ['nit'] = 'NO APLICA';
+					$entrada [$i] ['razon_social'] = 'NO APLICA';
 				} else {
-			
+					
 					$arreglo = array (
 							$entrada [$i] [4],
 							$entrada [$i] [1],
 							$entrada [$i] [2],
 							$entrada [$i] ['nit'],
-							$entrada [$i] ['razon_social']
+							$entrada [$i] ['razon_social'] 
 					);
 				}
-				
 				
 				$arreglo = serialize ( $arreglo );
 				$variable .= "&datosGenerales=" . $arreglo;
@@ -201,7 +199,7 @@ class registrarForm {
                     <td><center>" . $entrada [$i] [4] . "</center></td>
                     <td><center>" . $entrada [$i] [1] . "</center></td>
                     <td><center>" . $entrada [$i] [2] . "</center></td>
-                    <td><center>" . $entrada[$i]['nit'] . "</center></td>
+                    <td><center>" . $entrada [$i] ['nit'] . "</center></td>
                     <td><center>" . $entrada [$i] ['razon_social'] . "</center></td>
               ";
 				

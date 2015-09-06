@@ -118,6 +118,7 @@ class registrarForm {
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=" . $_REQUEST['usuario'];   
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -131,12 +132,8 @@ class registrarForm {
 		$atributos ['alto'] = '10%';
 		$atributos ['redirLugar'] = true;
 		echo $this->miFormulario->enlace ( $atributos );
-			
 		unset ( $atributos );
-			
-			
-		
-		
+
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -181,7 +178,7 @@ class registrarForm {
 					);
 					$arreglo=serialize($arreglo);
 					$variable .= "&datosGenerales=" .$arreglo;
-					
+					$variable .= "&usuario=" . $_REQUEST['usuario'];
 					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 					
 					$mostrarHtml = "<tr>

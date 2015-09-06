@@ -197,7 +197,7 @@ class registrarForm {
 		$atributos ['limitar'] = true;
 		$atributos ['anchoCaja'] = 24;
 		$atributos ['miEvento'] = '';
-		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
+		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada_consulta" );
 		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 		$atributos ['matrizItems'] = $matrizItems;
 		// $atributos['miniRegistro']=;
@@ -325,6 +325,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=ConsultarOrden";
+		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];  
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
 		 * Para ello utiliza la hora en que es creado el formulario para

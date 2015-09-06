@@ -24,9 +24,7 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-// 		var_dump ( $_REQUEST );
-// 		exit ();
-		
+		    
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -211,7 +209,7 @@ class RegistradorOrden {
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarInformación', $arreglo_clase );
-		$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo_clase,"insertarInformación");
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'idMaximoEntrada' );
 		$idEntradamax = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -232,7 +230,7 @@ class RegistradorOrden {
 				($_REQUEST ['id_proveedor'] != '') ? $_REQUEST ['id_proveedor'] : NULL, // donacion
 				($_REQUEST ['numero_factura'] != '') ? $_REQUEST ['numero_factura'] : NULL, // donacion
 				($_REQUEST ['fecha_factura'] != '') ? $_REQUEST ['fecha_factura'] : NULL, // donacion
-				$_REQUEST ['observaciones_entrada'],
+				($_REQUEST['observaciones_entrada']=='')?"NULL":"'".$_REQUEST ['observaciones_entrada']."'",
 				$_REQUEST ['numero_acta'],
 				($_REQUEST ['id_ordenador'] == '') ? NULL : $_REQUEST ['id_ordenador'], // obligatorio donacion
 				$_REQUEST ['sede'], // obligatorio
@@ -245,22 +243,23 @@ class RegistradorOrden {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarEntrada', $arregloDatos );
 		
-		$id_entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$id_entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arregloDatos,"insertarEntrada"); 
 		
 		$arreglo = array (
 				$idEntradamax,
 				$id_entrada [0] [0] ,
 				$id_entrada [0] [1] ,
+				$_REQUEST["usuario"]
 		);
 		
 		
 		if ($id_entrada) {
 			
-			redireccion::redireccionar ( 'inserto', $arreglo );
+			redireccion::redireccionar ( 'inserto', $arreglo ); 
 			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noInserto' );
+			redireccion::redireccionar ( 'noInserto' ,$_REQUEST['usuario']); 
 			exit ();
 		}
 	}
