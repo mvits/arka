@@ -19,12 +19,14 @@ class redireccion {
 				$variable .= "&numero_acta=" . $valor [0];
 				$variable .= "&fecha_acta=" . $valor [1];
 				$variable .= "&orden=" . $valor [2];
+				$variable .= "&usuario=".$valor[3];
 				break;
 			
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=error";
+				$variable .= "&usuario=".$valor;
 				break;
 			
 			case "noExtension" :
@@ -53,7 +55,8 @@ class redireccion {
 			case "registrar" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=asociarActa";
-				$variable .= "&datos=" . $valor;
+				$variable .= "&datos=" . $valor[0];
+				$variable .= "&usuario=".$valor[1];
 				break;
 			
 			case "paginaPrincipal" :

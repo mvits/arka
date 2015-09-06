@@ -45,7 +45,7 @@ class registrarForm {
 		 * $atributos= array_merge($atributos,$atributosGlobales);
 		 */
 		$atributosGlobales ['campoSeguro'] = 'true';
-		
+		 
 		// -------------------------------------------------------------------------------------------------
 		
 		$conexion = "inventarios";
@@ -183,20 +183,21 @@ class registrarForm {
 				$variable .= "&opcion=modificar";
 				$variable .= "&numero_acta=" . $Acta [$i] [0];
 				$variable .= "&arreglo=" .$arreglo;
-				
+				$variable .= "&usuario=".$_REQUEST['usuario'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$variable2 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable2 .= "&opcion=eliminarActa";
 				$variable2 .= "&numero_acta=" . $Acta [$i] [0];
 				$variable2 .= "&arreglo=" .$arreglo;
-				
+				$variable2 .= "&usuario=".$_REQUEST['usuario'];
 				$variable2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable2, $directorio );
 				
 				$variable1 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable1 .= "&opcion=consultarElementosActa";
 				$variable1 .= "&numero_acta=" . $Acta [$i] [0];
 				$variable1 .= "&arreglo=" .$arreglo;
+				$variable1 .= "&usuario=".$_REQUEST['usuario'];
 				$variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActaElementos', $Acta [$i] [0] );

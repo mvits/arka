@@ -113,23 +113,13 @@ class registrarForm {
 			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=ConsultarActa";
+ 
 			
 			$variable = "pagina=" . $miPaginaActual;
-			$variable .= "&opcion=ConsultarActa";
-			if (isset ( $_REQUEST ['arreglo'] )) {
-				$arreglo = unserialize ( $_REQUEST ['arreglo'] );
-				$variable .= "&numero_acta=" . $arreglo ['numero_acta'];
-				$variable .= "&id_proveedor=" . $arreglo ['nit'];
-				$variable .= "&fecha_recibido=" . $arreglo ['fecha'];
-				$variable .= "&sedeConsulta=" . $arreglo ['sede'];
-				$variable .= "&dependenciaConsulta=" . $arreglo ['dependencia'];
-				$variable .= "&fecha_inicio=" . $arreglo ['fecha_inicial'];
-				$variable .= "&fecha_final=" . $arreglo ['fecha_final'];
-			}
-			
+			$variable .= "&usuario=" . $_REQUEST['usuario'];   
+
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			
-			$url = htmlspecialchars ( $_SERVER ['HTTP_REFERER'] );
+			 
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
 			$atributos ['id'] = $esteCampo;
@@ -826,6 +816,7 @@ class registrarForm {
 				$valorCodificado .= "&seccion=" . $tiempo;
 				$valorCodificado .= "&id_acta=" . $_REQUEST ['numero_acta'];
 				$valorCodificado .= "&arreglo=" . $_REQUEST ['arreglo'];
+				$valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
 				
 				/**
 				 * SARA permite que los nombres de los campos sean dinámicos.

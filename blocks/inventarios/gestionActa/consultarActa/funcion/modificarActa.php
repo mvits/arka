@@ -24,25 +24,24 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		
 		$fechaActual = date ( 'Y-m-d' );
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionActa/registrarActa";
-// 		$rutaBloque .= $esteBloque ['nombre'];
+		// $rutaBloque .= $esteBloque ['nombre'];
 		
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/gestionActa/registrarActa";
 		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
+		
 		foreach ( $_FILES as $key => $values ) {
 			
 			$archivo = $_FILES [$key];
 		}
 		
-		if ($archivo['name']!='') {
+		if ($archivo ['name'] != '') {
 			// obtenemos los datos del archivo
 			$tamano = $archivo ['size'];
 			$tipo = $archivo ['type'];
@@ -66,7 +65,7 @@ class RegistradorOrden {
 		$fechaActual = date ( 'Y-m-d' );
 		// Actualizar Acta de Recibido
 		
-		if ($archivo['name']!='') {
+		if ($archivo ['name'] != '') {
 			
 			$datosActa = array (
 					'sede' => $_REQUEST ['sede'],
@@ -82,14 +81,11 @@ class RegistradorOrden {
 					'enlace_soporte' => $destino1,
 					'nombre_soporte' => $archivo1,
 					'id_acta' => $_REQUEST ['id_acta'],
-					'identificador_contrato' => ($_REQUEST ['numeroContrato']!='') ? $_REQUEST ['numeroContrato'] : 0, 
+					'identificador_contrato' => ($_REQUEST ['numeroContrato'] != '') ? $_REQUEST ['numeroContrato'] : 0 
 			);
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarActa_soporte', $datosActa );
-			$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-			
-			
-			
+			$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $datosActa, "actualizarActa_soporte" );
 		} else {
 			$datosActa = array (
 					'sede' => $_REQUEST ['sede'],
@@ -103,34 +99,28 @@ class RegistradorOrden {
 					'observaciones' => $_REQUEST ['observacionesacta'],
 					'estado' => 1,
 					'id_acta' => $_REQUEST ['id_acta'],
-					'identificador_contrato' => ($_REQUEST ['numeroContrato']!='') ? $_REQUEST ['numeroContrato'] : 0,
+					'identificador_contrato' => ($_REQUEST ['numeroContrato'] != '') ? $_REQUEST ['numeroContrato'] : 0 
 			);
 			
-			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarActa', $datosActa );
-			$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-			
-			
-			
+			$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $datosActa, 'actualizarActa' );
 		}
-
-
+		
 		$datos = array (
 				$_REQUEST ['id_acta'],
-				$fechaActual ,
-				$_REQUEST['arreglo']
+				$fechaActual,
+				$_REQUEST ['arreglo'],
+				$_REQUEST ['usuario'] 
 		);
-
 		
-
 		if ($id_acta) {
 			
 			redireccion::redireccionar ( 'inserto', $datos );
-			exit();
+			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noInserto', $datos );
-			exit();
+			redireccion::redireccionar ( 'noInserto', $_REQUEST['usuario'] );
+			exit ();
 		}
 	}
 	function resetForm() {

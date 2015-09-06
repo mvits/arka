@@ -86,6 +86,7 @@ class registrarForm {
 			
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=".$_REQUEST['usuario']; 
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -161,7 +162,7 @@ class registrarForm {
 						
 						$mensaje = "- El Archivo Tiene que Ser Tipo Excel.
 								<br>- Solo Se Cargaran de forma Correcta de Acuerdo al Plantilla Preedeterminada.
-								<br>- Para Verificar El Cargue Masivo Consulte los Elementos en el Modulo \"Consultar Y Modificar Elementos\".
+								<br>- Para Verificar El Cargue Masivo Consulte los Elementos en el Modulo \"Consultar Y Modificar Acta de Recibido\".
 								<br>- Enlace de Archivo Plantilla : <A HREF=" . $host . "> Archivo Plantilla </A>";
 						
 						// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -871,7 +872,7 @@ class registrarForm {
 				// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 				
 				echo $this->miFormulario->division ( 'fin' );
-				
+				 
 				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				
 				// ---------------- FIN SECCION: Controles del Formulario -------------------------------------------
@@ -906,6 +907,7 @@ class registrarForm {
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=registrar";
 			$valorCodificado .= "&numero_acta=" . $_REQUEST ['numero_acta'];
+			$valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
 			
 			
 			/**
@@ -1066,6 +1068,7 @@ class registrarForm {
 					
 					$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 					$variable = "pagina=indexAlmacen";
+					$variable .= "&usuario=".$_REQUEST['usuario'];
 					
 					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 					
@@ -1086,7 +1089,7 @@ class registrarForm {
 					$variable = "pagina=registrarSalidas";
 					$variable .= "&opcion=activarElementos";
 					$variable .= "&numero_acta=".$_REQUEST['numero_acta'];
-					
+					$variable .= "&usuario=".$_REQUEST['usuario'];
 					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 					
 					echo "&nbsp&nbsp&nbsp&nbsp&nbsp";

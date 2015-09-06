@@ -130,16 +130,13 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=" . $_REQUEST['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			function regresar() {
-				history . back ();
-			}
-			
-			$url = htmlspecialchars ( $_SERVER ['HTTP_REFERER'] );
+
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
 			$atributos ['id'] = $esteCampo;
-			$atributos ['enlace'] = $url;
+			$atributos ['enlace'] = $variable;  
 			$atributos ['tabIndex'] = 1;
 			$atributos ['estilo'] = 'textoSubtitulo';
 			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -914,6 +911,7 @@ class registrarForm {
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=procesarModificarElementos";
 			$valorCodificado .= "&id_elemento_acta=" . $_REQUEST ['id_elemento_acta'];
+			$valorCodificado .= "&usuario=".$_REQUEST['usuario'];  
 			
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.

@@ -136,7 +136,7 @@ class RegistradorActa {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarActa', $datosActa );
 		
-		$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$datosActa,'insertarActa' );
 		
 		if (isset ( $_REQUEST ['numero_orden'] )) {
 			
@@ -159,12 +159,9 @@ class RegistradorActa {
 				
 				
 				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'RegistrarActaElementos', array (
-						$valor [0],
-						$id_acta [0] [0] 
-				) );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'RegistrarActaElementos', $arreglo);
 				
-				$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+				$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso",$arreglo,'RegistrarActaElementos');
 				
 			}
 		}
@@ -172,7 +169,8 @@ class RegistradorActa {
 		$datos = array (
 				$id_acta [0] [0],
 				$fechaActual,
-				$tipoOrden
+				$tipoOrden,
+				$_REQUEST['usuario']
 		);
 		
 		if ($id_acta) {
@@ -181,7 +179,7 @@ class RegistradorActa {
 			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noInserto', $datos );
+			redireccion::redireccionar ( 'noInserto', $_REQUEST['usuario'] );
 			
 			exit ();
 		}

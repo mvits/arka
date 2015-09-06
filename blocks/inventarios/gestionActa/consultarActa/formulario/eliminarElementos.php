@@ -67,13 +67,29 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		echo $this->miFormulario->formulario ( $atributos );
 		{
+			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+				
+			$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
+			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
+			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+				
+			$valorCodificado = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
+			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+			$valorCodificado .= "&opcion=ConsultarActa";
 			
+				
+			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=" . $_REQUEST['usuario'];
 			
-			$url = htmlspecialchars($_SERVER['HTTP_REFERER']);
+			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+
+						
+						
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
 			$atributos ['id'] = $esteCampo;
-			$atributos ['enlace'] = $url;
+			$atributos ['enlace'] = $variable;
 			$atributos ['tabIndex'] = 1;
 			$atributos ['estilo'] = 'textoSubtitulo';
 			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -191,6 +207,7 @@ class registrarForm {
 			$valorCodificado .= "&opcion=eliminarElementoActa";
 			$valorCodificado .= "&id_elemento_acta=" . $_REQUEST ['id_elemento_acta'];
 			$valorCodificado .= "&numero_acta=" . $_REQUEST ['numero_acta'];			
+			$valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.
 			 * Para ello utiliza la hora en que es creado el formulario para

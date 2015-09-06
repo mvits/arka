@@ -592,6 +592,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "fecha_registro='" . date ( 'Y-m-d' ) . "' ";
 				$cadenaSql .= " WHERE id_actarecibido = '" . $variable . "' ";
 				$cadenaSql .= "RETURNING id_actarecibido";
+				 
 				break;
 			
 			case "tipoOrden" :

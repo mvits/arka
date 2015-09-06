@@ -70,17 +70,16 @@ class registrarForm {
 			$fechaFinal = '';
 		}
 		
-
-
+		
 		
 		switch ($tipo_orden) {
 			case 1 :
 				
-
 				$arreglo = array (
 						$fechaInicio,
 						$fechaFinal,
-						9
+						9,
+						$_REQUEST ['usuario'] 
 				);
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'OrdenConsultada', $arreglo );
@@ -95,9 +94,9 @@ class registrarForm {
 				$arreglo = array (
 						$fechaInicio,
 						$fechaFinal,
-						1
+						1,
+						$_REQUEST ['usuario'] 
 				);
-				
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'OrdenConsultada', $arreglo );
 				$cadenaSql;
@@ -112,20 +111,19 @@ class registrarForm {
 						$fechaFinal 
 				);
 				
-				
-				
-				$datos=serialize($datos);
-				redireccion::redireccionar ( 'registrar', $datos );
+				$datos = serialize ( $datos );
+				redireccion::redireccionar ( 'registrar', array (
+						$datos,
+						$_REQUEST ['usuario'] 
+				) );
 				
 				$titulo = "Otros";
-				exit();
+				exit ();
 				break;
 			
 			default :
 				break;
 		}
-		
-		
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -155,6 +153,7 @@ class registrarForm {
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=" . $_REQUEST['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -199,19 +198,19 @@ class registrarForm {
 				$variable .= "&opcion=asociarActa";
 				// $variable .= "&usuario=" . $miSesion->getSesionUsuarioId ();
 				$variable .= "&numero_orden=" . $resultado_orden [$i] [0];
-				$variable .= "&tipo_orden=" . $_REQUEST['tipoOrden'];
+				$variable .= "&tipo_orden=" . $_REQUEST ['tipoOrden'];
 				$variable .= "&fecha_orden=" . $resultado_orden [$i] [1];
-				$variable .= "&mensaje_titulo=" . $titulo .":  ".$resultado_orden [$i] ['identificador'] ;
+				$variable .= "&mensaje_titulo=" . $titulo . ":  " . $resultado_orden [$i] ['identificador'];
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
-				$desicion=(is_null($resultado_orden [$i] ['id_actarecibido'])==true)?"<a href='" . $variable . "'>
-                            <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'> </a>":"Existe Acta de Recibido Asociada";
-                       
+				$desicion = (is_null ( $resultado_orden [$i] ['id_actarecibido'] ) == true) ? "<a href='" . $variable . "'>
+                            <img src='" . $rutaBloque . "/css/images/edit.png' width='15px'> </a>" : "Existe Acta de Recibido Asociada";
 				
 				$mostrarHtml = "<tr>
                     <td><center>" . $resultado_orden [$i] [1] . "</center></td>
                     <td><center>" . $resultado_orden [$i] ['identificador'] . "</center></td>
-                    <td><center>".$desicion."</center> </td>
+                    <td><center>" . $desicion . "</center> </td>
            
                 </tr>";
 				echo $mostrarHtml;

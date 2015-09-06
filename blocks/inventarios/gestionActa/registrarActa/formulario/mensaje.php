@@ -76,6 +76,7 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=" . $_REQUEST['usuario']; 
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -257,7 +258,7 @@ class registrarForm {
 				
 				$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 				$variable = "pagina=indexAlmacen";
-				
+				$variable .= "&usuario=" . $_REQUEST ['usuario']; 
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -279,7 +280,7 @@ class registrarForm {
 					$variable = "pagina=registrarElementoActa";
 					$variable .= "&opcion=cargarElemento";
 					$variable .= "&numero_acta=" . $_REQUEST ['numero_acta'];
-					
+					$variable .= "&usuario=" . $_REQUEST ['usuario'];
 					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 					
 					echo "&nbsp&nbsp&nbsp&nbsp&nbsp";

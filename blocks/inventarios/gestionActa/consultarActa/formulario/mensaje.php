@@ -70,24 +70,7 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
 			$variable = "pagina=" . $miPaginaActual;
-			
-			if ($_REQUEST ['mensaje'] == 'actualizo') {
-				
-				$variable .= "&opcion=modificar";
-				$variable .= "&numero_acta=" . $_REQUEST ['numero_acta'];
-				$variable .= "&arreglo=" . $_REQUEST ['arreglo'];
-			} else if ($_REQUEST ['mensaje'] == 'elimino') {
-				
-				$variable .= "&opcion=eliminarActa";
-				$variable .= "&numero_acta=" . $_REQUEST ['numero_acta'];
-				$variable .= "&arreglo=" . $_REQUEST ['arreglo'];
-			} else if ($_REQUEST ['mensaje'] == 'eliminoElemento') {
-				
-				$variable .= "&opcion=eliminarElementos";
-				$variable .= "&id_elemento_acta=" . $_REQUEST['id_elemento_acta'];
-				$variable .= "&numero_acta=" . $_REQUEST ['numero_acta'];
-				
-			}
+			$variable .= "&usuario=" . $_REQUEST['usuario']; 
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------

@@ -137,6 +137,7 @@ class registrarForm {
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -161,7 +162,7 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		$atributos ["leyenda"] = "Consultar  Actas Recibido";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-		
+		 	
 		if ($Acta) {
 			
 			echo "<table id='tablaTitulos'>";
@@ -184,6 +185,7 @@ class registrarForm {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=cargarElemento";
 				$variable .= "&numero_acta=" . $Acta [$i] [0];
+				$variable .= "&usuario=".$_REQUEST['usuario']; 
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$mostrarHtml = "<tr>
