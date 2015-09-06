@@ -80,6 +80,7 @@ class registrarForm {
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 		
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=" . $_REQUEST ['usuario'];  
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
@@ -302,6 +303,7 @@ class registrarForm {
 		$valorCodificado .= "&numero_acta=".$_REQUEST['numero_acta'];
 		$valorCodificado .= "&numero_entrada=".$_REQUEST['numero_entrada'];
 		$valorCodificado .= "&consecutivo_entrada=" . $_REQUEST ['consecutivo_entrada'];
+		$valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
 		$valorCodificado .= "&tiempo=" . time ();
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.

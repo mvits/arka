@@ -51,7 +51,6 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		
 		if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
 			$fechaInicio = $_REQUEST ['fecha_inicio'];
 		} else {
@@ -84,9 +83,9 @@ class registrarForm {
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActaEntrada', $arreglo );
-
+		
 		$Acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
+		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
 		$atributos ['id'] = $esteCampo;
@@ -114,6 +113,7 @@ class registrarForm {
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=" . $_REQUEST ['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -160,6 +160,7 @@ class registrarForm {
 				$variable1 .= "&numero_acta=" . $Acta [$i] ['id_acta'];
 				$variable1 .= "&numero_entrada=" . $Acta [$i] ['id_entrada'];
 				$variable1 .= "&consecutivo_entrada=" . $Acta [$i] ['consecutivo_entrada'];
+				$variable1 .= "&usuario=" . $_REQUEST ['usuario'];
 				
 				$variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
 				

@@ -32,6 +32,7 @@ class RegistradorActa {
 	}
 	function procesarFormulario() {
 		$fechaActual = date ( 'Y-m-d' );
+		var_dump($_REQUEST);exit; 
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
