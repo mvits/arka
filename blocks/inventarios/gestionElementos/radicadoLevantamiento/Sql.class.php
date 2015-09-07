@@ -273,7 +273,12 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM  arka_parametros.arka_funcionarios fun ";
 				$cadenaSql .= "INNER JOIN  elemento_individual eli ON  eli.funcionario= fun.\"FUN_IDENTIFICACION\" ";
 				$cadenaSql .= "LEFT JOIN  arka_movil.radicado_levantamiento rl ON rl.funcionario =  eli.funcionario ";
+				$cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
+				$cadenaSql .= "JOIN tipo_bienes tb ON tb.id_tipo_bienes = ele.tipo_bien ";
 				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
+				$cadenaSql .= " AND  eli.estado_registro = 'TRUE'  ";
+				$cadenaSql .= " AND tb.id_tipo_bienes <> 1  ";
+				$cadenaSql .= " AND eli.funcionario <> 0  ";
 				
 				if ($variable != '') {
 					

@@ -24,8 +24,6 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		
-		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -45,7 +43,7 @@ class RegistradorOrden {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'Registrar_Radicacion', $valor );
 			
-			$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+			$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "Registrar_Radicacion" );
 		}
 		
 		// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarFuncionariosaCargoElementos', $valor );
@@ -54,11 +52,11 @@ class RegistradorOrden {
 		
 		if ($estado == true) {
 			
-			redireccion::redireccionar ( 'Radicado' );
+			redireccion::redireccionar ( 'Radicado', $_REQUEST ['usuario'] );
 			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'NoRadicado' );
+			redireccion::redireccionar ( 'NoRadicado', $_REQUEST ['usuario'] );
 			exit ();
 		}
 	}

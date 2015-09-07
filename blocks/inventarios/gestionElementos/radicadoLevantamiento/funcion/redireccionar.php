@@ -24,14 +24,14 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=Radicado";
-				
+				$variable .= "&usuario=".$valor;
 				break;
 			
 			case "NoRadicado" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=NoRadicado";
-				
+				$variable .= "&usuario=".$valor;
 				
 				break;
 			
