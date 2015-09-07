@@ -133,6 +133,7 @@ class registrarForm {
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -170,9 +171,10 @@ class registrarForm {
 		    <th>Número Salida y/o<br>Vigencia</th>
                     <th># Número Placa</th>
                     <th># Número Serial</th>
+                    <th>Descripción</th>
                     <th>Nombre Funcionario</th>
 		    <th>Identificación<br>Funcionario</th>
-					<th>Dependencia</th>
+                    <th>Dependencia</th>
                     <th>Ubicación Especifica</th>
         	    <th>Tipo Bien</th>
                     <th>Estado Elemento</th>
@@ -185,6 +187,7 @@ class registrarForm {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=trasladarElemento";
 				$variable .= "&id_elemento_ind=" . $elemento [$i] [0];
+				$variable .= "&usuario=" . $_REQUEST['usuario'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'funcionario_informacion_consultada', $elemento [$i] [3] );
@@ -194,6 +197,7 @@ class registrarForm {
                     <td><center>" . $elemento [$i] ['salidas'] . "</center></td>
                     <td><center>" . $elemento [$i] ['placa'] . "</center></td>
                     <td><center>" . $elemento [$i] ['serie'] . "</center></td>
+                        <td><center>" . $elemento [$i] ['descripcion_elemento'] . "</center></td>
                     <td><center>" . $elemento [$i] ['nombre_funcionario'] . "</center></td>
                     <td><center>" . $elemento [$i] ['funcionario_encargado'] . "</center></td>
                     <td><center>" . $elemento [$i] ['dependencia_encargada'] . "</center></td>		

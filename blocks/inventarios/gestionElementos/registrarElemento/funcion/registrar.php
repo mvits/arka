@@ -273,7 +273,7 @@ class RegistradorOrden {
 				);
 				
 				if ($elemento) {
-					
+					$this->miConfigurador->setVariableConfiguracion("cache",true);
 					redireccion::redireccionar ( 'inserto', $datos, $_REQUEST ['datosGenerales'] );
 					exit ();
 				} else {
@@ -814,7 +814,7 @@ class RegistradorOrden {
 						}
 						
 						if ($elemento) {
-							
+							$this->miConfigurador->setVariableConfiguracion("cache",true);
 							redireccion::redireccionar ( 'inserto_M', $fechaActual );
 							exit ();
 						} else {

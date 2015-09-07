@@ -1,4 +1,5 @@
 <?php
+
 use inventarios\gestionElementos\modificarElemento\Sql;
 
 $conexion = "inventarios";
@@ -21,18 +22,18 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
 	$cadenaSql = $this->sql->getCadenaSql ( 'consultarElemento', $arreglo );
 	
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
-
-	
+	 	
 	for($i = 0; $i < count ( $resultado ); $i ++) {
 		$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 		$variable .= "&id_elemento=" . $resultado [$i] ['idelemento'];
 		$variable .= "&opcion=modificar";
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		$variable2 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 		$variable2 .= "&id_elemento=" . $resultado [$i] ['idelemento'];
 		$variable2 .= "&opcion=anular";
+		$variable2 .= "&usuario=".$_REQUEST['usuario'];
 		$variable2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable2, $directorio );
 		
 

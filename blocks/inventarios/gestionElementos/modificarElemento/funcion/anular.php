@@ -38,24 +38,24 @@ class RegistradorOrden {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'estado_elemento', $_REQUEST['id_elemento'] );
 		
-		$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+		$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" ,$_REQUEST['id_elemento'] ,"estado_elemento");
 		
 
 		
     
 		$cadenaSql = $this->miSql->getCadenaSql ( 'anular_elemento', $arreglo );
 		 
-		$anular = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+		$anular = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso",$arreglo,"anular_elemento" );
 		
 		
 				
 		if ($anular) {
-				
-			redireccion::redireccionar ( 'anulado');
+				$this->miConfigurador->setVariableConfiguracion("cache",true);
+			redireccion::redireccionar ( 'anulado',$_REQUEST['usuario']);
 			exit();
 		} else {
 				
-			redireccion::redireccionar ( 'noAnulado' );
+			redireccion::redireccionar ( 'noAnulado' ,$_REQUEST['usuario']);
 			exit();
 			
 		}

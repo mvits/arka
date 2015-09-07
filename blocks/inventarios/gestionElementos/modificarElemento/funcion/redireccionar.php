@@ -17,33 +17,35 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=noFormatoImagen";
-				
+				$variable .= "&usuario=" . $valor;
 				break;
 			case "inserto" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=actualizo";
-				$variable .= "&placa=" . $valor;
+				$variable .= "&placa=" . $valor[0];
+				$variable .= "&usuario=" . $valor[1];  
 				break;
 			
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=error";
-				
+				$variable .= "&usuario=" . $valor; 
 				break;
 			
 			case "anulado" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=anulado";
+				$variable .= "&usuario=" . $valor;
 				break;
 			
 			case "noAnulado" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=noAnulado";
 				$variable .= "&mensaje=error";
-				
+				$variable .= "&usuario=" . $valor;
 				break;
 			
 			case "notextos" :

@@ -315,17 +315,17 @@ class Sql extends \Sql {
 
 				$cadenaSql = "SELECT ei.*, dep.\"ESF_DEP_ENCARGADA\" dependencia_encargada, eps.\"ESF_NOMBRE_ESPACIO\" ubicacion_especifica,
 						tfs.descripcion elemento_estado, fn.\"FUN_NOMBRE\" nombre_funcionario,sa.consecutivo||' - ('||sa.vigencia||')' salidas, tb.descripcion bien_tipo,est.tipo_faltsobr id_tipo_estado_elemento,
-						id_baja baja,sa.funcionario funcionario_encargado    ";
+						id_baja baja,sa.funcionario funcionario_encargado,el.descripcion descripcion_elemento    ";
 						
-				$cadenaSql .= "FROM elemento_individual ei ";
-				$cadenaSql .= "LEFT JOIN estado_elemento est  ON est.id_elemento_ind=ei.id_elemento_ind ";
-				$cadenaSql .= "LEFT JOIN baja_elemento bj  ON bj.id_elemento_ind=ei.id_elemento_ind ";
-				$cadenaSql .= "JOIN elemento el  ON el.id_elemento=ei.id_elemento_gen ";
-				$cadenaSql .= "JOIN salida  sa ON sa.id_salida=ei.id_salida ";
-				$cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes=el.tipo_bien ";
+				$cadenaSql .= "FROM arka_inventarios.elemento_individual ei ";
+				$cadenaSql .= "LEFT JOIN arka_inventarios.estado_elemento est  ON est.id_elemento_ind=ei.id_elemento_ind ";
+				$cadenaSql .= "LEFT JOIN arka_inventarios.baja_elemento bj  ON bj.id_elemento_ind=ei.id_elemento_ind ";
+				$cadenaSql .= "JOIN arka_inventarios.elemento el  ON el.id_elemento=ei.id_elemento_gen ";
+				$cadenaSql .= "JOIN arka_inventarios.salida  sa ON sa.id_salida=ei.id_salida ";
+				$cadenaSql .= "JOIN arka_inventarios.tipo_bienes  tb ON tb.id_tipo_bienes=el.tipo_bien ";
 				$cadenaSql .= "JOIN arka_parametros.arka_dependencia  dep ON dep.\"ESF_ID_ESPACIO\"=sa.ubicacion ";
 				$cadenaSql .= "JOIN arka_parametros.arka_espaciosfisicos eps ON eps.\"ESF_ID_ESPACIO\"=sa.ubicacion ";
-				$cadenaSql .= "LEFT JOIN tipo_falt_sobr tfs ON tfs.id_tipo_falt_sobr=est.tipo_faltsobr ";
+				$cadenaSql .= "LEFT JOIN arka_inventarios.tipo_falt_sobr tfs ON tfs.id_tipo_falt_sobr=est.tipo_faltsobr ";
 				$cadenaSql .= "JOIN arka_parametros.arka_funcionarios  fn ON fn.\"FUN_IDENTIFICACION\"=sa.funcionario ";
 				
 
@@ -426,16 +426,16 @@ class Sql extends \Sql {
 			case "seleccion_funcionario_anterior" :
 				
 				$cadenaSql = "SELECT id_elemento_ind,identificacion ||'  -  '||nombre AS funcionario ,id_funcionario ";
-				$cadenaSql .= "FROM elemento_individual ";
-				$cadenaSql .= "JOIN salida ON salida.id_salida = elemento_individual.id_salida ";
-				$cadenaSql .= "JOIN funcionario  ON funcionario.id_funcionario = salida.funcionario ";
+				$cadenaSql .= "FROM arka_inventarios.elemento_individual ";
+				$cadenaSql .= "JOIN arka_inventarios.salida ON salida.id_salida = elemento_individual.id_salida ";
+				$cadenaSql .= "JOIN arka_inventarios.funcionario  ON funcionario.id_funcionario = salida.funcionario ";
 				$cadenaSql .= "WHERE  id_elemento_ind='" . $variable . "';";
 				
 				break;
 			
 			case "insertar_historico" :
 				
-				$cadenaSql = " INSERT INTO historial_elemento_individual( ";
+				$cadenaSql = " INSERT INTO arka_inventarios.historial_elemento_individual( ";
 				$cadenaSql .= "fecha_registro, elemento_individual, funcionario,descripcion_funcionario)  ";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
@@ -448,7 +448,7 @@ class Sql extends \Sql {
 			
 			case "actualizar_salida" :
 				
-				$cadenaSql = " UPDATE salida ";
+				$cadenaSql = " UPDATE arka_inventarios.salida ";
 				$cadenaSql .= "SET funcionario='" . $variable [1] . "',";
 				$cadenaSql .= " observaciones='" . $variable [2] . "' ";
 				$cadenaSql .= " WHERE id_salida=(SELECT id_salida FROM elemento_individual WHERE id_elemento_ind='" . $variable [0] . "' ) ;";
@@ -485,7 +485,7 @@ class Sql extends \Sql {
 			
 			case "buscar_serie" :
 				$cadenaSql = " SELECT DISTINCT serie, serie as series ";
-				$cadenaSql .= "FROM elemento_individual ";
+				$cadenaSql .= "FROM arka_inventarios.elemento_individual ";
 				$cadenaSql .= "WHERE  serie IS NOT NULL ";
 				$cadenaSql .= "ORDER BY serie DESC ";
 				
@@ -493,7 +493,7 @@ class Sql extends \Sql {
 			
 			case "buscar_placa" :
 				$cadenaSql = " SELECT DISTINCT placa, placa as placas ";
-				$cadenaSql .= "FROM elemento_individual ";
+				$cadenaSql .= "FROM arka_inventarios.elemento_individual ";
 				$cadenaSql .= "WHERE  placa IS NOT NULL  ";
 				$cadenaSql .= "ORDER BY placa DESC ";
 				

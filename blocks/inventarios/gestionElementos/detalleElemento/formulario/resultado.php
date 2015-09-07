@@ -139,6 +139,7 @@ class registrarForm {
         // ---------------- SECCION: Controles del Formulario -----------------------------------------------
 
         $variable = "pagina=" . $miPaginaActual;
+        $variable .= "&usuario=" . $_REQUEST['usuario']; 
         $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
 
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------

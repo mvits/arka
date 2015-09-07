@@ -25,6 +25,7 @@ class registrarForm {
     }
 
     function miForm() {
+        $this->miConfigurador->setVariableConfiguracion('cache', true);
 
 // Rescatar los datos de este bloque
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
@@ -41,7 +42,7 @@ class registrarForm {
         $atributosGlobales ['campoSeguro'] = 'true';
 
         $_REQUEST ['tiempo'] = time();
-
+ 
 // -------------------------------------------------------------------------------------------------
         $conexion = "inventarios";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
@@ -421,6 +422,7 @@ class registrarForm {
         $valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
         $valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
         $valorCodificado .= "&opcion=Consultar";
+        $valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
         /**
          * SARA permite que los nombres de los campos sean dinámicos.
          * Para ello utiliza la hora en que es creado el formulario para

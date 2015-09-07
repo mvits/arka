@@ -332,6 +332,15 @@ class Sql extends \Sql {
                 $cadenaSql .= " AND id_elemento_ind='" . $variable . "' ";
                 break;
 
+            case "consultar_levantamiento":
+                $cadenaSql = " SELECT fecha_registro, CASE WHEN creador_observacion=0 THEN 'Funcionario' ELSE 'Almacén' END autor, observacion ";
+                $cadenaSql.= ' FROM arka_movil.detalle_levantamiento ';
+                $cadenaSql.= ' WHERE 1=1';
+                //$cadenaSql.= ' AND creador_observacion=0 ';
+                $cadenaSql.= ' AND estado_registro=TRUE ';
+                $cadenaSql.= " AND id_elemento_individual='" . $variable . "' ";
+                break;
+
 
             case "consultar_nivel_inventario" :
                 $cadenaSql = "SELECT elemento_id, elemento_padre||''|| elemento_codigo||' - '||elemento_nombre ";
@@ -341,7 +350,7 @@ class Sql extends \Sql {
                 break;
 
             case "buscar_entradas":
-                $cadenaSql = " SELECT id_entrada valor,consecutivo descripcion  ";
+                $cadenaSql = " SELECT id_entrada valor,consecutivo||' - ('||vigencia||')' descripcion  ";
                 $cadenaSql.= " FROM entrada; ";
                 break;
 
@@ -410,8 +419,8 @@ class Sql extends \Sql {
                 $cadenaSql .= " WHERE estado_registro='TRUE' ";
                 $cadenaSql .= " AND id_elemento='" . $variable . "' ";
                 break;
-            
-              case "eliminar_fotos":
+
+            case "eliminar_fotos":
                 $cadenaSql = " DELETE ";
                 $cadenaSql .= " FROM arka_movil.asignar_imagen ";
                 $cadenaSql .= " WHERE num_registro='" . $variable . "' ";

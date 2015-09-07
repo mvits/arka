@@ -74,6 +74,7 @@ class registrarForm {
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 		
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=" . $_REQUEST['usuario'];  
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -215,10 +216,6 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		
-		
-		
 		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;

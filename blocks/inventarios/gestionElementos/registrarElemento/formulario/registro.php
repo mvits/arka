@@ -133,6 +133,7 @@ class registrarForm {
 			
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=".$_REQUEST['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -1127,6 +1128,7 @@ class registrarForm {
 			$valorCodificado .= "&opcion=registrar";
 			$valorCodificado .= "&entrada=" . $_REQUEST ['numero_entrada'];
 			$valorCodificado .= "&datosGenerales=" . $_REQUEST ['datosGenerales'];
+			$valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
 			
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.
@@ -1286,7 +1288,7 @@ class registrarForm {
 					
 					$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 					$variable = "pagina=indexAlmacen";
-					
+					$variable .= "&usuario=".$_REQUEST['usuario'];
 					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -1307,7 +1309,7 @@ class registrarForm {
 					$variable .= "&opcion=Salida";
 					$variable .= "&numero_entrada=" . $_REQUEST ['numero_entrada'];
 					$variable .= "&datosGenerales=" . $_REQUEST ['datosGenerales'];
-					
+					$variable .= "&usuario=".$_REQUEST['usuario'];
 					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 					
 					echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
@@ -1341,7 +1343,7 @@ class registrarForm {
 			$valorCodificado .= "&opcion=redireccionar";
 			$valorCodificado .= "&numero_entrada=" . $_REQUEST ['numero_entrada'];
 			$valorCodificado .= "&datosGenerales=" . $_REQUEST ['datosGenerales'];
-			
+			$valorCodificado .= "&usuario=".$_REQUEST['usuario'];  
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.
 			 * Para ello utiliza la hora en que es creado el formulario para

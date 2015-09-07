@@ -117,6 +117,7 @@ class registrarForm {
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 		
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -169,6 +170,7 @@ class registrarForm {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=cargarElemento";
 				$variable .= "&numero_entrada=" . $entrada [$i] [0];
+				$variable .= "&usuario=".$_REQUEST['usuario'];
 				
 				if ($entrada [$i] [3] == 0) {
 					

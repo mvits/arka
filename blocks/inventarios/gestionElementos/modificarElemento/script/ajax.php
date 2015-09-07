@@ -22,6 +22,7 @@ $cadenaACodificar .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar .= $cadenaACodificar . "&funcion=Consulta";
 $cadenaACodificar .= "&tiempo=" . $_REQUEST ['tiempo'];
+$cadenaACodificar .= "&usuario=".$_REQUEST['usuario'];
 
 if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
 	$fechaInicio = $_REQUEST ['fecha_inicio'];

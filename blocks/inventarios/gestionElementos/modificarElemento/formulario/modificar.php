@@ -127,8 +127,9 @@ class registrarForm {
 			$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			
+			 
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=" . $_REQUEST['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -908,6 +909,7 @@ class registrarForm {
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=modificar";
 			$valorCodificado .= "&id_elemento=" . $_REQUEST ['id_elemento'];
+			$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 			
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.
