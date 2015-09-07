@@ -20,12 +20,14 @@ switch ($opcion) {
 		$variable .= "&mensaje=CerroPeriodo";
 		$variable .= "&fecha_inicio=" . $_REQUEST ['fecha_inicio_cierre'];
 		$variable .= "&fecha_final=" . $_REQUEST ['fecha_fin_cierre'];
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		break;
 	
 	case "noCerroPeriodo" :
 		$variable = "pagina=periodoLevantamiento";
 		$variable .= "&opcion=mensaje";
 		$variable .= "&mensaje=noCerroPeriodo";
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		break;
 	
 	
@@ -37,12 +39,14 @@ switch ($opcion) {
 		$variable .= "&mensaje=actualizoPeriodo";
 		$variable .= "&fecha_inicio=" . $_REQUEST ['fecha_inicio_cierre'];
 		$variable .= "&fecha_final=" . $_REQUEST ['fecha_fin_cierre'];
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		break;
 	
 	case "noactualizoPeriodo" :
 		$variable = "pagina=periodoLevantamiento";
 		$variable .= "&opcion=mensaje";
 		$variable .= "&mensaje=noactualizoPeriodo";
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		break;
 		
 	case "registroPeriodo" :
@@ -51,12 +55,14 @@ switch ($opcion) {
 		$variable .= "&mensaje=registroPeriodo";
 		$variable .= "&fecha_inicio=" . $_REQUEST ['fecha_inicio_cierre'];
 		$variable .= "&fecha_final=" . $_REQUEST ['fecha_fin_cierre'];
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		break;
 	
 	case "noregistroPeriodo" :
 		$variable = "pagina=periodoLevantamiento";
 		$variable .= "&opcion=mensaje";
 		$variable .= "&mensaje=noregistroPeriodo";
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		break;
 	
 	case "actualizoDocumento" :

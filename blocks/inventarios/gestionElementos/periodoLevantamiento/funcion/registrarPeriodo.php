@@ -16,46 +16,39 @@ $resultado = '';
 
 $fechaActual = date ( 'Y-m-d' );
 
-
 $cadenaSql = $this->sql->cadena_sql ( "Limpiar_Elementos_Individuales" );
 
-$Limpieza_elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-
+$Limpieza_elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso', "", "Limpiar_Elementos_Individuales" );
 
 $cadenaSql = $this->sql->cadena_sql ( "Limpiar_Radicados" );
 
-$Limpieza_radicados = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-
-
-
-
+$Limpieza_radicados = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso', "", "Limpiar_Radicados" );
 
 $arreglo = array (
 		$_REQUEST ['fecha_inicio_cierre'],
 		$_REQUEST ['fecha_fin_cierre'],
-		date('Y'),
-		date('Y-m-d'),
+		date ( 'Y' ),
+		date ( 'Y-m-d' ) 
 );
-
 
 $cadenaSql = $this->sql->cadena_sql ( "Actualizar_Periodos_Anterioes" );
 
-$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-
-
+$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso', "", "Actualizar_Periodos_Anterioes" );
 
 $cadenaSql = $this->sql->cadena_sql ( "registroPeriodo", $arreglo );
 
-$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso', $arreglo, "registroPeriodo" );
 
 // Crear Variables necesarias en los métodos
 
-
-
 if ($resultado) {
-	$this->funcion->Redireccionador ( 'registroPeriodo', date('Y') );
-	exit();
+	$this->miConfigurador->setVariableConfiguracion ( "cache", true );
+	$this->funcion->Redireccionador ( 'registroPeriodo', array (
+			date ( 'Y' ),
+			$_REQUEST ['usuario'] 
+	) );
+	exit ();
 } else {
-	$this->funcion->Redireccionador ( 'noregistroPeriodo' );
-	exit();
+	$this->funcion->Redireccionador ( 'noregistroPeriodo', $_REQUEST ['usuario'] );
+	exit ();
 }

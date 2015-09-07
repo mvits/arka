@@ -159,6 +159,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=CierrePeriodo";
+		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 		if ($resultado) {
 			$valorCodificado .= "&id_levantamiento=" . $resultado [0] [0];
 		}
