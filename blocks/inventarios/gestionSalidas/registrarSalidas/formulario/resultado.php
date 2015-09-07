@@ -49,12 +49,8 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		
-
-
 		$conexion = "sicapital";
 		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		
 		
 		if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
 			$fechaInicio = $_REQUEST ['fecha_inicio'];
@@ -94,7 +90,6 @@ class registrarForm {
 				$proveedor 
 		);
 		
-		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntrada', $arreglo );
 		
 		$entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -121,17 +116,16 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 		
-
-
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			
+		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			
+		
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=" . $_REQUEST ['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			
+		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'botonRegresar';
 		$atributos ['id'] = $esteCampo;
@@ -143,9 +137,8 @@ class registrarForm {
 		$atributos ['alto'] = '10%';
 		$atributos ['redirLugar'] = true;
 		echo $this->miFormulario->enlace ( $atributos );
-			
-		unset ( $atributos );
 		
+		unset ( $atributos );
 		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
@@ -161,7 +154,6 @@ class registrarForm {
 			$atributos ['leyenda'] = "Información Referente a las Entradas";
 			echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 			{
-				
 				
 				if ($entrada) {
 					
@@ -182,38 +174,37 @@ class registrarForm {
 					for($i = 0; $i < count ( $entrada ); $i ++) {
 						$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 						$variable .= "&opcion=Salida";
-						// $variable .= "&usuario=" . $miSesion->getSesionUsuarioId ();
+						$variable .= "&usuario=" . $_REQUEST ['usuario'];
 						$variable .= "&numero_entrada=" . $entrada [$i] [0];
 						
-						if ($entrada [$i] [3] ==0) {
-								
+						if ($entrada [$i] [3] == 0) {
+							
 							$arreglo = array (
 									$entrada [$i] [4],
 									$entrada [$i] [1],
 									$entrada [$i] [2],
 									'',
-									''
+									'' 
 							);
-								
-								
-							$proveedor[0][0]='NO APLICA';
-							$proveedor[0][1]='NO APLICA';
+							
+							$proveedor [0] [0] = 'NO APLICA';
+							$proveedor [0] [1] = 'NO APLICA';
 						} else {
 							$cadenaSql = $this->miSql->getCadenaSql ( 'proveedor_informacion', $entrada [$i] [3] );
-								
+							
 							$proveedor = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-								
+							
 							$arreglo = array (
 									$entrada [$i] [4],
 									$entrada [$i] [1],
 									$entrada [$i] [2],
 									$proveedor [0] [0],
 									$proveedor [0] [1],
-									$entrada[$i]['vigencia']
+									$entrada [$i] ['vigencia'] 
 							);
 						}
-
-						$arreglo=serialize($arreglo);
+						
+						$arreglo = serialize ( $arreglo );
 						$variable .= "&datosGenerales=" . $arreglo;
 						
 						$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
