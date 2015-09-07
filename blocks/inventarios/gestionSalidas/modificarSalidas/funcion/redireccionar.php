@@ -20,6 +20,7 @@ class redireccion {
 				$variable .= "&salida=" . $valor ['salida'];
 				$variable .= "&entrada=" . $valor ['entrada'];
 				$variable .= "&salidaSA=" . $valor ['salidasAS'];
+				$variable .= "&usuario=" . $valor ['usuario'];
 				
 				break;
 			
@@ -27,6 +28,7 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=error";
+				$variable .= "&usuario=" . $valor;
 				
 				break;
 			
@@ -50,7 +52,7 @@ class redireccion {
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=noCantidad";
 				$variable .= "&errores=notextos";
-				
+				$variable .= "&usuario=" . $valor; 
 				break;
 			
 			case "regresar" :

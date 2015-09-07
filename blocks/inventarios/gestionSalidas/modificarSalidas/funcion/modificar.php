@@ -146,6 +146,7 @@ class RegistradorOrden {
 		}
 		
 		if ($semaforo) {
+                    $this->miConfigurador->setVariableConfiguracion("cache",true);
 			redireccion::redireccionar ( 'inserto', $arreglo );
 			exit ();
 		} else {

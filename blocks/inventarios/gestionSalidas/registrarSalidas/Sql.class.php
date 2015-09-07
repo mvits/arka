@@ -370,7 +370,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= "'" . $variable [1] . "',";
 				$cadenaSql .= "'" . $variable [2] . "',";
-				$cadenaSql .= "'" . $variable [3] . "',";
+				$cadenaSql .= "" . $variable [3] . ",";
 				$cadenaSql .= "'" . $variable [4] . "',";
 				$cadenaSql .= "'" . $variable [5] . "',";
 				$cadenaSql .= "'" . $variable [6] . "',";
@@ -407,13 +407,16 @@ class Sql extends \Sql {
 				break;
 			
 			case "busqueda_elementos_bienes" :
-				$cadenaSql = "SELECT ei.id_elemento_ind AS id, tb.descripcion, el.tipo_bien   ";
+				$cadenaSql = "SELECT count(*) conteo, el.tipo_bien   ";
 				$cadenaSql .= "FROM elemento_individual ei ";
 				$cadenaSql .= "JOIN  elemento el ON el.id_elemento=ei.id_elemento_gen  ";
 				$cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes = el.tipo_bien  ";
 				$cadenaSql .= "JOIN salida  sa ON sa.id_salida = ei.id_salida  ";
 				$cadenaSql .= "WHERE sa.id_salida ='" . $variable . "' ";
-				$cadenaSql .= "ORDER BY id ASC;";
+				$cadenaSql .= "GROUP BY el.tipo_bien  ";
+// 				$cadenaSql .= "ORDER BY id ASC;";
+				
+				
 				break;
 			
 			case "busqueda_elementos_individuales_cantidad_restante" :
