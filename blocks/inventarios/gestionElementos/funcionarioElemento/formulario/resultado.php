@@ -20,7 +20,6 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -75,6 +74,7 @@ class registrarForm {
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 		
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -101,7 +101,6 @@ class registrarForm {
 		$atributos ["estilo"] = " ";
 		echo $this->miFormulario->division ( "inicio", $atributos );
 		
-		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'encabezado';
 		$atributos ['id'] = $esteCampo;
@@ -114,10 +113,10 @@ class registrarForm {
 		// Aplica atributos globales al control
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->cuadroMensaje ( $atributos );
-		unset($atributos);
+		unset ( $atributos );
 		
 		echo $this->miFormulario->division ( "fin" );
-		unset($atributos);
+		unset ( $atributos );
 		
 		echo "<button id=\"abrir\">Ver Instrucciones</button>";
 		
@@ -436,6 +435,7 @@ class registrarForm {
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Accion";
 		$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
+		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 		if ($resultado_periodo) {
 			if ($resultado) {
 				

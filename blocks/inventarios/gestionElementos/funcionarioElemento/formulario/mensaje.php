@@ -74,6 +74,7 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=" . $_REQUEST ['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -118,49 +119,43 @@ class registrarForm {
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
 				
-				
-
 				if ($_REQUEST ['mensaje'] == 'NoAprobado') {
-						
+					
 					$mensaje = "Se han guardado los cambios en el Inventario";
-						
+					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['tipo'] = 'success';
 					$atributos ['estilo'] = 'textoCentrar';
 					$atributos ['mensaje'] = $mensaje;
-						
+					
 					$tab ++;
-						
+					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->cuadroMensaje ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
 				
-				
-				
 				if ($_REQUEST ['mensaje'] == 'noVerificado') {
-				
+					
 					$mensaje = "Error de Verificación Inventario.<br> Verifique los Datos";
-				
+					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['tipo'] = 'warning';
 					$atributos ['estilo'] = 'textoCentrar';
 					$atributos ['mensaje'] = $mensaje;
-				
+					
 					$tab ++;
-				
+					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->cuadroMensaje ( $atributos );
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
-				
-				
 				
 				if ($_REQUEST ['mensaje'] == 'mantenimiento') {
 					

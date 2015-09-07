@@ -24,6 +24,8 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+		
+		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -38,14 +40,14 @@ class RegistradorOrden {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'Elemento_Existencia_Aprobado', $valor );
 				
-				$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+				$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "Elemento_Existencia_Aprobado" );
 			}
 			
 			$mensaje = array (
 					'Aprobado',
 					$_REQUEST ['funcionario'] 
 			);
-		} elseif (isset ( $_REQUEST ['botonGuadar'] ) && $_REQUEST ['botonGuadar'] == 'Guardar') {
+		} elseif (isset ( $_REQUEST ['botonGuadar'] ) && $_REQUEST ['botonGuadar'] == 'Preaprobar') {
 			
 			$elemento = unserialize ( $_REQUEST ['id_elementos'] );
 			
@@ -53,7 +55,7 @@ class RegistradorOrden {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'Elemento_Existencia_Tipo_Confirmada', $valor );
 				
-				$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+				$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "Elemento_Existencia_Tipo_Confirmada" );
 			}
 			
 			if ($estado == true) {
@@ -62,7 +64,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'Elemento_Existencia_No_Aprovado', $valor );
 					
-					$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+					$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "Elemento_Existencia_No_Aprovado" );
 					
 					$mensaje = array (
 							'NoAprobado',
@@ -71,16 +73,20 @@ class RegistradorOrden {
 				}
 			}
 		}
-		
-		// var_dump($elementos);
-		
+		$array = array (
+				$_REQUEST ['usuario'] 
+		);
+		$mensaje = array_merge ( $mensaje, $array );
 		if ($estado == true) {
 			
 			redireccion::redireccionar ( 'Verificacion', $mensaje );
 			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noVerificado',$_REQUEST[funcionario] );
+			redireccion::redireccionar ( 'noVerificado', array (
+					$_REQUEST [funcionario],
+					$_REQUEST ['usuario'] 
+			) );
 			exit ();
 		}
 	}
