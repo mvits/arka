@@ -85,6 +85,7 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=".$_REQUEST['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -309,6 +310,7 @@ class registrarForm {
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=registrar";
 			$valorCodificado .= "&items=" . serialize ( $items );
+			$valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
 			// $valorCodificado .= "&funcionario=" . $funcionario ['responsable_ante'];
 			// $valorCodificado .= "&idfuncionario=" . $funcionario ['id_funcionario'];
 			
