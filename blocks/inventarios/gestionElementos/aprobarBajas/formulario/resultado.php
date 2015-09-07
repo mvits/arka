@@ -127,6 +127,7 @@ class registrarForm {
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		
 		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -213,8 +214,6 @@ class registrarForm {
                 <th>Dependencia</th>
                 <th>Ubicación</th>
                 <th>Descripcion</th>
-                <th>Identificación<br>Funcionario</th>
-		<th>Nombre<br>Funcionario</th>
 		<th>Grupo Bien</th>
 		<th>Aprobar Baja<br>Elemento</th>
                 </tr>
@@ -229,8 +228,6 @@ class registrarForm {
                     <td><center>" . $elemento [$i] ['dependencia'] . "</center></td>
                     <td><center>" . $elemento [$i] ['ubicacion'] . "</center></td>
                     <td><center>" . $elemento [$i] ['descripcion_elemento'] . "</center></td>
-                    <td><center>" . $elemento [$i] ['funcionario'] . "</center></td>
-                    <td><center>" . $elemento [$i] ['fun_nombre'] . "</center></td>
                     <td><center>" . $elemento [$i] ['grupo_bien'] . "</center></td>
                     <td><center>";
 				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -323,6 +320,7 @@ class registrarForm {
 			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=aprobarBaja";
+			$valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
 			
 			/*
 			 * supervisor
