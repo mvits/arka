@@ -22,7 +22,7 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-		  
+		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -65,8 +65,6 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		{
 			
-			
-			
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			
 			$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
@@ -99,7 +97,7 @@ class registrarForm {
 			
 			if (empty ( $items )) {
 				
-				\inventarios\gestionEntradas\consultaEntradas\funcion\redireccion::redireccionar ( 'noEntradas',$_REQUEST['usuario']);
+				\inventarios\gestionEntradas\consultaEntradas\funcion\redireccion::redireccionar ( 'noEntradas' );
 				exit;
 			}
 			
@@ -119,7 +117,7 @@ class registrarForm {
 			echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 			{
 				if ($elementos_info) {
-					echo $this->miFormulario->tablaReporte ( $elementos_info,true );
+					echo $this->miFormulario->tablaReporte ( $elementos_info ,false);
 				}
 			}
 			
@@ -257,7 +255,6 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=modificar";
-		$valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
 		$valorCodificado .= "&datos_entradas=" . base64_encode ( serialize ( $items ) );
 		
 		/**
