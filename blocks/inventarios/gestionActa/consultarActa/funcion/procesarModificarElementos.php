@@ -66,7 +66,7 @@ class RegistradorOrden {
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( 'ActualizarElementoImagen', $arreglo );
 							
-						$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso",$arreglo,'ActualizarElementoImagen');
+						$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 						
 					}else if($ExistenciaImagen==false){
 						
@@ -81,7 +81,7 @@ class RegistradorOrden {
 				
 						$cadenaSql = $this->miSql->getCadenaSql ( 'RegistrarElementoImagen', $arreglo );
 							
-						$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso",$arreglo,'RegistrarElementoImagen'); 
+						$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 						
 					}
 					
@@ -121,7 +121,7 @@ class RegistradorOrden {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elemento_tipo_1', $arreglo );
 			
-			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" ,$arreglo,'actualizar_elemento_tipo_1');
+			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		} else if ($_REQUEST ['id_tipo_bien'] == 2) {
 			
 			$arreglo = array (
@@ -142,7 +142,7 @@ class RegistradorOrden {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elemento_tipo_1', $arreglo );
 			
-			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso",$arreglo,'actualizar_elemento_tipo_1');
+			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		} else if ($_REQUEST ['id_tipo_bien'] == 3) {
 			
 			if ($_REQUEST ['tipo_poliza'] == 0) {
@@ -188,7 +188,7 @@ class RegistradorOrden {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elemento_tipo_2', $arreglo );
 			
-			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" ,$arreglo,'actualizar_elemento_tipo_2'); 
+			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		}
 // 		 echo $cadenaSql;exit;
 		
@@ -210,12 +210,12 @@ class RegistradorOrden {
 		
 		
 		if ($elemento) {
-			
-			redireccion::redireccionar ( 'ActualizoElemento',$_REQUEST['usuario'] );
+			$this->miConfigurador->setVariableConfiguracion("cache",true);
+			redireccion::redireccionar ( 'ActualizoElemento' );
 			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noActualizoElemento', $_REQUEST['usuario'] );
+			redireccion::redireccionar ( 'noActualizoElemento' );
 			exit ();
 		}
 	}

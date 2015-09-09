@@ -185,7 +185,7 @@ class RegistradorOrden {
 				}
 				
 				if ($elemento) {
-					
+					$this->miConfigurador->setVariableConfiguracion("cache",true);
 					redireccion::redireccionar ( 'inserto', $datos );
 					exit ();
 				} else {
@@ -485,7 +485,7 @@ class RegistradorOrden {
 							);
 							
 							if ($elemento_id && $_REQUEST ['numero_acta']) {
-								
+								$this->miConfigurador->setVariableConfiguracion("cache",true);
 								redireccion::redireccionar ( 'inserto_cargue_masivo', $datos );
 								exit ();
 							} else {

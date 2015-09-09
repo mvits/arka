@@ -27,19 +27,19 @@ class RegistradorOrden {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'eliminarElementoActa', $_REQUEST ['id_elemento_acta'] ); 
-		$eliminado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso",$_REQUEST ['id_elemento_acta'] ,'eliminarElementoActa' ); 
-		 if ($eliminado) {
-			
+		$cadenaSql = $this->miSql->getCadenaSql ( 'eliminarElementoActa', $_REQUEST ['id_elemento_acta'] );
+		$eliminado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+		
+		if ($eliminado) {
+			$this->miConfigurador->setVariableConfiguracion("cache",true);
 			redireccion::redireccionar ( 'eliminoElemento', array (
 					$_REQUEST ['id_elemento_acta'],
-					$_REQUEST ['numero_acta'],
-					$_REQUEST['usuario'] 
-			) ); 
-			 
+					$_REQUEST ['numero_acta'] 
+			) );
+			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noeliminoElemento' ,$_REQUEST['usuario']); 
+			redireccion::redireccionar ( 'noeliminoElemento' );
 			exit ();
 		}
 	}

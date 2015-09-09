@@ -18,14 +18,12 @@ class redireccion {
 				$variable .= "&mensaje=actualizo";
 				$variable .= "&numero_acta=" . $valor [0];
 				$variable .= "&arreglo=" . $valor [2];
-				$variable .= "&usuario=" . $valor [3]; 
 				break;
 			
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=noactualizo";
 				$variable .= "&mensaje=error";
-				$variable .= "&usuario=" . $valor; 
 				break;
 			
 			case "elimino" :
@@ -34,7 +32,6 @@ class redireccion {
 				$variable .= "&mensaje=elimino";
 				$variable .= "&numero_acta=" . $valor[0];
 				$variable .= "&arreglo=" . $valor[1];
-				$variable .= "&usuario=" . $valor[2]; 
 				break;
 			
 			case "noFormatoImagen" :
@@ -50,35 +47,33 @@ class redireccion {
 				$variable .= "&mensaje=eliminoElemento";
 				$variable .= "&id_elemento_acta=".$valor[0];
 				$variable .= "&numero_acta=".$valor[1];
-				$variable .= "&usuario=" . $valor[2];
 				break;
 			
 			case "noeliminoElemento" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=noeliminoElemento";
-				$variable .= "&usuario=" . $valor; 
+				
 				break;
 			
 			case "ActualizoElemento" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=ActualizoElemento";
-				$variable .= "&usuario=" . $valor; 
+				
 				break;
 			
 			case "noActualizoElemento" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
-				$variable .= "&mensaje=noActualizoElemento"; 
-				$variable .= "&usuario=" . $valor; 
- 				break;
+				$variable .= "&mensaje=noActualizoElemento";
+				
+				break;
 			
 			case "noElimino" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=noelimino";
 				$variable .= "&mensaje=errorEliminar";
-				$variable .= "&usuario=" . $_REQUEST['usuario']; 
 				break;
 			
 			case "noItems" :
