@@ -8,9 +8,9 @@
 $url = $this->miConfigurador->getVariableConfiguracion ( "host" );
 $url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
 
-$urlDirectorio=$url;
+$urlDirectorio = $url;
 
-$urlDirectorio =$urlDirectorio."/plugin/scripts/javascript/dataTable/Spanish.json";
+$urlDirectorio = $urlDirectorio . "/plugin/scripts/javascript/dataTable/Spanish.json";
 
 $url .= "/index.php?";
 
@@ -22,7 +22,7 @@ $cadenaACodificar .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar .= $cadenaACodificar . "&funcion=Consulta";
 $cadenaACodificar .= "&tiempo=" . $_REQUEST ['tiempo'];
-$cadenaACodificar .= "&usuario=".$_REQUEST['usuario'];
+$cadenaACodificar .= "&usuario=" . $_REQUEST ['usuario'];
 
 if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
 	$fechaInicio = $_REQUEST ['fecha_inicio'];
@@ -60,15 +60,11 @@ if (isset ( $_REQUEST ['dependencia'] ) && $_REQUEST ['dependencia'] != '') {
 	$dependencia = '';
 }
 
-
-
 if (isset ( $_REQUEST ['funcionario'] ) && $_REQUEST ['funcionario'] != '') {
 	$funcionario = $_REQUEST ['funcionario'];
 } else {
 	$funcionario = '';
 }
-
-
 
 if (isset ( $_REQUEST ['numero_entrada'] ) && $_REQUEST ['numero_entrada'] != '') {
 	$entrada = $_REQUEST ['numero_entrada'];
@@ -76,15 +72,11 @@ if (isset ( $_REQUEST ['numero_entrada'] ) && $_REQUEST ['numero_entrada'] != ''
 	$entrada = '';
 }
 
-
 if (isset ( $_REQUEST ['registro_salidas'] ) && $_REQUEST ['registro_salidas'] != '') {
 	$registroSalidas = $_REQUEST ['registro_salidas'];
 } else {
 	$registroSalidas = '';
 }
-
-
-
 
 $arreglo = array (
 		$fechaInicio,
@@ -100,19 +92,14 @@ $arreglo = array (
 
 $arreglo = serialize ( $arreglo );
 
-$cadenaACodificar .= "&arreglo=" .$arreglo;
-
+$cadenaACodificar .= "&arreglo=" . $arreglo;
 
 // Codificar las variables
 $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar, $enlace );
 
-
 // URL definitiva
 $urlFinal = $url . $cadena;
-
-
-
 
 // Variables
 $cadenaACodificar16 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -131,9 +118,6 @@ $cadena16 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 $urlFinal16 = $url . $cadena16;
 // echo $urlFinal;
 
-
-
-
 // Variables
 $cadenaACodificar2 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificar2 .= "&procesarAjax=true";
@@ -141,17 +125,14 @@ $cadenaACodificar2 .= "&action=index.php";
 $cadenaACodificar2 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar2 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar2 .= "&funcion=SeleccionTipoBien";
-$cadenaACodificar2 .="&tiempo=".$_REQUEST['tiempo'];
-
+$cadenaACodificar2 .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 // Codificar las variables
 $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-$cadena2= $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar2, $enlace );
+$cadena2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar2, $enlace );
 
 // URL definitiva
 $urlFinal2 = $url . $cadena2;
-
-
 
 ?>
 <script type='text/javascript'>
@@ -416,6 +397,11 @@ function consultarDependencia(elem, request, response){
 	    	      });
 	        
 
+
+
+
+
+	        
 	        $( "#<?php echo $this->campoSeguro('cantidad')?>" ).keyup(function() {
 	            
 	            $("#<?php echo $this->campoSeguro('valor')?>").val('');

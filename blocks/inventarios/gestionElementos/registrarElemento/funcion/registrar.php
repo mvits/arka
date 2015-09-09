@@ -104,7 +104,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 					
-					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"ingresar_elemento_tipo_1" );
 				} else if ($_REQUEST ['id_tipo_bien'] == 2) {
 					
 					$arreglo = array (
@@ -129,7 +129,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 					
-					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"ingresar_elemento_tipo_1" );
 				} else if ($_REQUEST ['id_tipo_bien'] == 3) {
 					
 					if ($_REQUEST ['tipo_poliza'] == 0) {
@@ -182,7 +182,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
 					
-					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"ingresar_elemento_tipo_2" );
 				}
 				
 				$placa = date ( 'Ymd' ) . "00000";
@@ -214,7 +214,7 @@ class RegistradorOrden {
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 						
-						$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+						$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arregloElementosInv,"ingresar_elemento_individual" );
 						
 						$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 					}
@@ -240,7 +240,7 @@ class RegistradorOrden {
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 						
-						$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+						$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arregloElementosInv,"ingresar_elemento_individual" );
 						
 						$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 					}
@@ -263,7 +263,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ElementoImagen', $arreglo );
 					
-					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo,"ElementoImagen" );
 				}
 				
 				$datos = array (
@@ -535,7 +535,7 @@ class RegistradorOrden {
 								
 								$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 								
-								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"ingresar_elemento_tipo_1" );
 							} else if ($datos [$i] ['Tipo_Bien'] == 2) {
 								$datos [$i] ['Cantidad'] = 1;
 								
@@ -581,7 +581,7 @@ class RegistradorOrden {
 								
 								$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 								
-								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"ingresar_elemento_tipo_1" );
 							} else if ($datos [$i] ['Tipo_Bien'] == 3) {
 								
 								$datos [$i] ['Cantidad'] = 1;
@@ -683,7 +683,7 @@ class RegistradorOrden {
 								
 								$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
 								
-								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"ingresar_elemento_tipo_2" );
 							}
 							
 							// $cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_masivo', $arreglo );
@@ -740,7 +740,7 @@ class RegistradorOrden {
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 									
-									$elemento_id [$j] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									$elemento_id [$j] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arregloElementosInv,"ingresar_elemento_individual");
 									
 									$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 								}
@@ -766,7 +766,7 @@ class RegistradorOrden {
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 									
-									$elemento_id [$j] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									$elemento_id [$j] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arregloElementosInv,"ingresar_elemento_individual"); 
 									
 									$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 								}
