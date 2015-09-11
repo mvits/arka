@@ -77,7 +77,6 @@
         
         $('#<?php echo $this->campoSeguro('fecha_inicio')?>').datepicker({
 		dateFormat: 'yy-mm-dd',
-		maxDate: 0,
 		changeYear: true,
 		changeMonth: true,
 		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
@@ -103,7 +102,7 @@
 		});
               $('#<?php echo $this->campoSeguro('fecha_final')?>').datepicker({
 		dateFormat: 'yy-mm-dd',
-		maxDate: 0,
+		
 		changeYear: true,
 		changeMonth: true,
 		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
@@ -244,6 +243,7 @@
             $("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
             $("#<?php echo $this->campoSeguro('total_iva')?>").val('');
             $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
+                        resetIva();
             
           });  
 	
@@ -251,7 +251,7 @@
         	$("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
             $("#<?php echo $this->campoSeguro('total_iva')?>").val('');
             $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
-            
+                        resetIva();  
             cantidad=Number($("#<?php echo $this->campoSeguro('cantidad')?>").val());
             valor=Number($("#<?php echo $this->campoSeguro('valor')?>").val());
             

@@ -52,6 +52,24 @@ if ($_REQUEST ['funcion'] == 'consultaProveedor') {
 
 
 
+if ($_REQUEST ['funcion'] == 'consultarIva') {
+
+
+
+
+	$cadenaSql = $this->sql->getCadenaSql ( 'consultar_tipo_iva' );
+
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	$resultado = json_encode ( $resultado );
+	
+	echo $resultado;
+}
+
+
+
+
+
 
 
 ?>
