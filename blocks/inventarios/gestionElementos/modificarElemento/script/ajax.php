@@ -134,8 +134,65 @@ $cadena2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $ca
 // URL definitiva
 $urlFinal2 = $url . $cadena2;
 
+
+// Variables
+$cadenaACodificariva = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificariva .= "&procesarAjax=true";
+$cadenaACodificariva .= "&action=index.php";
+$cadenaACodificariva .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificariva .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificariva .= "&funcion=consultarIva";
+$cadenaACodificariva .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadenaiva = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificariva, $enlace );
+
+// URL definitiva
+$urlFinaliva = $url . $cadenaiva;  
+
+
+
 ?>
 <script type='text/javascript'>
+
+
+
+function resetIva(elem, request, response){
+	$.ajax({
+		url: "<?php echo $urlFinaliva?>",
+		dataType: "json",
+		success: function(data){
+
+
+
+
+			if(data[0]!=" "){
+
+				$("#<?php echo $this->campoSeguro('iva')?>").html('');
+				$("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('iva')?>");
+				$.each(data , function(indice,valor){
+
+					$("<option value='"+data[ indice ].id_iva+"'>"+data[ indice ].descripcion+"</option>").appendTo("#<?php echo $this->campoSeguro('iva')?>");
+
+				});
+					 
+					 
+					$('#<?php echo $this->campoSeguro('iva')?>').width(150);
+					$("#<?php echo $this->campoSeguro('iva')?>").select2();
+					 
+	     
+					 
+			}
+
+
+		}
+
+	});
+}; 
+
+
+
 $(function() {
          	$('#tablaTitulos').ready(function() {
 
@@ -285,7 +342,7 @@ function consultarDependencia(elem, request, response){
           
 	        $('#<?php echo $this->campoSeguro('fecha_inicio')?>').datepicker({
 			dateFormat: 'yy-mm-dd',
-			maxDate: 0,
+			
 			changeYear: true,
 			changeMonth: true,
 			monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
@@ -311,7 +368,7 @@ function consultarDependencia(elem, request, response){
 			});
 	              $('#<?php echo $this->campoSeguro('fecha_final')?>').datepicker({
 			dateFormat: 'yy-mm-dd',
-			maxDate: 0,
+			
 			changeYear: true,
 			changeMonth: true,
 			monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
@@ -408,14 +465,14 @@ function consultarDependencia(elem, request, response){
 	            $("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
 	            $("#<?php echo $this->campoSeguro('total_iva')?>").val('');
 	            $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
-	            
+	            resetIva();
 	          });  
 		
 	        $( "#<?php echo $this->campoSeguro('valor')?>" ).keyup(function() {
 	        	$("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
 	            $("#<?php echo $this->campoSeguro('total_iva')?>").val('');
 	            $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
-	            
+	            resetIva(); 
 	            cantidad=Number($("#<?php echo $this->campoSeguro('cantidad')?>").val());
 	            valor=Number($("#<?php echo $this->campoSeguro('valor')?>").val());
 	            

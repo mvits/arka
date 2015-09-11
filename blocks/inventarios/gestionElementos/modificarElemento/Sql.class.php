@@ -264,7 +264,8 @@ class Sql extends \Sql {
 				$cadenaSql .= (($variable [8] == 1) ? ' JOIN ' : ' LEFT JOIN ');
 				$cadenaSql .= "salida sl ON sl.id_salida = elemento_individual.id_salida  ";
 				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
-				$cadenaSql .= "LEFT JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= elemento_individual.funcionario ";
+				$cadenaSql .= (($variable [8] == 1) ? ' JOIN ' : ' LEFT JOIN ');
+				$cadenaSql .= " arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= elemento_individual.funcionario ";
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
