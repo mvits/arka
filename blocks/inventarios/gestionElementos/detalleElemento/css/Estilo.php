@@ -10,14 +10,21 @@ $estilo[$indice++]="chosen.css";
 $estilo[$indice++]="select2.css";
 $estilo[$indice++]="jquery_switch.css";
 
-// Tablas
+// // Tablas
 $estilo[$indice++]="demo_page.css";
 $estilo[$indice++]="demo_table.css";
 $estilo[$indice++]="jquery.dataTables.css";
 $estilo[$indice++]="jquery.dataTables.min.css";
 $estilo[$indice++]="jquery.dataTables_themeroller.css";
 $estilo[$indice++]="documentoPlacas.css";
-$estilo[$indice++]="styles.css";
+$estilo[$indice++]="jquery.auto-complete.css";
+
+
+$estilo[$indice++]="fileinput.css";
+$estilo[$indice++]="fileinput.min.css";
+$estilo[$indice++]="main.css";
+$estilo[$indice++]="bootstrap.css";
+$estilo[$indice++]="bootstrap.min.css";
 
 $rutaBloque=$this->miConfigurador->getVariableConfiguracion("host");
 $rutaBloque.=$this->miConfigurador->getVariableConfiguracion("site");

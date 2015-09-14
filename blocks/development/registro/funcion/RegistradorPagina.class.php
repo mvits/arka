@@ -46,28 +46,16 @@ class RegistradorPagina {
             $this->miConfigurador->setVariableConfiguracion('mostrarMensaje','errorDatos');
             return $resultado;
         } else {
-        	
-        	echo "estoy aca";
-        	
                     $resultado=$this->getPagina();
-                    
-                    
                     if(!$resultado){
-                    	
-                    	
-                    	
-                        $resultado=$this->setPagina();    
-
-                        exit;
-                        
+                        $resultado=$this->setPagina();                        
                     }else {
                         $this->miConfigurador->setVariableConfiguracion('mostrarMensaje','errorNombre');
-                        $resultado=false;   
-                        exit;                     
+                        $resultado=false;                        
                     }
                     
-//                     return $resultado;
-            exit;
+                    return $resultado;
+            
         }
     
     }
@@ -84,33 +72,23 @@ class RegistradorPagina {
     function getPagina(){
         
         $cadenaSql = $this->miSql->getCadenaSql ( 'buscarPagina' );
-        
         return $this->conexion->ejecutarAcceso ( $cadenaSql, 'busqueda' );        
     }
     
     function setPagina(){
         $cadenaSql = $this->miSql->getCadenaSql ( "insertarPagina" );
-        
-        
-        
         $this->conexion->ejecutarAcceso ( $cadenaSql, 'insertar' );
         
-        $resultado="";
+        $resultado=$this->getPagina();
         
         if(is_array($resultado)){
             //Armar un mensaje codificado en json
             $mensaje=json_encode($resultado);
             
         }
-//         var_dump($re);exit;
-
         
         $this->miConfigurador->setVariableConfiguracion('mostrarMensaje',$mensaje);
         $this->miConfigurador->setVariableConfiguracion('tipoMensaje','json');
-        
-        
-        
-        
         /**
          * Después de realizar esto se borran todas las variables relacionadas con este
          * Formulario

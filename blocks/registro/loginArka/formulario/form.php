@@ -49,7 +49,7 @@ class Formulario {
         */
         $atributosGlobales ['campoSeguro'] = 'true';
         $_REQUEST['tiempo']=time();
-        var_dump($_REQUEST);exit;
+        //var_dump($_REQUEST);exit;
         
         // -------------------------------------------------------------------------------------------------
 

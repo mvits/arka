@@ -234,6 +234,30 @@ $urlFinalDependencia = $url . $cadenaDependencia;
 
 
 
+
+// Variables
+$cadenaACodificarProveedor = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificarProveedor .= "&procesarAjax=true";
+$cadenaACodificarProveedor .= "&action=index.php";
+$cadenaACodificarProveedor .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarProveedor .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarProveedor .= "&funcion=consultaProveedor";
+$cadenaACodificarProveedor .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarProveedor, $enlace );
+
+// URL definitiva
+$urlFinalProveedor = $url . $cadena;
+
+
+
+
+
+
 ?>
 <script type='text/javascript'>
 
@@ -242,7 +266,7 @@ function datosInfo(elem, request, response){
 	  $.ajax({
 	    url: "<?php echo $urlFinal18?>",
 	    dataType: "json",
-	    data: { proveedor:$("#<?php echo $this->campoSeguro('selec_proveedor')?>").val()},
+	    data: { proveedor:$("#<?php echo $this->campoSeguro('id_proveedor')?>").val()},
 	    success: function(data){ 
 
 	    		if(data[0]!='null'){
@@ -477,6 +501,7 @@ function valorLetras(elem, request, response){
 
 		    			$("#<?php echo $this->campoSeguro('nombreOrdenador')?>").val(data[0]);
 		    			$("#<?php echo $this->campoSeguro('id_ordenador')?>").val(data[1]);
+		    			$("#<?php echo $this->campoSeguro('tipo_ordenador')?>").val(data[2]);
 								    			
 			    		}else{
 
@@ -502,6 +527,41 @@ $(function() {
 
 
 
+	$( "#<?php echo $this->campoSeguro('selec_proveedor')?>" ).keyup(function() {
+
+    	
+    	$('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val($('#<?php echo $this->campoSeguro('selec_proveedor') ?>').val().toUpperCase());
+
+    	
+            });
+
+
+
+
+	
+
+	
+
+
+    $("#<?php echo $this->campoSeguro('selec_proveedor') ?>").autocomplete({
+    	minChars: 3,
+    	serviceUrl: '<?php echo $urlFinalProveedor; ?>',
+    	onSelect: function (suggestion) {
+        	
+    	        $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val(suggestion.data);
+
+    	    	datosInfo();
+    	        
+    	    }
+                
+    });
+
+
+
+
+
+      
+    
 
     $("#<?php echo $this->campoSeguro('vigencia_contratista')?>").change(function() {
     	
@@ -529,11 +589,25 @@ $(function() {
 
 
 
+
+    $("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").change(function() {
+    	
+		if($("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").val()!=''){
+
+			disponibilidades();	
+
+		}else{}
+
+
+ });
+
+
 $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 
 		if($("#<?php echo $this->campoSeguro('diponibilidad')?>").val()!=''){
 		
 			infodisponibilidades();	
+			registrosP();
 		
 		}else{}
 		
@@ -543,18 +617,7 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 
 
 
-			$("#<?php echo $this->campoSeguro('vigencia_registro')?>").change(function() {
-				
-				if($("#<?php echo $this->campoSeguro('vigencia_registro')?>").val()!=''){
-			
-					registrosP();	
-			
-				}else{}
-			
-			
-			});
-			
-			
+
 			
 			$("#<?php echo $this->campoSeguro('registro')?>").change(function() {
 			
@@ -610,18 +673,7 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 
 		      });
 
-	    $("#<?php echo $this->campoSeguro('selec_proveedor')?>").change(function(){
 
-	    	if($("#<?php echo $this->campoSeguro('selec_proveedor')?>").val()!=''){
-	    		datosInfo();
-			}else{
-				
-				}
-
-		      });
-	      
-
-	      
 
 
 	    $("#<?php echo $this->campoSeguro('sede_super')?>").change(function(){
@@ -688,7 +740,8 @@ function disponibilidades(elem, request, response){
 	  $.ajax({
 	    url: "<?php echo $urlFinal10?>",
 	    dataType: "json",
-	    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val()},
+	    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
+	    		unidad:$("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").val()},
 	    success: function(data){ 
 	        if(data[0]!=" "){
 
@@ -696,13 +749,17 @@ function disponibilidades(elem, request, response){
 	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('diponibilidad')?>");
 	            $.each(data , function(indice,valor){
 
-	            	$("<option value='"+data[ indice ].IDENTIFICADOR+"'>"+data[ indice ].NUMERO+"</option>").appendTo("#<?php echo $this->campoSeguro('diponibilidad')?>");
+	            	$("<option value='"+data[ indice ].identificador+"'>"+data[ indice ].numero+"</option>").appendTo("#<?php echo $this->campoSeguro('diponibilidad')?>");
 	            	
 	            });
 	            $("#<?php echo $this->campoSeguro('diponibilidad')?>").removeAttr('disabled');
 
+
+
+
+	            $('#<?php echo $this->campoSeguro('diponibilidad')?>').width(300);	
 	            $("#<?php echo $this->campoSeguro('diponibilidad')?>").select2({
-	          		 placeholder: "Search for a repository",
+	          		 placeholder: "Ingrese Mínimo 1 Caracter",
 	           		 minimumInputLength: 1	,
 	               });
 	            
@@ -723,7 +780,8 @@ function disponibilidades(elem, request, response){
 		    url: "<?php echo $urlFinal12?>",
 		    dataType: "json",
 		    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
-			    disponibilidad:$("#<?php echo $this->campoSeguro('diponibilidad')?>").val()},
+			    disponibilidad:$("#<?php echo $this->campoSeguro('diponibilidad')?>").val(),
+			    unidad:$("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").val() },
 		    success: function(data){ 
 			    
 		        if(data[0]!="null"){
@@ -744,12 +802,46 @@ function disponibilidades(elem, request, response){
 		};
 
 
+
+
+		function registrosPresupuestales(elem, request, response){
+			  $.ajax({
+			    url: "<?php echo $urlFinal12?>",
+			    dataType: "json",
+			    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
+				    disponibilidad:$("#<?php echo $this->campoSeguro('diponibilidad')?>").val()},
+			    success: function(data){ 
+				    
+			        if(data[0]!="null"){
+			        	$("#<?php echo $this->campoSeguro('fecha_diponibilidad')?>").val(data[0]);
+				    	$("#<?php echo $this->campoSeguro('valor_disponibilidad')?>").val(data[1]);
+					
+				    	valorLetrasDis();
+		
+			            
+				        }
+
+			        
+
+
+				     }
+				                    
+			   });
+			};
+
+
+
+		
+
+
 		function registrosP(elem, request, response){
 			
 			  $.ajax({
 			    url: "<?php echo $urlFinal13?>",
 			    dataType: "json",
-			    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_registro')?>").val()},
+			    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
+				    disponibilidad:$("#<?php echo $this->campoSeguro('diponibilidad')?>").val(),
+				    unidad:$("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").val()},
 			    success: function(data){ 
 			        if(data[0]!=" "){
 
@@ -757,16 +849,13 @@ function disponibilidades(elem, request, response){
 			            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('registro')?>");
 			            $.each(data , function(indice,valor){
 
-			            	$("<option value='"+data[ indice ].IDENTIFICADOR+"'>"+data[ indice ].NUMERO+"</option>").appendTo("#<?php echo $this->campoSeguro('registro')?>");
+			            	$("<option value='"+data[ indice ].identificador+"'>"+data[ indice ].numero+"</option>").appendTo("#<?php echo $this->campoSeguro('registro')?>");
 			            	
 			            });
 			            
 			            $("#<?php echo $this->campoSeguro('registro')?>").removeAttr('disabled');
 			            
-			            $("#<?php echo $this->campoSeguro('registro')?>").select2({
-			          		 placeholder: "Search for a repository",
-			           		 minimumInputLength: 1	,
-			               });
+			            $("#<?php echo $this->campoSeguro('registro')?>").select2();
 			          
 			            
 				        }
@@ -784,8 +873,8 @@ function disponibilidades(elem, request, response){
 				  $.ajax({
 				    url: "<?php echo $urlFinal14?>",
 				    dataType: "json",
-				    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_registro')?>").val(),
-					    disponibilidad:$("#<?php echo $this->campoSeguro('registro')?>").val()},
+				    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
+					    		registro:$("#<?php echo $this->campoSeguro('registro')?>").val()},
 				    success: function(data){ 
 					    
 				        if(data[0]!="null"){

@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace inventarios\gestionElementos\detalleElemento;
 
@@ -8,6 +8,7 @@ if (! isset ( $GLOBALS ["autorizado"] )) {
 }
 
 include_once ("core/manager/Configurador.class.php");
+
 class Frontera {
 	var $ruta;
 	var $sql;
@@ -27,17 +28,18 @@ class Frontera {
 	public function setFormulario($formulario) {
 		$this->formulario = $formulario;
 	}
-	function frontera() {
-		$this->html ();
+	public function frontera() {
+		$this->html();
 	}
-	function setSql($a) {
+	public function setSql($a) {
 		$this->sql = $a;
 	}
-	function setFuncion($funcion) {
+	public function setFuncion($funcion) {
 		$this->funcion = $funcion;
 	}
-	function html() {
-		include_once ("core/builder/FormularioHtml.class.php");
+	public function html() {
+            
+      	include_once ("core/builder/FormularioHtml.class.php");
 		
 		$this->ruta = $this->miConfigurador->getVariableConfiguracion ( "rutaBloque" );
 		
@@ -55,8 +57,8 @@ class Frontera {
 					include_once ($this->ruta . "/formulario/resultado.php");
 					break;
 				
-				case "modificar" :
-					include_once ($this->ruta . "/formulario/modificar.php");
+				case "detalle" :
+					include_once ($this->ruta . "/formulario/detalle.php");
 					break;
 				
 				case "anular" :

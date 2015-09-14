@@ -1,4 +1,5 @@
 <?php
+
 use inventarios\gestionElementos\modificarElemento\Sql;
 
 $conexion = "inventarios";
@@ -21,26 +22,26 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
 	$cadenaSql = $this->sql->getCadenaSql ( 'consultarElemento', $arreglo );
 	
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
-
-	
+	 	
 	for($i = 0; $i < count ( $resultado ); $i ++) {
 		$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 		$variable .= "&id_elemento=" . $resultado [$i] ['idelemento'];
 		$variable .= "&opcion=modificar";
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		$variable2 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 		$variable2 .= "&id_elemento=" . $resultado [$i] ['idelemento'];
 		$variable2 .= "&opcion=anular";
+		$variable2 .= "&usuario=".$_REQUEST['usuario'];
 		$variable2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable2, $directorio );
 		
 
 		
 		if ($resultado [$i] ['cierrecontable'] == 'f') {
 			
-			$cierreContable = "<center><a href='" . $variable . "'><u>modificar</u></a></center> ";
-			$anulacion = ($resultado [$i] ['estadoentrada'] == 2) ? "<center><a href='" . $variable2 . "'><u>anular</u></a></center>" : " ";
+			$cierreContable = ( $resultado [$i] ['identificador_salida'] ==null )? "<center><a href='" . $variable . "'><u>modificar</u></a></center> ": '';
+			$anulacion = ($resultado [$i] ['estadoentrada'] == 1 && $resultado [$i] ['identificador_salida'] ==null  ) ? "<center><a href='" . $variable2 . "'><u>anular</u></a></center>" : " ";
 		}
 		if ($resultado [$i] ['cierrecontable'] == 't') {
 			
@@ -101,7 +102,22 @@ if ($_REQUEST ['funcion'] == 'SeleccionTipoBien') {
 	echo json_encode($resultadoItems);
 }
 
+if ($_REQUEST ['funcion'] == 'consultarIva') {
 
+
+
+
+	$cadenaSql = $this->sql->getCadenaSql ( 'consultar_tipo_iva' );
+
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+	$resultado = json_encode ( $resultado );
+
+	echo $resultado;
+}
+
+
+ 
 
 
 ?>

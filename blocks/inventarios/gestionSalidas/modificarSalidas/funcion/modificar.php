@@ -24,6 +24,7 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -37,6 +38,10 @@ class RegistradorOrden {
 			}
 		}
 		
+		
+		
+
+		
 		$arreglo = array (
 				
 				$_REQUEST ['dependencia'],
@@ -49,7 +54,7 @@ class RegistradorOrden {
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_salida', $arreglo );
-		$id_salida = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+		$id_salida = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso",$arreglo,"actualizar_salida"); 
 		if ($id_salida == true) {
 			
 			$semaforo = true;
@@ -59,10 +64,54 @@ class RegistradorOrden {
 		}
 		
 		if ($_REQUEST ['actualizar'] == '1') {
+						
+
+		
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consulta_elementos', array($_REQUEST['numero_entrada'],$_REQUEST['numero_salida']) );
+			
+			$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			$conteo=count($elementos);
+			$conteodescarga=count($items);
+
+
+			if($conteo==$conteodescarga){
+				redireccion::redireccionar ( "noActualizarElementos" );
+				exit ();
+
+				
+			}
+			
+			foreach ($items as $valor){
+				
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'LimpiarElementosIndividuales',$valor );
+				
+				$elementos_inds = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso",$valor,"LimpiarElementosIndividuales");
+			
+
+				if ($elementos_inds==false){
+					$semaforo = false;
+						}else{
+					$semaforo = true;
+					}
+				
+			}
+			
+			
+			
+			$arreglo = array (
+					"salida" => $_REQUEST ['numero_salida'],
+					"entrada" => $_REQUEST ['numero_entrada'],
+					"salidasAS" => 0
+			);
+			
+			
+			
 			
 			// -- Verificar -- Items -- Cantidades
 			
-			for($i = 0; $i <= $_REQUEST ['cantidadItems']; $i ++) {
+		/*	for($i = 0; $i <= $_REQUEST ['cantidadItems']; $i ++) {
 				
 				if (isset ( $_REQUEST ['item' . $i] )) {
 					
@@ -100,7 +149,7 @@ class RegistradorOrden {
 			foreach ( $elementos_inds as $claves ) {
 				$cadenaSql = $this->miSql->getCadenaSql ( 'limpiarIndividuales', $claves [0] );
 				
-				$elementos_ind = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				$elementos_ind = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda");
 			}
 			//
 			
@@ -114,7 +163,7 @@ class RegistradorOrden {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'ajustar_elementos_salida', $arreglo );
 				
-				$ele_sali = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+				$ele_sali = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" ,$arreglo,"ajustar_elementos_salida"); 
 				
 			}
 			
@@ -131,7 +180,7 @@ class RegistradorOrden {
 					"entrada" => $_REQUEST ['numero_entrada'],
 					"salidasAS" => 0 
 			);
-			
+		*/	
 			
 			
 		} else if ($_REQUEST ['actualizar'] == '0') {
@@ -146,6 +195,7 @@ class RegistradorOrden {
 		}
 		
 		if ($semaforo) {
+                    $this->miConfigurador->setVariableConfiguracion("cache",true);
 			redireccion::redireccionar ( 'inserto', $arreglo );
 			exit ();
 		} else {

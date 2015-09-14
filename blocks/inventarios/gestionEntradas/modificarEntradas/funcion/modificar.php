@@ -58,9 +58,9 @@ class RegistradorOrden {
 			
 			case '3' :
 				
-// 				// $observacion = $_REQUEST ['observaciones_sobrante'];
-// 				$entrada = $_REQUEST ['id_entradaS'];
-// 				$salida = $_REQUEST ['id_salidaS'];
+				// // $observacion = $_REQUEST ['observaciones_sobrante'];
+				// $entrada = $_REQUEST ['id_entradaS'];
+				// $salida = $_REQUEST ['id_salidaS'];
 				
 				foreach ( $_FILES as $key => $values ) {
 					
@@ -69,6 +69,7 @@ class RegistradorOrden {
 				}
 				
 				$archivo = $archivo [1];
+				$_REQUEST ['id_proveedor']='';
 				
 				break;
 			
@@ -155,7 +156,7 @@ class RegistradorOrden {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarInformacionArchivo', $arreglo_clase );
 				
-				$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo_clase, "actualizarInformacionArchivo" );
 			} else {
 				
 				$arreglo_clase = array (
@@ -170,7 +171,7 @@ class RegistradorOrden {
 				);
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'insertarInformación', $arreglo_clase );
-				$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo_clase, "insertarInformación" );
 				$_REQUEST ['clase_info'] = $info_clase [0] [0];
 			}
 		} else {
@@ -189,10 +190,7 @@ class RegistradorOrden {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarInformacion', $arreglo_clase );
 				
-				$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
-				
-				
+				$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo_clase, "actualizarInformacion" );
 			} else {
 				
 				$arreglo_clase = array (
@@ -207,50 +205,48 @@ class RegistradorOrden {
 				);
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'insertarInformación', $arreglo_clase );
-				$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo_clase, "insertarInformación" );
 				$_REQUEST ['clase_info'] = $info_clase [0] [0];
 			}
 		}
-		
-		
-		
-		
 		
 		$arregloDatos = array (
 				$_REQUEST ['vigencia'],
 				$_REQUEST ['clase'],
 				($_REQUEST ['tipo_contrato'] != '') ? $_REQUEST ['tipo_contrato'] : 0,
 				($_REQUEST ['numero_contrato'] != '') ? $_REQUEST ['numero_contrato'] : 0,
-				($_REQUEST ['fecha_contrato'] != '') ? $_REQUEST ['fecha_contrato'] : '0001-01-01',
-				($_REQUEST ['id_proveedor'] != '') ? $_REQUEST ['id_proveedor'] : 0,
-				($_REQUEST ['numero_factura'] != '') ? $_REQUEST ['numero_factura'] : 0,
-				($_REQUEST ['fecha_factura'] != '') ? $_REQUEST ['fecha_factura'] : '0001-01-01',
+				($_REQUEST ['fecha_contrato'] != '') ? "'".$_REQUEST ['fecha_contrato']."'" : "NULL",
+				($_REQUEST ['id_proveedor'] != '') ? "'".$_REQUEST ['id_proveedor']."'" : "NULL",
+				($_REQUEST ['numero_factura'] != '') ?"'". $_REQUEST ['numero_factura']."'" :"NULL" ,
+				($_REQUEST ['fecha_factura'] != '') ? "'".$_REQUEST ['fecha_factura']."'" : "NULL",
 				$_REQUEST ['observaciones_entrada'],
 				$_REQUEST ['numero_entrada'],
 				"Estado_entrada" => '1',
 				(isset ( $_REQUEST ['acta_recibido'] ) && $_REQUEST ['acta_recibido'] != '') ? $_REQUEST ['acta_recibido'] : 0,
-				($_REQUEST ['id_ordenador']=='')?'NULL':$_REQUEST ['id_ordenador'],
+				($_REQUEST ['id_ordenador'] == '') ? 'NULL' : $_REQUEST ['id_ordenador'],
 				$_REQUEST ['sede'],
 				$_REQUEST ['dependencia'],
 				$_REQUEST ['supervisor'],
-				($_REQUEST ['tipo_ordenador']=='')?'NULL':$_REQUEST ['tipo_ordenador'],
-				($_REQUEST ['identificacion_ordenador']=='')?'NULL':$_REQUEST ['identificacion_ordenador'],
-				$_REQUEST ['clase_info']
+				($_REQUEST ['tipo_ordenador'] == '') ? 'NULL' : $_REQUEST ['tipo_ordenador'],
+				($_REQUEST ['identificacion_ordenador'] == '') ? 'NULL' : $_REQUEST ['identificacion_ordenador'],
+				$_REQUEST ['clase_info'] 
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarEntrada', $arregloDatos );
 		
-		$id_entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		
+		$id_entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arregloDatos, "actualizarEntrada" );
+		 
 		if ($id_entrada) {
 			
-			redireccion::redireccionar ( 'inserto', $id_entrada [0] [0] );
-			exit();
+			redireccion::redireccionar ( 'inserto', array (
+					$id_entrada [0] [0],
+					$_REQUEST ['usuario'] 
+			) );
+			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noInserto' );
-			exit();
+			redireccion::redireccionar ( 'noInserto', $_REQUEST ['usuario'] );
+			exit ();
 		}
 	}
 	function resetForm() {

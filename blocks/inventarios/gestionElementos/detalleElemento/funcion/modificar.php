@@ -1,8 +1,8 @@
 <?php
 
-namespace inventarios\gestionElementos\modificarElemento\funcion;
+namespace inventarios\gestionElementos\detalleElemento\funcion;
 
-use inventarios\gestionElementos\modificarElemento\funcion\redireccion;
+use inventarios\gestionElementos\detalleElemento\funcion\redireccion;
 
 include_once ('redireccionar.php');
 if (! isset ( $GLOBALS ["autorizado"] )) {

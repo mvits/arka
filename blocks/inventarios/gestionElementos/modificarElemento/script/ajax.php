@@ -8,9 +8,9 @@
 $url = $this->miConfigurador->getVariableConfiguracion ( "host" );
 $url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
 
-$urlDirectorio=$url;
+$urlDirectorio = $url;
 
-$urlDirectorio =$urlDirectorio."/plugin/scripts/javascript/dataTable/Spanish.json";
+$urlDirectorio = $urlDirectorio . "/plugin/scripts/javascript/dataTable/Spanish.json";
 
 $url .= "/index.php?";
 
@@ -22,6 +22,7 @@ $cadenaACodificar .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar .= $cadenaACodificar . "&funcion=Consulta";
 $cadenaACodificar .= "&tiempo=" . $_REQUEST ['tiempo'];
+$cadenaACodificar .= "&usuario=" . $_REQUEST ['usuario'];
 
 if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
 	$fechaInicio = $_REQUEST ['fecha_inicio'];
@@ -59,15 +60,11 @@ if (isset ( $_REQUEST ['dependencia'] ) && $_REQUEST ['dependencia'] != '') {
 	$dependencia = '';
 }
 
-
-
 if (isset ( $_REQUEST ['funcionario'] ) && $_REQUEST ['funcionario'] != '') {
 	$funcionario = $_REQUEST ['funcionario'];
 } else {
 	$funcionario = '';
 }
-
-
 
 if (isset ( $_REQUEST ['numero_entrada'] ) && $_REQUEST ['numero_entrada'] != '') {
 	$entrada = $_REQUEST ['numero_entrada'];
@@ -75,15 +72,11 @@ if (isset ( $_REQUEST ['numero_entrada'] ) && $_REQUEST ['numero_entrada'] != ''
 	$entrada = '';
 }
 
-
 if (isset ( $_REQUEST ['registro_salidas'] ) && $_REQUEST ['registro_salidas'] != '') {
 	$registroSalidas = $_REQUEST ['registro_salidas'];
 } else {
 	$registroSalidas = '';
 }
-
-
-
 
 $arreglo = array (
 		$fechaInicio,
@@ -99,19 +92,14 @@ $arreglo = array (
 
 $arreglo = serialize ( $arreglo );
 
-$cadenaACodificar .= "&arreglo=" .$arreglo;
-
+$cadenaACodificar .= "&arreglo=" . $arreglo;
 
 // Codificar las variables
 $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar, $enlace );
 
-
 // URL definitiva
 $urlFinal = $url . $cadena;
-
-
-
 
 // Variables
 $cadenaACodificar16 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -130,9 +118,6 @@ $cadena16 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 $urlFinal16 = $url . $cadena16;
 // echo $urlFinal;
 
-
-
-
 // Variables
 $cadenaACodificar2 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificar2 .= "&procesarAjax=true";
@@ -140,20 +125,74 @@ $cadenaACodificar2 .= "&action=index.php";
 $cadenaACodificar2 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar2 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar2 .= "&funcion=SeleccionTipoBien";
-$cadenaACodificar2 .="&tiempo=".$_REQUEST['tiempo'];
-
+$cadenaACodificar2 .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 // Codificar las variables
 $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-$cadena2= $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar2, $enlace );
+$cadena2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar2, $enlace );
 
 // URL definitiva
 $urlFinal2 = $url . $cadena2;
 
 
+// Variables
+$cadenaACodificariva = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificariva .= "&procesarAjax=true";
+$cadenaACodificariva .= "&action=index.php";
+$cadenaACodificariva .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificariva .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificariva .= "&funcion=consultarIva";
+$cadenaACodificariva .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadenaiva = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificariva, $enlace );
+
+// URL definitiva
+$urlFinaliva = $url . $cadenaiva;  
+
+
 
 ?>
 <script type='text/javascript'>
+
+
+
+function resetIva(elem, request, response){
+	$.ajax({
+		url: "<?php echo $urlFinaliva?>",
+		dataType: "json",
+		success: function(data){
+
+
+
+
+			if(data[0]!=" "){
+
+				$("#<?php echo $this->campoSeguro('iva')?>").html('');
+				$("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('iva')?>");
+				$.each(data , function(indice,valor){
+
+					$("<option value='"+data[ indice ].id_iva+"'>"+data[ indice ].descripcion+"</option>").appendTo("#<?php echo $this->campoSeguro('iva')?>");
+
+				});
+					 
+					 
+					$('#<?php echo $this->campoSeguro('iva')?>').width(150);
+					$("#<?php echo $this->campoSeguro('iva')?>").select2();
+					 
+	     
+					 
+			}
+
+
+		}
+
+	});
+}; 
+
+
+
 $(function() {
          	$('#tablaTitulos').ready(function() {
 
@@ -299,6 +338,101 @@ function consultarDependencia(elem, request, response){
 	};
 
 	  $(function () {
+
+          
+	        $('#<?php echo $this->campoSeguro('fecha_inicio')?>').datepicker({
+			dateFormat: 'yy-mm-dd',
+			
+			changeYear: true,
+			changeMonth: true,
+			monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+			    'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+			    monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+			    dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+			    dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+			    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+			    onSelect: function(dateText, inst) {
+				var lockDate = new Date($('#<?php echo $this->campoSeguro('fecha_inicio')?>').datepicker('getDate'));
+				$('input#<?php echo $this->campoSeguro('fecha_final')?>').datepicker('option', 'minDate', lockDate);
+				},
+				onClose: function() { 
+			 	    if ($('input#<?php echo $this->campoSeguro('fecha_inicio')?>').val()!='')
+	                    {
+	                        $('#<?php echo $this->campoSeguro('fecha_final')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all   validate[required]");
+	                }else {
+	                        $('#<?php echo $this->campoSeguro('fecha_final')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all ");
+	                    }
+				  }
+				
+				
+			});
+	              $('#<?php echo $this->campoSeguro('fecha_final')?>').datepicker({
+			dateFormat: 'yy-mm-dd',
+			
+			changeYear: true,
+			changeMonth: true,
+			monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+			    'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+			    monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+			    dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+			    dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+			    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+			    onSelect: function(dateText, inst) {
+				var lockDate = new Date($('#<?php echo $this->campoSeguro('fecha_final')?>').datepicker('getDate'));
+				$('input#<?php echo $this->campoSeguro('fecha_inicio')?>').datepicker('option', 'maxDate', lockDate);
+				 },
+				 onClose: function() { 
+			 	    if ($('input#<?php echo $this->campoSeguro('fecha_final')?>').val()!='')
+	                    {
+	                        $('#<?php echo $this->campoSeguro('fecha_inicio')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all   validate[required]");
+	                }else {
+	                        $('#<?php echo $this->campoSeguro('fecha_inicio')?>').attr("class", "cuadroTexto ui-widget ui-widget-content ui-corner-all ");
+	                    }
+				  }
+				
+		   });
+		   
+
+
+		  
+
+		  $( "#<?php echo $this->campoSeguro('tipo_poliza')?>" ).change(function() {
+		        
+	            switch($("#<?php echo $this->campoSeguro('tipo_poliza')?>").val())
+	            {
+	                           
+	                case '0':
+	                    
+	                   
+	                    $("#<?php echo $this->campoSeguro('fechas_polizas')?>").css('display','none');
+	                   
+
+	                   
+
+	                break;
+	                
+	                
+	                case '1':
+	                    
+	                  $("#<?php echo $this->campoSeguro('fechas_polizas')?>").css('display','block');
+	       
+	                break;
+	                
+
+	                default:
+	                
+	                $("#<?php echo $this->campoSeguro('fechas_polizas')?>").css('display','none');
+	                   
+	                   break;
+	                
+	                
+	             }
+	          });  
+	  
+
+
+
+		  
 		    $("#<?php echo $this->campoSeguro('nivel')?>").change(function() {
 		    	
 				if($("#<?php echo $this->campoSeguro('nivel')?>").val()!=''){
@@ -320,20 +454,25 @@ function consultarDependencia(elem, request, response){
 	    	      });
 	        
 
+
+
+
+
+	        
 	        $( "#<?php echo $this->campoSeguro('cantidad')?>" ).keyup(function() {
 	            
 	            $("#<?php echo $this->campoSeguro('valor')?>").val('');
 	            $("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
 	            $("#<?php echo $this->campoSeguro('total_iva')?>").val('');
 	            $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
-	            
+	            resetIva();
 	          });  
 		
 	        $( "#<?php echo $this->campoSeguro('valor')?>" ).keyup(function() {
 	        	$("#<?php echo $this->campoSeguro('subtotal_sin_iva')?>").val('');
 	            $("#<?php echo $this->campoSeguro('total_iva')?>").val('');
 	            $("#<?php echo $this->campoSeguro('total_iva_con')?>").val('');
-	            
+	            resetIva(); 
 	            cantidad=Number($("#<?php echo $this->campoSeguro('cantidad')?>").val());
 	            valor=Number($("#<?php echo $this->campoSeguro('valor')?>").val());
 	            

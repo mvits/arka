@@ -2,10 +2,10 @@
 $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaje.php";
 
 
-$this->idioma ["tabCargarCrear"] = "Registrar Radicaciones de Inesixtencia de Elementos";
+$this->idioma ["tabCargarCrear"] = "Registrar Radicaciones de Movimientos";
 
 
-$this->idioma ["tabConsultar"] = "Consultar Radicaciones de Inesixtencia de Elementos";
+$this->idioma ["tabConsultar"] = "Consultar Radicaciones de Movimientos";
 
 
 
@@ -28,13 +28,13 @@ $this->idioma ["placaConsultaTitulo"] = "Seleccione Placa a Relacionar";
 
 
 
-$this->idioma ["tipoConsulta"] = "Tipo Inexistencia : ";
-$this->idioma ["tipoConsultaTitulo"] = "Seleccione Tipo Inexistencia";
+$this->idioma ["tipoConsulta"] = "Tipo Movimiento : ";
+$this->idioma ["tipoConsultaTitulo"] = "Seleccione Tipo Movimiento";
 
 
 
-$this->idioma ["tipo"] = "Tipo Inexistencia : ";
-$this->idioma ["tipoTitulo"] = "Seleccione Tipo Inexistencia";
+$this->idioma ["tipo"] = "Tipo Movimiento: ";
+$this->idioma ["tipoTitulo"] = "Seleccione Tipo Movimiento";
 
 
 $this->idioma ["documento"] = "Documento a Radicar:";

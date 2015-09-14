@@ -31,7 +31,6 @@ class Sql extends \Sql {
 			/**
 			 * Clausulas específicas
 			 */
-			
 			case "buscarUsuario" :
 				$cadenaSql = "SELECT ";
 				$cadenaSql .= "FECHA_CREACION, ";
@@ -85,7 +84,6 @@ class Sql extends \Sql {
 			 * se espera que estén en todos los formularios
 			 * que utilicen esta plantilla
 			 */
-			
 			case "iniciarTransaccion" :
 				$cadenaSql = "START TRANSACTION";
 				break;
@@ -148,6 +146,45 @@ class Sql extends \Sql {
 			/**
 			 * Clausulas Del Caso Uso.
 			 */
+			
+			case "buscar_placa_maxima" :
+				$cadenaSql = " SELECT  MAX(placa::FLOAT) placa_max ";
+				$cadenaSql .= " FROM elemento_individual ";
+				break;
+			
+			case "buscar_repetida_placa" :
+				$cadenaSql = " SELECT  count (placa) ";
+				$cadenaSql .= " FROM elemento_individual ";
+				$cadenaSql .= " WHERE placa ='" . $variable . "';";
+				break;
+			
+			case "idElementoMaxIndividual" :
+				
+				$cadenaSql = "SELECT max(id_elemento_ind) ";
+				$cadenaSql .= "FROM elemento_individual  ";
+				
+				break;
+			
+			case "ingresar_elemento_individual" :
+				
+				$cadenaSql = " 	INSERT INTO elemento_individual(";
+				$cadenaSql .= "fecha_registro, placa, serie, id_elemento_gen,id_elemento_ind) ";
+				$cadenaSql .= " VALUES (";
+				$cadenaSql .= "'" . $variable [0] . "',";
+				$cadenaSql .= ((is_null ( $variable [1] )) ? 'null' . "," : "'" . $variable [1] . "',");
+				$cadenaSql .= ((is_null ( $variable [2] )) ? 'null' . "," : "'" . $variable [2] . "',");
+				$cadenaSql .= "'" . $variable [3] . "',";
+				$cadenaSql .= "'" . $variable [4] . "') ";
+				$cadenaSql .= "RETURNING id_elemento_ind; ";
+				
+				break;
+			
+			case "Informacion_Elemento" :
+				$cadenaSql = "SELECT *  ";
+				$cadenaSql .= " FROM elemento ";
+				$cadenaSql .= " WHERE  id_elemento='" . $variable . "';";
+				
+				break;
 			
 			case "sede" :
 				$cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" ";
@@ -219,29 +256,28 @@ class Sql extends \Sql {
 						      entrada.cierre_contable as cierrecontable,
 						     fn.\"FUN_IDENTIFICACION\" ||' - '||  fn.\"FUN_NOMBRE\" as funcionario,
 						        entrada.consecutivo||' - ('||entrada.vigencia||')' entrada,
-						       elemento.descripcion descripcion, ad.\"ESF_DEP_ENCARGADA\" dependencia 	";
+						       elemento.descripcion descripcion, ad.\"ESF_DEP_ENCARGADA\" dependencia,  elemento_individual.id_salida identificador_salida ";
 				$cadenaSql .= "FROM elemento ";
 				$cadenaSql .= "JOIN tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien ";
-				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
+				
 				$cadenaSql .= "RIGHT JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
-				$cadenaSql .= (($variable[8]==1)?' JOIN ':' LEFT JOIN ' );
+				$cadenaSql .= (($variable [8] == 1) ? ' JOIN ' : ' LEFT JOIN ');
 				$cadenaSql .= "salida sl ON sl.id_salida = elemento_individual.id_salida  ";
-				$cadenaSql .= "LEFT JOIN  arka_parametros.arka_dependencia ad ON  ad.\"ESF_CODIGO_DEP\"=sl.dependencia ";
-				$cadenaSql .= "LEFT JOIN arka_parametros.arka_sedes sas ON sas.\"ESF_ID_SEDE\" = sl.sede ";
-				$cadenaSql .= "LEFT JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= sl.funcionario ";
-				
-				// $cadenaSql .= "LEFT JOIN arka_parametros.arka_espaciosfisicos ef ON ef.\"ESF_COD_SEDE\"=sas.\"ESF_COD_SEDE\" ";
-				
+				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
+				$cadenaSql .= (($variable [8] == 1) ? ' JOIN ' : ' LEFT JOIN ');
+				$cadenaSql .= " arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= elemento_individual.funcionario ";
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
 				$cadenaSql .= "WHERE 1=1 ";
-				if($variable[8]==0){
-					
+				if ($variable [8] == 0) {
 					
 					$cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
-					
 				}
 				$cadenaSql .= "AND entrada.cierre_contable='f' ";
+				$cadenaSql .= "AND elemento_individual.estado_registro='TRUE' ";
 				$cadenaSql .= "AND   entrada.estado_registro='t' ";
-// 				$cadenaSql .= "AND   entrada.estado_entrada = 1  ";
+				
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND elemento.fecha_registro BETWEEN CAST ( '" . $variable [0] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable [1] . "' AS DATE)  ";
@@ -266,8 +302,6 @@ class Sql extends \Sql {
 				if ($variable [7] != '') {
 					$cadenaSql .= " AND  entrada.id_entrada= '" . $variable [7] . "' ";
 				}
-				// $cadenaSql .= "ORDER BY entrada.id_entrada DESC ";
-				// $cadenaSql .= " LIMIT 5000; ";
 				
 				break;
 			
@@ -372,10 +406,25 @@ class Sql extends \Sql {
 				
 				break;
 			
-			case "consultar_placa_actulizada" :
-				$cadenaSql = " SELECT placa";
-				$cadenaSql .= " FROM elemento ";
-				$cadenaSql .= " WHERE id_elemento='" . $variable . "'";
+			case "inhabilitar_elementos_individuales" :
+				$cadenaSql = " UPDATE elemento_individual   ";
+				$cadenaSql .= " SET  estado_registro='FALSE' ";
+				$cadenaSql .= " WHERE id_elemento_ind='" . $variable . "'  ";
+				
+				break;
+			
+			case "consultar_elementos_individuales_sin_placa" :
+				$cadenaSql = " SELECT id_elemento_ind  ";
+				$cadenaSql .= " FROM elemento_individual  ";
+				$cadenaSql .= " WHERE id_elemento_gen='" . $variable . "'  ";
+				$cadenaSql .= "AND  placa IS  NULL ;";
+				break;
+			
+			case "consultar_elementos_individuales" :
+				$cadenaSql = " SELECT id_elemento_ind  ";
+				$cadenaSql .= " FROM elemento_individual  ";
+				$cadenaSql .= " WHERE id_elemento_gen='" . $variable . "'  ";
+				$cadenaSql .= "AND  placa IS NOT NULL ;";
 				
 				break;
 			
@@ -560,6 +609,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
 				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
 				$cadenaSql .= "AND  ce.elemento_id > 0  ";
+				$cadenaSql .= "AND  ce.elemento_padre > 0  ";
 				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
 				
 				break;
@@ -572,8 +622,36 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
 				
 				break;
+			
+			case 'consultarExistenciaImagen' :
+				
+				$cadenaSql = "SELECT num_registro  ";
+				$cadenaSql .= "FROM  arka_movil.asignar_imagen ";
+				$cadenaSql .= "WHERE  id_elemento ='" . $variable . "';";
+				
+				break;
+			
+			case "RegistrarElementoImagen" :
+				
+				$cadenaSql = " 	INSERT INTO arka_movil.asignar_imagen(";
+				$cadenaSql .= " id_elemento, imagen ,prioridad) ";
+				$cadenaSql .= " VALUES (";
+				$cadenaSql .= "'" . $variable ['elemento'] . "',";
+				$cadenaSql .= "'" . $variable ['imagen'] . "',";
+				$cadenaSql .= "1) ";
+				$cadenaSql .= "RETURNING num_registro; ";
+				
+				break;
+			case "ActualizarElementoImagen" :
+				
+				$cadenaSql = " UPDATE arka_movil.asignar_imagen  ";
+				$cadenaSql .= "SET  id_elemento='" . $variable ['elemento'] . "', imagen='" . $variable ['imagen'] . "' ";
+				$cadenaSql .= "WHERE num_registro='" . $variable ['id_imagen'] . "';";
+				
+				break;
 		}
 		return $cadenaSql;
 	}
 }
+
 ?>

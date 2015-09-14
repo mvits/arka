@@ -4,9 +4,6 @@
  * en el arreglo $esteBloque. Esto también aplica para todos los archivos que se incluyan.
  */
 
-
-
-
 $indice=0;
 
 $funcion[$indice++]="jquery.validationEngine.js";

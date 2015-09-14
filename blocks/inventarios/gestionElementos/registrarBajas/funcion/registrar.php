@@ -37,7 +37,7 @@ class RegistradorOrden {
     function procesarFormulario() {
 
         $elementos = unserialize($_REQUEST['items']);
-        
+
 
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
 
@@ -100,9 +100,9 @@ class RegistradorOrden {
 
         foreach ($elementos as $key => $values) {
             $cadenaSql = $this->miSql->getCadenaSql('consultar_informacion', $elementos[$key]);
-            
+
             $elemento = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-            
+
             $arreglo = array(
                 'dependencia' => $elemento[0]['cod_dependencia'],
                 'funcionario' => $elemento[0]['funcionario_encargado'],
@@ -113,30 +113,31 @@ class RegistradorOrden {
                 'fecha' => $fechaActual,
                 'sede' => $elemento[0]['cod_sede'],
                 'ubicacion' => $elemento[0]['cod_ubicacion'],
-            	'tipo_baja'=>$_REQUEST['tipoBaja']	
+                'tipo_baja' => $_REQUEST['tipoBaja']
             );
-            
-            
+
+
             $cadenaSql = $this->miSql->getCadenaSql('insertar_baja', $arreglo);
-            
-            $registro = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+            $registro = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda",$arreglo,"insertar_baja");
 
             $cadenaSql = $this->miSql->getCadenaSql('actualizar_asignacion_funcionario', $arreglo);
-            $funcionario = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+            $funcionario = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda",$arreglo,"actualizar_asignacion_funcionario");
 
             $cadenaSql = $this->miSql->getCadenaSql('actualizar_asignacion_contratista', $arreglo);
-            $contratista = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-            
+            $contratista = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda",$arreglo,"actualizar_asignacion_contratista");
+
             $count ++;
         }
-        
+
 
         if ($registro) {
-            redireccion::redireccionar('inserto', $count);
+            $this->miConfigurador->setVariableConfiguracion("cache", true);
+            redireccion::redireccionar('inserto', array($count,$_REQUEST['usuario']));
             exit();
         } else {
 
-            redireccion::redireccionar('noInserto');
+            redireccion::redireccionar('noInserto',$_REQUEST['usuario']);
             exit();
         }
     }

@@ -183,6 +183,26 @@ class registrarForm {
 				}
 				
 				
+				if (isset($_REQUEST ['mensaje'])&&$_REQUEST ['mensaje'] == 'datosVacios') {
+				
+					$mensaje = "Verifique el Archivo .xlsx. <br>Existen Datos Vacios";
+				
+					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+					$esteCampo = 'mensajeRegistro';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['tipo'] = 'error';
+					$atributos ['estilo'] = 'textoCentrar';
+					$atributos ['mensaje'] = $mensaje;
+				
+					$tab ++;
+				
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+				}
+				
+				
 				
 				if (isset($_REQUEST ['mensaje'])&&$_REQUEST ['mensaje'] == 'noExtension') {
 						

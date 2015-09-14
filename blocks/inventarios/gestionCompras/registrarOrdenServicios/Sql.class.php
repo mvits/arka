@@ -169,32 +169,40 @@ class Sql extends \Sql {
 				break;
 			
 			case "informacion_proveedor" :
-				$cadenaSql = " SELECT PRO_RAZON_SOCIAL,PRO_NIT,PRO_DIRECCION,PRO_TELEFONO  ";
-				$cadenaSql .= " FROM PROVEEDORES  ";
-				$cadenaSql .= " WHERE PRO_NIT='" . $variable . "' ";
+				$cadenaSql = " SELECT \"PRO_RAZON_SOCIAL\",\"PRO_NIT\",\"PRO_DIRECCION\",\"PRO_TELEFONO\"  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+				$cadenaSql .= " WHERE \"PRO_NIT\"='" . $variable . "' ";
+				
+				break;
+			
+			case "buscar_Proveedores" :
+				$cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  value,\"PRO_NIT\"  AS data  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
+				$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
+				$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
 				
 				break;
 			
 			case "proveedores" :
-				$cadenaSql = " SELECT PRO_NIT,PRO_NIT||' - '||PRO_RAZON_SOCIAL AS proveedor ";
-				$cadenaSql .= " FROM PROVEEDORES ";
+				$cadenaSql = " SELECT \"PRO_NIT\",\"PRO_NIT\"||' - '||\"PRO_RAZON_SOCIAL\" AS proveedor ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor ";
 				
 				break;
 			
 			case "cargoSuper" :
 				
-				$cadenaSql = "SELECT FUN_CARGO ";
-				$cadenaSql .= "FROM FUNCIONARIOS ";
-				$cadenaSql .= "WHERE FUN_ESTADO='A' ";
-				$cadenaSql .= "AND FUN_IDENTIFICACION='" . $variable . "' ";
+				$cadenaSql = "SELECT \"FUN_CARGO\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_funcionarios  ";
+				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
+				$cadenaSql .= "AND \"FUN_IDENTIFICACION\"='" . $variable . "' ";
 				
 				break;
 			
 			case "funcionarios" :
 				
-				$cadenaSql = "SELECT FUN_IDENTIFICACION, FUN_IDENTIFICACION ||' - '|| FUN_NOMBRE ";
-				$cadenaSql .= "FROM FUNCIONARIOS ";
-				$cadenaSql .= "WHERE FUN_ESTADO='A' ";
+				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\", \"FUN_IDENTIFICACION\" ||' - '|| \"FUN_NOMBRE\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_funcionarios ";
+				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
 				
 				break;
 			
@@ -227,24 +235,28 @@ class Sql extends \Sql {
 				break;
 			
 			case "vigencia_disponibilidad" :
-				$cadenaSql = "SELECT DIS_VIGENCIA AS valor, DIS_VIGENCIA AS vigencia  ";
-				$cadenaSql .= "FROM DISPONIBILIDAD ";
-				$cadenaSql .= "GROUP BY DIS_VIGENCIA";
+				$cadenaSql = "SELECT \"DIS_VIGENCIA\" AS valor, \"DIS_VIGENCIA\" AS vigencia  ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal ";
+				$cadenaSql .= "GROUP BY \"DIS_VIGENCIA\" ORDER BY  \"DIS_VIGENCIA\"  DESC; ";
 				break;
 			
 			case "buscar_disponibilidad" :
-				$cadenaSql = "SELECT DISTINCT DIS_IDENTIFICADOR AS identificador,DIS_NUMERO_DISPONIBILIDAD AS numero ";
-				$cadenaSql .= "FROM DISPONIBILIDAD ";
-				$cadenaSql .= "WHERE DIS_VIGENCIA='" . $variable . "'";
+				$cadenaSql = "SELECT DISTINCT \"DIS_NUMERO_DISPONIBILIDAD\" AS identificador,\"DIS_NUMERO_DISPONIBILIDAD\" AS numero ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
+				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable[0] . "' ";
+				$cadenaSql .= "AND \"DIS_UNIDAD_EJECUTORA\"='" . $variable[1]. "' ";
+				$cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" DESC ;";
+				
 				
 				break;
 			
 			case "info_disponibilidad" :
-				$cadenaSql = "SELECT DISTINCT TO_CHAR(DIS_FECHA_REGISTRO,'yyyy-mm-dd') AS FECHA,  DIS_VALOR ";
-				$cadenaSql .= "FROM DISPONIBILIDAD  ";
-				$cadenaSql .= "WHERE DIS_VIGENCIA='" . $variable [1] . "' ";
-				$cadenaSql .= "AND  DIS_IDENTIFICADOR='" . $variable [0] . "' ";
-				$cadenaSql .= "AND ROWNUM = 1 ";
+				$cadenaSql = "SELECT DISTINCT \"DIS_FECHA_REGISTRO\" AS FECHA, \"DIS_VALOR\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
+				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [1] . "' ";
+				$cadenaSql .= "AND  \"DIS_IDENTIFICADOR\"='" . $variable [0] . "' ";
+				$cadenaSql .= "AND  \"DIS_UNIDAD_EJECUTORA\"='" . $variable [2] . "' ";
+
 				
 				break;
 			
@@ -256,18 +268,19 @@ class Sql extends \Sql {
 				break;
 			
 			case "buscar_registro" :
-				$cadenaSql = "SELECT DISTINCT REP_IDENTIFICADOR AS IDENTIFICADOR,REP_NUMERO_DISPONIBILIDAD AS NUMERO ";
-				$cadenaSql .= "FROM REGISTRO_PRESUPUESTAL ";
-				$cadenaSql .= "WHERE REP_VIGENCIA='" . $variable . "'";
+				$cadenaSql = "SELECT  \"REP_IDENTIFICADOR\" AS identificador,\"REP_IDENTIFICADOR\" AS numero ";
+				$cadenaSql .= "FROM arka_parametros.arka_registropresupuestal ";
+				$cadenaSql .= "WHERE \"REP_VIGENCIA\"='" . $variable [0] . "'";
+				$cadenaSql .= "AND  \"REP_NUMERO_DISPONIBILIDAD\"='" . $variable [1] . "'";
+				$cadenaSql .= "AND  \"REP_UNIDAD_EJECUTORA\"='" . $variable [2] . "'";
 				
 				break;
 			
 			case "info_registro" :
-				$cadenaSql = "SELECT TO_CHAR(REP_FECHA_REGISTRO,'yyyy-mm-dd') AS fecha,  REP_VALOR ";
-				$cadenaSql .= "FROM REGISTRO_PRESUPUESTAL ";
-				$cadenaSql .= "WHERE REP_VIGENCIA='" . $variable [1] . "' ";
-				$cadenaSql .= "AND  REP_IDENTIFICADOR='" . $variable [0] . "' ";
-				$cadenaSql .= "AND ROWNUM = 1 ";
+				$cadenaSql = "SELECT \"REP_FECHA_REGISTRO\" AS fecha, \"REP_VALOR\" valor ";
+				$cadenaSql .= "FROM arka_parametros.arka_registropresupuestal  ";
+				$cadenaSql .= "WHERE \"REP_VIGENCIA\"='" . $variable [1] . "'  ";
+				$cadenaSql .= "AND  \"REP_IDENTIFICADOR\"='" . $variable [0] . "' ";
 				
 				break;
 			case "informacion_cargo_jefe" :
@@ -276,12 +289,11 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE  JEF_IDENTIFICADOR='" . $variable . "' ";
 				
 				break;
-			
 			case "informacion_ordenador" :
-				$cadenaSql = " SELECT ORG_NOMBRE,ORG_IDENTIFICACION  ";
-				$cadenaSql .= " FROM ORDENADORES_GASTO ";
-				$cadenaSql .= " WHERE  ORG_IDENTIFICACION='" . $variable . "'";
-				$cadenaSql .= " AND ORG_ESTADO='A' ";
+				$cadenaSql = " SELECT \"ORG_NOMBRE\",\"ORG_IDENTIFICACION\" , \"ORG_TIPO_ORDENADOR\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_ordenadores ";
+				$cadenaSql .= " WHERE  \"ORG_IDENTIFICACION\"='" . $variable . "' ";
+				$cadenaSql .= " AND \"ORG_ESTADO\"='A' ";
 				
 				break;
 			
@@ -304,8 +316,9 @@ class Sql extends \Sql {
 				break;
 			
 			case "rubros" :
-				$cadenaSql = " SELECT RUB_IDENTIFICADOR, RUB_RUBRO ||' - '|| RUB_NOMBRE_RUBRO ";
-				$cadenaSql .= " FROM RUBROS ";
+				$cadenaSql = " SELECT \"RUB_IDENTIFICADOR\", \"RUB_RUBRO\" ||' - '|| \"RUB_NOMBRE_RUBRO\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_rubros ";
+				$cadenaSql .= "WHERE \"RUB_VIGENCIA\"='" . date ( 'Y' ) . "';";
 				
 				break;
 			
@@ -353,11 +366,12 @@ class Sql extends \Sql {
 			
 			case "insertarSupervisor" :
 				$cadenaSql = " INSERT INTO supervisor_servicios(";
-				$cadenaSql .= " nombre,cargo, dependencia) ";
+				$cadenaSql .= " nombre,cargo, dependencia,sede) ";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= "'" . $variable [1] . "',";
-				$cadenaSql .= "'" . $variable [2] . "') ";
+				$cadenaSql .= "'" . $variable [2] . "',";
+				$cadenaSql .= "'" . $variable [3] . "') ";
 				$cadenaSql .= "RETURNING  id_supervisor; ";
 				break;
 			
@@ -389,66 +403,65 @@ class Sql extends \Sql {
 				$cadenaSql .= "RETURNING  id_encargado; ";
 				break;
 			
-			// INSERT INTO orden_servicio(
-			// fecha_registro, , dependencia_solicitante,
+			// INSERT
+			// orden(
+			// id_orden, tipo_orden, vigencia, consecutivo_servicio, consecutivo_compras,
+			// fecha_registro, info_presupuestal, dependencia_solicitante, sede,
 			// rubro, objeto_contrato, poliza1, poliza2, poliza3, poliza4, duracion_pago,
-			// fecha_inicio_pago, fecha_final_pago, forma_pago, total_preliminar,
-			// iva, total, id_contratista, id_contratista_encargado, vig_contratista,
-			// id_ordenador_encargado, id_supervisor, estado)
-			// VALUES (?, ?, ?, ?,
-			// ?, ?, ?, ?, ?, ?, ?,
-			// ?, ?, ?, ?,
-			// ?, ?, ?, ?, ?,
-			// ?, ?, ?);
+			// fecha_inicio_pago, fecha_final_pago, forma_pago, id_ordenador_encargado,
+			// estado)
+			// ;
 			
 			case "insertarOrden" :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= " orden_servicio(";
-				$cadenaSql .= "  fecha_registro,info_presupuestal,dependencia_solicitante, rubro, objeto_contrato, poliza1, ";
-				$cadenaSql .= " poliza2, poliza3, poliza4, duracion_pago, fecha_inicio_pago, ";
-				$cadenaSql .= " fecha_final_pago, forma_pago, total_preliminar, iva, total, id_contratista ,id_ordenador_encargado,id_supervisor, estado,sede)";
+				$cadenaSql .= " orden(";
+				$cadenaSql .= "tipo_orden, vigencia, consecutivo_servicio, consecutivo_compras, 
+								            fecha_registro, info_presupuestal, dependencia_solicitante, sede, 
+								            rubro, objeto_contrato, poliza1, poliza2, poliza3, poliza4, duracion_pago, 
+								            fecha_inicio_pago, fecha_final_pago, forma_pago,id_contratista,id_supervisor, id_ordenador_encargado, tipo_ordenador)";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= "'" . $variable [1] . "',";
-				$cadenaSql .= "'" . $variable [2] . "',";
-				$cadenaSql .= "'" . $variable [3] . "',";
+				$cadenaSql .= "" . $variable [2] . ",";
+				$cadenaSql .= "" . $variable [3] . ",";
 				$cadenaSql .= "'" . $variable [4] . "',";
-				
-				if ($variable [5] != '') {
-					$cadenaSql .= "'" . $variable [5] . "',";
-				} else {
-					$cadenaSql .= "'0',";
-				}
-				
-				if ($variable [6] != '') {
-					$cadenaSql .= "'" . $variable [6] . "',";
-				} else {
-					$cadenaSql .= "'0',";
-				}
-				if ($variable [7] != '') {
-					$cadenaSql .= "'" . $variable [7] . "',";
-				} else {
-					$cadenaSql .= "'0',";
-				}
-				if ($variable [8] != '') {
-					$cadenaSql .= "'" . $variable [8] . "',";
-				} else {
-					$cadenaSql .= "'0',";
-				}
-				
+				$cadenaSql .= "'" . $variable [5] . "',";
+				$cadenaSql .= "'" . $variable [6] . "',";
+				$cadenaSql .= "'" . $variable [7] . "',";
+				$cadenaSql .= "'" . $variable [8] . "',";
 				$cadenaSql .= "'" . $variable [9] . "',";
-				$cadenaSql .= "'" . $variable [10] . "',";
-				$cadenaSql .= "'" . $variable [11] . "',";
-				$cadenaSql .= "'" . $variable [12] . "',";
-				$cadenaSql .= "'" . $variable [13] . "',";
+				
+				if ($variable [10] != '') {
+					$cadenaSql .= "'" . $variable [10] . "',";
+				} else {
+					$cadenaSql .= "'0',";
+				}
+				
+				if ($variable [11] != '') {
+					$cadenaSql .= "'" . $variable [11] . "',";
+				} else {
+					$cadenaSql .= "'0',";
+				}
+				if ($variable [12] != '') {
+					$cadenaSql .= "'" . $variable [12] . "',";
+				} else {
+					$cadenaSql .= "'0',";
+				}
+				if ($variable [13] != '') {
+					$cadenaSql .= "'" . $variable [13] . "',";
+				} else {
+					$cadenaSql .= "'0',";
+				}
+				
 				$cadenaSql .= "'" . $variable [14] . "',";
 				$cadenaSql .= "'" . $variable [15] . "',";
 				$cadenaSql .= "'" . $variable [16] . "',";
 				$cadenaSql .= "'" . $variable [17] . "',";
 				$cadenaSql .= "'" . $variable [18] . "',";
 				$cadenaSql .= "'" . $variable [19] . "',";
-				$cadenaSql .= "'" . $variable [20] . "') ";
-				$cadenaSql .= "RETURNING  id_orden_servicio; ";
+				$cadenaSql .= "'" . $variable [20] . "',";
+				$cadenaSql .= "'" . $variable [21] . "') ";
+				$cadenaSql .= "RETURNING  consecutivo_compras,consecutivo_servicio,id_orden  ; ";
 				
 				break;
 			
@@ -456,7 +469,7 @@ class Sql extends \Sql {
 				$cadenaSql = " INSERT INTO informacion_presupuestal_orden( ";
 				$cadenaSql .= " vigencia_dispo, numero_dispo, valor_disp, fecha_dip,
 								letras_dispo, vigencia_regis, numero_regis, valor_regis, fecha_regis,
-								letras_regis, fecha_registro)";
+								letras_regis, fecha_registro,unidad_ejecutora)";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [1] . "',";
 				$cadenaSql .= "'" . $variable [2] . "',";
@@ -468,8 +481,10 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [8] . "',";
 				$cadenaSql .= "'" . $variable [9] . "',";
 				$cadenaSql .= "'" . $variable [10] . "',";
-				$cadenaSql .= "'" . $variable [0] . "') ";
+				$cadenaSql .= "'" . $variable [0] . "',";
+				$cadenaSql .= "'" . $variable [11] . "') ";
 				$cadenaSql .= "RETURNING  id_informacion; ";
+				
 				break;
 			
 			case "consultarDependencia" :
@@ -537,6 +552,46 @@ class Sql extends \Sql {
 				id_ordenador_encargado, estado ";
 				$cadenaSql .= "FROM orden_servicio  ";
 				$cadenaSql .= "WHERE  id_orden_servicio='" . $variable . "';";
+				
+				break;
+			
+			case "tipoComprador" :
+				
+				$cadenaSql = " 	SELECT \"ORG_IDENTIFICACION\",\"ORG_ORDENADOR_GASTO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_ordenadores ";
+				$cadenaSql .= " WHERE \"ORG_ESTADO\"='A' ";
+				
+				break;
+			
+			case "tipo_orden" :
+				
+				$cadenaSql = " 	SELECT 	id_tipo , descripcion ";
+				$cadenaSql .= " FROM tipo_contrato ";
+				$cadenaSql .= " WHERE id_tipo =  1 ";
+				$cadenaSql .= "OR   id_tipo =  9  ";
+				
+				break;
+			
+			case "consecutivo_compra" :
+				
+				$cadenaSql = " 	SELECT max(consecutivo_compras)  ";
+				$cadenaSql .= " FROM orden ";
+				$cadenaSql .= " WHERE vigencia ='" . $variable . "';";
+				
+				break;
+			
+			case "consecutivo_servicios" :
+				
+				$cadenaSql = " 	SELECT max(consecutivo_servicio)  ";
+				$cadenaSql .= " FROM orden ";
+				$cadenaSql .= " WHERE vigencia ='" . $variable . "';";
+				
+				break;
+			
+			case "Unidad_Ejecutoria" :
+				
+				$cadenaSql = " SELECT DISTINCT \"DIS_UNIDAD_EJECUTORA\" valor ,\"DIS_UNIDAD_EJECUTORA\" descripcion  ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal; ";
 				
 				break;
 		}

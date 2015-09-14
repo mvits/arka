@@ -1,70 +1,106 @@
 <?php
 $this->idioma["usuario"]="Identificación:";
 $this->idioma["clave"]="Clave:";
+
+
 $this->idioma["usuarioTitulo"]="Número de documento";
 $this->idioma["claveTitulo"]="Clave de Acceso";
+
+
 $this->idioma["botonAceptar"]="Aceptar";
 $this->idioma["botonCancelar"]="Cancelar";
 $this->idioma["noDefinido"]="No definido";
 $this->idioma["botonIngresar"]="Ingresar";
-$this->idioma["errorWsdl"]="WSDL Invalido";
-$this->idioma["errorNombre"]="Nombre funcion Ivalido Invalido";
-$this->idioma["errorArgumentos"]="Argumentos Invalidos";
-$this->idioma["errorParametro"]="Error, Paràmetro invalido";
-$this->idioma["errorConexion"]="Error, Fallò al conectar a la base de datos";
-$this->idioma["errorEliminar"]="Fall� al eliminar registros";
-$this->idioma["errorConsulta"]="Fall� al realizar la Consulta";
-$this->idioma["errorElementosArray"] = "Error, el numero de elementos de los arrays deben ser iguales";
-$this->idioma["errorActualizar"] ="Fall� al realizar la Actualizaci�n";
-$this->idioma["errorInsertar"] ="Fall� al realizar la inserci�n";
-$this->idioma['errorProceso'] ="El usuario no pose� permisos sobre el proceso";
+
+
+$this->idioma["errorWsdl"]="WSDL Inválido";
+$this->idioma["errorNombre"]="Nombre función Inválido";
+$this->idioma["errorArgumentos"]="Argumentos Inválidos";
+$this->idioma["errorParametro"]="Error, Parámetro inválido";
+$this->idioma["errorConexion"]="Error al conectar a la base de datos";
+$this->idioma["errorEliminar"]="Falló al eliminar registros";
+$this->idioma["errorConsulta"]="Falló al realizar la Consulta";
+$this->idioma["errorElementosArray"] = "Error, el número de elementos debe coincidir";
+$this->idioma["errorActualizar"] ="Falló al realizar la Actualización";
+$this->idioma["errorInsertar"] ="Falló al realizar la inserción";
+$this->idioma['errorProceso'] ="El usuario no posee permisos suficientes";
+$this->idioma["errorNombre"]="Error. Nombre inválido";
+$this->idioma['errorCreacion']="Error en la creación";
+$this->idioma['errorNombreExiste']="Error, el nombre ya existe";
+$this->idioma['errorId']="Error. Identificador  No Definido";
+$this->idioma['errorEliminar']="Hubo un Error Eliminando lo seleccionado";
+$this->idioma["errorCatalogoExiste"]="Error. El catálogo NO existe";
+$this->idioma["errorIdE"]="Error. Identificador No Definido";
+$this->idioma["errorIdP"]="Error. Identificador Padre No definido";
+$this->idioma["errorLista"]="No se encuentran elementos registrados";
+$this->idioma["errorIdPadreExiste"] =" Error. El identificador Padre no es válido";
+$this->idioma["errorIdElementoExiste"] =" Error. El identificador ya está asociado al nivel Padre";
+$this->idioma["errorNombreElementoExiste"]=" Error. El nombre ya existe en ese nivel";
+$this->idioma["errorIdR"]=" Identificador No Definido";
+$this->idioma['errorCambioNombre']=" Error al cambiar Nombre";
+$this->idioma['errorLargoNombre']="Nombre mayor a 50 caracteres";
+$this->idioma['errorValId']="Identificador debe ser menor a 50 caracteres y numérico";
+
+
+
 $this->idioma["nombreBloque"]="muchasCosas";
 $this->idioma["nombre"]="Nombre";
-$this->idioma["nombreTitulo"]=" Ingrese el Nombre del Catalogo";
+$this->idioma["nombreTitulo"]=" Ingrese el Nombre del Catálogo";
 $this->idioma["nombreBloqueTitulo"]="muchasCosas";
-$this->idioma["errorLista"]="No se encuentran elementos registrados";
-$this->idioma["listaEditar"]="Editar catalogo";
-$this->idioma["listaEliminar"]="Eliminar Catalogo";
-$this->idioma["listaAdicion"]="Agregar Catalogo";
-$this->idioma["crear"]="crear";
-$this->idioma["errorNombre"]="Error nombre inv�lido";
-$this->idioma['errorCreacion']="Error en la creaci�n";
-$this->idioma['errorNombreExiste']="Error nombre existe";
-$this->idioma["creacionExitosa"]="Creaci�n exitosa";
-$this->idioma['errorId']="error Id  no definido";
-$this->idioma['errorEliminar']="error Eliminando";
-$this->idioma['operacionExitosa']="Operaci�n Exitosa";
-$this->idioma["id"]="Identificador";
-$this->idioma["idTitulo"]="Ingrese Identificador Elemento";
+
+
+$this->idioma["crear"]="Crear Catálogo";
+$this->idioma["creacionExitosa"]="Creación exitosa";
+$this->idioma['operacionExitosa']="Operación Exitosa";
+
+
+$this->idioma["id"]="Código Nivel";
+$this->idioma["idPadre"]="Código Nivel Padre";
+//$this->idioma["idPadreTitulo"]="Añadir Identificador";
+$this->idioma["idPadreTitulo"]="";
+//$this->idioma["idTitulo"]="Ingrese el Identificador Elemento";
+$this->idioma["idTitulo"]="";
+$this->idioma["idGrupo"]="Grupo Manejo de Bienes";
+
+
 $this->idioma["reiniciar"]="Reiniciar";
 $this->idioma["reiniciarTitulo"]="Reiniciar valores";
-$this->idioma["idPadre"]="Identificador Padre";
-$this->idioma["idPadreTitulo"]="Seleccione un elemento de catalogo para cambiar Identificador padre, Seleccione reiniciar para ponerlo en 0 nuevamente";
+
 $this->idioma["agregar"]="Agregar Elemento";
 $this->idioma["agregarTitulo"]="Agregar Elemento";
-$this->idioma["catalogoVacio"]="El catalogo se encuentra vacio";
-$this->idioma["errorCatalogoExiste"]="Error el catalogo no existe";
-$this->idioma["errorIdE"]="Error Id indefinido";
-$this->idioma["errorIdP"]="Error Id  padre indefinido";
-$this->idioma["nombreElemento"]="Nombre Elemento";
-$this->idioma["nombreElementoTitulo"]=" Ingrese el Nombre del Elemento";
-$this->idioma["errorIdPadreExiste"] =" Error el identificador padre no es v�lido";
-$this->idioma["errorIdElementoExiste"] =" Error el identificador ya existe con ese padre";
-$this->idioma["errorNombreElementoExiste"]=" Error el nombre ya existe en ese nivel";
-$this->idioma["errorIdR"]=" Id no definido";
-$this->idioma["nombreCatalogo"]="Nombre catalogo";
-$this->idioma["nombreCatalogoTitulo"]="Modifique el nombre del catalogo";
-$this->idioma["cambiarNombre"]=" Cambiar nombre";
-$this->idioma["cambiarNombreTitulo"]=" Cambiar nombre";
-$this->idioma['errorCambioNombre']=" error en Cambiar nombre";
-$this->idioma['cambioNombre']=" Se cambia el nombre exitosamente";
-$this->idioma['listaVer']="Mostrar elementos del catalogo";
-$this->idioma['errorLargoNombre']="Nombre mayor a 50 caracteres";
-$this->idioma['errorValId']="Id debe ser menor a 50 caracteres y numerico";
+$this->idioma["catalogoVacio"]="El Catálogo se encuentra vacío";
+
+$this->idioma["nombreElemento"]="Nombre Nivel";
+$this->idioma["nombreElementoTitulo"]="";
+//$this->idioma["nombreElementoTitulo"]=" Ingrese el Nombre del Elemento";
+
+$this->idioma["nombreCatalogo"]="Nombre Catálogo";
+$this->idioma["nombreCatalogoTitulo"]="Modifique el nombre del Catálogo";
+
+$this->idioma["cambiarNombre"]="Cambiar Nombre del Catálogo";
+$this->idioma["cambiarNombreTitulo"]="Cambiar Nombre";
+$this->idioma['cambioNombre']="El Nombre ha cambiado con éxito";
+
+$this->idioma['crearLabel']="Crear Catálogo";
+
+
+$this->idioma["listaMostrar"]="Ver";
+$this->idioma["listaEdicion"]="Editar";
+$this->idioma["listaEliminacion"]="Activar";
+$this->idioma['listaVer']="Mostrar elementos del Catálogo";
 $this->idioma['listaNombre']="Nombre";
 $this->idioma['listaFecha']="Fecha Creación";
-$this->idioma['listaMenu']="Menu";
+$this->idioma['listaMenu']="Menú";
 $this->idioma["listaId"]="Identificador";
-$this->idioma["listaCasa"]="Ir a la lista de catalogos";
-$this->idioma['crearLabel']="Crear catalogo";
+$this->idioma["listaCasa"]="Regresar a la lista de Catálogos";
+$this->idioma["listaEditar"]="Editar Catálogo";
+$this->idioma["listaEliminar"]="Eliminar Catálogo";
+$this->idioma["listaAdicion"]="Agregar Catálogo";
+$this->idioma["listaActivo"]="Catálogo Activo";
+$this->idioma["listaActivar"]="Activar Catálogo";
+
+
+
+$this->idioma['catalogo']="Catálogo";
+$this->idioma['elementos']="Elementos";
 ?>

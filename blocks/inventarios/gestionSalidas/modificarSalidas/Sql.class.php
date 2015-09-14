@@ -350,21 +350,26 @@ class Sql extends \Sql {
 				break;
 			
 			case "consulta_elementos" :
-				$cadenaSql = "SELECT id_elemento, elemento_padre||''||elemento_codigo||' - '||elemento_nombre AS item, cantidad, descripcion ";
-				$cadenaSql .= "FROM elemento ";
-				$cadenaSql .= " JOIN grupo.catalogo_elemento ce ON ce.elemento_id = elemento.nivel ";
+				
+				$cadenaSql = "SELECT id_elemento,elemento_padre||''||elemento_codigo||' - '||elemento_nombre AS item, 
+						  descripcion ,elemento_individual.id_elemento_ind ";
+				$cadenaSql .= "FROM elemento_individual ";
+				$cadenaSql .= "JOIN elemento  ON elemento.id_elemento = elemento_individual.id_elemento_gen ";
+				$cadenaSql .= "JOIN grupo.catalogo_elemento ce ON ce.elemento_id = elemento.nivel ";
 				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
 				$cadenaSql .= "JOIN  entrada en ON en.id_entrada = elemento.id_entrada  ";
-				$cadenaSql .= "JOIN  elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento  ";
-				$cadenaSql .= "JOIN  salida sal ON sal.id_salida = ei.id_salida  ";
+				$cadenaSql .= "JOIN  salida sal ON sal.id_salida = elemento_individual.id_salida  ";
 				$cadenaSql .= "WHERE elemento.id_entrada='" . $variable [0] . "' ";
-				$cadenaSql .= "AND ei.id_salida='" . $variable [1] . "' ";
+				$cadenaSql .= "AND elemento_individual.id_salida='" . $variable [1] . "' ";
 				$cadenaSql .= "AND cl.lista_activo = 1  ";
 				$cadenaSql .= "AND en.cierre_contable ='f' ";
 				$cadenaSql .= "AND en.estado_entrada = 1  ";
-				$cadenaSql .= "AND ei.id_salida IS NOT NULL   ";
-				$cadenaSql .= "ORDER BY ei.id_elemento_ind ASC;  ";
+				$cadenaSql .= "AND elemento_individual.id_salida IS NOT NULL   ";
+				$cadenaSql .= "ORDER BY elemento_individual.id_elemento_ind ASC;  ";
 				
+				/*
+				 * $cadenaSql = "SELECT id_elemento, elemento_padre||''||elemento_codigo||' - '||elemento_nombre AS item, cantidad, descripcion "; $cadenaSql .= "FROM elemento "; $cadenaSql .= " JOIN grupo.catalogo_elemento ce ON ce.elemento_id = elemento.nivel "; $cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo "; $cadenaSql .= "JOIN entrada en ON en.id_entrada = elemento.id_entrada "; $cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento "; $cadenaSql .= "JOIN salida sal ON sal.id_salida = ei.id_salida "; $cadenaSql .= "WHERE elemento.id_entrada='" . $variable [0] . "' "; $cadenaSql .= "AND ei.id_salida='" . $variable [1] . "' "; $cadenaSql .= "AND cl.lista_activo = 1 "; $cadenaSql .= "AND en.cierre_contable ='f' "; $cadenaSql .= "AND en.estado_entrada = 1 "; $cadenaSql .= "AND ei.id_salida IS NOT NULL "; $cadenaSql .= "ORDER BY ei.id_elemento_ind ASC; ";
+				 */
 				break;
 			
 			case 'elementosIndividuales' :
@@ -376,7 +381,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " JOIN  salida_contable sc ON  sc.salida_general =ei.id_salida ";
 				$cadenaSql .= " WHERE ei.id_salida ='" . $variable . "' ";
 				$cadenaSql .= " ORDER BY ei.id_elemento_ind ASC  ";
-				
 				
 				break;
 			
@@ -645,6 +649,16 @@ class Sql extends \Sql {
 									SET
 									funcionario='51882328'
 								WHERE funcionario='" . $variable . "';";
+				
+				break;
+			
+			case "LimpiarElementosIndividuales" :
+				$cadenaSql = " UPDATE elemento_individual ";
+				$cadenaSql .= " SET  id_salida=NULL, ";
+				$cadenaSql .= "  ubicacion_elemento=NULL, ";
+				$cadenaSql .= "  funcionario=NULL  ";
+				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable . "' ;";
+				
 				
 				break;
 		}

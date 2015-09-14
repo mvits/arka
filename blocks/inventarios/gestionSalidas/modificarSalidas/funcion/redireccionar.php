@@ -12,6 +12,14 @@ class redireccion {
 		$miPaginaActual = $miConfigurador->getVariableConfiguracion ( "pagina" );
 		
 		switch ($opcion) {
+			
+			case "noActualizarElementos" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=noActualizarElementos";
+				
+			
+				break;
 			case "inserto" :
 				
 				$variable = "pagina=" . $miPaginaActual;
@@ -22,11 +30,12 @@ class redireccion {
 				$variable .= "&salidaSA=" . $valor ['salidasAS'];
 				
 				break;
-			
+				
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=error";
+				$variable .= "&usuario=" . $valor;
 				
 				break;
 			
@@ -50,7 +59,7 @@ class redireccion {
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=noCantidad";
 				$variable .= "&errores=notextos";
-				
+				$variable .= "&usuario=" . $valor; 
 				break;
 			
 			case "regresar" :

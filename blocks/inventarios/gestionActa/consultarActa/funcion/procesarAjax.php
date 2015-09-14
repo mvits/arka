@@ -5,6 +5,21 @@ $conexion = "inventarios";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
 
+
+if ($_REQUEST ['funcion'] == 'SeleccionTipoBien') {
+
+
+	$cadenaSql = $this->sql->getCadenaSql ( 'ConsultaTipoBien', $_REQUEST['valor'] );
+	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoItems=$resultadoItems[0];
+
+	echo json_encode($resultadoItems);
+}
+
+
+
+
+
 if ($_REQUEST ['funcion'] == 'tablaItems') {
     $tabla = new stdClass ();
     $page = $_GET ['page'];
@@ -154,17 +169,9 @@ if ($_REQUEST ['funcion'] == 'SeleccionOrdenador') {
 }
 
 
-
-
-
-
-
-$conexion2 = "sicapital";
-$esteRecursoDB2 = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion2);
-
 if ($_REQUEST ['funcion'] == 'proveedor') {
     $cadenaSql = $this->sql->getCadenaSql('select_proveedor', $_REQUEST['proveedor']);
-    $resultadoItems = $esteRecursoDB2->ejecutarAcceso($cadenaSql, "busqueda");
+    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
     $resultado = json_encode($resultadoItems[0]);
     echo $resultado;
 }
@@ -206,7 +213,22 @@ if ($_REQUEST ['funcion'] == 'consultaProveedor') {
 
 
 
+if ($_REQUEST ['funcion'] == 'consultarIva') {
 
+
+
+
+	$cadenaSql = $this->sql->getCadenaSql ( 'consultar_tipo_iva' );
+
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+	$resultado = json_encode ( $resultado );
+
+	echo $resultado;
+}
+
+
+ 
 
 
 

@@ -24,6 +24,9 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+// 		var_dump ( $_REQUEST );
+// 		exit ();
+		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -37,8 +40,6 @@ class RegistradorOrden {
 		
 		$fechaReinicio = date ( "Y-m-d", mktime ( 0, 0, 0, 1, 1, date ( 'Y' ) ) );
 		
-
-		
 		if ($fechaActual == $fechaReinicio) {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultaConsecutivo', $fechaReinicio );
@@ -49,8 +50,6 @@ class RegistradorOrden {
 				$consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 			}
 		}
-		
-		
 		
 		$i = 0;
 		
@@ -73,13 +72,18 @@ class RegistradorOrden {
 				}
 				
 				$archivo = $archivo [0];
+				
+				$_REQUEST ['fecha_contrato'] = '';
+				$_REQUEST ['numero_contrato'] = '';
+				$_REQUEST ['tipo_contrato'] = '';
+				
 				break;
 			
 			case '3' :
 				
 				// $observacion = $_REQUEST ['observaciones_sobrante'];
-// 				$entrada = $_REQUEST ['id_entradaS'];
-// 				$salida = $_REQUEST ['id_salidaS'];
+				// $entrada = $_REQUEST ['id_entradaS'];
+				// $salida = $_REQUEST ['id_salidaS'];
 				
 				foreach ( $_FILES as $key => $values ) {
 					
@@ -88,7 +92,15 @@ class RegistradorOrden {
 				}
 				
 				$archivo = $archivo [1];
-				
+				$_REQUEST ['id_ordenador'] = '';
+				$_REQUEST ['tipo_ordenador'] = '';
+				$_REQUEST ['identificacion_ordenador']='';
+				$_REQUEST ['id_proveedor'] = '';
+				$_REQUEST ['fecha_contrato'] = '';
+				$_REQUEST ['numero_contrato'] = '';
+				$_REQUEST ['tipo_contrato'] = '';
+				$_REQUEST ['numero_factura'] = '';
+				$_REQUEST ['fecha_factura'] = '';
 				break;
 			
 			case '4' :
@@ -100,6 +112,13 @@ class RegistradorOrden {
 				}
 				
 				$archivo = $archivo [2];
+				
+				$_REQUEST ['id_proveedor'] = '';
+				$_REQUEST ['fecha_contrato'] = '';
+				$_REQUEST ['numero_contrato'] = '';
+				$_REQUEST ['tipo_contrato'] = '';
+				$_REQUEST ['numero_factura'] = '';
+				$_REQUEST ['fecha_factura'] = '';
 				
 				break;
 			
@@ -113,6 +132,15 @@ class RegistradorOrden {
 				}
 				
 				$archivo = $archivo [3];
+				
+				$_REQUEST ['id_proveedor'] = '';
+				$_REQUEST ['fecha_contrato'] = '';
+				$_REQUEST ['numero_contrato'] = '';
+				$_REQUEST ['tipo_contrato'] = '';
+				$_REQUEST ['numero_factura'] = '';
+				$_REQUEST ['fecha_factura'] = '';
+				
+				
 				break;
 			
 			case '6' :
@@ -127,9 +155,8 @@ class RegistradorOrden {
 				$archivo = $archivo [4];
 				break;
 			
+			// $observacion = $_REQUEST ['observaciones_avance'];
 			case '7' :
-				
-				// $observacion = $_REQUEST ['observaciones_avance'];
 				foreach ( $_FILES as $key => $values ) {
 					
 					$archivo [$i] = $_FILES [$key];
@@ -137,6 +164,12 @@ class RegistradorOrden {
 				}
 				
 				$archivo = $archivo [5];
+				
+				$_REQUEST ['fecha_contrato'] = '';
+				$_REQUEST ['numero_contrato'] = '';
+				$_REQUEST ['tipo_contrato'] = '';
+				
+				
 				break;
 		}
 		
@@ -171,63 +204,64 @@ class RegistradorOrden {
 				(isset ( $entrada )) ? $entrada : 0,
 				(isset ( $salida )) ? $salida : 0,
 				($_REQUEST ['clase'] == 1) ? $_REQUEST ['id_hurtoR'] : 0,
-				 0,
-				 0,
+				0,
+				0,
 				(isset ( $destino1 )) ? $destino1 : 'NULL',
 				(isset ( $archivo1 )) ? $archivo1 : 'NULL' 
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarInformación', $arreglo_clase );
-		$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		
+		$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo_clase,"insertarInformación");  
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'idMaximoEntrada' );
 		$idEntradamax = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$idEntradamax=$idEntradamax[0][0]+1;
-		
+		$idEntradamax = $idEntradamax [0] [0] + 1;
 		
 		$fechaActual = date ( 'Y-m-d' );
 		$anio_vigencia = date ( 'Y' );
-		
 		
 		$arregloDatos = array (
 				$fechaActual,
 				$anio_vigencia,
 				$_REQUEST ['clase'],
 				$info_clase [0] [0],
-				($_REQUEST ['tipo_contrato'] != '') ? $_REQUEST ['tipo_contrato'] : 0,
-				($_REQUEST ['numero_contrato'] != '') ? $_REQUEST ['numero_contrato'] : 0,
-				($_REQUEST ['fecha_contrato'] != '') ? $_REQUEST ['fecha_contrato'] : '0001-01-01',
-				($_REQUEST ['id_proveedor'] != '') ? $_REQUEST ['id_proveedor'] : 0,
-				($_REQUEST ['numero_factura'] != '') ? $_REQUEST ['numero_factura'] : 0,
-				($_REQUEST ['fecha_factura'] != '') ? $_REQUEST ['fecha_factura'] : '0001-01-01',
-				$_REQUEST ['observaciones_entrada'],
-				(isset ( $_REQUEST ['acta_recibido'] ) && $_REQUEST ['acta_recibido'] != '') ? $_REQUEST ['acta_recibido'] : 0,
-				($_REQUEST ['id_ordenador']=='')?'NULL':$_REQUEST ['id_ordenador'],
-				$_REQUEST ['sede'],
-				$_REQUEST ['dependencia'],
+				($_REQUEST ['tipo_contrato'] != '') ? $_REQUEST ['tipo_contrato'] : NULL,
+				($_REQUEST ['numero_contrato'] != '') ? $_REQUEST ['numero_contrato'] : NULL,
+				($_REQUEST ['fecha_contrato'] != '') ? $_REQUEST ['fecha_contrato'] : NULL,
+				($_REQUEST ['id_proveedor'] != '') ? $_REQUEST ['id_proveedor'] : NULL, // donacion
+				($_REQUEST ['numero_factura'] != '') ? $_REQUEST ['numero_factura'] : NULL, // donacion
+				($_REQUEST ['fecha_factura'] != '') ? $_REQUEST ['fecha_factura'] : NULL, // donacion
+				($_REQUEST['observaciones_entrada']=='')?"NULL":"'".$_REQUEST ['observaciones_entrada']."'",
+				$_REQUEST ['numero_acta'],
+				($_REQUEST ['id_ordenador'] == '') ? NULL : $_REQUEST ['id_ordenador'], // obligatorio donacion
+				$_REQUEST ['sede'], // obligatorio
+				$_REQUEST ['dependencia'], // obligatorio
 				$_REQUEST ['supervisor'],
-				($_REQUEST ['tipo_ordenador']=='')?'NULL':$_REQUEST ['tipo_ordenador'],
-				($_REQUEST ['identificacion_ordenador']=='')?'NULL':$_REQUEST ['identificacion_ordenador'],
-				$idEntradamax
+				($_REQUEST ['tipo_ordenador'] == '') ? NULL : $_REQUEST ['tipo_ordenador'], // obligatorio donacion
+				($_REQUEST ['identificacion_ordenador'] == '') ? NULL : $_REQUEST ['identificacion_ordenador'], // obligatorio donacion
+				$idEntradamax 
 		);
 		
-
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarEntrada', $arregloDatos );
-
-		$id_entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$arreglo=array($idEntradamax,$id_entrada[0][0]);
-		if ($id_entrada [0] [0]) {
-			
-			redireccion::redireccionar ( 'inserto', $arreglo);
-			exit();
+		$id_entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arregloDatos,"insertarEntrada" );
+		
+		$arreglo = array (
+				$idEntradamax,
+				$id_entrada [0] [0] ,
+				$id_entrada [0] [1] ,
+		);
+		
+		
+		if ($id_entrada) {
+			$this->miConfigurador->setVariableConfiguracion("cache",true);
+			redireccion::redireccionar ( 'inserto', $arreglo );
+			exit ();
 		} else {
 			
 			redireccion::redireccionar ( 'noInserto' );
-			exit();
+			exit ();
 		}
 	}
 	function resetForm() {

@@ -82,6 +82,8 @@ class registrarForm {
 		
 		$_REQUEST = array_merge ( $_REQUEST, $elemento [0], $arreglo );
 		
+		$polizasMostrar = 'none';
+		
 		if ($elemento [0] ['tipo_bien'] == 3) {
 			
 			$tipoDevolutivo = 'block';
@@ -125,8 +127,9 @@ class registrarForm {
 			$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			
+			 
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=" . $_REQUEST['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -315,6 +318,24 @@ class registrarForm {
 							$atributos = array_merge ( $atributos, $atributosGlobales );
 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
 							unset ( $atributos );
+							
+							$esteCampo = "imagenElemento";
+							$atributos ["id"] = $esteCampo; // No cambiar este nombre
+							$atributos ["nombre"] = $esteCampo;
+							$atributos ["tipo"] = "file";
+							$atributos ["obligatorio"] = true;
+							$atributos ["etiquetaObligatorio"] = false;
+							$atributos ["tabIndex"] = $tab ++;
+							$atributos ["columnas"] = 1;
+							$atributos ["estilo"] = "textoIzquierda";
+							$atributos ["anchoEtiqueta"] = 215;
+							$atributos ["tamanno"] = 500000;
+							$atributos ["validar"] = " ";
+							$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
+							// $atributos ["valor"] = $valorCodificado;
+							$atributos = array_merge ( $atributos, $atributosGlobales );
+							echo $this->miFormulario->campoCuadroTexto ( $atributos );
+							unset ( $atributos );
 						}
 						echo $this->miFormulario->agrupacion ( "fin" );
 						unset ( $atributos );
@@ -452,7 +473,7 @@ class registrarForm {
 								$atributos ['validar'] = '';
 								
 								if (isset ( $_REQUEST [$esteCampo] )) {
-									$atributos ['valor'] = $_REQUEST [$esteCampo];
+									$atributos ['valor'] = ($_REQUEST [$esteCampo] == '0001-01-01') ? NULL : $_REQUEST [$esteCampo];
 								} else {
 									$atributos ['valor'] = '';
 								}
@@ -483,7 +504,7 @@ class registrarForm {
 								$atributos ['validar'] = '';
 								
 								if (isset ( $_REQUEST [$esteCampo] )) {
-									$atributos ['valor'] = $_REQUEST [$esteCampo];
+									$atributos ['valor'] = ($_REQUEST [$esteCampo] == '0001-01-01') ? NULL : $_REQUEST [$esteCampo];
 								} else {
 									$atributos ['valor'] = '';
 								}
@@ -748,7 +769,7 @@ class registrarForm {
 							$atributos ['valor'] = '';
 						}
 						$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-						$atributos ['deshabilitado'] = false;
+						$atributos ['deshabilitado'] = true; 
 						$atributos ['tamanno'] = 10;
 						$atributos ['maximoTamanno'] = '';
 						$atributos ['anchoEtiqueta'] = 220;
@@ -779,7 +800,7 @@ class registrarForm {
 							$atributos ['valor'] = '';
 						}
 						$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-						$atributos ['deshabilitado'] = false;
+						$atributos ['deshabilitado'] = true; 
 						$atributos ['tamanno'] = 10;
 						$atributos ['maximoTamanno'] = '';
 						$atributos ['anchoEtiqueta'] = 220;
@@ -810,7 +831,7 @@ class registrarForm {
 							$atributos ['valor'] = '';
 						}
 						$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-						$atributos ['deshabilitado'] = false;
+						$atributos ['deshabilitado'] = true; 
 						$atributos ['tamanno'] = 10;
 						$atributos ['maximoTamanno'] = '';
 						$atributos ['anchoEtiqueta'] = 220;
@@ -888,6 +909,7 @@ class registrarForm {
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=modificar";
 			$valorCodificado .= "&id_elemento=" . $_REQUEST ['id_elemento'];
+			$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 			
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.

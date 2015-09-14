@@ -1,11 +1,70 @@
 <?php
 $this->idioma ["noDefinido"] = "Etiqueta no esta definida en locale/es_es/Mensaje.php";
 
-$this->idioma ["documentoContrato"] ="Link Documento Contrato";
+$this->idioma ["documentoContrato"] ="Ver Documento Contrato";
+
+//---Cargar Elementos
+$this->idioma ["desicion"] ="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp¿ Que desea realizar ?";
+
+
+$this->idioma ["tipo_registro"] ="Tipo de Registro	";
+
+$this->idioma ["documentos_elementos"] ="Archivo de Elementos";
+
+$this->idioma ["nivel"] ="Nivel de Inventarios : ";
+$this->idioma ["nivelTitulo"] ="Seleccione Nivel de Inventarios";
+
+$this->idioma ["tipo_bien"] ="Tipo de Bien : ";
+$this->idioma ["tipo_bienTitulo"] ="Seleccione Tipo de Bien";
+
+$this->idioma ["serie"] ="Serie : ";
+$this->idioma ["serieTitulo"] ="Ingrese Serie Elemento";
+
+$this->idioma ["marca"] ="Marca : ";
+$this->idioma ["marcaTitulo"] ="Ingrese Marca Elemento";
+
+$this->idioma ["imagenElemento"] ="Imagen Elemento : ";
+$this->idioma ["imagenElementoTitulo"] ="Seleccione Imagen Elemento (.jpg,.jpeg)";
+
+$this->idioma ["tipo_poliza"] ="Tipo de Poliza : ";
+$this->idioma ["tipo_polizaTitulo"] ="Seleccione Tipo de Poliza";
+
+$this->idioma ["fecha_inicio"] ="Fecha Inicial : ";
+$this->idioma ["fecha_inicioTitulo"] ="Seleccione Fecha Inicial";
+
+$this->idioma ["fecha_final"] ="Fecha Final : ";
+$this->idioma ["fecha_finalTitulo"] ="Seleccione Fecha Final";
+
+$this->idioma ["descripcion"] ="Descripción: ";
+$this->idioma ["descripcionTitulo"] ="Ingrese Descripción";
+
+$this->idioma ["cantidad"] ="Cantidad: ";
+$this->idioma ["cantidadTitulo"] ="Ingrese Cantidad";
+
+$this->idioma ["cantidad"] ="Cantidad: ";
+$this->idioma ["cantidadTitulo"] ="Ingrese Cantidad";
+
+$this->idioma ["valor"] ="Valor del Elemento: ";
+$this->idioma ["valorTitulo"] ="Ingrese Valor del Elemento";
+
+$this->idioma ["iva"] ="IVA : ";
+$this->idioma ["ivaTitulo"] ="Seleccione IVA";
+
+$this->idioma ["subtotal_sin_iva"] ="Subtotal sin IVA : ";
+$this->idioma ["subtotal_sin_ivaTitulo"] ="Ingrese Subtotal";
+
+$this->idioma ["total_iva"] ="Total IVA : ";
+$this->idioma ["total_ivaTitulo"] ="Ingrese total IVA";
+
+$this->idioma ["total_iva_con"] ="Total con IVA : ";
+$this->idioma ["total_iva_conTitulo"] ="Ingrese Total con IVA";
+
+$this->idioma ["unidad"] ="Unidad de Medida: ";
+$this->idioma ["unidadTitulo"] ="Ingrese Unidad de Medida";
 
 
 
-
+//---
 $this->idioma ["numeroContrato"] ="Número y/o :             <br>Fecha de Contrato";
 $this->idioma ["numeroContratoTitulo"] ="Seleccione Fecha Inicial";
 
@@ -73,7 +132,7 @@ $this->idioma ["ordenadorGasto"] ="Ordenador Gasto";
 $this->idioma ["numFactura"] =" Número Factura :";
 $this->idioma ["numFacturaTitulo"] ="Ingrese Número Factura";
 
-$this->idioma ["descripcionFactura"] ="Descripción Factura";
+$this->idioma ["descripcionFactura"] ="Descripción Factura (Elementos)";
 
 $this->idioma ["observacionesActa"] ="Observaciones: ";
 

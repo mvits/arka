@@ -3,6 +3,10 @@ if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();
 }
+
+
+use inventarios\gestionElementos\registrarTraslados\funcion\redireccion;
+
 class registrarForm {
 	var $miConfigurador;
 	var $lenguaje;
@@ -62,7 +66,14 @@ class registrarForm {
 				$items [] = $_REQUEST ['item_' . $i];
 			}
 		}
-		;
+		
+		if(empty($items)==true){
+			
+			redireccion::redireccionar ( 'noItems', false );
+			exit();
+			
+		}
+		
 		
 		foreach ( $items as $key => $values ) {
 			$cadenaSql = $this->miSql->getCadenaSql ( 'elemento_informacion', $items [$key] );
@@ -133,7 +144,7 @@ class registrarForm {
 			{
 				
 				if ($elementos_info) {
-					echo $this->miFormulario->tablaReporte ( $elementos_info );
+					echo $this->miFormulario->tablaReporte ( $elementos_info,true);
 				}
 			}
 			
@@ -413,6 +424,7 @@ class registrarForm {
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=registrar";
 			$valorCodificado .= "&fun_anterior=" . $funcionario;
+			$valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
 			$valorCodificado .= "&informacion_elementos=" . base64_encode ( serialize ( $elementos_info ) );
 			
 			/**

@@ -104,7 +104,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 					
-					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"ingresar_elemento_tipo_1" );
 				} else if ($_REQUEST ['id_tipo_bien'] == 2) {
 					
 					$arreglo = array (
@@ -129,7 +129,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 					
-					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"ingresar_elemento_tipo_1" );
 				} else if ($_REQUEST ['id_tipo_bien'] == 3) {
 					
 					if ($_REQUEST ['tipo_poliza'] == 0) {
@@ -182,7 +182,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
 					
-					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"ingresar_elemento_tipo_2" );
 				}
 				
 				$placa = date ( 'Ymd' ) . "00000";
@@ -214,7 +214,7 @@ class RegistradorOrden {
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 						
-						$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+						$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arregloElementosInv,"ingresar_elemento_individual" );
 						
 						$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 					}
@@ -240,7 +240,7 @@ class RegistradorOrden {
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 						
-						$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+						$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arregloElementosInv,"ingresar_elemento_individual" );
 						
 						$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 					}
@@ -263,7 +263,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ElementoImagen', $arreglo );
 					
-					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo,"ElementoImagen" );
 				}
 				
 				$datos = array (
@@ -273,7 +273,7 @@ class RegistradorOrden {
 				);
 				
 				if ($elemento) {
-					
+					$this->miConfigurador->setVariableConfiguracion("cache",true);
 					redireccion::redireccionar ( 'inserto', $datos, $_REQUEST ['datosGenerales'] );
 					exit ();
 				} else {
@@ -363,32 +363,75 @@ class RegistradorOrden {
 							
 							$datos [$i] ['Nivel'] = $objPHPExcel->getActiveSheet ()->getCell ( 'A' . $i )->getCalculatedValue ();
 							
+							if (is_null ( $datos [$i] ['Nivel'] ) == true) {
+								
+								redireccion::redireccionar ( 'datosVacios', $fechaActual );
+								exit ();
+							}
+							
 							$datos [$i] ['Tipo_Bien'] = $objPHPExcel->getActiveSheet ()->getCell ( 'B' . $i )->getCalculatedValue ();
+							
+							if (is_null ( $datos [$i] ['Tipo_Bien'] ) == true) {
+								
+								redireccion::redireccionar ( 'datosVacios', $fechaActual );
+								exit ();
+							}
 							
 							$datos [$i] ['Descripcion'] = $objPHPExcel->getActiveSheet ()->getCell ( 'C' . $i )->getCalculatedValue ();
 							
+							if (is_null ( $datos [$i] ['Descripcion'] ) == true) {
+								
+								redireccion::redireccionar ( 'datosVacios', $fechaActual );
+								exit ();
+							}
 							$datos [$i] ['Cantidad'] = $objPHPExcel->getActiveSheet ()->getCell ( 'D' . $i )->getCalculatedValue ();
 							
+							if (is_null ( $datos [$i] ['Cantidad'] ) == true) {
+								
+								redireccion::redireccionar ( 'datosVacios', $fechaActual );
+								exit ();
+							}
 							$datos [$i] ['Unidad_Medida'] = $objPHPExcel->getActiveSheet ()->getCell ( 'E' . $i )->getCalculatedValue ();
+							
+							if (is_null ( $datos [$i] ['Unidad_Medida'] ) == true) {
+								
+								redireccion::redireccionar ( 'datosVacios', $fechaActual );
+								exit ();
+							}
 							
 							$datos [$i] ['Valor_Precio'] = $objPHPExcel->getActiveSheet ()->getCell ( 'F' . $i )->getCalculatedValue ();
 							
+							if (is_null ( $datos [$i] ['Valor_Precio'] ) == true) {
+								
+								redireccion::redireccionar ( 'datosVacios', $fechaActual );
+								exit ();
+							}
 							$datos [$i] ['Iva'] = $objPHPExcel->getActiveSheet ()->getCell ( 'G' . $i )->getCalculatedValue ();
+							
+							if (is_null ( $datos [$i] ['Iva'] ) == true) {
+								
+								redireccion::redireccionar ( 'datosVacios', $fechaActual );
+								exit ();
+							}
 							
 							$datos [$i] ['Tipo_poliza'] = $objPHPExcel->getActiveSheet ()->getCell ( 'H' . $i )->getCalculatedValue ();
 							
-							$datos [$i] ['Fecha_Inicio_Poliza'] = $objPHPExcel->getActiveSheet ()->getCell ( 'I' . $i )->getCalculatedValue ();
+							$datos [$i] ['Fecha_Inicio_Poliza_Anio'] = $objPHPExcel->getActiveSheet ()->getCell ( 'I' . $i )->getCalculatedValue ();
 							
-							$datos [$i] ['Fecha_Final_Poliza'] = $objPHPExcel->getActiveSheet ()->getCell ( 'J' . $i )->getCalculatedValue ();
+							$datos [$i] ['Fecha_Inicio_Poliza_Mes'] = $objPHPExcel->getActiveSheet ()->getCell ( 'J' . $i )->getCalculatedValue ();
 							
-							$datos [$i] ['Marca'] = $objPHPExcel->getActiveSheet ()->getCell ( 'K' . $i )->getCalculatedValue ();
+							$datos [$i] ['Fecha_Inicio_Poliza_Dia'] = $objPHPExcel->getActiveSheet ()->getCell ( 'K' . $i )->getCalculatedValue ();
 							
-							$datos [$i] ['Serie'] = $objPHPExcel->getActiveSheet ()->getCell ( 'L' . $i )->getCalculatedValue ();
+							$datos [$i] ['Fecha_Final_Poliza_Anio'] = $objPHPExcel->getActiveSheet ()->getCell ( 'L' . $i )->getCalculatedValue ();
+							
+							$datos [$i] ['Fecha_Final_Poliza_Mes'] = $objPHPExcel->getActiveSheet ()->getCell ( 'M' . $i )->getCalculatedValue ();
+							
+							$datos [$i] ['Fecha_Final_Poliza_Dia'] = $objPHPExcel->getActiveSheet ()->getCell ( 'N' . $i )->getCalculatedValue ();
+							
+							$datos [$i] ['Marca'] = $objPHPExcel->getActiveSheet ()->getCell ( 'O' . $i )->getCalculatedValue ();
+							
+							$datos [$i] ['Serie'] = $objPHPExcel->getActiveSheet ()->getCell ( 'P' . $i )->getCalculatedValue ();
 						}
-						
-						
-						
-						
 						
 						for($i = 2; $i <= $highestRow; $i ++) {
 							
@@ -431,15 +474,11 @@ class RegistradorOrden {
 									break;
 							}
 							
-							
-							
-							
 							$cadenaSql = $this->miSql->getCadenaSql ( 'idElementoMax' );
 							
 							$elemento_id_max = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 							
 							$elemento_id_max = $elemento_id_max [0] [0] + 1;
-							
 							
 							// $arreglo = array (
 							// $fechaActual,
@@ -474,8 +513,6 @@ class RegistradorOrden {
 								// "5";0.1;"10%";
 								// "6";0.16;"16%";
 								
-								
-								
 								$arreglo = array (
 										$fechaActual,
 										$datos [$i] ['Nivel'],
@@ -498,9 +535,7 @@ class RegistradorOrden {
 								
 								$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 								
-								
-								
-								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"ingresar_elemento_tipo_1" );
 							} else if ($datos [$i] ['Tipo_Bien'] == 2) {
 								$datos [$i] ['Cantidad'] = 1;
 								
@@ -546,7 +581,7 @@ class RegistradorOrden {
 								
 								$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 								
-								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"ingresar_elemento_tipo_1" );
 							} else if ($datos [$i] ['Tipo_Bien'] == 3) {
 								
 								$datos [$i] ['Cantidad'] = 1;
@@ -614,8 +649,8 @@ class RegistradorOrden {
 											1 * $datos [$i] ['Valor_Precio'] * $IVA,
 											round ( 1 * $datos [$i] ['Valor_Precio'] * $IVA ) + (1 * $datos [$i] ['Valor_Precio']),
 											$datos [$i] ['Tipo_poliza'],
-											trim ( $datos [$i] ['Fecha_Inicio_Poliza'], "'" ),
-											trim ( $datos [$i] ['Fecha_Final_Poliza'], "'" ),
+											$datos [$i] ['Fecha_Inicio_Poliza_Anio'] . "-" . $datos [$i] ['Fecha_Inicio_Poliza_Mes'] . "-" . $datos [$i] ['Fecha_Inicio_Poliza_Dia'],
+											$datos [$i] ['Fecha_Final_Poliza_Anio'] . "-" . $datos [$i] ['Fecha_Final_Poliza_Mes'] . "-" . $datos [$i] ['Fecha_Final_Poliza_Dia'],
 											(is_null ( $datos [$i] ['Marca'] ) == true) ? 'null' : trim ( $datos [$i] ['Marca'], "'" ),
 											(is_null ( $datos [$i] ['Serie'] ) == true) ? 'null' : trim ( $datos [$i] ['Serie'], "'" ),
 											$_REQUEST ['entrada'],
@@ -648,13 +683,8 @@ class RegistradorOrden {
 								
 								$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
 								
-								
-								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+								$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"ingresar_elemento_tipo_2" );
 							}
-							
-							
-							
-							
 							
 							// $cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_masivo', $arreglo );
 							
@@ -695,7 +725,6 @@ class RegistradorOrden {
 									break;
 							}
 							
-							
 							if ($num_placa [0] [0] == 0) {
 								
 								for($j = 0; $j < $_REQUEST ['cantidad']; $j ++) {
@@ -711,8 +740,7 @@ class RegistradorOrden {
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 									
-																		
-									$elemento_id [$j] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									$elemento_id [$j] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arregloElementosInv,"ingresar_elemento_individual");
 									
 									$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 								}
@@ -738,67 +766,61 @@ class RegistradorOrden {
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 									
-									
-									
-									$elemento_id [$j] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+									$elemento_id [$j] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arregloElementosInv,"ingresar_elemento_individual"); 
 									
 									$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 								}
 							}
 							
+							// $cadenaSql = $this->miSql->getCadenaSql ( 'buscar_repetida_placa', $placa );
 							
-// 							$cadenaSql = $this->miSql->getCadenaSql ( 'buscar_repetida_placa', $placa );
+							// $num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 							
-// 							$num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							// if ($num_placa [0] [0] == 0) {
 							
-// 							if ($num_placa [0] [0] == 0) {
-								
-// 								for($i = 0; $i < $_REQUEST ['cantidad']; $i ++) {
-// 									$arregloElementosInv = array (
-// 											$fechaActual,
-// 											$placa + $i,
-// 											$_REQUEST ['serie'],
-// 											$elemento [0] [0] 
-// 									);
-									
-// 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
-									
-// 									$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-// 								}
-// 							} else if ($num_placa [0] [0] != 0) {
-								
-// 								$cadenaSql = $this->miSql->getCadenaSql ( 'buscar_placa_maxima', $placa );
-								
-// 								$num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-								
-// 								$placa = $num_placa [0] [0];
-								
-// 								for($i = 1; $i <= $_REQUEST ['cantidad']; $i ++) {
-// 									$arregloElementosInv = array (
-// 											$fechaActual,
-// 											$placa + $i,
-// 											$_REQUEST ['serie'],
-// 											$elemento [0] [0] 
-// 									);
-									
-// 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
-									
-// 									$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-// 								}
-// 							}
+							// for($i = 0; $i < $_REQUEST ['cantidad']; $i ++) {
+							// $arregloElementosInv = array (
+							// $fechaActual,
+							// $placa + $i,
+							// $_REQUEST ['serie'],
+							// $elemento [0] [0]
+							// );
+							
+							// $cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
+							
+							// $elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							// }
+							// } else if ($num_placa [0] [0] != 0) {
+							
+							// $cadenaSql = $this->miSql->getCadenaSql ( 'buscar_placa_maxima', $placa );
+							
+							// $num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							
+							// $placa = $num_placa [0] [0];
+							
+							// for($i = 1; $i <= $_REQUEST ['cantidad']; $i ++) {
+							// $arregloElementosInv = array (
+							// $fechaActual,
+							// $placa + $i,
+							// $_REQUEST ['serie'],
+							// $elemento [0] [0]
+							// );
+							
+							// $cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
+							
+							// $elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							// }
+							// }
 						}
 						
-						
 						if ($elemento) {
-							
+							$this->miConfigurador->setVariableConfiguracion("cache",true);
 							redireccion::redireccionar ( 'inserto_M', $fechaActual );
-							exit();
-							
+							exit ();
 						} else {
 							
 							redireccion::redireccionar ( 'noInserto', $datos );
-							exit();
-							
+							exit ();
 						}
 					}
 				} else {

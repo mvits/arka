@@ -97,6 +97,7 @@ class Formulario {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=".$_REQUEST['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -377,6 +378,7 @@ class Formulario {
 		$valorCodificado .= "&idunico_contrato=" . $_REQUEST ['contrato'];
 		$valorCodificado .= "&identificador_contrato=" . $_REQUEST ['identificador_contrato'];
 		$valorCodificado .= "&identificador_documento=" . $_REQUEST ['id_documento'];
+		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
 		 * Para ello utiliza la hora en que es creado el formulario para

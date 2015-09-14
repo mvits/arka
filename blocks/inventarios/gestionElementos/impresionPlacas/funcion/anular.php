@@ -50,7 +50,7 @@ class RegistradorOrden {
 		
 				
 		if ($anular) {
-				
+				$this->miConfigurador->setVariableConfiguracion("cache",true);
 			redireccion::redireccionar ( 'anulado');
 		} else {
 				

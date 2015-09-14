@@ -180,13 +180,14 @@ class Sql extends \Sql {
 			case "consultarEntrada" :
 				$cadenaSql = "SELECT DISTINCT ";
 				$cadenaSql .= "entrada.id_entrada, entrada.fecha_registro,  ";
-				$cadenaSql .= " clase_entrada.descripcion,proveedor,consecutivo||' - ('||entrada.vigencia||')' consecutivo,estado_entrada.descripcion estado_entradas ,cierre_contable  ";
+				$cadenaSql .= " clase_entrada.descripcion,proveedor,entrada.consecutivo||' - ('||entrada.vigencia||')' consecutivo,estado_entrada.descripcion estado_entradas ,cierre_contable  ";
 				$cadenaSql .= "FROM entrada ";
 				$cadenaSql .= "JOIN clase_entrada ON clase_entrada.id_clase = entrada.clase_entrada ";
 				$cadenaSql .= "JOIN estado_entrada ON estado_entrada.id_estado = entrada.estado_entrada ";
-				// $cadenaSql .= "JOIN elemento ON elemento.id_entrada = entrada.id_entrada ";
+				$cadenaSql .= "JOIN salida sa ON sa.id_entrada = entrada.id_entrada ";
 				$cadenaSql .= "WHERE 1=1 ";
 				$cadenaSql .= "AND entrada.cierre_contable='" . $variable [5] . "' ";
+				$cadenaSql .= "AND sa.id_entrada IS NOT NULL   ";
 				
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND entrada.id_entrada = '" . $variable [0] . "'";

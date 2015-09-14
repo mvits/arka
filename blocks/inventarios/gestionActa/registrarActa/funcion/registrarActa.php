@@ -5,6 +5,13 @@ namespace inventarios\gestionActa\registrarActa\funcion;
 use inventarios\gestionActa\registrarActa\funcion\redireccion;
 
 include_once ('redireccionar.php');
+
+$ruta_1 = $this->miConfigurador->getVariableConfiguracion ( 'raizDocumento' ) . '/plugin/php_excel/Classes/PHPExcel.class.php';
+$ruta_2 = $this->miConfigurador->getVariableConfiguracion ( 'raizDocumento' ) . '/plugin/php_excel/Classes/PHPExcel/Reader/Excel2007.class.php';
+
+include_once ($ruta_1);
+include_once ($ruta_2);
+
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();
@@ -24,7 +31,6 @@ class RegistradorActa {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-
 		$fechaActual = date ( 'Y-m-d' );
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
@@ -37,38 +43,36 @@ class RegistradorActa {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		// ----homologacion Dependencias
+		/*
+		 * $cadenaSql = $this->miSql->getCadenaSql ( 'ids' ); $id_actas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ); foreach ($id_actas as $doc){ $cadenaSql = $this->miSql->getCadenaSql ( 'update_dependencia', $doc); $succeso = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" ); }
+		 */
 		
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'items', $_REQUEST ['seccion'] );
+		// $items = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		// if ($items == false) {
 		
-		//----homologacion Dependencias
-		/*$cadenaSql = $this->miSql->getCadenaSql ( 'ids' );
-		$id_actas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		
-		
-		foreach ($id_actas as $doc){
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'update_dependencia', $doc);
-		
-		$succeso = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-		}
-		
-		*/
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'items', $_REQUEST ['seccion'] );
-		$items = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		if ($items == false) {
-			
-			redireccion::redireccionar ( 'noItems' );
-		}
+		// redireccion::redireccionar ( 'noItems' );
+		// }
 		
 		foreach ( $_FILES as $key => $values ) {
 			
 			$archivo = $_FILES [$key];
 		}
 		
-		if ($_FILES['documentoSoporte']['name']!='') {
+		// $archivoImagen = $archivo [1];
+		
+		// if ($archivoImagen ['error'] == 0) {
+		
+		// if ($archivoImagen ['type'] != 'image/jpeg') {
+		// redireccion::redireccionar ( 'noFormatoImagen' );
+		
+		// exit ();
+		// }
+		// }
+		
+		if ($_FILES ['documentoSoporte'] ['name'] != '') {
 			
 			// obtenemos los datos del archivo
 			$tamano = $archivo ['size'];
@@ -90,20 +94,19 @@ class RegistradorActa {
 			}
 		} else {
 			
-			$destino1 = 'NULL';
-			$archivo1 = 'NULL';
+			$destino1 = NULL;
+			$archivo1 = NULL;
 		}
-		
 		
 		if (isset ( $_REQUEST ['tipoOrden'] )) {
 			
 			switch ($_REQUEST ['tipoOrden']) {
 				
-				case "Orden de Servicios" :
+				case 1 :
 					$tipoOrden = 1;
 					break;
 				
-				case "Orden de Compra" :
+				case 2 :
 					$tipoOrden = 2;
 					break;
 			}
@@ -118,54 +121,67 @@ class RegistradorActa {
 				'dependencia' => $_REQUEST ['dependencia'],
 				'fecha_registro' => $fechaActual,
 				'tipo_bien' => '0',
-				'nitproveedor' => $_REQUEST ['id_proveedor'],
-				'ordenador' => $_REQUEST ['id_ordenador'],
+				'nitproveedor' => ($_REQUEST ['id_proveedor'] != '') ? $_REQUEST ['id_proveedor'] : null,
+				'ordenador' => ($_REQUEST ['id_ordenador'] != '') ? $_REQUEST ['id_ordenador'] : null,
 				'fecha_revision' => $_REQUEST ['fecha_revision'],
-				'revisor' => $_REQUEST ['revisor'],
+				'revisor' => NUll,
 				'observacion' => $_REQUEST ['observacionesActa'],
 				'estado' => 1,
 				'tipo_orden' => $tipoOrden,
-				'numero_orden' => (isset ( $_REQUEST ['numero_orden'] )) ? $_REQUEST ['numero_orden'] : 0,
+				'numero_orden' => (isset ( $_REQUEST ['numero_orden'] )) ? "'".$_REQUEST ['numero_orden']."'" : "NULL",
 				'enlace_soporte' => $destino1,
 				'nombre_soporte' => $archivo1,
-				'identificador_contrato' => ($_REQUEST ['numeroContrato']!='') ? $_REQUEST ['numeroContrato'] : 0,
+				'identificador_contrato' => ($_REQUEST ['numeroContrato'] != '') ? $_REQUEST ['numeroContrato'] : NULL 
 		);
-
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarActa', $datosActa );
 		
-		$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$datosActa,'insertarActa' );
 		
-		// Registro de Items
-		foreach ( $items as $contenido ) {
+		if (isset ( $_REQUEST ['numero_orden'] )) {
 			
-			$datosItems = array (
-					$id_acta [0] [0],
-					$contenido ['item'],
-					$contenido ['descripcion'],
-					$contenido ['cantidad'],
-					$contenido ['valor_unitario'],
-					$contenido ['cantidad'] * $contenido ['valor_unitario'] 
-			);
+			// Rescatar los Elementos acta
 			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'insertarItems', $datosItems );
+			$cadenaSql = $this->miSql->getCadenaSql ( 'ConsultaElementosOrden', $_REQUEST ['numero_orden'] );
 			
-			$items = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+			$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			// Registrar al acta lo elementos de la Orden
+			
+			foreach ( $elementos as $valor ) {
+				
+				
+				$arreglo=array (
+						$valor [0],
+						$id_acta [0] [0] 
+				);
+				
+				
+				
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'RegistrarActaElementos', $arreglo);
+				
+				$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso",$arreglo,'RegistrarActaElementos');
+				
+			}
 		}
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'limpiar_tabla_items', $_REQUEST ['seccion'] );
-		$resultado_secuencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		
 		$datos = array (
 				$id_acta [0] [0],
-				$fechaActual 
+				$fechaActual,
+				$tipoOrden,
+				$_REQUEST['usuario']
 		);
 		
-		if ($items && $id_acta) {
-			
-			redireccion::redireccionar ( 'inserto', $datos );
+		if ($id_acta) {
+			$this->miConfigurador->setVariableConfiguracion("cache",true);
+			redireccion::redireccionar ( 'insertoActa', $datos );
+			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noInserto', $datos );
+			redireccion::redireccionar ( 'noInserto', $_REQUEST['usuario'] );
+			
+			exit ();
 		}
 	}
 	function resetForm() {

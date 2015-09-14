@@ -1,274 +1,219 @@
 <?php
-use inventarios\gestionElementos\modificarElemento\Sql;
 
-$ruta = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
-
-$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/plugin/html2pfd/";
-
-include ($ruta . "/plugin/scripts/javascript/dataTable/ssp.class.php");
+namespace inventarios\gestionElementos\detalleElemento;
 
 $conexion = "inventarios";
-$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
-$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
-$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
-$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
+$directorio = $this->miConfigurador->getVariableConfiguracion("host");
+$directorio .= $this->miConfigurador->getVariableConfiguracion("site") . "/index.php?";
+$directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");
 
-$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
-$rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/";
+$rutaBloque = $this->miConfigurador->getVariableConfiguracion("host");
+$rutaBloque .= $this->miConfigurador->getVariableConfiguracion("site") . "/blocks/";
 $rutaBloque .= $esteBloque ['grupo'] . '/' . $esteBloque ['nombre'];
 
-$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+$miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
+
+
+if ($_REQUEST ['funcion'] == 'subeFoto') {
+
+    //echo "aqui>".$_REQUEST['elemento'];
+    if (empty($_FILES['images'])) {
+        echo json_encode(['error' => 'No files found for upload.']);
+        // or you can throw an exception 
+        return; // terminate
+    }
+
+// get the files posted
+    $images = $_FILES['images'];
+
+// get user id posted
+    $userid = empty($_POST['userid']) ? '' : $_POST['userid'];
+
+// get user name posted
+    $username = empty($_POST['username']) ? '' : $_POST['username'];
+
+// a flag to see if everything is ok
+    $success = null;
+
+// file paths to store
+    $paths = [];
+
+// get file names
+    $filenames = $images['tmp_name'];
+
+// loop and process files
+    for ($i = 0; $i < count($filenames); $i++) {
+//        $ext = explode('.', basename($filenames[$i]));
+//        $target = "uploads" . DIRECTORY_SEPARATOR . md5(uniqid()) . "." . array_pop($ext);
+
+        $data = base64_encode(file_get_contents($filenames[$i]));
+        $parametro = array(
+            'id_elemento' => $_REQUEST['elemento'],
+            'prioridad' => 0,
+            'imagen' => $data,
+        );
+
+       $cadenaSql = $this->sql->getCadenaSql('guardar_foto', $parametro);
+        $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, 'insertar',$parametro,"guardar_foto");
+
+        if ($resultadoItems == true) {
+            $output = ['uploaded' => 'Foto registrada'];
+        } else {
+            $output = ['error' => 'Error while uploading images. Contact the system administrator'];
+        }
+
+// return a json encoded response for plugin to process successfully
+        echo json_encode($output);
+    }
+}
+
+
+
+if ($_REQUEST ['funcion'] == 'galeriaFoto') {
+
+    $sPhotos = '';
+    $cadenaSql = $this->miSql->getCadenaSql('consultar_fotos', $_REQUEST ['elemento']);
+    $aItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+    if ($aItems) {
+        foreach ($aItems as $i => $aItemInfo) {
+            $sPhotos .= '<img src="data:image/gif;base64,' . $aItems[$i][0] . '">, ';
+        }
+    } else {
+        $sPhotos = ['error' => 'No files were processed.'];
+    }
+
+    echo json_encode($sPhotos);
+}
+
+
+
+if ($_REQUEST ['funcion'] == 'eliminaFoto') {
+    //var_dump($_REQUEST);
+
+    $foto = $_REQUEST['num_registro'];
+    
+    $cadenaSql = $this->sql->getCadenaSql('eliminar_fotos', $foto);
+    $eliminar = $esteRecursoDB->ejecutarAcceso($cadenaSql, "insertar",$foto,"eliminar_fotos");
+
+    
+     if ($eliminar == true) {
+            $output = ['uploaded' => 'Foto eliminada'];
+        } else {
+            $output = ['error' => 'Error eliminando la foto'];
+        }
+    echo json_encode($output);
+}
+
+
 
 if ($_REQUEST ['funcion'] == 'Consulta') {
-	
-	/*
-	 * DataTables example server-side processing script.
-	 *
-	 * Please note that this script is intentionally extremely simply to show how
-	 * server-side processing can be implemented, and probably shouldn't be used as
-	 * the basis for a large complex system. It is suitable for simple use cases as
-	 * for learning.
-	 *
-	 * See http://datatables.net/usage/server-side for full details on the server-
-	 * side processing requirements of DataTables.
-	 *
-	 * @license MIT - http://datatables.net/license_mit
-	 */
-	
-	/*
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Easy set variables
-	 */
-	
-	// DB table to use
-	$table = 'arka_inventarios.elemento ';
-	
-	// Table's primary key
-	$primaryKey = 'id_elemento';
-	
-	// DB JOINS
-	$join [] = " JOIN arka_inventarios.tipo_bienes  ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien ";
-	$join [] = " JOIN arka_inventarios.entrada  ON entrada.id_entrada = elemento.id_entrada ";
-	$join [] = " JOIN arka_inventarios.elemento_individual  ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
-	
-	$join = implode ( " ", $join );
-	
-	// DB WHERE
-	
-	$arreglo = unserialize ( $_REQUEST ['arreglo'] );
-	
-	if ($arreglo ['fecha_inicio'] != '') {
-		$where [] = "elemento.fecha_registro BETWEEN CAST ( '" . $arreglo ['fecha_inicio'] . "' AS DATE) AND  CAST ( '" . $arreglo ['fecha_final'] . "' AS DATE)  ";
-	} else {
-		$where [] = '1=1';
-	}
-	if ($arreglo ['placa'] != '') {
-		$where [] = "elemento_individual.placa = '" . $arreglo ['placa'] . "' ";
-	} else {
-		
-		$where [] = '1=1';
-	}
-	if ($arreglo ['serie'] != '') {
-		$where [] = "elemento.serie= '" . $arreglo ['serie'] . "' ";
-	} else {
-		
-		$where [] = '1=1';
-	}
-	
-	if ($arreglo ['entrada'] != '') {
-		$where [] = "entrada.id_entrada= '" . $arreglo ['entrada'] . "' ";
-	} else {
-	
-		$where [] = '1=1';
-	}
-	
-	
-	
+    $arreglo = unserialize($_REQUEST['arreglo']);
 
-	if ($arreglo ['entrada'] != '') {
-		$where [] = "entrada.id_entrada= '" . $arreglo ['entrada'] . "' ";
-	} else {
-	
-		$where [] = '1=1';
-	}
-	
-	
-	
-	
-	
-	
-	$where = implode ( " AND ", $where );
-	
+    $cadenaSql = $this->sql->getCadenaSql('consultarElemento', $arreglo);
+//    $cadenaSql = $this->sql->getCadenaSql('consultarElemento', false);
+    $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
-	// Array of database columns which should be read and sent back to DataTables.
-	// The `db` parameter represents the column name in the database, while the `dt`
-	// parameter represents the DataTables column identifier. In this case simple
-	// indexes
-	$columns = array (
-			array (
-					'db' => 'elemento_individual.placa',
-					'dt' => 0 
-			),
-			array (
-					'db' => 'elemento.serie',
-					'dt' => 1 
-			),
-			array (
-					'db' => 'tipo_bienes.descripcion',
-					'dt' => 2 
-			),
-			array (
-					'db' => 'elemento.fecha_registro',
-					'dt' => 3 
-			),
-			array (
-					'db' => 'elemento.id_elemento',
-					'dt' => 4 
-			),
-			array (
-					'db' => 'entrada.estado_entrada',
-					'dt' => 5 
-			),
-			array (
-					'db' => 'entrada.cierre_contable',
-					'dt' => 6 
-			) 
-	);
-	
-	// var_dump($esteRecursoDB);exit;
-	// SQL server connection information
-	$sql_details = array (
-			'user' => $esteRecursoDB->usuario,
-			'pass' => $esteRecursoDB->clave,
-			'db' => $esteRecursoDB->db,
-			'host' => $esteRecursoDB->servidor 
-	);
-	
-	// var_dump($sql_details);exit;
-	/*
-	 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * If you just want to use the basic configuration for DataTables with PHP
-	 * server-side, there is no need to edit below this line.
-	 */
-	
-	echo json_encode ( SSP::simple ( $_GET, $sql_details, $table, $primaryKey, $columns, $join, $where ) );
+    foreach ($resultado as $key => $values) {
+        $variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+        $variable .= "&opcion=detalle";
+        $variable .= "&elemento=" . $resultado[$key]['id_elemento_ind'];
+        $variable .= "&usuario=" . $_REQUEST['usuario'];
+        $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
+
+        $detalle = "<center><a href='" . $variable . "'><u>Ver Detalle</u></a></center> ";
+
+        $resultadoFinal[] = array(
+            'placa' => "<center>" . $resultado[$key]['placa'] . "</center>",
+            'descripcion' => "<center>" . $resultado[$key]['descripcion'] . "</center>",
+            'sede' => "<center>" . $resultado[$key]['sede_nombre'] . "</center>",
+            'dependencia' => "<center>" . $resultado[$key]['dependencia_nombre'] . "</center>",
+            'funcionario' => "<center>" . $resultado[$key]['fun_nombre'] . "</center>",
+            'detalle' => "<center>" . $detalle
+        );
+    }
+
+    $total = count($resultadoFinal);
+    $resultado = json_encode($resultadoFinal);
+    $resultado = '{
+                "recordsTotal":' . $total . ',
+                "recordsFiltered":' . $total . ',
+		"data":' . $resultado . '}';
+
+    echo $resultado;
 }
 
-if ($_REQUEST ['funcion'] == 'consultaPlacas') {
-	
-	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_placa', $_GET ['query'] );
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
-	foreach ( $resultadoItems as $key => $values ) {
-		$keys = array (
-				'value',
-				'data' 
-		);
-		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
-	}
-	
-	// var_dump($resultado);
-	
-	// echo json_encode($resultadoItems);
-	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
+if ($_REQUEST ['funcion'] == 'placas') {
+    $parametro = $_REQUEST['query'];
+    $cadenaSql = $this->sql->getCadenaSql('buscar_placa', $parametro);
+    $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, 'busqueda');
+
+    foreach ($resultadoItems as $key => $values) {
+        $keys = array('value', 'data');
+        $resultado[$key] = array_intersect_key($resultadoItems[$key], array_flip($keys));
+    }
+    echo '{"suggestions":' . json_encode($resultado) . '}';
 }
 
-if ($_REQUEST ['funcion'] == 'consultaSerie') {
-	
-	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_serie', $_GET ['query'] );
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
-	foreach ( $resultadoItems as $key => $values ) {
-		$keys = array (
-				'value',
-				'data' 
-		);
-		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
-	}
-	
-	// var_dump($resultado);
-	
-	// echo json_encode($resultadoItems);
-	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
+if ($_REQUEST ['funcion'] == 'consultarDependencia') {
+    $cadenaSql = $this->sql->getCadenaSql('dependenciasConsultadas', $_REQUEST['valor']);
+    $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+    $resultado = json_encode($resultado);
+    echo $resultado;
 }
 
-if ($_REQUEST ['funcion'] == 'consultaEntrada') {
-	
-	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_entradas', $_GET ['query'] );
-	
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
-	foreach ( $resultadoItems as $key => $values ) {
-		$keys = array (
-				'value',
-				'data' 
-		);
-		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
-	}
-	
-	// var_dump($resultado);
-	
-	// echo json_encode($resultadoItems);
-	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
-}
 
-if ($_REQUEST ['funcion'] == 'consultaFuncionario') {
-	
-	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_funcionarios', $_GET ['query'] );
-	
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
-	foreach ( $resultadoItems as $key => $values ) {
-		$keys = array (
-				'value',
-				'data' 
-		);
-		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
-	}
-	
-	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
-}
+if ($_REQUEST ['funcion'] == 'consultarUbicacion') {
+    $cadenaSql = $this->sql->getCadenaSql('ubicacionesConsultadas', $_REQUEST['valor']);
+    $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
-if ($_REQUEST ['funcion'] == 'consultaSede') {
-	
-	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_sede', $_GET ['query'] );
-	
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
-	foreach ( $resultadoItems as $key => $values ) {
-		$keys = array (
-				'value',
-				'data' 
-		);
-		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
-	}
-	
-	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
+    $resultado = json_encode($resultado);
+    echo $resultado;
 }
+//
+//if ($_POST['action'] == 'get_info' && (int) $_POST['id'] > 0) {
+//    // get photo info ->>> Este es el numero de registro
+//    $iPid = (int) $_POST['id'];
+//
+//  echo  $cadenaSql = $this->sql->getCadenaSql('consultarElemento_foto', $iPid);
+//    $aImageInfo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+//    var_dump($aImageInfo);
+//    
+//    exit;
+//    // prepare last 10 comments con el numero de registro
+//    //$sCommentsBlock = $GLOBALS['MyComments']->getComments($iPid);
+//
+//    $cadenaSql = $this->sql->getCadenaSql('consultar_fotos', $aImageInfo[0]['numero_registro']);
+//    $aItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda"); // get photos info
+//    // Prev & Next navigation
+//    $sNext = $sPrev = '';
+//
+//    $cadenaSql = $this->sql->getCadenaSql('consultarElemento_foto_antes', $aImageInfo[0]['numero_registro']);
+//    $iPrev = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda"); // get photos info
+//
+//    $cadenaSql = $this->miSql->getCadenaSql('consultarElemento_foto_despues', $aImageInfo[0]['numero_registro']);
+//    $iNext = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda"); // get photos info
+//
+//    $iPrev = (int) $iPrev[0][0];
+//    $iNext = (int) $iNext[0][0];
+//    $sPrevBtn = ($iPrev) ? '<div class="preview_prev" onclick="getPhotoPreviewAjx(\'' . $iPrev . '\')"><img src=' . $rutaBloque . '"/script/sources281/images/prev.png" alt="prev" /></div>' : '';
+//    $sNextBtn = ($iNext) ? '<div class="preview_next" onclick="getPhotoPreviewAjx(\'' . $iNext . '\')"><img src=' . $rutaBloque . '"/script/sources281images/next.png" alt="next" /></div>' : '';
+//
+//    require_once($rutaBloque . '/script/sources281/classes/Services_JSON.php');
+//
+//    $oJson = new Services_JSON();
+//    header('Content-Type:text/javascript');
+//    echo $oJson->encode(array(
+//        'data1' => '<img class="fileUnitSpacer" src="data:image/gif;base64,' . $aImageInfo[0]['imagen'] . '">' . $sPrevBtn . $sNextBtn,
+//            //   'data2' => $sCommentsBlock,
+//    ));
+//    exit;
+//}
 
-if ($_REQUEST ['funcion'] == 'consultaDependencia') {
-	
-	$arreglo = array (
-			$_REQUEST ['valor'],
-			$_GET ['query'] 
-	);
-	
-	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_dependencia', $arreglo );
-	
-	
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	
-	foreach ( $resultadoItems as $key => $values ) {
-		$keys = array (
-				'value',
-				'data' 
-		);
-		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
-	}
-	
-	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
-}
 
-?>
+
+

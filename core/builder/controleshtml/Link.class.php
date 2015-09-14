@@ -5,6 +5,8 @@
  * $atributos['tabIndex']
  * $atributos['estilo']
  * $atributos['enlaceTexto']
+ * $atributos['enlaceImagen']
+ * $atributos['posicionImagen']
  */
 require_once ("core/builder/HtmlBase.class.php");
 class Link extends HtmlBase {
@@ -52,32 +54,41 @@ class Link extends HtmlBase {
 			}
 		}
 		$this->cadenaHTML .= ">\n";
-		if (isset ( $atributos ["enlaceTexto"] )) {
-			$this->cadenaHTML .= "<span>" . $atributos ["enlaceTexto"] . "</span>";
-		}
-		
+
 		if (isset ( $atributos ["enlaceImagen"] )) {
-			$this->cadenaHTML .= "<img src=" . $atributos ["enlaceImagen"] . " ";
+			$imagen = "<img src=" . $atributos ["enlaceImagen"] . " ";
 			
 			if (isset ( $atributos [self::ANCHO] )) {
 				if ($atributos [self::ANCHO] != "") {
-					$this->cadenaHTML .= "width='" . $atributos [self::ANCHO] . "' ";
+					$imagen .= "width='" . $atributos [self::ANCHO] . "' ";
 				}
 			} else {
-				$this->cadenaHTML .= "width='10px' ";
+				$imagen .= "width='10px' ";
 			}
 			
 			if (isset ( $atributos ["alto"] )) {
 				if ($atributos ["alto"] != "") {
-					$this->cadenaHTML .= "height='" . $atributos [self::ALTO] . "' ";
+					$imagen .= "height='" . $atributos [self::ALTO] . "' ";
 				}
 			} else {
-				$this->cadenaHTML .= "height='10px' ";
+				$imagen .= "height='10px' ";
 			}
 			
-			$this->cadenaHTML .= " />";
+			$imagen .= " />";
+		}
+                
+                if (isset ( $atributos ["enlaceImagen"] ) && isset ( $atributos [self::POSICIONIMAGEN]) && $atributos [self::POSICIONIMAGEN]=='atras' )
+                    {$this->cadenaHTML .= $imagen; }
+                
+		if (isset ( $atributos ["enlaceTexto"] )) {
+			$this->cadenaHTML .= "<span>" . $atributos ["enlaceTexto"] . "</span>";
 		}
 		
+                if (isset ( $atributos ["enlaceImagen"] ) && isset ( $atributos [self::POSICIONIMAGEN]) && $atributos [self::POSICIONIMAGEN]=='adelante' )
+                    {$this->cadenaHTML .= $imagen; }
+		 elseif (isset ( $atributos ["enlaceImagen"] ) && !isset ( $atributos [self::POSICIONIMAGEN] ))
+                    {$this->cadenaHTML .= $imagen; }
+                    
 		$this->cadenaHTML .= "</a>";
 		
 		if (isset ( $atributos [self::SALTOLINEA] )) {

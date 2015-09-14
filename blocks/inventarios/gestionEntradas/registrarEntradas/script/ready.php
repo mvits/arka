@@ -24,7 +24,10 @@
             });
         });
 
-                 
+                               $('#tablaTitulos').dataTable( {
+                "sPaginationType": "full_numbers"
+                 } );
+
                  
                  $("#<?php echo $this->campoSeguro('supervisor')?>").select2({
              	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
@@ -32,6 +35,7 @@
               	 });
                  
          $("#<?php echo $this->campoSeguro('clase')?>").select2();
+         $("#<?php echo $this->campoSeguro('numero_acta')?>").select2();
          $("#<?php echo $this->campoSeguro('acta_recibido')?>").select2();
              
          
@@ -111,6 +115,7 @@
                    $("#<?php echo $this->campoSeguro('recuperacion')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('tipo_cotr')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('inf_contr')?>").css('display',' none');
+                   $("#<?php echo $this->campoSeguro('inf_provee')?>").css('display','none');
                    $("#<?php echo $this->campoSeguro('cuadro_ordenador')?>").css('display','none');
    
               	 

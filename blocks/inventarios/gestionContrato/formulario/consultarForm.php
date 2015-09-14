@@ -51,6 +51,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 	$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		
 	$variable = "pagina=" . $miPaginaActual;
+	$variable .= "&usuario=".$_REQUEST['usuario'];
 	$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 	// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -71,7 +72,9 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 	
 	$esteCampo = "Agrupacion";
 	$atributos ['id'] = $esteCampo;
-	$atributos ['leyenda'] = "Registro Contratos Vicerectoria";
+	$atributos ["estilo"] = "jqueryui";
+	$atributos ['tipoEtiqueta'] = 'inicio';
+	$atributos ['leyenda'] = "Registro Contratos";
 	echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 	
 
@@ -212,11 +215,14 @@ $resultadoContratos = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" )
 
 if ($resultadoContratos) {
 	
+	
+	
+	
 	// -----------------Inicio de Conjunto de Controles----------------------------------------
 	$esteCampo = "marcoDatosResultadoParametrizar";
 	$atributos ["estilo"] = "jqueryui";
-	$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
-	// echo $this->miFormulario->marcoAgrupacion("inicio", $atributos);
+// 	$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+	echo $this->miFormulario->marcoAgrupacion("inicio", $atributos);
 	unset ( $atributos );
 	
 	echo "<table id='tablaContratos'>";
@@ -240,6 +246,7 @@ if ($resultadoContratos) {
 		$variable .= "&contrato=" . $resultadoContratos [$i] [4];
 		$variable .= "&nombre_contrato=" . $resultadoContratos [$i] [0];
 		$variable .= "&identificador_contrato=" . $resultadoContratos [$i] [9];
+		$variable .= "&usuario=".$_REQUEST['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		$mostrarHtml = "<tr>

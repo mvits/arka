@@ -159,11 +159,11 @@ class registrarForm {
 		
 		$atributos ['evento'] = '';
 		$atributos ['deshabilitado'] = true;
-		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ["etiquetaObligatorio"] = false;
 		$atributos ['tab'] = $tab;
 		$atributos ['tamanno'] = 1;
 		$atributos ['estilo'] = 'jqueryui';
-		$atributos ['validar'] = 'required';
+		$atributos ['validar'] = '';
 		$atributos ['limitar'] = true;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['anchoEtiqueta'] = 150;
@@ -369,6 +369,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=ConsultarElemento";
+		$valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
 		 * Para ello utiliza la hora en que es creado el formulario para

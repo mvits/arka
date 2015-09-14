@@ -153,11 +153,154 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 $urlFinalProveedor = $url . $cadena;
 
 
-// echo $urlFinal;exit;
-// echo $urlFinal2;
-// echo $urlFinal3;
+// Variables
+$cadenaACodificarTipoBien = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificarTipoBien .= "&procesarAjax=true";
+$cadenaACodificarTipoBien .= "&action=index.php";
+$cadenaACodificarTipoBien .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarTipoBien .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarTipoBien .= "&funcion=SeleccionTipoBien";
+$cadenaACodificarTipoBien .="&tiempo=".$_REQUEST['tiempo'];
+
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarTipoBien, $enlace );
+
+// URL definitiva
+$urlFinalTipoBien = $url . $cadena;
+
+
+
+// Variables
+$cadenaACodificariva = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificariva .= "&procesarAjax=true";
+$cadenaACodificariva .= "&action=index.php";
+$cadenaACodificariva .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificariva .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificariva .= "&funcion=consultarIva";
+$cadenaACodificariva .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadenaiva = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificariva, $enlace );
+
+// URL definitiva
+$urlFinaliva = $url . $cadenaiva;
+ 
+
+
+
+
 ?>
+
+
+<script lenguage="JavaScript">
+function regresar()
+{
+window.history.go(-1)	
+}
+</script>
+
 <script type='text/javascript'>
+
+function resetIva(elem, request, response){
+	  $.ajax({
+	    url: "<?php echo $urlFinaliva?>",
+	    dataType: "json",
+	    success: function(data){ 
+
+
+
+
+	        if(data[0]!=" "){
+
+	            $("#<?php echo $this->campoSeguro('iva')?>").html('');
+	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('iva')?>");
+	            $.each(data , function(indice,valor){
+
+	            	$("<option value='"+data[ indice ].id_iva+"'>"+data[ indice ].descripcion+"</option>").appendTo("#<?php echo $this->campoSeguro('iva')?>");
+	            	
+	            });
+	            
+	            
+	            $('#<?php echo $this->campoSeguro('iva')?>').width(150);
+	            $("#<?php echo $this->campoSeguro('iva')?>").select2();
+	            
+	          
+	            
+		        }
+	    			
+
+	    }
+		                    
+	   });
+	}; 
+
+function tipo_bien(elem, request, response){
+	  $.ajax({
+	    url: "<?php echo $urlFinalTipoBien?>",
+	    dataType: "json",
+	    data: { valor:$("#<?php echo $this->campoSeguro('nivel')?>").val()},
+	    success: function(data){ 
+
+
+	    			$("#<?php echo $this->campoSeguro('id_tipo_bien')?>").val(data[0]);
+	    			$("#<?php echo $this->campoSeguro('tipo_bien')?>").val(data[1]);
+
+	    			  switch($("#<?php echo $this->campoSeguro('id_tipo_bien')?>").val())
+	    	            {
+	    	                           
+	    	                
+	    	                case '2':
+
+
+	    	                    $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','none');
+	    	                    $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','block');   
+	    	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
+	    	                 $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
+
+	    	                 break;
+	    	                
+	    	                case '3':
+
+	    	                    $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','block');
+	    	                    $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','none');
+	    	                    $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
+	    	         
+	    	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('1');
+	    	                 $('#<?php echo $this->campoSeguro('cantidad')?>').attr('disabled','');
+	    	                    
+	    	                break;
+	    	                                
+	    	           
+	    	                break;
+	    	                
+
+	    	                default:
+
+	    	                    $("#<?php echo $this->campoSeguro('devolutivo')?>").css('display','none');
+	    	                    $("#<?php echo $this->campoSeguro('consumo_controlado')?>").css('display','none');   
+	    	                    
+	    	                 
+	    	                 $("#<?php echo $this->campoSeguro('cantidad')?>").val('');
+	    	                 $('#<?php echo $this->campoSeguro('cantidad')?>').removeAttr('disabled');
+	    	                 
+	    	                break;
+	    	                
+	    	                }
+
+
+
+
+
+
+	    			
+
+	    }
+		                    
+	   });
+	};
 
 
 
@@ -187,6 +330,45 @@ function consultarContrato(elem, request, response){
 		                    
 	   });
 };
+
+
+
+function consultarDependenciaConsultada(elem, request, response){
+	  $.ajax({
+	    url: "<?php echo $urlFinal16?>",
+	    dataType: "json",
+	    data: { valor:$("#<?php echo $this->campoSeguro('sedeConsulta')?>").val()},
+	    success: function(data){ 
+
+
+
+
+	        if(data[0]!=" "){
+
+	            $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").html('');
+	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta')?>");
+	            $.each(data , function(indice,valor){
+
+	            	$("<option value='"+data[ indice ].ESF_CODIGO_DEP+"'>"+data[ indice ].ESF_DEP_ENCARGADA+"</option>").appendTo("#<?php echo $this->campoSeguro('dependenciaConsulta')?>");
+	            	
+	            });
+	            
+	            $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").removeAttr('disabled');
+	            
+	            $('#<?php echo $this->campoSeguro('dependenciaConsulta')?>').width(300);
+	            $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2();
+	            
+	          
+	            
+		        }
+	    			
+
+	    }
+		                    
+	   });
+	};
+
+
 
 
 
@@ -408,7 +590,21 @@ function datosOrdenador(elem, request, response){
     			}
 
     	      });
+
+
+
         
+        $("#<?php echo $this->campoSeguro('sedeConsulta')?>").change(function(){
+        	if($("#<?php echo $this->campoSeguro('sedeConsulta')?>").val()!=''){
+        		consultarDependenciaConsultada();
+    		}else{
+    			$("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").attr('disabled','');
+    			}
+
+    	      });
+        
+        
+             
         
         $("#<?php echo $this->campoSeguro('asignacionOrdenador')?>").change(function(){
         	
@@ -442,6 +638,18 @@ function datosOrdenador(elem, request, response){
                 });
 
 
+
+        $("#<?php echo $this->campoSeguro('nivel')?>").change(function() {
+        	
+    		if($("#<?php echo $this->campoSeguro('nivel')?>").val()!=''){
+
+    			tipo_bien();	
+
+    		}else{}
+
+
+     });
+        
 
 
             $("#<?php echo $this->campoSeguro('nitproveedor') ?>").autocomplete({

@@ -170,7 +170,8 @@ class Sql extends \Sql {
 			case "buscar_placa" :
 				$cadenaSql = " SELECT DISTINCT placa, placa as placas ";
 				$cadenaSql .= "FROM elemento_individual ";
-				$cadenaSql .= "ORDER BY placa DESC ";
+				$cadenaSql .= "WHERE placa IS NOT NULL ";
+				$cadenaSql .= "ORDER BY placa DESC ;";
 				
 				break;
 			

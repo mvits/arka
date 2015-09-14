@@ -47,6 +47,7 @@ if (!isset($GLOBALS["autorizado"])) {
     $directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
     	
     $variable = "pagina=" . $miPaginaActual;
+    $variable .= "&usuario=".$_REQUEST['usuario'];
     $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
     	
     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------

@@ -222,18 +222,12 @@ class Formulario {
 
              
         }
-
         return true;
-
     }
     
-    
-    
-
 }
 
 $miFormulario = new Formulario ( $this->lenguaje, $this->miFormulario,$this->sql );
-
 
 $miFormulario->formulario ();
 $miFormulario->mensaje ();

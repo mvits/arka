@@ -55,6 +55,12 @@ class Funcion {
 	function modificarOrden() {
 		include_once ($this->ruta . "funcion/modificarOrden.php");
 	}
+	function modificarElementos() {
+		include_once ($this->ruta . "funcion/procesarModificarElementos.php");
+	}
+	function eliminarElementoOrden() {
+		include_once ($this->ruta . "funcion/procesareliminarElemento.php");
+	}
 	function documentoPdf() {
 		include_once ($this->ruta . "funcion/documentoPdf.php");
 	}
@@ -75,15 +81,21 @@ class Funcion {
 			$this->procesarAjax ();
 		} elseif (isset ( $_REQUEST ["opcion"] )) {
 			
-// 			var_dump($_REQUEST);exit;
 			switch ($_REQUEST ['opcion']) {
 				
 				case 'modificarOrden' :
 					$this->modificarOrden ();
 					break;
 				
-				case 'documento' :
-					
+				case 'procesarModificarElementos' :
+					$this->modificarElementos ();
+					break;
+				
+				case 'eliminarElementoOrden' :
+					$this->eliminarElementoOrden ();
+					break;
+				
+				case 'generarDocumento' :
 					$this->documentoPdf ();
 					break;
 			}

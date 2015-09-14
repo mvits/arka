@@ -151,6 +151,7 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=".$_REQUEST['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -622,7 +623,7 @@ class registrarForm {
 				unset ( $atributos );
 				
 				$atributos ["id"] = "itemsAgr";
-				$atributos ["estiloEnLinea"] = "display:" . $motrar;
+ 				$atributos ["estiloEnLinea"] = "display:" . $motrar;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->division ( "inicio", $atributos );
 				unset ( $atributos );
@@ -630,11 +631,13 @@ class registrarForm {
 					
 					$esteCampo = "Agrupacion";
 					$atributos ['id'] = $esteCampo;
-					$atributos ['leyenda'] = "Elementos Referentes a las Entrada";
+					$atributos ['leyenda'] = "Elementos Asignados al Funcionario";
 					echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 					
 					{
 						$cantidaditems = count ( $elementos );
+						
+						
 						
 						if ($elementos) {
 							
@@ -644,9 +647,8 @@ class registrarForm {
 				                <tr>
 				                   <th>Nivel Inventarios</th>
 				                    <th>Cantidad</th>
-									<th>Cantidad Asignar</th>
-				                    <th>Nombre</th>
-									<th>Selección Items</th>
+									<th>Nombre</th>
+									<th>Elementos Descargar</th>
 							    </tr>
 					            </thead>
 					            <tbody>";
@@ -661,44 +663,10 @@ class registrarForm {
 								
 								if ($elementos_restantes) {
 									$mostrarHtml = "<tr>
-						                    <td><center>" . $elementos [$i] [1] . "</center></td>
-						                    <td><center>" . $cantidad_sobrante . "</center></td>
-						                    <td><center>";
-									
-									$atributos ["id"] = "botones";
-									$atributos ["estilo"] = "marcoBotones";
-									$mostrarHtml .= $this->miFormulario->division ( "inicio", $atributos );
-									
-									$esteCampo = "cantidadAsignar" . $i;
-									$atributos ['id'] = $esteCampo;
-									$atributos ['nombre'] = $esteCampo;
-									$atributos ['tipo'] = 'text';
-									$atributos ['estilo'] = 'center';
-									$atributos ['marco'] = true;
-									$atributos ['estiloMarco'] = '';
-									$atributos ['columnas'] = 1;
-									$atributos ['textoFondo'] = "Cantidad";
-									$atributos ['dobleLinea'] = 0;
-									$atributos ['tabIndex'] = $tab;
-									$atributos ['validar'] = 'custom[onlyNumberSp]';
-									if (isset ( $_REQUEST [$esteCampo] )) {
-										$atributos ['valor'] = $_REQUEST [$esteCampo];
-									} else {
-										$atributos ['valor'] = '';
-									}
-									$atributos ['deshabilitado'] = false;
-									$atributos ['tamanno'] = 10;
-									$atributos ['maximoTamanno'] = '';
-									$atributos ['anchoEtiqueta'] = 0;
-									$tab ++;
-									
-									// Aplica atributos globales al control
-									$atributos = array_merge ( $atributos, $atributosGlobales );
-									$mostrarHtml .= ($cantidad_sobrante == 1) ? ' ' : $this->miFormulario->campoCuadroTexto ( $atributos );
-									
-									$mostrarHtml .= $this->miFormulario->division ( 'fin' );
-									$mostrarHtml .= "</center></td>
-			     							 <td><center>" . $elementos [$i] [3] . "</center></td>
+						                    <td><center>" . $elementos [$i] ['item'] . "</center></td>
+						                    <td><center>1</center></td>";
+						                    
+									$mostrarHtml .= "<td><center>" . $elementos [$i] ['descripcion'] . "</center></td>
 				   							<td><center>";
 									
 									// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -715,7 +683,7 @@ class registrarForm {
 									if (isset ( $_REQUEST [$esteCampo] )) {
 										$atributos ['valor'] = $_REQUEST [$esteCampo];
 									} else {
-										$atributos ['valor'] = $elementos [$i] [0];
+										$atributos ['valor'] = $elementos [$i] ['id_elemento_ind'];
 									}
 									
 									$atributos ['deshabilitado'] = false;
@@ -873,6 +841,7 @@ class registrarForm {
 			$valorCodificado .= "&id_funcionario=" . $id_funcionario;
 			$valorCodificado .= "&cantidadItems=" . $cantidaditems;
 			$valorCodificado .= "&vigencia=" . $salida ['vigencia'];
+			$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 			
 			if (isset ( $_REQUEST ['salidasAS'] )) {
 				$valorCodificado .= "&Re_Actualizacion=1";

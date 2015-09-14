@@ -73,6 +73,7 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 				
 			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&usuario=" . $_REQUEST['usuario']; 
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -103,7 +104,7 @@ class registrarForm {
 				
 				if ($_REQUEST ['mensaje'] == 'inserto') {
 					
-					$mensaje = "Se Registro Entrada <br> Número de Entrada: " . $_REQUEST ['consecutivo'] . "<br>Fecha Registro:". date ( 'Y-m-d' );
+					$mensaje = "Se Registro Entrada <br> Número de Entrada: " . $_REQUEST ['consecutivo']."<br>Fecha Registro:". date ( 'Y-m-d' );
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -201,8 +202,30 @@ class registrarForm {
 					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoBoton ( $atributos );
+// 					echo $this->miFormulario->campoBoton ( $atributos );
 					// -----------------FIN CONTROL: Botón -----------------------------------------------------------
+
+					// -----------------CONTROL: Botón ----------------------------------------------------------------
+					$esteCampo = 'botonActivarElementos';
+					$atributos ["id"] = $esteCampo;
+					$atributos ["tabIndex"] = $tab;
+					$atributos ["tipo"] = 'boton';
+					// submit: no se coloca si se desea un tipo button genérico
+					$atributos ['submit'] = true;
+					$atributos ["estiloMarco"] = '';
+					$atributos ["estiloBoton"] = 'jqueryui';
+					// verificar: true para verificar el formulario antes de pasarlo al servidor.
+					$atributos ["verificar"] = '';
+					$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+					$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoBoton ( $atributos );
+					
+					
 					// -----------------CONTROL: Botón ----------------------------------------------------------------
 					$esteCampo = 'botonCargarElemento';
 					$atributos ["id"] = $esteCampo;
@@ -309,7 +332,10 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=redireccionar";
-		$valorCodificado .= "&id_entrada=". $_REQUEST ['numero_entrada'];
+		$valorCodificado .= "&numero_entrada=". $_REQUEST ['numero_entrada'];
+		$valorCodificado .= "&consecutivo_entrada=" . $_REQUEST ['consecutivo'];
+		$valorCodificado .= "&numero_acta=".$_REQUEST['numero_acta'];
+		$valorCodificado .= "&usuario=".$_REQUEST['usuario']; 
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
 		 * Para ello utiliza la hora en que es creado el formulario para
