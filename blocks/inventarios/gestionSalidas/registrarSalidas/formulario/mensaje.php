@@ -53,11 +53,15 @@ class registrarForm {
 					$_REQUEST ['salida'],
 					$_REQUEST ['entrada'] 
 			);
+			
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consulta_elementos_validar', $_REQUEST ['entrada'] );
+			
+			$elementos_validacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
 		}
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consulta_elementos_validar', $_REQUEST ['entrada'] );
-		
-		$elementos_validacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
 		
 		
 		// Limpia Items Tabla temporal

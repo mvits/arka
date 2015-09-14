@@ -90,9 +90,7 @@ $cadenaACodificar .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar .= "&funcion=Consulta";
 $cadenaACodificar .= "&tiempo=" . $_REQUEST ['tiempo'];
-if (isset ( $_REQUEST ['usuario'] )) {
-	$cadenaACodificar .= "&usuario=" . $_REQUEST ['usuario'];
-}
+$cadenaACodificar .= "&usuario=" . $_REQUEST ['usuario'];
 $cadenaACodificar .= $cadenaACodificar . "&arreglo=" . $arreglo;
 
 // Codificar las variables
@@ -118,9 +116,7 @@ $cadenaACodificar16 .= "&action=index.php";
 $cadenaACodificar16 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar16 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar16 .= $cadenaACodificar16 . "&funcion=consultarDependencia";
-if (isset ( $_REQUEST ['usuario'] )) {
-	$cadenaACodificar16 .= "&usuario=" . $_REQUEST ['usuario'];
-}
+$cadenaACodificar16 .= "&usuario=" . $_REQUEST ['usuario'];
 $cadenaACodificar16 .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 // Codificar las variables
@@ -137,9 +133,7 @@ $cadenaACodificar6 .= "&action=index.php";
 $cadenaACodificar6 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar6 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar6 .= $cadenaACodificar6 . "&funcion=galeriaFoto";
-if (isset ( $_REQUEST ['usuario'] )) {
-	$cadenaACodificar6 .= "&usuario=" . $_REQUEST ['usuario'];
-}
+$cadenaACodificar6 .= "&usuario=" . $_REQUEST ['usuario'];
 $cadenaACodificar6 .= "&tiempo=" . $_REQUEST ['tiempo'];
 $cadenaACodificar6 .= "&elemento=" . isset ( $_REQUEST ['elemento'] );
 
@@ -157,9 +151,7 @@ $cadenaACodificar4 .= "&action=index.php";
 $cadenaACodificar4 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar4 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar4 .= $cadenaACodificar4 . "&funcion=consultarUbicacion";
-if (isset ( $_REQUEST ['usuario'] )) {
-	$cadenaACodificar4 .= "&usuario=" . $_REQUEST ['usuario'];
-}
+$cadenaACodificar4 .= "&usuario=" . $_REQUEST ['usuario'];
 $cadenaACodificar4 .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 // Codificar las variables
@@ -176,9 +168,7 @@ $cadenaACodificar3 .= "&action=index.php";
 $cadenaACodificar3 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar3 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar3 .= $cadenaACodificar3 . "&funcion=subeFoto";
-if (isset ( $_REQUEST ['usuario'] )) {
-	$cadenaACodificar3 .= "&usuario=" . $_REQUEST ['usuario'];
-}
+$cadenaACodificar3 .= "&usuario=" . $_REQUEST ['usuario'];
 $cadenaACodificar3 .= "&tiempo=" . $_REQUEST ['tiempo'];
 $cadenaACodificar3 .= "&elemento=" . $elemento_id;
 
@@ -217,9 +207,7 @@ if (isset ( $_REQUEST ['elemento'] ) && empty ( $aItems ) == FALSE) {
 		$cadenaACodificar5 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 		$cadenaACodificar5 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$cadenaACodificar5 .= $cadenaACodificar5 . "&funcion=eliminaFoto";
-		if (isset ( $_REQUEST ['usuario'] )) {
-			$cadenaACodificar5 .= "&usuario=" . $_REQUEST ['usuario'];
-		}
+		$cadenaACodificar5 .= "&usuario=" . $_REQUEST ['usuario'];
 		$cadenaACodificar5 .= "&tiempo=" . $_REQUEST ['tiempo'];
 		$cadenaACodificar5 .= "&num_registro=" . $aItems [$i] ['num_registro'];
 		
@@ -407,4 +395,4 @@ if (isset ( $_REQUEST ['elemento'] ) && empty ( $aItems ) == FALSE) {
 
 
 <?php
-// disable warnings
+

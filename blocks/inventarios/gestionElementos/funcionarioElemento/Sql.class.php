@@ -32,13 +32,6 @@ class Sql extends \Sql {
 			 * Clausulas específicas
 			 */
 			
-			case "Verificar_Periodo" :
-				$cadenaSql = " SELECT *   ";
-				$cadenaSql .= " FROM  arka_movil.periodo_levantamiento ";
-				$cadenaSql .= "WHERE estado_registro=TRUE ;";
-				
-				break;
-			
 			case "buscarUsuario" :
 				$cadenaSql = "SELECT ";
 				$cadenaSql .= "FECHA_CREACION, ";
@@ -154,13 +147,19 @@ class Sql extends \Sql {
 			/**
 			 * Clausulas Del Caso Uso.
 			 */
+			case "Verificar_Periodo" :
+				$cadenaSql = " SELECT *   ";
+				$cadenaSql .= " FROM  arka_movil.periodo_levantamiento ";
+				$cadenaSql .= "WHERE estado_registro=TRUE ;";
+				
+				break;
 			
-			// id_levantamiento, funcionario, observacion_funcionario, fecha_registrofun,
-			// observacion_almacen, fecha_registroalm, tipo_movimiento, id_periodolevantamiento,
-			// estado_registro, estado_radicacion)
-			// VALUES (?, ?, ?, ?,
-			// ?, ?, ?, ?,
-			// ?, ?);
+			case "consultar_Perido_final" :
+				$cadenaSql = " SELECT max(id_periodolevantamiento)   ";
+				$cadenaSql .= " FROM  arka_movil.periodo_levantamiento ";
+				$cadenaSql .= "WHERE estado_registro=TRUE ;";
+				
+				break;
 			
 			case "jefe_recursos_fisicos" :
 				
@@ -199,10 +198,11 @@ class Sql extends \Sql {
 			case "Registrar_Observaciones_Elemento" :
 				
 				$cadenaSql = "INSERT INTO arka_movil.detalle_levantamiento( 
-									    funcionario,id_elemento_individual, observacion,creador_observacion )";
+									    funcionario,id_elemento_individual,id_periodolevantamiento, observacion,creador_observacion )";
 				$cadenaSql .= "VALUES ( ";
 				$cadenaSql .= "'" . $variable ['funcionario'] . "',";
 				$cadenaSql .= "'" . $variable ['id_elemento_individual'] . "',";
+				$cadenaSql .= "'" . $variable ['periodo'] . "',";
 				$cadenaSql .= "'" . $variable ['observacion'] . "',";
 				$cadenaSql .= "0) RETURNING  id_detallelevantamiento  ";
 				

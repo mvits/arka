@@ -273,7 +273,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " JOIN elemento ON elemento.id_elemento = elemento_individual.id_elemento_gen ";
 				$cadenaSql .= " JOIN salida ON salida.id_salida = elemento_individual.id_salida ";
 				$cadenaSql .= " JOIN tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien ";
-				$cadenaSql .= ' JOIN arka_parametros.arka_dependencia ON arka_parametros.arka_dependencia."ESF_CODIGO_DEP"=salida.dependencia ';
+				$cadenaSql .= ' JOIN arka_parametros.arka_dependencia ON arka_parametros.arka_dependencia."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
 				// $cadenaSql .= "JOIN funcionario ON funcionario.id_funcionario = salida.funcionario ";
 				$cadenaSql .= " WHERE 1=1 ";
 				$cadenaSql .= " AND id_elemento_ind='" . $variable . "' ";

@@ -20,8 +20,6 @@ include_once ("core/connection/Sql.class.php");
  * poder realizar rollbacks gestionados por el aplicativo.
 */
 
-
-
 class Sql extends \Sql {
 
     var $miConfigurador;
@@ -63,7 +61,7 @@ class Sql extends \Sql {
 			case "registrarEvento" :
 				$cadenaSql = "INSERT INTO ";
 				$cadenaSql .= $prefijo . "logger( ";
-				$cadenaSql .= "id_usuario, ";
+				$cadenaSql .= "id, ";
 				$cadenaSql .= "evento, ";
 				$cadenaSql .= "fecha) ";
 				$cadenaSql .= "VALUES( ";

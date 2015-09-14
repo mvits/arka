@@ -173,11 +173,11 @@ class registrarForm {
                     <th># Número Serial</th>
                     <th>Descripción</th>
                     <th>Nombre Funcionario</th>
-		    <th>Identificación<br>Funcionario</th>
+		    		<th>Identificación<br>Funcionario</th>
                     <th>Dependencia</th>
                     <th>Ubicación Especifica</th>
-        	    <th>Tipo Bien</th>
-                    <th>Estado Elemento</th>
+        	    	<th>Tipo Bien</th>
+                    
                     <th>Generar  Faltante<br>Sobrante</th>
                 </tr>
             </thead>
@@ -197,31 +197,22 @@ class registrarForm {
                     <td><center>" . $elemento [$i] ['salidas'] . "</center></td>
                     <td><center>" . $elemento [$i] ['placa'] . "</center></td>
                     <td><center>" . $elemento [$i] ['serie'] . "</center></td>
-                        <td><center>" . $elemento [$i] ['descripcion_elemento'] . "</center></td>
+                	<td><center>" . $elemento [$i] ['descripcion_elemento'] . "</center></td>
                     <td><center>" . $elemento [$i] ['nombre_funcionario'] . "</center></td>
                     <td><center>" . $elemento [$i] ['funcionario_encargado'] . "</center></td>
                     <td><center>" . $elemento [$i] ['dependencia_encargada'] . "</center></td>		
                     <td><center>" . $elemento [$i] ['ubicacion_especifica'] . "</center></td>
                     <td><center>" . $elemento [$i] ['bien_tipo'] . "</center></td>";
+					
+					$mostrarHtml .= "<td><center>";
 				
-				if (is_null ( $elemento [$i] ['baja'] ) == false) {
-					
-					$mostrarHtml .= "<td><center>Tramite Baja</center></td>
-                    <td><center>";
-				} else {
-					
-					$mostrarHtml .= "<td><center>" . $elemento [$i] ['elemento_estado'] . "</center></td>
-                    <td><center>";
-				}
 				
 				if (is_null ( $elemento [$i] ['id_tipo_estado_elemento'] ) == true) {
-					
-					if (is_null ( $elemento [$i] ['baja'] ) == true) {
-						
+		
 						$mostrarHtml .= "<a href='" . $variable . "'>
                             <img src='" . $rutaBloque . "/css/images/faltsobra.png' width='15px'>
                         </a>";
-					}
+					
 				} else {
 					$mostrarHtml .= " ";
 				}

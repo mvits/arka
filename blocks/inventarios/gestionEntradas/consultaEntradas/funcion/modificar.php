@@ -39,7 +39,7 @@ class RegistradorOrden {
             $arreglo[$key]['estadoNuevo'] = $_REQUEST['estado'];
             $arreglo[$key]['estadoRegistro'] = ($_REQUEST['estado']==3)?'false':'true';
             $cadenaSql = $this->miSql->getCadenaSql('actualizarEstado', $arreglo[$key]);
-            $modificar = $esteRecursoDB->ejecutarAcceso($cadenaSql, "insertar");
+            $modificar = $esteRecursoDB->ejecutarAcceso($cadenaSql, "insertar",$arreglo[$key],"actualizarEstado");  
 
             if ($modificar == false) {
                 \inventarios\gestionEntradas\consultaEntradas\funcion\redireccion::redireccionar('noInserto');
@@ -47,7 +47,7 @@ class RegistradorOrden {
         }
 
         
-        
+         
         if ($modificar != false) {
         	$this->miConfigurador->setVariableConfiguracion("cache",true);
             \inventarios\gestionEntradas\consultaEntradas\funcion\redireccion::redireccionar('inserto', false);

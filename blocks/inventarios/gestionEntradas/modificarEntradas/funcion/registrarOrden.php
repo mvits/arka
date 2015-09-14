@@ -197,7 +197,7 @@ class RegistradorOrden {
 		
 	
 		if ($items == 1) {
-			
+			$this->miConfigurador->setVariableConfiguracion("cache",true);
 			redireccion::redireccionar ( 'inserto', $datos );
 		} else {
 			

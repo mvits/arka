@@ -50,7 +50,7 @@ if ($_FILES) {
 			);
 			
 			$cadenaSql = $this->sql->cadena_sql ( "actualizarDocumento", $parametros );
-			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' ,$parametros,"actualizarDocumento");
 			
 			
 			
@@ -72,17 +72,18 @@ $arreglo = array (
 );
 
 $cadenaSql = $this->sql->cadena_sql ( "actualizarContrato", $arreglo );
-$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso',$arreglo,"actualizarContrato" );
 
 // Crear Variables necesarias en los métodos
 
 $variable = '';
 
 if ($resultado) {
-	$this->funcion->Redireccionador ( 'actualizoDocumento', $variable );
+    $this->miConfigurador->setVariableConfiguracion("cache",true);
+	$this->funcion->Redireccionador ( 'actualizoDocumento', $_REQUEST['usuario'] );
 	exit();
 	
 } else {
-	$this->funcion->Redireccionador ( 'noactualizoDocumento', $variable );
+	$this->funcion->Redireccionador ( 'noactualizoDocumento', $_REQUEST['usuario'] );
 	exit();
 }

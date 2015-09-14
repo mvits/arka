@@ -34,7 +34,7 @@ class RegistradorOrden {
 		
 	
 		if ($eliminado) {
-			
+			$this->miConfigurador->setVariableConfiguracion("cache",true);
 			redireccion::redireccionar ( 'eliminoElemento' );
 			exit;
 		} else {

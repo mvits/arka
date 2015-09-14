@@ -101,14 +101,9 @@ class Oci8 extends ConectorDb {
      */
     function conectar_db() {
 
-    	
-    	
         $this->enlace = oci_connect($this->usuario, $this->clave, $this->db);
-        
-        
 
         if ($this->enlace) {
-        	
             return $this->enlace;
         } else {
             $this->error = oci_error();
@@ -195,12 +190,10 @@ class Oci8 extends ConectorDb {
 
         $cadenaParser = oci_parse($this->enlace, $cadena);
 
-        
         if (oci_execute($cadenaParser)) {
-        	
             return $this->procesarResultado($cadenaParser, $numeroRegistros);
         } else {
-        	echo "Verificar que la sentencia SQL no contenga ';' si el error es ORA-00911 : illegal character ";
+
             unset($this->registro);
             $this->error = oci_error($this->enlace);
             return 0;

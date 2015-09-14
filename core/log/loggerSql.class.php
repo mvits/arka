@@ -55,7 +55,7 @@ class loggerSql {
                 $this->cadena_sql [$indice].= "'".$parametro['descripcion']."',  ";
                 $this->cadena_sql [$indice].= "'".$parametro['host']."'  ";
                 $this->cadena_sql [$indice].= ")"; 
-                
+                 
                 break;             
             
             

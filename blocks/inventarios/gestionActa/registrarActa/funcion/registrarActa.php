@@ -32,7 +32,6 @@ class RegistradorActa {
 	}
 	function procesarFormulario() {
 		$fechaActual = date ( 'Y-m-d' );
-		var_dump($_REQUEST);exit; 
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -175,7 +174,7 @@ class RegistradorActa {
 		);
 		
 		if ($id_acta) {
-			
+			$this->miConfigurador->setVariableConfiguracion("cache",true);
 			redireccion::redireccionar ( 'insertoActa', $datos );
 			exit ();
 		} else {

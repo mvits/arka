@@ -69,6 +69,7 @@ class RegistradorOrden {
 				}
 				
 				$archivo = $archivo [1];
+				$_REQUEST ['id_proveedor']='';
 				
 				break;
 			
@@ -214,10 +215,10 @@ class RegistradorOrden {
 				$_REQUEST ['clase'],
 				($_REQUEST ['tipo_contrato'] != '') ? $_REQUEST ['tipo_contrato'] : 0,
 				($_REQUEST ['numero_contrato'] != '') ? $_REQUEST ['numero_contrato'] : 0,
-				($_REQUEST ['fecha_contrato'] != '') ? $_REQUEST ['fecha_contrato'] : '0001-01-01',
-				($_REQUEST ['id_proveedor'] != '') ? $_REQUEST ['id_proveedor'] : 0,
-				($_REQUEST ['numero_factura'] != '') ? $_REQUEST ['numero_factura'] : 0,
-				($_REQUEST ['fecha_factura'] != '') ? $_REQUEST ['fecha_factura'] : '0001-01-01',
+				($_REQUEST ['fecha_contrato'] != '') ? "'".$_REQUEST ['fecha_contrato']."'" : "NULL",
+				($_REQUEST ['id_proveedor'] != '') ? "'".$_REQUEST ['id_proveedor']."'" : "NULL",
+				($_REQUEST ['numero_factura'] != '') ?"'". $_REQUEST ['numero_factura']."'" :"NULL" ,
+				($_REQUEST ['fecha_factura'] != '') ? "'".$_REQUEST ['fecha_factura']."'" : "NULL",
 				$_REQUEST ['observaciones_entrada'],
 				$_REQUEST ['numero_entrada'],
 				"Estado_entrada" => '1',
@@ -234,7 +235,7 @@ class RegistradorOrden {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarEntrada', $arregloDatos );
 		
 		$id_entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arregloDatos, "actualizarEntrada" );
-		
+		 
 		if ($id_entrada) {
 			
 			redireccion::redireccionar ( 'inserto', array (

@@ -33,7 +33,6 @@ class registrarForm {
 		 * $atributos= array_merge($atributos,$atributosGlobales);
 		 */
 		
-
 		$atributosGlobales ['campoSeguro'] = 'true';
 		$atributosGlobales ['tiempo'] = 'true';
 		
@@ -69,6 +68,7 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		echo $this->miFormulario->formulario ( $atributos );
 		{
+			
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 			
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -79,10 +79,8 @@ class registrarForm {
 			
 			$variable = "pagina=" . $miPaginaActual;
 			$variable .= "&opcion=Consultar";
-			$variable .= "&funcionario=".$_REQUEST['funcionario'];
+			$variable .= "&funcionario=" . $_REQUEST ['funcionario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			
-			
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
@@ -204,6 +202,7 @@ class registrarForm {
 			$valorCodificado .= "&elemento_individual=" . $_REQUEST ['elemento_individual'];
 			$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
 			$valorCodificado .= "&placa=" . $_REQUEST ['placa'];
+			$valorCodificado .= "&periodo=" . $_REQUEST ['periodo'];
 			
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.

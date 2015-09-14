@@ -43,7 +43,7 @@ if ($_FILES) {
 			);
 			
 			$cadenaSql = $this->sql->cadena_sql ( "registroDocumento", $parametros );
-			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' ,$parametros,"registroDocumento");
 		} else {
 			$status = "<br>Error al subir el archivo1";
 		}
@@ -67,7 +67,7 @@ $arreglo = array (
 
 
 $cadenaSql = $this->sql->cadena_sql ( "registroContrato", $arreglo );
-$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso',$arreglo,"registroContrato" );
 
 // Crear Variables necesarias en los métodos
 
@@ -75,9 +75,10 @@ $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 $variable = '';
 
 if ($resultado) {
-	$this->funcion->Redireccionador ( 'registroDocumento', $variable );
+    $this->miConfigurador->setVariableConfiguracion("cache",true);
+	$this->funcion->Redireccionador ( 'registroDocumento', $_REQUEST['usuario'] );
 	exit();
 } else {
-	$this->funcion->Redireccionador ( 'noregistroDocumento', $variable );
+	$this->funcion->Redireccionador ( 'noregistroDocumento', $_REQUEST['usuario'] );
 	exit();
 }

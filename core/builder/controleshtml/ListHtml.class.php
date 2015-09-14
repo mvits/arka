@@ -28,7 +28,6 @@ class ListHTML extends HtmlBase{
         $this->cadenaHTML .= ">";
     
         foreach ( $this->atributos ["items"] as $clave => $valor ) {
-//         	var_dump($this->atributos); 
             // La clave es la fila, el valor es un arreglo con los datos de cada columna
             // $arreglo[fila][columna] 
             
@@ -46,16 +45,13 @@ class ListHTML extends HtmlBase{
         }
     
         $this->cadenaHTML .= "</ul>";
-//     echo  $this->cadenaHTML;
-//         exit;
+    
         return $this->cadenaHTML;
     
     }
     
     private function procesarValor($valor, $clave) {
         
-//     	var_dump($valor);
-//     	var_dump($clave);
         if(isset ( $this->atributos ['menu'] ) && $this->atributos ['menu']){
             $claseEnlace= "class='enlaceMenu' ";
         }else{
@@ -76,7 +72,6 @@ class ListHTML extends HtmlBase{
                 $this->cadenaHTML .= "<span class='ui-accordion-header ui-state-default ui-accordion-icons ui-corner-all'>" . $icono . $valor ['nombre'] . "</span>";
                 $this->cadenaHTML .= "</div>";
                 $this->cadenaHTML .= "</a>";
-                
             }
         } else {
             // Podría implementarse llamando a $this->enlace
@@ -86,10 +81,8 @@ class ListHTML extends HtmlBase{
     
             if (isset ( $this->atributos ["enlaces"] ) && $this->atributos ["enlaces"] == "true") {
                 $enlace = explode ( '|', $valor );
-                
                 $this->cadenaHTML .= "<a href='" . $enlace [1] . "' ".$claseEnlace.">" . $enlace [0] . "</a>";
             }
-//             echo "listos varlor ".$clave;
         }
     
         return true;

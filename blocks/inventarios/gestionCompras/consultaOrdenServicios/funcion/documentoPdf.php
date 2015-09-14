@@ -1,4 +1,4 @@
-<?
+<?php
 $ruta = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
 
 $host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/plugin/html2pfd/";

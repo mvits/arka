@@ -65,7 +65,7 @@ class RegistradorOrden {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertar_salida', $arreglo );
 		
-		$id_salida = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$id_salida = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,"insertar_salida");
 		
 		$items = unserialize ( $_REQUEST ['items'] );
 		$cantidad = unserialize ( $_REQUEST ['cantidad'] );
@@ -101,7 +101,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elementos_individuales', $arreglo );
 					
-					$actualizo_elem = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+					$actualizo_elem = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" ,$arreglo,"actualizar_elementos_individuales");
 				}
 			}
 			
@@ -117,7 +117,7 @@ class RegistradorOrden {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elementos_individuales', $arreglo );
 				
-				$actualizo_elem = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+				$actualizo_elem = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" , $arreglo,"actualizar_elementos_individuales"); 
 			}
 		}
 		
@@ -160,7 +160,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'InsertarSalidaContable', $arreglo_salida_contable );
 					
-					$id_salida_contable = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$id_salida_contable = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo_salida_contable,"InsertarSalidaContable");
 					
 					break;
 				
@@ -193,7 +193,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'InsertarSalidaContable', $arreglo_salida_contable );
 					
-					$id_salida_contable = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$id_salida_contable = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo_salida_contable,"InsertarSalidaContable");
 					
 					break;
 				
@@ -226,7 +226,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'InsertarSalidaContable', $arreglo_salida_contable );
 					
-					$id_salida_contable = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$id_salida_contable = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo_salida_contable,"InsertarSalidaContable"); 
 					
 					break;
 			}

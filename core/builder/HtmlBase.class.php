@@ -124,11 +124,13 @@ class HtmlBase {
 
     const TEXTOFONDO = 'textoFondo';
     
-	const ENLACEIMAGEN = 'enlaceImagen';
+    const ENLACEIMAGEN = 'enlaceImagen';
 	
-	const SALTOLINEA = 'saltoLinea';
+    const POSICIONIMAGEN = 'posicionImagen';
 	
-	const REDIRLUGAR = 'redirLugar';
+    const SALTOLINEA = 'saltoLinea';
+	
+    const REDIRLUGAR = 'redirLugar';
 	
 	
 	

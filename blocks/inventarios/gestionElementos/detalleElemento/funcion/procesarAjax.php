@@ -121,6 +121,7 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
         $variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
         $variable .= "&opcion=detalle";
         $variable .= "&elemento=" . $resultado[$key]['id_elemento_ind'];
+        $variable .= "&usuario=" . $_REQUEST['usuario'];
         $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable, $directorio);
 
         $detalle = "<center><a href='" . $variable . "'><u>Ver Detalle</u></a></center> ";

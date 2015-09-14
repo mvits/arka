@@ -20,7 +20,6 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -486,7 +485,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Consultar";
-		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
+		
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
 		 * Para ello utiliza la hora en que es creado el formulario para
@@ -507,7 +506,7 @@ class registrarForm {
 		$atributos ["etiqueta"] = "";
 		$atributos ["valor"] = $valorCodificado;
 		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos );
+		unset ( $atributos ); 
 		
 		$atributos ['marco'] = true;
 		$atributos ['tipoEtiqueta'] = 'fin';

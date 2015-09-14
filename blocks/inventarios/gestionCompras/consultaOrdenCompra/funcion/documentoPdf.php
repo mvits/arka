@@ -139,7 +139,7 @@ class RegistradorOrden {
 </style>				
 				
 				
-<page backtop='10mm' backbottom='7mm' backleft='10mm' backright='10mm'>
+<page backtop='8mm' backbottom='8mm' backleft='8mm' backright='8mm'>
 	
 
         <table align='left' style='width:100%;' >

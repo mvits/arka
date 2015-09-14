@@ -153,6 +153,7 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT DISTINCT id_elemento_ind, placa as placas ";
 				$cadenaSql .= "FROM elemento_individual ";
 				$cadenaSql .= "WHERE placa IS NOT NULL ";
+				$cadenaSql .= "AND estado_registro='t' ";
 				$cadenaSql .= "ORDER BY placa ASC ";
 				
 				break;
@@ -475,6 +476,7 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT DISTINCT id_elemento_ind, placa as placas ";
 				$cadenaSql .= "FROM elemento_individual ";
 				$cadenaSql .= "WHERE id_elemento_ind >= ".$variable." ";
+				$cadenaSql .= "AND estado_registro='t' ";
 				$cadenaSql .= "ORDER BY placa ASC ";
 				
 				break;

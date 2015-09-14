@@ -25,6 +25,7 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionElementos/";
@@ -75,11 +76,13 @@ class RegistradorOrden {
 					}
 				} else {
 					$status = "Error al subir el archivo";
+					
 					redireccion::redireccionar ( 'noInserto', $_REQUEST ['usuario'] );
 					// echo $status;
 				}
 			} else {
 				$status = "Error al subir archivo";
+				
 				redireccion::redireccionar ( 'noInserto', $_REQUEST ['usuario'] );
 				// echo $status . "2";
 			}
@@ -90,6 +93,7 @@ class RegistradorOrden {
 		
 		$a = 0;
 		
+
 		foreach ( $items as $key => $fila ) {
 			
 			foreach ( $fila as $columna => $valor ) {
@@ -226,10 +230,12 @@ class RegistradorOrden {
 				);
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarAprobar', $datosAprobar );
+				 
 				$asignar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $datosAprobar, "actualizarAprobar" );
 				$a ++;
 			}
 		}
+		
 		
 		if ($asignar == true) {
 			$this->miConfigurador->setVariableConfiguracion ( "cache", true );

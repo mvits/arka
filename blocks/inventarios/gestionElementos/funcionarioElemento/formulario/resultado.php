@@ -240,6 +240,8 @@ class registrarForm {
 					$VariableDetalles .= "&opcion=detalle";
 					$VariableDetalles .= "&elemento=" . $resultado [$i] ['identificador_elemento_individual'];
 					$VariableDetalles .= "&funcionario=" . $funcionario;
+					$VariableDetalles .= "&usuario=" . $_REQUEST ['usuario']; 
+					$VariableDetalles .= "&periodo=" .$resultado_periodo[0][0];
 					$VariableDetalles = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableDetalles, $directorio );
 					
 					$VariableObservaciones = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
@@ -247,6 +249,8 @@ class registrarForm {
 					$VariableObservaciones .= "&elemento_individual=" . $resultado [$i] ['identificador_elemento_individual'];
 					$VariableObservaciones .= "&funcionario=" . $funcionario;
 					$VariableObservaciones .= "&placa=" . $resultado [$i] ['placa'];
+					$VariableObservaciones .= "&usuario=" . $_REQUEST ['usuario'];
+					$VariableObservaciones .= "&periodo=" .$resultado_periodo[0][0];
 					$VariableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableObservaciones, $directorio );
 					
 					$identificaciones_elementos [] = $resultado [$i] ['identificador_elemento_individual'];

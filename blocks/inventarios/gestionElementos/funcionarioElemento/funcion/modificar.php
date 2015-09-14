@@ -28,10 +28,19 @@ class RegistradorOrden {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_Perido_final' );
+		
+		$periodo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$periodo=$periodo[0]['max'];
+		
+		
+		
 		$arreglo = array (
 				"funcionario" => $_REQUEST ['funcionario'],
 				"id_elemento_individual" => $_REQUEST ['elemento_individual'],
-				'observacion' => $_REQUEST ['descripcion'] 
+				'observacion' => $_REQUEST ['descripcion'], 
+				"periodo"=>$periodo
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'Registrar_Observaciones_Elemento', $arreglo );

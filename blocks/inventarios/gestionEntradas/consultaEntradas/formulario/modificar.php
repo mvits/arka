@@ -255,6 +255,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=modificar";
+		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 		$valorCodificado .= "&datos_entradas=" . base64_encode ( serialize ( $items ) );
 		
 		/**

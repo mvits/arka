@@ -169,10 +169,8 @@ class RegistradorOrden {
 				
 			}
 			
-
-			
 			$datos = "NÚMERO DE " . $nombre . " # " . $consecutivo . "<br> Y VIGENCIA " . date ( 'Y' );
-			
+			$this->miConfigurador->setVariableConfiguracion("cache",true);
 			redireccion::redireccionar ( 'inserto', array($datos,$consecutivo_orden[2]) );
 			exit ();
 		} else {

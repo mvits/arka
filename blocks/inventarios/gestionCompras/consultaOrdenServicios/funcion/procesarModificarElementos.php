@@ -192,7 +192,7 @@ class RegistradorOrden {
 		;
 		
 		if ($elemento) {
-			
+			$this->miConfigurador->setVariableConfiguracion("cache",true);
 			redireccion::redireccionar ( 'ActualizoElemento', $arreglo );
 			exit ();
 		} else {

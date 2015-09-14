@@ -237,6 +237,29 @@ class registrarForm {
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 				}
 				
+				
+				
+				if ($_REQUEST ['mensaje'] == 'noActualizarElementos') {
+						
+					$mensaje = "Se debe dejar mínimo un Elemento asociado a la Salida";
+						
+					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+					$esteCampo = 'mensajeRegistro';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['tipo'] = 'error';
+					$atributos ['estilo'] = 'textoCentrar';
+					$atributos ['mensaje'] = $mensaje;
+						
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					$semaforo = 0;
+					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+				}
+				
+				
 				if ($_REQUEST ['mensaje'] == 'noCantidad') {
 				
 					$mensaje = "No Ingreso Cantidad Correspondiente del Item <br>Error para Actualizar Salida";

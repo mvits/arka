@@ -123,7 +123,7 @@ class RegistradorOrden {
 		
 
 		if ($id_acta) {
-			
+			$this->miConfigurador->setVariableConfiguracion("cache",true);
 			redireccion::redireccionar ( 'inserto', $datos );
 			exit();
 		} else {

@@ -24,7 +24,9 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		    
+// 		var_dump ( $_REQUEST );
+// 		exit ();
+		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -209,7 +211,7 @@ class RegistradorOrden {
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarInformación', $arreglo_clase );
-		$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo_clase,"insertarInformación");
+		$info_clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo_clase,"insertarInformación");  
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'idMaximoEntrada' );
 		$idEntradamax = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -243,23 +245,22 @@ class RegistradorOrden {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarEntrada', $arregloDatos );
 		
-		$id_entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arregloDatos,"insertarEntrada"); 
+		$id_entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arregloDatos,"insertarEntrada" );
 		
 		$arreglo = array (
 				$idEntradamax,
 				$id_entrada [0] [0] ,
 				$id_entrada [0] [1] ,
-				$_REQUEST["usuario"]
 		);
 		
 		
 		if ($id_entrada) {
-			
-			redireccion::redireccionar ( 'inserto', $arreglo ); 
+			$this->miConfigurador->setVariableConfiguracion("cache",true);
+			redireccion::redireccionar ( 'inserto', $arreglo );
 			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noInserto' ,$_REQUEST['usuario']); 
+			redireccion::redireccionar ( 'noInserto' );
 			exit ();
 		}
 	}

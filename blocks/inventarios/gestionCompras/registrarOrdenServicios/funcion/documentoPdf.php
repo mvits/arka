@@ -1,4 +1,4 @@
-<?
+<?php
 
 $ruta = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
 

@@ -2,7 +2,7 @@
 $indice=0;
 $estilo[$indice]="estiloBloque.css";
 $estilo[$indice]="estiloNotificador.css";
-
+$estilo[$indice]="reloj.css";
 $indice++;
 
 $rutaBloque=$this->miConfigurador->getVariableConfiguracion("host");

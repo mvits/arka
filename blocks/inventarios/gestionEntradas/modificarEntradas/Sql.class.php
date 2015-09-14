@@ -463,10 +463,10 @@ class Sql extends \Sql {
 				$cadenaSql .= "  clase_entrada='" . $variable [1] . "', ";
 				$cadenaSql .= "  tipo_contrato='" . $variable [2] . "', ";
 				$cadenaSql .= "  numero_contrato='" . $variable [3] . "', ";
-				$cadenaSql .= "  fecha_contrato='" . $variable [4] . "', ";
-				$cadenaSql .= "  proveedor='" . $variable [5] . "', ";
-				$cadenaSql .= "  numero_factura='" . $variable [6] . "', ";
-				$cadenaSql .= "  fecha_factura='" . $variable [7] . "', ";
+				$cadenaSql .= "  fecha_contrato=" . $variable [4] . ", ";
+				$cadenaSql .= "  proveedor=". $variable [5] . ", ";
+				$cadenaSql .= "  numero_factura=" . $variable [6] . ", ";
+				$cadenaSql .= "  fecha_factura=" . $variable [7] . ", ";
 				$cadenaSql .= "  observaciones='" . $variable [8] . "', ";
 				$cadenaSql .= "  acta_recibido='" . $variable [10] . "', ";
 				$cadenaSql .= "  ordenador=" . $variable [11] . ", ";

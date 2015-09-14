@@ -187,7 +187,7 @@ class RegistradorOrden {
 				}
 				
 				if ($elemento) {
-					
+					$this->miConfigurador->setVariableConfiguracion("cache",true);
 					\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'inserto', $datos );
 					
 					exit ();
@@ -500,7 +500,7 @@ class RegistradorOrden {
 							);
 							
 							if ($elemento_id && $_REQUEST ['id_orden']) {
-								
+								$this->miConfigurador->setVariableConfiguracion("cache",true);
 								\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'inserto_cargue_masivo', $datos );
 								exit ();
 							} else {
