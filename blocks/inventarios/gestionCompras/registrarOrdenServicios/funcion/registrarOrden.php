@@ -69,7 +69,7 @@ class RegistradorOrden {
 		$id_ContratistaC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$datosContratistaC,'insertarContratista');
 		
 		// Registro Orden
-		
+		/*
 		$arreglo = array (
 				$fechaActual,
 				$_REQUEST ['vigencia_disponibilidad'],
@@ -88,7 +88,7 @@ class RegistradorOrden {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarInformacionPresupuestal', $arreglo );
 		
 		$info_presupuestal = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo,'insertarInformacionPresupuestal');
-		// var_dump ( $_REQUEST );
+		*/ 
 		
 		switch ($_REQUEST ['tipo_orden']) {
 			case '1' :
@@ -133,7 +133,6 @@ class RegistradorOrden {
 				$consecutivo_servicio,
 				$consecutivo_compra,
 				date ( 'Y-m-d' ),
-				$info_presupuestal [0] [0],
 				$_REQUEST ['dependencia_solicitante'],
 				$_REQUEST ['sede'],
 				$_REQUEST ['rubro'],

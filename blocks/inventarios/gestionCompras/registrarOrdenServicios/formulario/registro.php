@@ -1067,7 +1067,8 @@ class registrarForm {
 				}
 				
 				echo $this->miFormulario->agrupacion ( 'fin' );
-				
+				unset($atributos);
+				/*
 				$esteCampo = "AgrupacionDisponibilidad";
 				$atributos ['id'] = $esteCampo;
 				$atributos ['leyenda'] = "Información Respaldo Presupuestal";
@@ -1521,16 +1522,8 @@ class registrarForm {
 				}
 				
 				echo $this->miFormulario->agrupacion ( 'fin' );
-				
-				
-				
-				
-				// $esteCampo = "Encargados";
-				// $atributos ['id'] = $esteCampo;
-				// $atributos ['leyenda'] = $this->lenguaje->getCadena ( $esteCampo );
-				// echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
-				// {
-				
+				*/
+	
 				$esteCampo = "ordenadorGasto";
 				$atributos ['id'] = $esteCampo;
 				$atributos ['leyenda'] = $this->lenguaje->getCadena ( $esteCampo );

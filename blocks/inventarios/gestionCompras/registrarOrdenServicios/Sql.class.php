@@ -243,10 +243,9 @@ class Sql extends \Sql {
 			case "buscar_disponibilidad" :
 				$cadenaSql = "SELECT DISTINCT \"DIS_NUMERO_DISPONIBILIDAD\" AS identificador,\"DIS_NUMERO_DISPONIBILIDAD\" AS numero ";
 				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
-				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable[0] . "' ";
-				$cadenaSql .= "AND \"DIS_UNIDAD_EJECUTORA\"='" . $variable[1]. "' ";
+				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [0] . "' ";
+				$cadenaSql .= "AND \"DIS_UNIDAD_EJECUTORA\"='" . $variable [1] . "' ";
 				$cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" DESC ;";
-				
 				
 				break;
 			
@@ -256,7 +255,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [1] . "' ";
 				$cadenaSql .= "AND  \"DIS_IDENTIFICADOR\"='" . $variable [0] . "' ";
 				$cadenaSql .= "AND  \"DIS_UNIDAD_EJECUTORA\"='" . $variable [2] . "' ";
-
 				
 				break;
 			
@@ -416,7 +414,7 @@ class Sql extends \Sql {
 				$cadenaSql = " INSERT INTO ";
 				$cadenaSql .= " orden(";
 				$cadenaSql .= "tipo_orden, vigencia, consecutivo_servicio, consecutivo_compras, 
-								            fecha_registro, info_presupuestal, dependencia_solicitante, sede, 
+								            fecha_registro, dependencia_solicitante, sede, 
 								            rubro, objeto_contrato, poliza1, poliza2, poliza3, poliza4, duracion_pago, 
 								            fecha_inicio_pago, fecha_final_pago, forma_pago,id_contratista,id_supervisor, id_ordenador_encargado, tipo_ordenador)";
 				$cadenaSql .= " VALUES (";
@@ -429,8 +427,12 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [6] . "',";
 				$cadenaSql .= "'" . $variable [7] . "',";
 				$cadenaSql .= "'" . $variable [8] . "',";
-				$cadenaSql .= "'" . $variable [9] . "',";
 				
+				if ($variable [9] != '') {
+					$cadenaSql .= "'" . $variable [9] . "',";
+				} else {
+					$cadenaSql .= "'0',";
+				}
 				if ($variable [10] != '') {
 					$cadenaSql .= "'" . $variable [10] . "',";
 				} else {
@@ -447,20 +449,14 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= "'0',";
 				}
-				if ($variable [13] != '') {
-					$cadenaSql .= "'" . $variable [13] . "',";
-				} else {
-					$cadenaSql .= "'0',";
-				}
-				
+				$cadenaSql .= "'" . $variable [13] . "',";
 				$cadenaSql .= "'" . $variable [14] . "',";
 				$cadenaSql .= "'" . $variable [15] . "',";
 				$cadenaSql .= "'" . $variable [16] . "',";
 				$cadenaSql .= "'" . $variable [17] . "',";
 				$cadenaSql .= "'" . $variable [18] . "',";
 				$cadenaSql .= "'" . $variable [19] . "',";
-				$cadenaSql .= "'" . $variable [20] . "',";
-				$cadenaSql .= "'" . $variable [21] . "') ";
+				$cadenaSql .= "'" . $variable [20] . "') ";
 				$cadenaSql .= "RETURNING  consecutivo_compras,consecutivo_servicio,id_orden  ; ";
 				
 				break;
