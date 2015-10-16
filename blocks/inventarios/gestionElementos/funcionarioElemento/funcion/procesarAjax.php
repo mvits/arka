@@ -101,7 +101,16 @@ if ($_REQUEST ['funcion'] == 'SeleccionTipoBien') {
 	echo json_encode($resultadoItems);
 }
 
+if ($_REQUEST ['funcion'] == 'consultarUbicacion') {
 
 
+	$cadenaSql = $this->sql->getCadenaSql ( 'ubicacionesConsultadas', $_REQUEST['valor'] );
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+
+	$resultado = json_encode ( $resultado);
+
+	echo $resultado;
+}
 
 ?>

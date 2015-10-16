@@ -222,8 +222,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE   \"ESF_ESTADO\"='A'";
 				$cadenaSql .= " AND \"ESF_ID_SEDE\"<>'PAS' ";
 				
-				
-				
 				break;
 			
 			case "dependencias" :
@@ -248,7 +246,7 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\", \"FUN_IDENTIFICACION\" ||' - '||  \"FUN_NOMBRE\" ";
 				$cadenaSql .= "FROM  arka_parametros.arka_funcionarios ";
-// 				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
+				// $cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
 				
 				break;
 			
@@ -308,7 +306,7 @@ class Sql extends \Sql {
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
 				$cadenaSql .= "WHERE tb.id_tipo_bienes <> 1 ";
 				$cadenaSql .= " AND eli.estado_registro = 'TRUE'  ";
-				$cadenaSql .= " AND eli.funcionario= '" . $variable['funcionario']. "' ";
+				$cadenaSql .= " AND eli.funcionario= '" . $variable ['funcionario'] . "' ";
 				
 				if ($variable ['sede'] != '') {
 					$cadenaSql .= ' AND sas."ESF_ID_SEDE" = ';
@@ -320,9 +318,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " '" . $variable ['dependencia'] . "' ";
 				}
 				
-				
 				$cadenaSql .= " ORDER BY dependencia DESC   ;  ";
-				
 				
 				break;
 			
@@ -625,6 +621,15 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM grupo.catalogo_elemento ce ";
 				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
 				$cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
+				
+				break;
+			
+			case "ubicacionesConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  ef.\"ESF_ID_ESPACIO\" , ef.\"ESF_NOMBRE_ESPACIO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ef  ";
+				$cadenaSql .= " JOIN arka_parametros.arka_dependencia ad ON ad.\"ESF_ID_ESPACIO\"=ef.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_CODIGO_DEP\"='" . $variable . "' ";
+				$cadenaSql .= " AND  ef.\"ESF_ESTADO\"='A'";
 				
 				break;
 		}

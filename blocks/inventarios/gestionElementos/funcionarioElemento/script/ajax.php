@@ -54,6 +54,23 @@ $cadena2= $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 $urlFinal2 = $url . $cadena2;
 
 
+// Variables
+$cadenaACodificar4 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar4 .= "&procesarAjax=true";
+$cadenaACodificar4 .= "&action=index.php";
+$cadenaACodificar4 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar4 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar4 .= $cadenaACodificar4 . "&funcion=consultarUbicacion";
+$cadenaACodificar4 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena4 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar4, $enlace );
+
+// URL definitiva
+$urlFinal4 = $url . $cadena4;
+
+
 
 ?>
 <script type='text/javascript'>
@@ -97,6 +114,43 @@ function verificarElementos(obj) {
     	}            
 	} 
 }
+
+
+
+
+function consultarEspacio(elem, request, response){
+	  $.ajax({
+	    url: "<?php echo $urlFinal4?>",
+	    dataType: "json",
+	    data: { valor:$("#<?php echo $this->campoSeguro('dependencia')?>").val()},
+	    success: function(data){ 
+
+
+
+	        if(data[0]!=" "){
+
+	            $("#<?php echo $this->campoSeguro('ubicacion')?>").html('');
+	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('ubicacion')?>");
+	            $.each(data , function(indice,valor){
+
+	            	$("<option value='"+data[ indice ].ESF_ID_ESPACIO+"'>"+data[ indice ].ESF_NOMBRE_ESPACIO+"</option>").appendTo("#<?php echo $this->campoSeguro('ubicacion')?>");
+	            	
+	            });
+	            
+	            $("#<?php echo $this->campoSeguro('ubicacion')?>").removeAttr('disabled');
+	            
+	            $('#<?php echo $this->campoSeguro('ubicacion')?>').width(500);
+	            $("#<?php echo $this->campoSeguro('ubicacion')?>").select2();
+	            
+	          
+	            
+		        }
+	    			
+
+	    }
+		                    
+	   });
+	};
 
 
 
@@ -205,6 +259,20 @@ function consultarDependencia(elem, request, response){
 	};
 
 	  $(function () {
+
+
+
+		   $("#<?php echo $this->campoSeguro('dependencia')?>").change(function(){
+	        	if($("#<?php echo $this->campoSeguro('dependencia')?>").val()!=''){
+	        		consultarEspacio();
+	    		}else{
+	    			$("#<?php echo $this->campoSeguro('ubicacion')?>").attr('disabled','');
+	    			}
+
+	    	      });
+
+
+		  
 		    $("#<?php echo $this->campoSeguro('nivel')?>").change(function() {
 		    	
 				if($("#<?php echo $this->campoSeguro('nivel')?>").val()!=''){
