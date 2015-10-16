@@ -158,9 +158,9 @@ class RegistradorOrden {
 			<td style='width:10%;text-align=center;'>Placa</td>
 			<td style='width:10%;text-align=center;'>Dependencia</td>
 			<td style='width:10%;text-align=center;'>Sede</td>
+			<td style='width:10%;text-align=center;'>Espacio Físico</td>
 			<td style='width:35%;text-align=center;'>Descripción</td>
-			<td style='width:10%;text-align=center;'>Marca</td>
-			<td style='width:10%;text-align=center;'>Serie</td>
+			<td style='width:10%;text-align=center;'>Marca y Serie</td>
 			<td style='width:5%;text-align=center;'>Estado</td>
 			<td style='width:10%;text-align=center;'>Verificación</td>
 			</tr>";
@@ -171,9 +171,9 @@ class RegistradorOrden {
                     			<td style='width:10%;text-align=center;'>" . $valor ['placa'] . "</td>
                     			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['dependencia'] . "</font></td>
                     			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['sede'] . "</font></td>
+                    			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['espacio_fisico'] . "</font></td>
                     			<td style='width:35%;text-align=center;'>" . $valor ['descripcion_elemento'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['marca'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['serie'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['marca'] . " - " . $valor ['serie'] . "</td>
                     			<td style='width:5%;text-align=center;'>" . $valor ['estado_bien'] . "</td>
                     			<td style='width:10%;text-align=center;'>" . $valor ['marca_existencia'] . "</td>
                     			</tr>";
@@ -187,7 +187,9 @@ class RegistradorOrden {
 											</tr>
 											</table>";
 			
-			$contenidoPagina .= "	
+			$contenidoPagina .= "<page_footer>";
+			
+			$contenidoPagina .= "
 												<br>
 												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
 												<tr>
@@ -209,8 +211,8 @@ class RegistradorOrden {
 												<tr>
 												<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Realizo y Verificó Existencia Fìsica:</td>
 												</tr>
-												</table>											
-				
+												</table>
+			
 												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
 												<tr>
 												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Nombre : </td>
@@ -218,15 +220,15 @@ class RegistradorOrden {
 												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Actualizado a : </td>
 												<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . date ( 'Y - m - d    H:i:s' ) . "</td>
 												</tr>
-												</table>";
-			
-			$contenidoPagina .= "<page_footer>
+												</table>
+					
+					
 														<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
 														<tr>
 														<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>
 									                    <font size='1px'>Para mayor información y solicitud de inventarios: almacen@udistrital.edu.co</font>
 									                    <br>
-									                    <font size='0.5px'>Ley 734 del 2002 :Delos deberes del Servidor Pùblico. Vigilar y salvaguardar los bienes y valores que le han sido encomendados y cuidar que sean utilizados debida y racionalmente, de conformidad con los fines a que han sido destinados.</font>
+									                    <font size='0.5px'>Ley 734 del 2002 :Delos deberes del Servidor Pùblico. Vigilar y salvaguardar los bienes y valores que le han sido encomendados y cuidar que sean utilizados debida y racionalmente, de conformidad con los<br>fines a que han sido destinados.</font>
 														</td>
 														</tr>
 														</table>
@@ -314,9 +316,9 @@ class RegistradorOrden {
 			<td style='width:10%;text-align=center;'>Placa</td>
 			<td style='width:10%;text-align=center;'>Dependencia</td>
 			<td style='width:10%;text-align=center;'>Sede</td>
+			<td style='width:10%;text-align=center;'>Espacio Físico</td>
 			<td style='width:35%;text-align=center;'>Descripción</td>
-			<td style='width:10%;text-align=center;'>Marca</td>
-			<td style='width:10%;text-align=center;'>Serie</td>
+			<td style='width:10%;text-align=center;'>Marca y Serie</td>
 			<td style='width:5%;text-align=center;'>Estado</td>
 			<td style='width:10%;text-align=center;'>Verificación</td>
 			</tr>";
@@ -327,9 +329,9 @@ class RegistradorOrden {
                     			<td style='width:10%;text-align=center;'>" . $valor ['placa'] . "</td>
                     			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['dependencia'] . "</font></td>
                     			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['sede'] . "</font></td>
+                    			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['espacio_fisico'] . "</font></td>
                     			<td style='width:35%;text-align=center;'>" . $valor ['descripcion_elemento'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['marca'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['serie'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['marca'] . " - " . $valor ['serie'] . "</td>
                     			<td style='width:5%;text-align=center;'>" . $valor ['estado_bien'] . "</td>
                     			<td style='width:10%;text-align=center;'>" . $valor ['marca_existencia'] . "</td>
                     			</tr>";
@@ -341,51 +343,56 @@ class RegistradorOrden {
 											<tr>
 											<td style='width:100%;border=none;'><font size='5px'>Nota: Antes de firmar, verifique que los bienes que se encuentran en el presente listado corresponden a los que usted se hace responsable.</font></td>
 											</tr>
-											</table>";
+											</table>
+					<br>
+					<br>";
 			
-			$contenidoPagina .= "
-												<br>
-												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-												<tr>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>_______________________________________________________</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>_______________________________________________________</td>
-												</tr>
-												<tr>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $jefe ['nombre'] . "</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $resultado [0] ['nombre_funcionario'] . "</td>
-												</tr>
-												<tr>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Almacenista General</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>CC : " . $_REQUEST ['funcionario'] . "</td>
-												</tr>
-												</table>";
+	
 			
-			$contenidoPagina .= "		<br>
-												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-												<tr>
-												<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Realizo y Verificó Existencia Fìsica:</td>
-												</tr>
-												</table>
-		
-												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-												<tr>
-												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Nombre : </td>
-												<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>________________________________________</td>
-												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Actualizado a : </td>
-												<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . date ( 'Y - m - d    H:i:s' ) . "</td>
-												</tr>
-												</table>";
+			$contenidoPagina .= "<page_footer>";
 			
-			$contenidoPagina .= "<page_footer>
-														<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-														<tr>
-														<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>
-									                    <font size='1px'>Para mayor información y solicitud de inventarios: almacen@udistrital.edu.co</font>
-									                    <br>
-									                    <font size='0.5px'>Ley 734 del 2002 :Delos deberes del Servidor Pùblico. Vigilar y salvaguardar los bienes y valores que le han sido encomendados y cuidar que sean utilizados debida y racionalmente, de conformidad con los fines a que han sido destinados.</font>
-														</td>
-														</tr>
-														</table>
+			$contenidoPagina .= "<br>
+								<br>
+								<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
+								<tr>
+								<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>_______________________________________________________</td>
+								<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>_______________________________________________________</td>
+								</tr>
+								<tr>
+								<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $jefe ['nombre'] . "</td>
+								<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $resultado [0] ['nombre_funcionario'] . "</td>
+								</tr>
+								<tr>
+								<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Almacenista General</td>
+								<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>CC : " . $_REQUEST ['funcionario'] . "</td>
+								</tr>
+								</table>";
+
+	$contenidoPagina .= "<br>
+										<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
+										<tr>
+										<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Realizo y Verificó Existencia Fìsica:</td>
+										</tr>
+										</table>
+	
+										<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
+										<tr>
+										<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Nombre : </td>
+										<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>________________________________________</td>
+										<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Actualizado a : </td>
+										<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . date ( 'Y - m - d    H:i:s' ) . "</td>
+										</tr>
+										</table>
+	
+											<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
+											<tr>
+											<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>
+						                    <font size='1px'>Para mayor información y solicitud de inventarios: almacen@udistrital.edu.co</font>
+						                    <br>
+						                    <font size='0.5px'>Ley 734 del 2002 :Delos deberes del Servidor Pùblico. Vigilar y salvaguardar los bienes y valores que le han sido encomendados y cuidar que sean utilizados debida y racionalmente, de conformidad con los<br>fines a que han sido destinados.</font>
+											</td>
+											</tr>
+											</table>
 									    </page_footer> ";
 			
 			$contenidoPagina .= "</page>";

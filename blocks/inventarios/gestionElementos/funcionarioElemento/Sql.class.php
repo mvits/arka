@@ -290,7 +290,7 @@ class Sql extends \Sql {
 											ELSE  ' '
 											END  marca_existencia,
 										\"FUN_NOMBRE\" nombre_funcionario, 					
-                						sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia, 
+                						sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia,espacios.\"ESF_NOMBRE_ESPACIO\" espacio_fisico, 
                 						CASE
                 						WHEN  tfs.descripcion IS  NULL THEN 'Activo'
 										ELSE  tfs.descripcion  
