@@ -5,11 +5,8 @@ namespace inventarios\gestionElementos\funcionarioElemento\funcion;
 use inventarios\gestionElementos\funcionarioElemento\funcion\redireccion;
 
 $ruta = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
-
 $host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/plugin/html2pfd/";
-
 include ($ruta . "/plugin/html2pdf/html2pdf.class.php");
-
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();
@@ -34,19 +31,39 @@ class RegistradorOrden {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$funcionario = $_REQUEST ['funcionario'];
+		if (isset ( $_REQUEST ['funcionario'] ) && $_REQUEST ['funcionario'] != '') {
+			$funcionario = $_REQUEST ['funcionario'];
+		}
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $funcionario );
+		if (isset ( $_REQUEST ['sede'] ) && $_REQUEST ['sede'] != '') {
+			$sede = $_REQUEST ['sede'];
+		} else {
+			$sede = '';
+		}
+		
+		if (isset ( $_REQUEST ['dependencia'] ) && $_REQUEST ['dependencia'] != '') {
+			$dependencia = $_REQUEST ['dependencia'];
+		} else {
+			$dependencia = '';
+		}
+		
+		$arreglo = array (
+				'funcionario' => $funcionario,
+				'sede' => $sede,
+				'dependencia' => $dependencia 
+		);
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'jefe_recursos_fisicos' );
-// 		echo $cadenaSql;
+		// echo $cadenaSql;
 		$jefe = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$jefe = $jefe [0];
 		
-// 		var_dump($jefe);exit;
-// 		var_dump($resultado);exit;
+		// var_dump($jefe);exit;
+		// var_dump($resultado);exit;
 		
 		foreach ( $resultado as $valor ) {
 			
@@ -77,12 +94,10 @@ class RegistradorOrden {
 		
         border-collapse:collapse; border-spacing: 3px; 
     }
-
     td, th { 
         border: 1px solid #CCC; 
         height: 13px;
     } /* Make cells a bit taller */
-
 	col{
 	width=50%;
 	
@@ -93,7 +108,6 @@ class RegistradorOrden {
         text-align: center;
         font-size:10px
     }
-
     td {
         
         text-align: left;
@@ -104,7 +118,6 @@ class RegistradorOrden {
 				
 <page backtop='5mm' backbottom='5mm' backleft='5mm' backright='5mm'>
 	
-
         <table align='left' style='width:100%;' >
             <tr>
                 <td align='center' style='width:12%;border=none;' >
@@ -166,9 +179,6 @@ class RegistradorOrden {
                     			</tr>";
 			}
 			
-			
-			
-			
 			$contenidoPagina .= "</table>";
 			
 			$contenidoPagina .= "<table style='width:100%;'>
@@ -186,7 +196,7 @@ class RegistradorOrden {
 												</tr>
 												<tr>
 												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $jefe ['nombre'] . "</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>".$resultado [0] ['nombre_funcionario']."</td>
+												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $resultado [0] ['nombre_funcionario'] . "</td>
 												</tr>
 												<tr>
 												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Almacenista General</td>
@@ -225,7 +235,7 @@ class RegistradorOrden {
 			$contenidoPagina .= "</page>";
 		}
 		
-		if ( isset($elementos_devolutivos)) {
+		if (isset ( $elementos_devolutivos )) {
 			
 			$contenidoPagina .= "
 <style type=\"text/css\">
@@ -286,7 +296,6 @@ class RegistradorOrden {
                 </td>
             </tr>
         </table>
-
            	<table style='width:100%;'>
             <tr>
 			<td style='width:50%;border=none;text-align:center;'>NOMBRE FUNCIONARIO : " . $resultado [0] ['nombre_funcionario'] . "</td>
@@ -343,7 +352,7 @@ class RegistradorOrden {
 												</tr>
 												<tr>
 												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $jefe ['nombre'] . "</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>".$resultado [0] ['nombre_funcionario']."</td>
+												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $resultado [0] ['nombre_funcionario'] . "</td>
 												</tr>
 												<tr>
 												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Almacenista General</td>
@@ -381,25 +390,20 @@ class RegistradorOrden {
 			
 			$contenidoPagina .= "</page>";
 		}
-// 		echo $contenidoPagina;exit;
+		// echo $contenidoPagina;exit;
 		return $contenidoPagina;
 	}
 }
-
 $miRegistrador = new RegistradorOrden ( $this->lenguaje, $this->sql, $this->funcion );
-
 $textos = $miRegistrador->documento ();
-
 ob_start ();
-$html2pdf = new \HTML2PDF ( 'L', 'LETTER', 'es', true, 'UTF-8', array (1,	1,	1,	1) );
+$html2pdf = new \HTML2PDF ( 'L', 'LETTER', 'es', true, 'UTF-8', array (
+		1,
+		1,
+		1,
+		1 
+) );
 $html2pdf->pdf->SetDisplayMode ( 'fullpage' );
 $html2pdf->WriteHTML ( $textos );
-
 $html2pdf->Output ( 'Certificado  	' . date ( 'Y-m-d' ) . '.pdf', 'D' );
-
 ?>
-
-
-
-
-

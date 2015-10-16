@@ -74,7 +74,7 @@ class registrarForm {
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 		
 		$variable = "pagina=" . $miPaginaActual;
-		$variable .= "&usuario=".$_REQUEST['usuario'];
+		$variable .= "&usuario=" . $_REQUEST ['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -90,9 +90,29 @@ class registrarForm {
 		echo $this->miFormulario->enlace ( $atributos );
 		unset ( $atributos );
 		
-		$funcionario = $_REQUEST ['funcionario'];
+		if (isset ( $_REQUEST ['funcionario'] ) && $_REQUEST ['funcionario'] != '') {
+			$funcionario = $_REQUEST ['funcionario'];
+		}
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $funcionario );
+		if (isset ( $_REQUEST ['sede'] ) && $_REQUEST ['sede'] != '') {
+			$sede = $_REQUEST ['sede'];
+		} else {
+			$sede = '';
+		}
+		
+		if (isset ( $_REQUEST ['dependencia'] ) && $_REQUEST ['dependencia'] != '') {
+			$dependencia = $_REQUEST ['dependencia'];
+		} else {
+			$dependencia = '';
+		}
+		
+		$arreglo = array (
+				'funcionario' => $funcionario,
+				'sede' => $sede,
+				'dependencia' => $dependencia 
+		);
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
@@ -240,8 +260,8 @@ class registrarForm {
 					$VariableDetalles .= "&opcion=detalle";
 					$VariableDetalles .= "&elemento=" . $resultado [$i] ['identificador_elemento_individual'];
 					$VariableDetalles .= "&funcionario=" . $funcionario;
-					$VariableDetalles .= "&usuario=" . $_REQUEST ['usuario']; 
-					$VariableDetalles .= "&periodo=" .$resultado_periodo[0][0];
+					$VariableDetalles .= "&usuario=" . $_REQUEST ['usuario'];
+					$VariableDetalles .= "&periodo=" . $resultado_periodo [0] [0];
 					$VariableDetalles = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableDetalles, $directorio );
 					
 					$VariableObservaciones = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
@@ -250,7 +270,7 @@ class registrarForm {
 					$VariableObservaciones .= "&funcionario=" . $funcionario;
 					$VariableObservaciones .= "&placa=" . $resultado [$i] ['placa'];
 					$VariableObservaciones .= "&usuario=" . $_REQUEST ['usuario'];
-					$VariableObservaciones .= "&periodo=" .$resultado_periodo[0][0];
+					$VariableObservaciones .= "&periodo=" . $resultado_periodo [0] [0];
 					$VariableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableObservaciones, $directorio );
 					
 					$identificaciones_elementos [] = $resultado [$i] ['identificador_elemento_individual'];
@@ -439,7 +459,17 @@ class registrarForm {
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Accion";
 		$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
-		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
+		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
+		if (isset ( $_REQUEST ['sede'] )) {
+			
+			$valorCodificado .= "&sede=" . $_REQUEST ['sede'];
+		}
+		
+		if (isset ( $_REQUEST ['dependencia'] )) {
+			
+			$valorCodificado .= "&dependencia=" . $_REQUEST ['dependencia'];
+		}
+		
 		if ($resultado_periodo) {
 			if ($resultado) {
 				

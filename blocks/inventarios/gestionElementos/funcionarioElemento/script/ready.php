@@ -73,6 +73,16 @@ $('#<?php echo $this->campoSeguro('funcionario')?>').width(500);
               	 $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
  $("#<?php echo $this->campoSeguro('nivel')?>").select2();
  $("#<?php echo $this->campoSeguro('tipo_registro')?>").select2();
+ 
+ 
+ $("#<?php echo $this->campoSeguro('sede')?>").select2();
+ 
+ $('#<?php echo $this->campoSeguro('ubicacion')?>').width(500);     
+ $("#<?php echo $this->campoSeguro('ubicacion')?>").select2();
+ 
+ $("#<?php echo $this->campoSeguro('dependencia')?>").select2();
+ 
+ 
  $("#<?php echo $this->campoSeguro('tipo_bien')?>").select2();
  $("#<?php echo $this->campoSeguro('iva')?>").select2();
  $("#<?php echo $this->campoSeguro('bodega')?>").select2();

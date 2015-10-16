@@ -43,6 +43,10 @@ $this->idioma ["funcionario"] ="Funcionario : ";
 $this->idioma ["funcionarioTitulo"] ="Ingrese Funcionario";
 
 
+$this->idioma ["ubicacion"] ="Espacio Físico : ";
+$this->idioma ["ubicacionTitulo"] ="Seleccione Espacio Físico";
+
+
 
 $this->idioma ["observaciones"] ="Observaciones : ";
 $this->idioma ["fecha_inicioTitulo"] ="Ingrese Observaciones";
