@@ -205,7 +205,11 @@ class registrarForm {
 						$atributos ['seleccionado'] = ($resultado [$i] ['radicacion'] == 'TRUE') ? true : false;
 						$atributos ['evento'] = '';
 						$atributos ['eventoFuncion'] = '';
-						$atributos ['valor'] = $resultado [$i] ['identificacion'];
+						$atributos ['valor'] = array (
+								$resultado [$i] ['identificacion'],
+								$resultado [$i] ['ESF_COD_SEDE'],
+								$resultado [$i] ['ESF_CODIGO_DEP'] 
+						);
 						$atributos ['deshabilitado'] = false;
 						$tab ++;
 						
@@ -319,7 +323,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Accion";
-		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
+		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 		// $valorCodificado .= "&opcion=mensaje";
 		// $valorCodificado .= "&mensaje=mantenimiento";
 		

@@ -32,20 +32,14 @@ class Sql extends \Sql {
 			 * Clausulas específicas
 			 */
 			
-		
-			
 			case "Registrar_Radicacion" :
 				$cadenaSql = " INSERT INTO arka_movil.radicado_levantamiento(  ";
 				$cadenaSql .= "funcionario, estado_radicacion, fecha_registro)  ";
-				$cadenaSql .= "VALUES ('".$variable."',";
+				$cadenaSql .= "VALUES ('" . $variable . "',";
 				$cadenaSql .= " 'TRUE',  ";
-				$cadenaSql .= "'".date('Y-m-d')."');";
+				$cadenaSql .= "'" . date ( 'Y-m-d' ) . "');";
 				
-			
 				break;
-					
-			
-			
 			
 			case "Verificar_Periodo" :
 				$cadenaSql = " SELECT *   ";
@@ -270,7 +264,7 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT  DISTINCT fun.\"FUN_IDENTIFICACION\" identificacion, 
 						                 fun.\"FUN_NOMBRE\"   funcionario,
 										CASE rl.estado_radicacion WHEN 'TRUE' THEN 'TRUE' ELSE 'FALSE' END radicacion,
-										sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia ";
+										sas.\"ESF_SEDE\" sede,sas.\"ESF_COD_SEDE\",ad.\"ESF_CODIGO_DEP\", ad.\"ESF_DEP_ENCARGADA\" dependencia ";
 				$cadenaSql .= "FROM  arka_parametros.arka_funcionarios fun ";
 				$cadenaSql .= "INNER JOIN  elemento_individual eli ON  eli.funcionario= fun.\"FUN_IDENTIFICACION\" ";
 				$cadenaSql .= 'LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
@@ -286,10 +280,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND eli.funcionario <> 0  ";
 				
 				if ($variable != '') {
-					
 					$cadenaSql .= "AND eli.funcionario='" . $variable . "' ";
 				}
-				$cadenaSql .='GROUP BY fun."FUN_IDENTIFICACION",fun."FUN_NOMBRE",sas."ESF_SEDE",ad."ESF_DEP_ENCARGADA",rl.estado_radicacion;';
+				$cadenaSql .= 'GROUP BY fun."FUN_IDENTIFICACION",fun."FUN_NOMBRE",sas."ESF_SEDE",ad."ESF_DEP_ENCARGADA",sas."ESF_COD_SEDE",ad."ESF_CODIGO_DEP", rl.estado_radicacion;';
 				
 				break;
 			
