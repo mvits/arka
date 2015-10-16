@@ -269,9 +269,13 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "SELECT  DISTINCT fun.\"FUN_IDENTIFICACION\" identificacion, 
 						                 fun.\"FUN_NOMBRE\"   funcionario,
-										CASE rl.estado_radicacion WHEN 'TRUE' THEN 'TRUE' ELSE 'FALSE' END radicacion  ";
+										CASE rl.estado_radicacion WHEN 'TRUE' THEN 'TRUE' ELSE 'FALSE' END radicacion,
+										sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia ";
 				$cadenaSql .= "FROM  arka_parametros.arka_funcionarios fun ";
 				$cadenaSql .= "INNER JOIN  elemento_individual eli ON  eli.funcionario= fun.\"FUN_IDENTIFICACION\" ";
+				$cadenaSql .= 'LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
+				$cadenaSql .= 'LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
+				$cadenaSql .= 'LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
 				$cadenaSql .= "LEFT JOIN  arka_movil.radicado_levantamiento rl ON rl.funcionario =  eli.funcionario ";
 				$cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
 				$cadenaSql .= "JOIN tipo_bienes tb ON tb.id_tipo_bienes = ele.tipo_bien ";
@@ -279,11 +283,13 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND  eli.estado_registro = 'TRUE'  ";
 				$cadenaSql .= " AND tb.id_tipo_bienes <> 1  ";
 				$cadenaSql .= " AND eli.funcionario <> 0  ";
+				$cadenaSql .= " AND eli.funcionario <> 0  ";
 				
 				if ($variable != '') {
 					
-					$cadenaSql .= "AND eli.funcionario='" . $variable . "'; ";
+					$cadenaSql .= "AND eli.funcionario='" . $variable . "' ";
 				}
+				$cadenaSql .='GROUP BY fun."FUN_IDENTIFICACION",fun."FUN_NOMBRE",sas."ESF_SEDE",ad."ESF_DEP_ENCARGADA",rl.estado_radicacion;';
 				
 				break;
 			

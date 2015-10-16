@@ -174,6 +174,8 @@ class registrarForm {
                 <tr>
               	  <th>Identificación</th>
 					<th>Nombre Funcionario </th>
+					<th>Sede</th>
+					<th>Dependencia</th>
 					<th>Radicación <br>Inventario Físico</th> 
 					 </tr>
             </thead>
@@ -185,6 +187,8 @@ class registrarForm {
 						$mostrarHtml .= "<tr>
                     <td><center>" . $resultado [$i] ['identificacion'] . "</center></td>
                     <td><center>" . $resultado [$i] ['funcionario'] . "</center></td>
+                    <td><center>" . $resultado [$i] ['sede'] . "</center></td>
+                    <td><center>" . $resultado [$i] ['dependencia'] . "</center></td>
                     <td><center>		
 					";
 						
