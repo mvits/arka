@@ -205,11 +205,11 @@ class registrarForm {
 						$atributos ['seleccionado'] = ($resultado [$i] ['radicacion'] == 'TRUE') ? true : false;
 						$atributos ['evento'] = '';
 						$atributos ['eventoFuncion'] = '';
-						$atributos ['valor'] = array (
-								$resultado [$i] ['identificacion'],
-								$resultado [$i] ['ESF_COD_SEDE'],
-								$resultado [$i] ['ESF_CODIGO_DEP'] 
-						);
+						$atributos ['valor'] = serialize ( array (
+								"identificacion" => $resultado [$i] ['identificacion'],
+								"cod_sede" => $resultado [$i] ['codigo_sede'],
+								"cod_dependencia" => $resultado [$i] ['codigo_dependencia'] 
+						) );
 						$atributos ['deshabilitado'] = false;
 						$tab ++;
 						
