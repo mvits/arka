@@ -67,7 +67,8 @@ class RegistradorOrden {
 					$elementos_particulares ['marca'],
 					$elementos_particulares ['serie'],
 					$_REQUEST ['numero_entrada'],
-					$elemento_id_max 
+					$elemento_id_max,
+					$elementos_particulares ['cantidad']
 			);
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento', $arreglo );

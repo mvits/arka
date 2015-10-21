@@ -232,7 +232,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " elemento(";
                 $cadenaSql .= "fecha_registro,nivel,tipo_bien, descripcion, cantidad, ";
                 $cadenaSql .= "unidad, valor, iva, ajuste, bodega, subtotal_sin_iva, total_iva, ";
-                $cadenaSql .= "total_iva_con,tipo_poliza, fecha_inicio_pol, fecha_final_pol,marca,serie,id_entrada,id_elemento) ";
+                $cadenaSql .= "total_iva_con,tipo_poliza, fecha_inicio_pol, fecha_final_pol,marca,serie,id_entrada,id_elemento,cantidad_por_asignar) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= "'" . $variable [0] . "',";
                 $cadenaSql .= "'" . $variable [1] . "',";
@@ -253,7 +253,8 @@ class Sql extends \Sql {
                 $cadenaSql .= (is_null($variable [16]) == true) ? ' NULL , ' : "'" . $variable [16] . "',";
                 $cadenaSql .= (is_null($variable [17]) == true) ? ' NULL , ' : "'" . $variable [17] . "',";
                 $cadenaSql .= "'" . $variable [18] . "',";
-                $cadenaSql .= "'" . $variable [19] . "') ";
+                $cadenaSql .= "'" . $variable [19] . "',";
+                $cadenaSql .= "'" . $variable [20] . "') ";
                 $cadenaSql .= "RETURNING  id_elemento; ";
 
                 break;
