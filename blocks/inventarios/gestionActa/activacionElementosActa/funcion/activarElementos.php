@@ -52,7 +52,7 @@ class RegistradorOrden {
 					$elementos_particulares ['nivel'],
 					$elementos_particulares ['tipo_bien'],
 					$elementos_particulares ['descripcion'],
-					$elementos_particulares ['cantidad'] ,
+					$elementos_particulares ['cantidad'],
 					$elementos_particulares ['unidad'],
 					$elementos_particulares ['valor'],
 					$elementos_particulares ['iva'],
@@ -73,7 +73,7 @@ class RegistradorOrden {
 			$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento', $arreglo );
 			
 			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, "ingresar_elemento" );
-
+			
 			$placa = date ( 'Ymd' ) . "00000";
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'buscar_repetida_placa', $placa );
@@ -88,82 +88,87 @@ class RegistradorOrden {
 			
 			$sumaplaca = 0;
 			
-			
-			
-			var_dump($_REQUEST);exit;
-			if ($num_placa [0] [0] == 0) {
-
-				for($i = 0; $i < $elementos_particulares ['cantidad']; $i ++) {
-					$arregloElementosInv = array (
-							$fechaActual,
-							($elementos_particulares ['tipo_bien'] == 1) ? NULL : $placa + $sumaplaca,
-							(is_null ( $elementos_particulares ['serie'] ) == true) ? NULL : $elementos_particulares ['serie'],
-							$elemento [0] [0],
-							$elemento_id_max_indiv 
-					);
+		
+			if ($elementos_particulares ['tipo_bien'] == 2 || $elementos_particulares ['tipo_bien'] == 3) {
+				
+				echo $elementos_particulares ['tipo_bien']."<br>";
+				
+				if ($num_placa [0] [0] == 0) {
 					
-					$sumaplaca = ($elementos_particulares ['tipo_bien'] == 1) ? $sumaplaca : $sumaplaca ++;
-					
-					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
-					$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arregloElementosInv, "ingresar_elemento_individual" );
-					
-					$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
-					
-					// ******************* AQUI QUEDA LA FOTO INDIVIDUAL ********************************//
-					if (is_null ( $elementos_particulares ['imagen'] ) == false) {
-						$arreglo = array (
-								"elemento" => $elemento_id [$i] [0] [0],
-								"imagen" => $elementos_particulares ['imagen'] 
+					for($i = 0; $i < $elementos_particulares ['cantidad']; $i ++) {
+						$arregloElementosInv = array (
+								$fechaActual,
+								$placa + $sumaplaca,
+								(is_null ( $elementos_particulares ['serie'] ) == true) ? NULL : $elementos_particulares ['serie'],
+								$elemento [0] [0],
+								$elemento_id_max_indiv 
 						);
 						
-						$cadenaSql = $this->miSql->getCadenaSql ( 'ElementoImagen', $arreglo );
-						$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+						$sumaplaca = ($elementos_particulares ['tipo_bien'] == 1) ? $sumaplaca : $sumaplaca ++;
+						
+						$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
+						
+						$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arregloElementosInv, "ingresar_elemento_individual" );
+						
+						$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
+						
+						// ******************* AQUI QUEDA LA FOTO INDIVIDUAL ********************************//
+						if (is_null ( $elementos_particulares ['imagen'] ) == false) {
+							$arreglo = array (
+									"elemento" => $elemento_id [$i] [0] [0],
+									"imagen" => $elementos_particulares ['imagen'] 
+							);
+							
+							$cadenaSql = $this->miSql->getCadenaSql ( 'ElementoImagen', $arreglo );
+							$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+						}
 					}
-				}
-			} else if ($num_placa [0] [0] != 0) {
-				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'buscar_placa_maxima', $placa );
-				
-				$num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
-				$placa = $num_placa [0] [0];
-				$sumaplaca = 1;
-				
-				for($i = 1; $i <= $elementos_particulares ['cantidad']; $i ++) {
-					$arregloElementosInv = array (
-							$fechaActual,
-							($elementos_particulares ['tipo_bien'] == 1) ? NULL : $placa + $sumaplaca,
-							(is_null ( $elementos_particulares ['serie'] ) == true) ? NULL : $elementos_particulares ['serie'],
-							$elemento [0] [0],
-							$elemento_id_max_indiv 
-					);
+				} else if ($num_placa [0] [0] != 0) {
 					
-					$sumaplaca = ($elementos_particulares ['tipo_bien'] == 1) ? $sumaplaca : $sumaplaca ++;
+					$cadenaSql = $this->miSql->getCadenaSql ( 'buscar_placa_maxima', $placa );
 					
-					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
+					$num_placa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
-					$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda",$arregloElementosInv,"ingresar_elemento_individual");
+					$placa = $num_placa [0] [0];
+					$sumaplaca = 1;
 					
-					if (is_null ( $elementos_particulares ['imagen'] ) == false) {
-						$arreglo = array (
-								"elemento" => $elemento_id [$i] [0] [0],
-								"imagen" => $elementos_particulares ['imagen'] 
+					for($i = 1; $i <= $elementos_particulares ['cantidad']; $i ++) {
+						$arregloElementosInv = array (
+								$fechaActual,
+								 $placa + $sumaplaca,
+								(is_null ( $elementos_particulares ['serie'] ) == true) ? NULL : $elementos_particulares ['serie'],
+								$elemento [0] [0],
+								$elemento_id_max_indiv 
 						);
 						
-						$cadenaSql = $this->miSql->getCadenaSql ( 'ElementoImagen', $arreglo );
-						$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, "ElementoImagen" );
+						$sumaplaca = ($elementos_particulares ['tipo_bien'] == 1) ? $sumaplaca : $sumaplaca ++;
+						
+						$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
+						
+						$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arregloElementosInv, "ingresar_elemento_individual" );
+						
+						if (is_null ( $elementos_particulares ['imagen'] ) == false) {
+							$arreglo = array (
+									"elemento" => $elemento_id [$i] [0] [0],
+									"imagen" => $elementos_particulares ['imagen'] 
+							);
+							
+							$cadenaSql = $this->miSql->getCadenaSql ( 'ElementoImagen', $arreglo );
+							$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, "ElementoImagen" );
+						}
+						
+						$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 					}
-					
-					$elemento_id_max_indiv = $elemento_id_max_indiv + 1;
 				}
-				
-				
 			}
+			
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'anular_elementos_acta', $id_elemento_acta );
 			
 			$elemento_anulado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $id_elemento_acta, "anular_elementos_acta" );
 		}
+		
+		
 		
 		$datos = array (
 				$_REQUEST ['numero_entrada'],
