@@ -129,7 +129,7 @@ class registrarForm {
 				
 				if ($_REQUEST ['mensaje'] == 'inserto' && $elementos_validacion[0][0]!=0) {
 					
-					$mensaje = "Se Registro Salida <br> Número de Salida: " . $_REQUEST ['salida'] . "<br>Fecha Registro:" . date ( 'Y-m-d' );
+					$mensaje = "Se Registro Salida <br> Número de Salida: " . $_REQUEST ['salida'] . " - ".date('Y')."<br>Fecha Registro:" . date ( 'Y-m-d' );
 					$mensaje .= "<br>Existen Elementos de la Entrada Sin Haber Generado Salidas ";
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -150,8 +150,8 @@ class registrarForm {
 					$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_entrada', $arreglo );
 					$inserto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 					
-					$mensaje = "Se Registro Salida <br> Número de Salida: " . $_REQUEST ['salida'] . "<br>Fecha Registro:" . date ( 'Y-m-d' );
-					$mensaje .= "<br> Se Generaron todas las Salidas con todos los Elementos Relacionados con la Entrada";
+					$mensaje = "Se Registro Salida <br> Número de Salida: " . $_REQUEST ['salida'] . " - ".date('Y')."<br>Fecha Registro:" . date ( 'Y-m-d' );
+					$mensaje .= "<br> Se dio salida a la totalidad de los elementos relacionados con la entrada";
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
 					$atributos ['id'] = $esteCampo;
