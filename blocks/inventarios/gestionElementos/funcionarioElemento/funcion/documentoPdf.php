@@ -47,10 +47,17 @@ class RegistradorOrden {
 			$dependencia = '';
 		}
 		
+		if (isset ( $_REQUEST ['ubicacion'] ) && $_REQUEST ['ubicacion'] != '') {
+			$ubicacion = $_REQUEST ['ubicacion'];
+		} else {
+			$ubicacion = '';
+		}
+		
 		$arreglo = array (
 				'funcionario' => $funcionario,
 				'sede' => $sede,
-				'dependencia' => $dependencia 
+				'dependencia' => $dependencia,
+				'ubicacion' => $ubicacion 
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
@@ -347,8 +354,6 @@ class RegistradorOrden {
 					<br>
 					<br>";
 			
-	
-			
 			$contenidoPagina .= "<page_footer>";
 			
 			$contenidoPagina .= "<br>
@@ -367,8 +372,8 @@ class RegistradorOrden {
 								<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>CC : " . $_REQUEST ['funcionario'] . "</td>
 								</tr>
 								</table>";
-
-	$contenidoPagina .= "<br>
+			
+			$contenidoPagina .= "<br>
 										<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
 										<tr>
 										<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Realizo y Verificó Existencia Fìsica:</td>

@@ -1,6 +1,15 @@
 <?php
 use inventarios\gestionElementos\modificarElemento\Sql;
 
+
+include_once ("core/builder/FormularioHtml.class.php");
+
+$this->ruta = $this->miConfigurador->getVariableConfiguracion ( "rutaBloque" );
+
+$this->miFormulario = new \FormularioHtml ();
+
+
+$atributosGlobales ['campoSeguro'] = 'true';
 $conexion = "inventarios";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
@@ -14,51 +23,76 @@ $rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/bl
 $rutaBloque .= $esteBloque ['grupo'] .'/'. $esteBloque ['nombre'];
 
 $miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-
+// var_dump($_REQUEST);exit;
 
 if ($_REQUEST ['funcion'] == 'Consulta') {
 	$arreglo = unserialize ( $_REQUEST ['arreglo'] );
+	
 	$cadenaSql = $this->sql->getCadenaSql ( 'consultarElemento', $arreglo );
 	
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 
+	$cadenaSql = $this->sql->getCadenaSql ( "Verificar_Periodo" );
+	$resultado_periodo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+	$tab = 1;
+	
 	
 	for($i = 0; $i < count ( $resultado ); $i ++) {
-		$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-		$variable .= "&id_elemento=" . $resultado [$i] ['idelemento'];
-		$variable .= "&opcion=modificar";
-		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
-		$variable2 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-		$variable2 .= "&id_elemento=" . $resultado [$i] ['idelemento'];
-		$variable2 .= "&opcion=anular";
-		$variable2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable2, $directorio );
+		$VariableDetalles = "pagina=detalleElemento"; // pendiente la pagina para modificar parametro
+		$VariableDetalles .= "&opcion=detalle";
+		$VariableDetalles .= "&elemento=" . $resultado [$i] ['identificador_elemento_individual'];
+		$VariableDetalles .= "&funcionario=" . $arreglo['funcionario'];
+// 		$VariableDetalles .= "&usuario=" . $_REQUEST ['usuario'];
+		$VariableDetalles .= "&periodo=" . $resultado_periodo [0] [0];
+		$VariableDetalles = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableDetalles, $directorio );
+			
+		$VariableObservaciones = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+		$VariableObservaciones .= "&opcion=observaciones";
+		$VariableObservaciones .= "&elemento_individual=" . $resultado [$i] ['identificador_elemento_individual'];
+		$VariableObservaciones .= "&funcionario=" .$arreglo['funcionario'];
+		$VariableObservaciones .= "&placa=" . $resultado [$i] ['placa'];
+// 		$VariableObservaciones .= "&usuario=" . $_REQUEST ['usuario'];
+		$VariableObservaciones .= "&periodo=" . $resultado_periodo [0] [0];
+		$VariableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableObservaciones, $directorio );
+			
+		$identificaciones_elementos [] = $resultado [$i] ['identificador_elemento_individual'];
 		
+		
+		
+		$nombre = 'item_' . $i;
+		$atributos ['id'] = $nombre;
+		$atributos ['nombre'] = $nombre;
+		$atributos ['marco'] = true;
+		$atributos ['estiloMarco'] = true;
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ['columnas'] = 1;
+		$atributos ['dobleLinea'] = 1;
+		$atributos ['tabIndex'] = $tab;
+		$atributos ['etiqueta'] = '';
+		$atributos ['seleccionado'] = ($resultado [$i] ['confirmada_existencia'] == 't') ? true : false;
+		$atributos ['evento'] = 'onclick';
+		$atributos ['eventoFuncion'] = ' verificarElementos(this.form)';
+		$atributos ['valor'] = $resultado [$i] ['identificador_elemento_individual'];
+		$atributos ['deshabilitado'] = false;
+		$tab ++;
+			
+		// Aplica atributos globales al control
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		
+		$item = ($resultado [$i] ['tipo_confirmada'] == 1) ? '&#8730 ' : $this->miFormulario->campoCuadroSeleccion ( $atributos );
 
-		
-		if ($resultado [$i] ['cierrecontable'] == 'f') {
-			
-			$cierreContable = "<center><a href='" . $variable . "'><u>modificar</u></a></center> ";
-			$anulacion = ($resultado [$i] ['estadoentrada'] == 2) ? "<center><a href='" . $variable2 . "'><u>anular</u></a></center>" : " ";
-		}
-		if ($resultado [$i] ['cierrecontable'] == 't') {
-			
-			$cierreContable = "<center>Inhabilitado por Cierre Contable</center>";
-			
-			$anulacion = "<center>Inhabilitado por Cierre Contable</center>";
-		}
-		
-		
 		$resultadoFinal[]=array(
-				'fecharegistro'=>"<center>".$resultado[$i]['fecharegistro']."</center>",
-				'entrada'=>"<center>".$resultado[$i]['entrada']."</center>",
-				'descripcion'=>"<center>".$resultado[$i]['descripcion']."</center>",
-				'placa' =>"<center>".$resultado[$i]['placa']."</center>",
-				'funcionario'=>"<center>".$resultado[$i]['funcionario']."</center>",
+				'tipobien'=>"<center>".$resultado[$i]['nombre_tipo_bienes']."</center>",
+				'placa'=>"<center>".$resultado[$i]['placa']."</center>",
+				'descripcion'=>"<center>".$resultado[$i]['descripcion_elemento']."</center>",
+				'sede' =>"<center>".$resultado[$i]['sede']."</center>",
 				'dependencia'=>"<center>".$resultado[$i]['dependencia']."</center>",
-				'modificar'=>"<center>".$cierreContable,
-				'anular'=>"<center>".$anulacion
+				'estadoelemento'=>"<center>".$resultado[$i]['estado_bien']."</center>",
+				'detalle'=>"<center><a href='" . $VariableDetalles . "'><u>Ver Detalles</u></a></center>",
+				'observaciones'=>"<center><a href='" . $VariableObservaciones . "'>&#9658; &blk34;</a></center>",
+				'verificacion'=>"<center>".$item."</center>",
 					
 		);
 	}

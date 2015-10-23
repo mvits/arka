@@ -250,7 +250,7 @@ class registrarForm {
 				$mostrarHtml = "<table id='tablaTitulos'>
 			<thead>
                 <tr>
-              	  <th>Tipo Bien</th>
+              	    <th>Tipo Bien</th>
 					<th>Placa</th>
 					<th>Descripción</th>
 					<th>Sede</th>
@@ -261,79 +261,24 @@ class registrarForm {
 					<th>Verificación</th> 
 					 </tr>
             </thead>
-			<tbody>
+			
+			</table>			
             ";
+		
 				
+	
+				echo $mostrarHtml;
+				
+				
+
 				for($i = 0; $i < count ( $resultado ); $i ++) {
-					
-					$VariableDetalles = "pagina=detalleElemento"; // pendiente la pagina para modificar parametro
-					$VariableDetalles .= "&opcion=detalle";
-					$VariableDetalles .= "&elemento=" . $resultado [$i] ['identificador_elemento_individual'];
-					$VariableDetalles .= "&funcionario=" . $funcionario;
-					$VariableDetalles .= "&usuario=" . $_REQUEST ['usuario'];
-					$VariableDetalles .= "&periodo=" . $resultado_periodo [0] [0];
-					$VariableDetalles = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableDetalles, $directorio );
-					
-					$VariableObservaciones = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-					$VariableObservaciones .= "&opcion=observaciones";
-					$VariableObservaciones .= "&elemento_individual=" . $resultado [$i] ['identificador_elemento_individual'];
-					$VariableObservaciones .= "&funcionario=" . $funcionario;
-					$VariableObservaciones .= "&placa=" . $resultado [$i] ['placa'];
-					$VariableObservaciones .= "&usuario=" . $_REQUEST ['usuario'];
-					$VariableObservaciones .= "&periodo=" . $resultado_periodo [0] [0];
-					$VariableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableObservaciones, $directorio );
-					
-					$identificaciones_elementos [] = $resultado [$i] ['identificador_elemento_individual'];
-					
-					// $elementos_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-					
-					// $validacion_elementos = " <td><center>
-					// <a href='" . $variable1 . "'>
-					// <img src='" . $rutaBloque . "/css/images/update.png' width='15px'>
-					// </a>
-					// </center> </td>";
-					
-					$mostrarHtml .= "<tr>
-                    <td><center>" . $resultado [$i] ['nombre_tipo_bienes'] . "</center></td>
-                    <td><center>" . $resultado [$i] ['placa'] . "</center></td>
-                    <td><center>" . $resultado [$i] ['descripcion_elemento'] . "</center></td>
-                    <td><center>" . $resultado [$i] ['sede'] . "</center></td>
-                    <td><center>" . $resultado [$i] ['dependencia'] . "</center></td>
-                    <td><center>" . $resultado [$i] ['estado_bien'] . "</center></td>
-                    <td><center><a href='" . $VariableDetalles . "'><u>Ver Detalles</u></a></center> </td>    
-					 <td><center><a href='" . $VariableObservaciones . "'><img src='" . $rutaBloque . "/css/images/edit.png' width='15px'></a></center>
-                     <td><center>		
-					";
-					
-					$nombre = 'item_' . $i;
-					$atributos ['id'] = $nombre;
-					$atributos ['nombre'] = $nombre;
-					$atributos ['marco'] = true;
-					$atributos ['estiloMarco'] = true;
-					$atributos ["etiquetaObligatorio"] = true;
-					$atributos ['columnas'] = 1;
-					$atributos ['dobleLinea'] = 1;
-					$atributos ['tabIndex'] = $tab;
-					$atributos ['etiqueta'] = '';
-					$atributos ['seleccionado'] = ($resultado [$i] ['confirmada_existencia'] == 't') ? true : false;
-					$atributos ['evento'] = 'onclick';
-					$atributos ['eventoFuncion'] = ' verificarElementos(this.form)';
-					$atributos ['valor'] = $resultado [$i] ['identificador_elemento_individual'];
-					$atributos ['deshabilitado'] = false;
-					$tab ++;
-					
-					// Aplica atributos globales al control
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					$mostrarHtml .= ($resultado [$i] ['tipo_confirmada'] == 1) ? '&#8730 ' : $this->miFormulario->campoCuadroSeleccion ( $atributos );
-					
+						
 					$mostrar_botones = ($resultado [$i] ['tipo_confirmada'] != 1) ? 'block' : 'none';
-					
-					$mostrarHtml .= "</center> </td> </tr>";
+					$identificaciones_elementos [] = $resultado [$i] ['identificador_elemento_individual'];
+						
 				}
 				
-				$mostrarHtml .= "</tbody>
-					 </table>";
-				echo $mostrarHtml;
+				
 				unset ( $mostrarHtml );
 				unset ( $variable );
 			} else {
@@ -355,7 +300,7 @@ class registrarForm {
 			}
 		}
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
-		
+		unset($atributos);
 		if ($resultado) {
 			
 			if ($resultado_periodo) {
@@ -437,7 +382,7 @@ class registrarForm {
 			echo $this->miFormulario->campoBoton ( $atributos );
 			unset ( $atributos );
 			
-			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
+			// -----------------FIN CONTROL: Botón ----------------
 			
 			// ---------------------------------------------------------
 		}

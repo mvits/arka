@@ -80,12 +80,12 @@ $(function() {
              	 processing: true,
 //                   ordering: true,
                   searching: true,
-//                   deferRender: true,
-//                   sScrollY: 200	,
-         //          bScrollCollapse: true,
+//                deferRender: true,
+                   sScrollY: 500	,
+                  bScrollCollapse: true,
                   info:true,
 //                   lengthChange:true,
-                  paging: true,
+   		    paging: false,
 //                   stateSave: true,
          //          renderer: "bootstrap",
          //          retrieve: true,
@@ -94,12 +94,15 @@ $(function() {
                       dataSrc:"data"                                                                  
                   },
                   columns: [
-                  { data :"fecharegistro" },
-                  { data :"entrada" },
-                  { data :"descripcion" },
+                  { data :"tipobien" },
                   { data :"placa" },
-                  { data :"modificar" },
-                  { data :"anular" }
+                  { data :"descripcion" },
+                  { data :"sede" },
+                  { data :"dependencia" },
+                  { data :"estadoelemento" },
+                  { data :"detalle" },
+                  { data :"observaciones" },
+                  { data :"verificacion" },
                             ]
              });
                   
@@ -110,4 +113,5 @@ $(function() {
 
 
 
-</script>
+</script
+>

@@ -50,11 +50,6 @@
   });
         
         
-               $('#tablaTitulos').dataTable( {
-					"sScrollY": "350px",
-					 "bScrollCollapse": true,
-					   "bPaginate": false,
-                 } );
 
 
     $('#<?php echo $this->campoSeguro('botonAprobar')?>').attr('disabled','disabled');

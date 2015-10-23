@@ -342,6 +342,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Consultar";
+		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 		
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
