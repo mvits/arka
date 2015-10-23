@@ -106,10 +106,20 @@ class registrarForm {
 			$dependencia = '';
 		}
 		
+		if (isset ( $_REQUEST ['ubicacion'] ) && $_REQUEST ['ubicacion'] != '') {
+			$ubicacion = $_REQUEST ['ubicacion'];
+		} else {
+			$ubicacion = '';
+		}
+		
+		
+		
 		$arreglo = array (
 				'funcionario' => $funcionario,
 				'sede' => $sede,
-				'dependencia' => $dependencia 
+				'dependencia' => $dependencia,
+				'ubicacion' => $ubicacion,
+				
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );

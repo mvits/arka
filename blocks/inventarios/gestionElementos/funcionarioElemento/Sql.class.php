@@ -317,6 +317,12 @@ class Sql extends \Sql {
 					$cadenaSql .= ' AND ad ."ESF_CODIGO_DEP" = ';
 					$cadenaSql .= " '" . $variable ['dependencia'] . "' ";
 				}
+				if ($variable ['ubicacion'] != '') {
+					$cadenaSql .= ' AND espacios."ESF_ID_ESPACIO" = ';
+					$cadenaSql .= " '" . $variable ['ubicacion'] . "' ";
+				}
+				
+				
 				
 				$cadenaSql .= " ORDER BY dependencia DESC   ;  ";
 				
