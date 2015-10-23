@@ -148,7 +148,7 @@ class registrarForm {
 		echo $this->miFormulario->division ( "fin" );
 		unset ( $atributos );
 		
-		echo "<button id=\"abrir\">Ver Instrucciones</button>";
+	
 		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
@@ -192,6 +192,8 @@ class registrarForm {
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				// echo $this->miFormulario->campoTexto ( $atributos );
 				unset ( $atributos );
+				
+				echo "<button id=\"abrir\">Ver Instrucciones</button>";
 				
 				// ------------------Division para los botones-------------------------
 				$atributos ["id"] = "SeleccionRegistro";

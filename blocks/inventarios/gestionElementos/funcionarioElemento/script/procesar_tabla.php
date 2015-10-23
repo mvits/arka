@@ -24,6 +24,8 @@ $cadenaACodificar .= "&funcion=Consulta";
 $cadenaACodificar .= "&tiempo=" . $_REQUEST ['tiempo'];
 if (isset ( $_REQUEST ['funcionario'] ) && $_REQUEST ['funcionario'] != '') {
 	$funcionario = $_REQUEST ['funcionario'];
+}else {
+	$funcionario = '';
 }
 
 if (isset ( $_REQUEST ['sede'] ) && $_REQUEST ['sede'] != '') {

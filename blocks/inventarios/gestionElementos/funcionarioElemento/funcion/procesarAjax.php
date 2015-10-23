@@ -23,7 +23,7 @@ $rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/bl
 $rutaBloque .= $esteBloque ['grupo'] .'/'. $esteBloque ['nombre'];
 
 $miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-// var_dump($_REQUEST);exit;
+
 
 if ($_REQUEST ['funcion'] == 'Consulta') {
 	$arreglo = unserialize ( $_REQUEST ['arreglo'] );
