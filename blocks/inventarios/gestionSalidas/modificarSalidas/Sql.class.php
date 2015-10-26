@@ -209,8 +209,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = salida.id_entrada ";
 				$cadenaSql .= "JOIN elemento_individual ON elemento_individual.id_salida = salida.id_salida ";
 				$cadenaSql .= "JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\" = salida.funcionario ";
-				$cadenaSql .= "WHERE 1=1";
-				$cadenaSql .= "AND   entrada.cierre_contable ='f' ";
+				$cadenaSql .= "WHERE entrada.cierre_contable ='f' ";
 				$cadenaSql .= "AND   entrada.estado_entrada = 1  ";
 				$cadenaSql .= "AND   entrada.estado_registro='t' ";
 				
@@ -364,8 +363,10 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND cl.lista_activo = 1  ";
 				$cadenaSql .= "AND en.cierre_contable ='f' ";
 				$cadenaSql .= "AND en.estado_entrada = 1  ";
+				$cadenaSql .= "AND en.estado_registro='t' ";
 				$cadenaSql .= "AND elemento_individual.id_salida IS NOT NULL   ";
 				$cadenaSql .= "ORDER BY elemento_individual.id_elemento_ind ASC;  ";
+				
 				
 				/*
 				 * $cadenaSql = "SELECT id_elemento, elemento_padre||''||elemento_codigo||' - '||elemento_nombre AS item, cantidad, descripcion "; $cadenaSql .= "FROM elemento "; $cadenaSql .= " JOIN grupo.catalogo_elemento ce ON ce.elemento_id = elemento.nivel "; $cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo "; $cadenaSql .= "JOIN entrada en ON en.id_entrada = elemento.id_entrada "; $cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento "; $cadenaSql .= "JOIN salida sal ON sal.id_salida = ei.id_salida "; $cadenaSql .= "WHERE elemento.id_entrada='" . $variable [0] . "' "; $cadenaSql .= "AND ei.id_salida='" . $variable [1] . "' "; $cadenaSql .= "AND cl.lista_activo = 1 "; $cadenaSql .= "AND en.cierre_contable ='f' "; $cadenaSql .= "AND en.estado_entrada = 1 "; $cadenaSql .= "AND ei.id_salida IS NOT NULL "; $cadenaSql .= "ORDER BY ei.id_elemento_ind ASC; ";
@@ -663,9 +664,17 @@ class Sql extends \Sql {
 			
 			case "ActualizarElementosIndividuales" :
 				$cadenaSql = " UPDATE elemento ";
-				$cadenaSql .= " SET  cantidad_por_asignar='" . $variable [1] . "', ";
+				$cadenaSql .= " SET  cantidad_por_asignar='" . $variable [1] . "'  ";
 				$cadenaSql .= "  WHERE id_elemento='" . $variable [0] . "' ;";
-				echo $cadenaSql;
+				
+				break;
+			
+			case "actualizar_elementos" :
+				$cadenaSql = " UPDATE elemento_individual ";
+				$cadenaSql .= " SET  funcionario='" . $variable ['funcionario'] . "',  ";
+				$cadenaSql .= "  ubicacion_elemento='" . $variable ['ubicacion'] . "'   ";
+				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable ['identificacion_elemento'] . "' ;";
+				
 				break;
 			
 			case "EliminarElementosIndividuales" :

@@ -76,10 +76,10 @@ class registrarForm {
 		$entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consulta_elementos', $arregloES );
-		echo $cadenaSql;
+		
 		
 		$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		var_dump ( $elementos );
+		
 		// }
 		// }
 		
@@ -120,6 +120,7 @@ class registrarForm {
 		);
 		
 		$_REQUEST = array_merge ( $_REQUEST, $salida );
+		
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -841,6 +842,7 @@ class registrarForm {
 			$valorCodificado .= "&opcion=modificar";
 			$valorCodificado .= "&numero_entrada=" . $_REQUEST ['numero_entrada'];
 			$valorCodificado .= "&numero_salida=" . $_REQUEST ['numero_salida'];
+			$valorCodificado .= "&salida=" . $datos[1];
 			$valorCodificado .= "&id_funcionario=" . $id_funcionario;
 			$valorCodificado .= "&cantidadItems=" . $cantidaditems;
 			$valorCodificado .= "&vigencia=" . $salida ['vigencia'];
