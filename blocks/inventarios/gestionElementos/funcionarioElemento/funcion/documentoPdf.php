@@ -123,7 +123,7 @@ class RegistradorOrden {
 </style>				
 				
 				
-<page backtop='5mm' backbottom='5mm' backleft='5mm' backright='5mm'>
+<page backtop='5mm' backbottom='20mm' backleft='5mm' backright='5mm'>
 	
         <table align='left' style='width:100%;' >
             <tr>
@@ -214,6 +214,8 @@ class RegistradorOrden {
 												</table>";
 			
 			$contenidoPagina .= "		<br>
+										<br>
+										<br>
 												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
 												<tr>
 												<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Realizo y Verificó Existencia Fìsica:</td>
@@ -280,7 +282,7 @@ class RegistradorOrden {
 </style>
 		
 		
-<page backtop='10mm' backbottom='7mm' backleft='10mm' backright='10mm'>
+<page backtop='10mm' backbottom='20mm' backleft='10mm' backright='10mm'>
 		
 		
         <table align='left' style='width:100%;' >
@@ -374,6 +376,8 @@ class RegistradorOrden {
 								</table>";
 			
 			$contenidoPagina .= "<br>
+								<br>
+								<br>
 										<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
 										<tr>
 										<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Realizo y Verificó Existencia Fìsica:</td>
