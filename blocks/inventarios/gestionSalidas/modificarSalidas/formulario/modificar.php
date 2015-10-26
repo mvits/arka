@@ -78,8 +78,10 @@ class registrarForm {
 		$entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consulta_elementos', $arregloES );
+		echo $cadenaSql;
 		
 		$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		var_dump($elementos);
 		// }
 		// }
 		
@@ -663,7 +665,7 @@ class registrarForm {
 								if ($elementos_restantes) {
 									$mostrarHtml = "<tr>
 						                    <td><center>" . $elementos [$i] ['item'] . "</center></td>
-						                    <td><center>1</center></td>";
+						                    <td><center>".$elementos[$i]['cantidad_asignada']."</center></td>";
 						                    
 									$mostrarHtml .= "<td><center>" . $elementos [$i] ['descripcion'] . "</center></td>
 				   							<td><center>";
