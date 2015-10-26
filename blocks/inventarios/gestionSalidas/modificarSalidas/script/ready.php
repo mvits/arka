@@ -26,8 +26,10 @@
         });
 
                      $('#tablaTitulos').dataTable( {
-                "sPaginationType": "full_numbers"
-                 } );
+                      "scrollY":"350px",
+        			  "scrollCollapse": true,
+        			  "paging":false
+			        	          } );
 
                      
                  $("#<?php echo $this->campoSeguro('funcionarioP')?>").select2({

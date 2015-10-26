@@ -44,8 +44,7 @@ class registrarForm {
 		
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$conexion = "sicapital";
-		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
 		
 		$seccion ['tiempo'] = $tiempo;
 		
@@ -623,7 +622,7 @@ class registrarForm {
 				unset ( $atributos );
 				
 				$atributos ["id"] = "itemsAgr";
- 				$atributos ["estiloEnLinea"] = "display:" . $motrar;
+ 				$atributos ["estiloEnLinea"] = "display:block" ;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->division ( "inicio", $atributos );
 				unset ( $atributos );
