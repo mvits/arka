@@ -352,15 +352,15 @@ class Sql extends \Sql {
 			case "consulta_elementos" :
 				
 				$cadenaSql = "SELECT id_elemento,elemento_padre||''||elemento_codigo||' - '||elemento_nombre AS item, 
-						  descripcion ,elemento_individual.id_elemento_ind, cantidad_asignada, elemento.tipo_bien ";
+						  descripcion ,elemento_individual.id_elemento_ind, cantidad_asignada,cantidad_por_asignar,  elemento.tipo_bien ";
 				$cadenaSql .= "FROM elemento_individual ";
 				$cadenaSql .= "JOIN elemento  ON elemento.id_elemento = elemento_individual.id_elemento_gen ";
 				$cadenaSql .= "JOIN catalogo.catalogo_elemento ce ON ce.elemento_id = elemento.nivel ";
 				$cadenaSql .= "JOIN catalogo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
 				$cadenaSql .= "JOIN  entrada en ON en.id_entrada = elemento.id_entrada  ";
 				$cadenaSql .= "JOIN  salida sal ON sal.id_salida = elemento_individual.id_salida  ";
-					$cadenaSql .= "WHERE elemento.id_entrada='" . $variable [0] . "' ";
-					$cadenaSql .= "AND elemento_individual.id_salida='" . $variable [1] . "' ";
+				$cadenaSql .= "WHERE elemento.id_entrada='" . $variable [0] . "' ";
+				$cadenaSql .= "AND elemento_individual.id_salida='" . $variable [1] . "' ";
 				$cadenaSql .= "AND cl.lista_activo = 1  ";
 				$cadenaSql .= "AND en.cierre_contable ='f' ";
 				$cadenaSql .= "AND en.estado_entrada = 1  ";
@@ -659,6 +659,18 @@ class Sql extends \Sql {
 				$cadenaSql .= "  funcionario=NULL  ";
 				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable . "' ;";
 				
+				break;
+			
+			case "ActualizarElementosIndividuales" :
+				$cadenaSql = " UPDATE elemento ";
+				$cadenaSql .= " SET  cantidad_por_asignar='" . $variable [1] . "', ";
+				$cadenaSql .= "  WHERE id_elemento='" . $variable [0] . "' ;";
+				echo $cadenaSql;
+				break;
+			
+			case "EliminarElementosIndividuales" :
+				$cadenaSql = " DELETE FROM elemento_individual ";
+				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable . "' ;";
 				
 				break;
 		}
