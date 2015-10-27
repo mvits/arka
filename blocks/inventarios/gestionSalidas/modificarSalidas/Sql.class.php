@@ -351,7 +351,7 @@ class Sql extends \Sql {
 			case "consulta_elementos" :
 				
 				$cadenaSql = "SELECT id_elemento,elemento_padre||''||elemento_codigo||' - '||elemento_nombre AS item, 
-						  descripcion ,elemento_individual.id_elemento_ind, cantidad_asignada,cantidad_por_asignar,  elemento.tipo_bien ";
+						  descripcion ,elemento_individual.id_elemento_ind, cantidad_asignada,cantidad_por_asignar,  elemento.tipo_bien, placa , elemento_individual.id_salida ";
 				$cadenaSql .= "FROM elemento_individual ";
 				$cadenaSql .= "JOIN elemento  ON elemento.id_elemento = elemento_individual.id_elemento_gen ";
 				$cadenaSql .= "JOIN catalogo.catalogo_elemento ce ON ce.elemento_id = elemento.nivel ";

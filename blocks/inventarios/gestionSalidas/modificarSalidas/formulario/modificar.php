@@ -79,7 +79,7 @@ class registrarForm {
 		
 		
 		$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
+//		var_dump($elementos);
 		// }
 		// }
 		
@@ -565,7 +565,7 @@ class registrarForm {
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required, minSize[1]';
+				$atributos ['validar'] = ' minSize[1]';
 				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 				$atributos ['deshabilitado'] = false;
 				$atributos ['tamanno'] = 20;
@@ -589,7 +589,7 @@ class registrarForm {
 				$atributos ['columnas'] = 1;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['id'] = $esteCampo;
-				$atributos ['seleccion'] = $selec;
+				$atributos ['seleccion'] = 1;
 				$atributos ['evento'] = '';
 				$atributos ['deshabilitado'] = false;
 				$atributos ['tab'] = $tab;
