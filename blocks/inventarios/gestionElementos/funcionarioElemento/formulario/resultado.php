@@ -43,7 +43,7 @@ class registrarForm {
 		 */
 		
 		$atributosGlobales ['campoSeguro'] = 'true';
-		
+		var_dump ( $_REQUEST );
 		// -------------------------------------------------------------------------------------------------
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -77,18 +77,24 @@ class registrarForm {
 		$variable .= "&usuario=" . $_REQUEST ['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
-		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-		$esteCampo = 'botonRegresar';
-		$atributos ['id'] = $esteCampo;
-		$atributos ['enlace'] = $variable;
-		$atributos ['tabIndex'] = 1;
-		$atributos ['estilo'] = 'textoSubtitulo';
-		$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['ancho'] = '10%';
-		$atributos ['alto'] = '10%';
-		$atributos ['redirLugar'] = true;
-		echo $this->miFormulario->enlace ( $atributos );
-		unset ( $atributos );
+		if (isset ( $_REQUEST ['accesoCondor'] ) == 'true') {
+			
+			$_REQUEST ['funcionario'] = $_REQUEST ['identificacion'];
+		} else {
+			
+			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+			$esteCampo = 'botonRegresar';
+			$atributos ['id'] = $esteCampo;
+			$atributos ['enlace'] = $variable;
+			$atributos ['tabIndex'] = 1;
+			$atributos ['estilo'] = 'textoSubtitulo';
+			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos ['ancho'] = '10%';
+			$atributos ['alto'] = '10%';
+			$atributos ['redirLugar'] = true;
+			echo $this->miFormulario->enlace ( $atributos );
+			unset ( $atributos );
+		}
 		
 		if (isset ( $_REQUEST ['funcionario'] ) && $_REQUEST ['funcionario'] != '') {
 			$funcionario = $_REQUEST ['funcionario'];
@@ -112,19 +118,21 @@ class registrarForm {
 			$ubicacion = '';
 		}
 		
-		
-		
 		$arreglo = array (
 				'funcionario' => $funcionario,
 				'sede' => $sede,
 				'dependencia' => $dependencia,
-				'ubicacion' => $ubicacion,
-				
+				'ubicacion' => $ubicacion 
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarFuncionario',$funcionario );
+		
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
 		
 		// ------------------Division para los botones-------------------------
 		$atributos ["id"] = "ventanaEmergente";
@@ -147,8 +155,6 @@ class registrarForm {
 		
 		echo $this->miFormulario->division ( "fin" );
 		unset ( $atributos );
-		
-	
 		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
@@ -266,20 +272,14 @@ class registrarForm {
 			
 			</table>			
             ";
-		
 				
-	
 				echo $mostrarHtml;
 				
-				
-
 				for($i = 0; $i < count ( $resultado ); $i ++) {
-						
+					
 					$mostrar_botones = ($resultado [$i] ['tipo_confirmada'] != 1) ? 'block' : 'none';
 					$identificaciones_elementos [] = $resultado [$i] ['identificador_elemento_individual'];
-						
 				}
-				
 				
 				unset ( $mostrarHtml );
 				unset ( $variable );
@@ -302,7 +302,7 @@ class registrarForm {
 			}
 		}
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
-		unset($atributos);
+		unset ( $atributos );
 		if ($resultado) {
 			
 			if ($resultado_periodo) {
