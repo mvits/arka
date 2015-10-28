@@ -218,6 +218,7 @@ require_once("../clase/encriptar.class.php");
         $variable=$miCodificador->codificar($variable);
         $enlaceCambioPassword=$indiceSaraLaverna.$opcion.$variable;
 		
+		
 		//enlace administrados Evaluación Docente
 		include_once("crypto/Encriptador.class.php");
 		$miCodificador=Encriptador::singleton();
@@ -255,6 +256,27 @@ require_once("../clase/encriptar.class.php");
         //$variable=$cripto->codificar_url($variable,$configuracion);
         $variable=$miCodificador->codificar($variable);
         $enlaceCertificadosIngRet=$indiceSaraLaverna.$opcion.$variable;
+        
+        
+//         var_dump($_SESSION);exit;
+        
+/*******///Enlace a Invetarios Docente en el sistema Arka
+        include_once("crypto/Encriptador.class.php");
+        $miCodificador=Encriptador::singleton();
+        $usuario = $_SESSION['usuario_login'];
+        $identificacion = $_SESSION['usuario_login'];
+        $tipo=30;
+        $indiceArkaInventarios = $configuracion["host_inventario"]."/arka/index.php?";
+        $tokenCondor = "0xel0t1l";
+        $opcion="data=";
+        $variable="pagina=funcionarioElemento";
+        $variable.="&identificacion=".$identificacion;
+        $variable.="&usuario=".$identificacion;
+        $variable=$miCodificador->codificar_arka($variable,$tokenCondor);
+        $enlaceInventarioDocente = $indiceArkaInventarios.$opcion.$variable;
+        
+        
+        
 ?>
 <html>
 <head>
@@ -362,6 +384,13 @@ require_once("../clase/encriptar.class.php");
 <li class="subitem1"><a target="principal" href="<?php echo $configuracion['host_soporte'].'/soporte/archivos/manual_vinculacion_docente_docente.pdf';?>">Manual Vinculaci&oacute;n Docente</a></li>
 </ul>
 </li>
+
+<li class="item3"><a href="#">Inventario</a>
+<ul class="submenus">
+<li class="subitem1"><a target="principal" href="<?php echo $enlaceInventarioDocente ;?>">Inventario Docente</a></li>
+</ul>
+</li>
+
 
 <li class="item5"><a href="#">Clave</a>
 <ul class="submenus">
