@@ -44,6 +44,7 @@ class registrarForm {
 		
 		$atributosGlobales ['campoSeguro'] = 'true';
 		var_dump ( $_REQUEST );
+		
 		// -------------------------------------------------------------------------------------------------
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -77,10 +78,7 @@ class registrarForm {
 		$variable .= "&usuario=" . $_REQUEST ['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
-		if (isset ( $_REQUEST ['accesoCondor'] ) == 'true') {
-			
-			$_REQUEST ['funcionario'] = $_REQUEST ['identificacion'];
-		} else {
+		if (! isset ( $_REQUEST ['accesoCondor'] )) {
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
@@ -129,11 +127,10 @@ class registrarForm {
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarFuncionario',$funcionario );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarFuncionario', $funcionario );
 		
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		
+		$datosfuncionario = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$datosfuncionario = $datosfuncionario [0];
 		// ------------------Division para los botones-------------------------
 		$atributos ["id"] = "ventanaEmergente";
 		$atributos ["estilo"] = " ";
@@ -156,11 +153,14 @@ class registrarForm {
 		echo $this->miFormulario->division ( "fin" );
 		unset ( $atributos );
 		
+		$datosfuncionario ['identificacion'] = $_REQUEST ['usuario'];
+		
+		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Inventario Funcionario CC. " . $_REQUEST ['funcionario'] . "        " . $resultado [0] ['nombre_funcionario'];
+		$atributos ["leyenda"] = "Inventario  : CC. " . $datosfuncionario ['identificacion'] . "    " . isset($datosfuncionario ['nombre']);
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		unset ( $atributos );
 		{
@@ -199,7 +199,8 @@ class registrarForm {
 				// echo $this->miFormulario->campoTexto ( $atributos );
 				unset ( $atributos );
 				
-				echo "<button id=\"abrir\">Ver Instrucciones</button>";
+				echo "<a id='abrir'><B><u>Instrucciones</u></B></a>";
+				// echo "<button id=\"abrir\">Ver Instrucciones</button>";
 				
 				// ------------------Division para los botones-------------------------
 				$atributos ["id"] = "SeleccionRegistro";
@@ -221,7 +222,7 @@ class registrarForm {
 						$atributos ['valor'] = '';
 					}
 					$atributos ['deshabilitado'] = false;
-					$atributos ['columnas'] = 2;
+					$atributos ['columnas'] = 1;
 					$atributos ['tamanno'] = 1;
 					$atributos ['ajax_function'] = "";
 					$atributos ['ajax_control'] = $esteCampo;
@@ -410,13 +411,18 @@ class registrarForm {
 		
 		// Paso 1: crear el listado de variables
 		
-		$valorCodificado = "action=" . $esteBloque ["nombre"];
+		$valorCodificado = "actionBloque=" . $esteBloque ["nombre"];
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Accion";
-		$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
+		$valorCodificado .= "&funcionario=" . $_REQUEST ['usuario'];
 		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
+		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+			
+			$valorCodificado .= "&accesoCondor=true";
+		}
+		
 		if (isset ( $_REQUEST ['sede'] )) {
 			
 			$valorCodificado .= "&sede=" . $_REQUEST ['sede'];
