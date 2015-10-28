@@ -638,6 +638,17 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND  ef.\"ESF_ESTADO\"='A'";
 				
 				break;
+				
+				
+				case "consultarFuncionario" :
+				
+					$cadenaSql = "SELECT \"FUN_IDENTIFICACION\" identificacion , \"FUN_NOMBRE\" nombre ";
+					$cadenaSql .= "FROM  arka_parametros.arka_funcionarios ";
+					$cadenaSql .= "WHERE \"FUN_IDENTIFICACION\"='".$variable."'";
+					
+				
+					break;
+				
 		}
 		return $cadenaSql;
 	}
