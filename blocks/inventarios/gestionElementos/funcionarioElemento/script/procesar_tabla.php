@@ -4,15 +4,6 @@
  * Los datos del bloque se encuentran en el arreglo $esteBloque.
  */
 
-// URL base
-// $url = $this->miConfigurador->getVariableConfiguracion ( "host" );
-// $url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
-
-// $urlDirectorio = $url;
-
-// $urlDirectorio = $urlDirectorio . "/plugin/scripts/javascript/dataTable/Spanish.json";
-
-// $url .= "/index.php?";
 
 // Variables
 $cadenaACodificar = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -21,7 +12,14 @@ $cadenaACodificar .= "&action=index.php";
 $cadenaACodificar .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar .= "&funcion=Consulta";
+$cadenaACodificar .= "&usuario=".$_REQUEST ['usuario'];
 $cadenaACodificar .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor']=='true' ) {
+		
+	$_REQUEST ['funcionario'] = $_REQUEST ['usuario'];
+}
+
 if (isset ( $_REQUEST ['funcionario'] ) && $_REQUEST ['funcionario'] != '') {
 	$funcionario = $_REQUEST ['funcionario'];
 }else {
