@@ -155,12 +155,17 @@ class registrarForm {
 		
 		$datosfuncionario ['identificacion'] = $_REQUEST ['usuario'];
 		
+		if (isset ( $datosfuncionario ['nombre'] )) {
+			$datosfuncionarioNombre = $datosfuncionario ['nombre'];
+		} else {
+			$datosfuncionarioNombre = '';
+		}
 		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Inventario  : CC. " . $datosfuncionario ['identificacion'] . "    " . isset($datosfuncionario ['nombre']);
+		$atributos ["leyenda"] = "Inventario  : CC. " . $datosfuncionario ['identificacion'] . "    " . $datosfuncionarioNombre;
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		unset ( $atributos );
 		{
@@ -199,8 +204,13 @@ class registrarForm {
 				// echo $this->miFormulario->campoTexto ( $atributos );
 				unset ( $atributos );
 				
-				echo "<a id='abrir'><B><u>Instrucciones</u></B></a>";
-				// echo "<button id=\"abrir\">Ver Instrucciones</button>";
+				if (! isset ( $_REQUEST ['accesoCondor'] )) {
+					
+					echo "<button id=\"abrir\">Ver Instrucciones</button>";
+				} else {
+					
+					echo "<a id='abrir'><B><u>Instrucciones</u></B></a>";
+				}
 				
 				// ------------------Division para los botones-------------------------
 				$atributos ["id"] = "SeleccionRegistro";

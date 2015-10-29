@@ -76,20 +76,21 @@ class registrarForm {
 			$variable = "pagina=" . $miPaginaActual;
 			$variable .= "&usuario=" . $_REQUEST ['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			
-			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-			$esteCampo = 'botonRegresar';
-			$atributos ['id'] = $esteCampo;
-			$atributos ['enlace'] = $variable;
-			$atributos ['tabIndex'] = 1;
-			$atributos ['estilo'] = 'textoSubtitulo';
-			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['ancho'] = '10%';
-			$atributos ['alto'] = '10%';
-			$atributos ['redirLugar'] = true;
-			echo $this->miFormulario->enlace ( $atributos );
-			
-			unset ( $atributos );
+			if (! isset ( $_REQUEST ['accesoCondor'] )) {
+				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+				$esteCampo = 'botonRegresar';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['enlace'] = $variable;
+				$atributos ['tabIndex'] = 1;
+				$atributos ['estilo'] = 'textoSubtitulo';
+				$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['ancho'] = '10%';
+				$atributos ['alto'] = '10%';
+				$atributos ['redirLugar'] = true;
+				echo $this->miFormulario->enlace ( $atributos );
+				
+				unset ( $atributos );
+			}
 			
 			$esteCampo = "marcoDatosBasicos";
 			$atributos ['id'] = $esteCampo;
