@@ -81,7 +81,7 @@ class registrarForm {
 			$variable .= "&opcion=Consultar";
 			$variable .= "&funcionario=" . $_REQUEST ['funcionario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			var_dump ( $_REQUEST );
+			
 			if (! isset ( $_REQUEST ['accesoCondor'] )) {
 				
 				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------

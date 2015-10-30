@@ -34,7 +34,7 @@ class registrarForm {
 		 */
 		
 		$atributosGlobales ['campoSeguro'] = 'true';
-		var_dump ( $_REQUEST );
+		
 		// -------------------------------------------------------------------------------------------------
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -358,7 +358,7 @@ class registrarForm {
 		// Paso 1: crear el listado de variables
 		
 		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor']=='true') {
-			echo "stiv";
+			
 			$valorCodificado = "actionBloque=" . $esteBloque ["nombre"];
 			$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
@@ -368,7 +368,7 @@ class registrarForm {
 			$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 			$valorCodificado .= "&accesoCondor=true";
 			
-			echo $valorCodificado;
+			
 			
 		} else {
 			
@@ -380,7 +380,7 @@ class registrarForm {
 			$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
 			$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 			
-			echo $valorCodificado;
+			
 			
 		}
 		
