@@ -165,7 +165,7 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Inventario  : CC. " . $datosfuncionario ['identificacion'] . "    " . $datosfuncionarioNombre;
+		$atributos ["leyenda"] = "Inventario  : CC. " . $_REQUEST['funcionario'] . "    " . $datosfuncionarioNombre;
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		unset ( $atributos );
 		{
@@ -426,7 +426,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Accion";
-		$valorCodificado .= "&funcionario=" . $_REQUEST ['usuario'];
+		$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
 		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
 			

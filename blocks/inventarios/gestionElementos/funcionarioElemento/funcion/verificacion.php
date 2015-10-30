@@ -39,8 +39,10 @@ class RegistradorOrden {
 			foreach ( $elementos as $valor ) {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'Elemento_Existencia_Aprobado', $valor );
-				
+				 
 				$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "Elemento_Existencia_Aprobado" );
+				
+				
 			}
 			
 			$mensaje = array (
@@ -56,6 +58,10 @@ class RegistradorOrden {
 				$cadenaSql = $this->miSql->getCadenaSql ( 'Elemento_Existencia_Tipo_Confirmada', $valor );
 				
 				$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "Elemento_Existencia_Tipo_Confirmada" );
+				
+				
+				
+				
 			}
 			
 			if ($estado == true) {
@@ -77,6 +83,7 @@ class RegistradorOrden {
 				$_REQUEST ['usuario'] 
 		);
 		$mensaje = array_merge ( $mensaje, $array );
+		
 		if ($estado == true) {
 			
 			redireccion::redireccionar ( 'Verificacion', $mensaje );
@@ -84,7 +91,7 @@ class RegistradorOrden {
 		} else {
 			
 			redireccion::redireccionar ( 'noVerificado', array (
-					$_REQUEST [funcionario],
+					$_REQUEST ['funcionario'],
 					$_REQUEST ['usuario'] 
 			) );
 			exit ();
