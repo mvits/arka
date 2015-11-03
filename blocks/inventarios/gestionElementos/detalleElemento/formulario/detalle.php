@@ -24,7 +24,7 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-		var_dump ( $_REQUEST );
+		
 		
 		$this->miConfigurador->setVariableConfiguracion ( 'cache', true );
 		// Rescatar los datos de este bloque
