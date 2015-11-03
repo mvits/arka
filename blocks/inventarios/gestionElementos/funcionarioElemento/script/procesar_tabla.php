@@ -78,7 +78,7 @@ $(function() {
                 url: "<?php echo $urlDirectorio?>"
             			},
              	 processing: true,
-		"aLengthMenu": [[10,25, 50,100,300,500,1000], [10,25, 50,100,300,500,1000]],
+		"aLengthMenu": [[10,25, 50,100,300,500,1000,-1], [10,25, 50,100,300,500,1000,'Todos']],
 //                   ordering: true,
                   searching: true,
 //                deferRender: true,
