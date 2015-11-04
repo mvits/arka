@@ -168,14 +168,30 @@ class Sql extends \Sql {
 			case "ingresar_elemento_individual" :
 				
 				$cadenaSql = " 	INSERT INTO elemento_individual(";
-				$cadenaSql .= "fecha_registro, placa, serie, id_elemento_gen,id_elemento_ind,funcionario,ubicacion_elemento,cantidad_asignada) ";
+				$cadenaSql .= "fecha_registro, placa, serie, id_elemento_gen,id_elemento_ind,id_salida,funcionario,ubicacion_elemento,cantidad_asignada) ";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= ((is_null ( $variable [1] )) ? 'null' . "," : "'" . $variable [1] . "',");
 				$cadenaSql .= ((is_null ( $variable [2] )) ? 'null' . "," : "'" . $variable [2] . "',");
 				$cadenaSql .= "'" . $variable [3] . "',";
 				$cadenaSql .= "'" . $variable [4] . "',";
-				$cadenaSql .= "'" . $variable [4] . "') ";
+				if (is_null ( $variable ['id_salida'] ) == false) {
+					$cadenaSql .= "'" . $variable ['id_salida'] . "',";
+				} else {
+					$cadenaSql .= "NULL,";
+				}
+				if (is_null ( $variable ['funcionario'] ) == false) {
+					$cadenaSql .= "'" . $variable ['funcionario'] . "',";
+				} else {
+					$cadenaSql .= "NULL,";
+				}
+				if (is_null ( $variable ['ubicacion_elemento'] ) == false) {
+					$cadenaSql .= "'" . $variable ['ubicacion_elemento'] . "',";
+				} else {
+					$cadenaSql .= "NULL,";
+				}
+				
+				$cadenaSql .= "'" . $variable ['cantidad_asignada'] . "') ";
 				$cadenaSql .= "RETURNING id_elemento_ind; ";
 				
 				break;
@@ -302,7 +318,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE 1=1 ";
 				$cadenaSql .= "AND elemento.estado='t' ";
 				$cadenaSql .= "AND entrada.cierre_contable='f' ";
-				$cadenaSql .= "AND elemento_individual.estado_registro='TRUE' ";
+// 				$cadenaSql .= "AND elemento_individual.estado_registro='t' ";
 				// $cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
 				$cadenaSql .= "AND   entrada.estado_registro='t' ";
 				$cadenaSql .= "AND   entrada.estado_entrada='1' ";
@@ -322,7 +338,7 @@ class Sql extends \Sql {
 				if ($variable [4] != '') {
 					$cadenaSql .= " AND  entrada.id_entrada= '" . $variable [4] . "' ";
 				}
-				// echo $cadenaSql;exit;
+				
 				
 				break;
 			
@@ -437,7 +453,7 @@ class Sql extends \Sql {
 				break;
 			
 			case "consultar_elementos_individuales_sin_placa" :
-				$cadenaSql = " SELECT id_elemento_ind  ";
+				$cadenaSql = " SELECT * ";
 				$cadenaSql .= " FROM elemento_individual  ";
 				$cadenaSql .= " WHERE id_elemento_gen='" . $variable . "'  ";
 				$cadenaSql .= "AND  placa IS  NULL ;";
@@ -687,13 +703,15 @@ class Sql extends \Sql {
 				$cadenaSql .= "ORDER BY placa DESC ;";
 				break;
 			
-			// case "buscar_Proveedores" :
-			// $cadenaSql = " SELECT \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS value,\"PRO_NIT\" AS data ";
-			// $cadenaSql .= " FROM arka_parametros.arka_proveedor ";
-			// $cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
-			// $cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
-			
-			// break;
+			case "actualizar_cantidad_elemento" :
+				
+				$cadenaSql = " UPDATE ";
+				$cadenaSql .= " elemento ";
+				$cadenaSql .= " SET ";
+				$cadenaSql .= " cantidad_por_asignar='".$variable['cantidad']."'  ";
+				$cadenaSql .= "  WHERE id_elemento='" . $variable ['id_elemento'] . "';";
+				
+				break;
 		}
 		return $cadenaSql;
 	}
