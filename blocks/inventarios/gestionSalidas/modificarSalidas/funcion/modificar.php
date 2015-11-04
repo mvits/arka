@@ -90,10 +90,15 @@ class RegistradorOrden {
 				}
 				
 				foreach ( $items as $valor ) {
+					
+					// --- Eliminando Depreciación--//
+					
+					$cadenaSql = $this->miSql->getCadenaSql ( 'Eliminar_Depreciacion', $valor ['identificacion_elemento'] );
+					$depresiacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "LimpiarElementosIndividuales" );
+					
 					if ($valor ['tipo_bien'] != 1) {
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( 'LimpiarElementosIndividuales', $valor ['identificacion_elemento'] );
-						
 						$elementos_inds = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "LimpiarElementosIndividuales" );
 					} else {
 						

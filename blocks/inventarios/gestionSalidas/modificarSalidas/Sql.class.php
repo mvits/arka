@@ -367,7 +367,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND elemento_individual.id_salida IS NOT NULL   ";
 				$cadenaSql .= "ORDER BY elemento_individual.id_elemento_ind ASC;  ";
 				
-				
 				/*
 				 * $cadenaSql = "SELECT id_elemento, elemento_padre||''||elemento_codigo||' - '||elemento_nombre AS item, cantidad, descripcion "; $cadenaSql .= "FROM elemento "; $cadenaSql .= " JOIN grupo.catalogo_elemento ce ON ce.elemento_id = elemento.nivel "; $cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo "; $cadenaSql .= "JOIN entrada en ON en.id_entrada = elemento.id_entrada "; $cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento "; $cadenaSql .= "JOIN salida sal ON sal.id_salida = ei.id_salida "; $cadenaSql .= "WHERE elemento.id_entrada='" . $variable [0] . "' "; $cadenaSql .= "AND ei.id_salida='" . $variable [1] . "' "; $cadenaSql .= "AND cl.lista_activo = 1 "; $cadenaSql .= "AND en.cierre_contable ='f' "; $cadenaSql .= "AND en.estado_entrada = 1 "; $cadenaSql .= "AND ei.id_salida IS NOT NULL "; $cadenaSql .= "ORDER BY ei.id_elemento_ind ASC; ";
 				 */
@@ -682,6 +681,15 @@ class Sql extends \Sql {
 				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable . "' ;";
 				
 				break;
+				
+				
+			
+			case "Eliminar_Depreciacion" :
+				$cadenaSql = " DELETE FROM detalle_depreciacion ";
+				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable . "' ;";
+				
+				break;
+	
 		}
 		
 		return $cadenaSql;
