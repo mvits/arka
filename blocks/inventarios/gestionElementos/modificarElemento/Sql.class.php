@@ -261,8 +261,9 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
 				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
 				$cadenaSql .= "WHERE  elemento.estado=TRUE ";
-				$cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
+				//$cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
 				$cadenaSql .= "AND entrada.cierre_contable='f' ";
+				$cadenaSql .= "AND   entrada.estado_entrada='1' ";
 				$cadenaSql .= "AND elemento_individual.estado_registro='TRUE' ";
 				$cadenaSql .= "AND   entrada.estado_registro='t' ";
 				$cadenaSql .= "AND   tipo_bienes.id_tipo_bienes <> '1' ";
@@ -295,14 +296,15 @@ class Sql extends \Sql {
 						       elemento.descripcion descripcion,  elemento.tipo_bien ";
 				$cadenaSql .= "FROM elemento ";
 				$cadenaSql .= "JOIN tipo_bienes ON tipo_bienes.id_tipo_bienes = elemento.tipo_bien ";
-				$cadenaSql .= "JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
+				$cadenaSql .= "LEFT JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
 				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
 				$cadenaSql .= "WHERE 1=1 ";
 				$cadenaSql .= "AND elemento.estado='t' ";
 				$cadenaSql .= "AND entrada.cierre_contable='f' ";
 				$cadenaSql .= "AND elemento_individual.estado_registro='TRUE' ";
-				$cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
+// 				$cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
 				$cadenaSql .= "AND   entrada.estado_registro='t' ";
+				$cadenaSql .= "AND   entrada.estado_entrada='1' ";
 				$cadenaSql .= "AND   tipo_bienes.id_tipo_bienes='1' ";
 				
 				if ($variable [0] != '') {
