@@ -168,12 +168,13 @@ class Sql extends \Sql {
 			case "ingresar_elemento_individual" :
 				
 				$cadenaSql = " 	INSERT INTO elemento_individual(";
-				$cadenaSql .= "fecha_registro, placa, serie, id_elemento_gen,id_elemento_ind) ";
+				$cadenaSql .= "fecha_registro, placa, serie, id_elemento_gen,id_elemento_ind,funcionario,ubicacion_elemento,cantidad_asignada) ";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= ((is_null ( $variable [1] )) ? 'null' . "," : "'" . $variable [1] . "',");
 				$cadenaSql .= ((is_null ( $variable [2] )) ? 'null' . "," : "'" . $variable [2] . "',");
 				$cadenaSql .= "'" . $variable [3] . "',";
+				$cadenaSql .= "'" . $variable [4] . "',";
 				$cadenaSql .= "'" . $variable [4] . "') ";
 				$cadenaSql .= "RETURNING id_elemento_ind; ";
 				
@@ -261,7 +262,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN elemento_individual ON elemento_individual.id_elemento_gen = elemento.id_elemento ";
 				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = elemento.id_entrada ";
 				$cadenaSql .= "WHERE  elemento.estado=TRUE ";
-				//$cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
+				// $cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
 				$cadenaSql .= "AND entrada.cierre_contable='f' ";
 				$cadenaSql .= "AND   entrada.estado_entrada='1' ";
 				$cadenaSql .= "AND elemento_individual.estado_registro='TRUE' ";
@@ -302,7 +303,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND elemento.estado='t' ";
 				$cadenaSql .= "AND entrada.cierre_contable='f' ";
 				$cadenaSql .= "AND elemento_individual.estado_registro='TRUE' ";
-// 				$cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
+				// $cadenaSql .= "AND elemento_individual.id_salida IS NULL ";
 				$cadenaSql .= "AND   entrada.estado_registro='t' ";
 				$cadenaSql .= "AND   entrada.estado_entrada='1' ";
 				$cadenaSql .= "AND   tipo_bienes.id_tipo_bienes='1' ";
@@ -395,7 +396,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " total_iva_con='" . $variable [10] . "', ";
 				$cadenaSql .= " marca='" . $variable [11] . "', ";
 				$cadenaSql .= " serie='" . $variable [12] . "',  ";
-				$cadenaSql .= " nivel='" . $variable [14] . "'  ";
+				$cadenaSql .= " nivel='" . $variable [14] . "',  ";
+				$cadenaSql .= " cantidad_por_asignar='0'  ";
 				$cadenaSql .= "  WHERE id_elemento='" . $variable [13] . "';";
 				
 				break;
@@ -421,7 +423,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " fecha_final_pol='" . $variable [13] . "',  ";
 				$cadenaSql .= " marca='" . $variable [14] . "', ";
 				$cadenaSql .= " serie='" . $variable [15] . "', ";
-				$cadenaSql .= " nivel='" . $variable [17] . "' ";
+				$cadenaSql .= " nivel='" . $variable [17] . "', ";
+				$cadenaSql .= " cantidad_por_asignar='0'  ";
 				$cadenaSql .= "  WHERE id_elemento='" . $variable [16] . "';";
 				
 				break;
@@ -441,7 +444,7 @@ class Sql extends \Sql {
 				break;
 			
 			case "consultar_elementos_individuales" :
-				$cadenaSql = " SELECT id_elemento_ind  ";
+				$cadenaSql = " SELECT *  ";
 				$cadenaSql .= " FROM elemento_individual  ";
 				$cadenaSql .= " WHERE id_elemento_gen='" . $variable . "'  ";
 				$cadenaSql .= "AND  placa IS NOT NULL ;";

@@ -24,8 +24,6 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		
-		 
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -108,7 +106,7 @@ class RegistradorOrden {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elemento_tipo_1', $arreglo );
 			
-			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $arreglo, "actualizar_elemento_tipo_1" );
+			// $elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $arreglo, "actualizar_elemento_tipo_1" );
 		} else if ($_REQUEST ['id_tipo_bien'] == 2) {
 			
 			$arreglo = array (
@@ -132,7 +130,7 @@ class RegistradorOrden {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elemento_tipo_1', $arreglo );
 			
-			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $arreglo, "actualizar_elemento_tipo_1" );
+			// $elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $arreglo, "actualizar_elemento_tipo_1" );
 		} else if ($_REQUEST ['id_tipo_bien'] == 3) {
 			
 			if ($_REQUEST ['tipo_poliza'] == 0) {
@@ -181,43 +179,45 @@ class RegistradorOrden {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar_elemento_tipo_2', $arreglo );
 			
-			$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $arreglo, "actualizar_elemento_tipo_2" );
+			// $elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $arreglo, "actualizar_elemento_tipo_2" );
 		}
 		
 		if ($info_elemento ['tipo_bien'] != $_REQUEST ['id_tipo_bien']) {
 			
 			if (($info_elemento ['tipo_bien'] == 2 || $info_elemento ['tipo_bien'] == 3) && $_REQUEST ['id_tipo_bien'] == 1) {
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_elementos_individuales', $_REQUEST ['id_elemento'] );
-				$elementos_Individuales = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
-				foreach ( $elementos_Individuales as $valor ) {
-					
-					$cadenaSql = $this->miSql->getCadenaSql ( 'inhabilitar_elementos_individuales', $valor ['id_elemento_ind'] );
-					$elementos_Individuales = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor ['id_elemento_ind'], "inhabilitar_elementos_individuales" );
-				}
+				$elementos_Individuales = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				var_dump ( $elementos_Individuales );
+				
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'inhabilitar_elementos_individuales', $elementos_Individuales [0]['id_elemento_ind'] );
+// 				$elementos_Individuales = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor ['id_elemento_ind'], "inhabilitar_elementos_individuales" );
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'idElementoMaxIndividual' );
 				$elemento_id_max_indiv = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$elemento_id_max_indiv = $elemento_id_max_indiv [0] [0] + 1;
 				
-				for($i = 0; $i < $_REQUEST ['cantidad']; $i ++) {
-					$arregloElementosInv = array (
-							date ( 'Y-m-d' ),
-							NULL,
-							($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
-							$_REQUEST ['id_elemento'],
-							$elemento_id_max_indiv 
-					);
-					
-					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
-					
-					$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arregloElementosInv, "ingresar_elemento_individual" );
-					
-					$elemento_id_max_indiv = $elemento_id [$i] [0] [0] + 1;
-				}
-			} else if ($info_elemento ['tipo_bien'] == 1 && ($_REQUEST ['id_tipo_bien'] == 2 || $_REQUEST ['id_tipo_bien'] == 3)) {
+				$arregloElementosInv = array (
+						date ( 'Y-m-d' ),
+						NULL,
+						($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
+						$_REQUEST ['id_elemento'],
+						$elemento_id_max_indiv,
+						"id_salida" => $elementos_Individuales [0] ['id_salida'],
+						"funcionario" => $elementos_Individuales [0] ['funcionario'],
+						"ubicacion_elemento" => $elementos_Individuales [0] ['ubicacion_elemento'],
+						"cantidad_asignada" => (is_null($elementos_Individuales [0] ['id_salida'])==false)?$_REQUEST ['cantidad']:0 
+				);
+				var_dump($arregloElementosInv);exit;
+				$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_individual', $arregloElementosInv );
 				
+				$elemento_id [$i] = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arregloElementosInv, "ingresar_elemento_individual" );
+				
+				$elemento_id_max_indiv = $elemento_id [$i] [0] [0] + 1;
+			} else if ($info_elemento ['tipo_bien'] == 1 && ($_REQUEST ['id_tipo_bien'] == 2 || $_REQUEST ['id_tipo_bien'] == 3)) {
+				exit ();
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_elementos_individuales_sin_placa', $_REQUEST ['id_elemento'] );
 				
 				$elementos_Individuales = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -291,7 +291,7 @@ class RegistradorOrden {
 				}
 			}
 		}
-		
+		exit ();
 		// -----------------
 		
 		if ($elemento) {
