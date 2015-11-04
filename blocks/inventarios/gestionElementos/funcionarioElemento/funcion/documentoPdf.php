@@ -123,7 +123,7 @@ class RegistradorOrden {
 </style>				
 				
 				
-<page backtop='5mm' backbottom='20mm' backleft='5mm' backright='5mm'>
+<page backtop='5mm' backbottom='20mm' backleft='5mm' backright='5mm' footer='page'>
 	
         <table align='left' style='width:100%;' >
             <tr>
@@ -192,7 +192,8 @@ class RegistradorOrden {
 											<tr>
 											<td style='width:100%;border=none;'><font size='5px'>Nota: Antes de firmar, verifique que los bienes que se encuentran en el presente listado corresponden a los que usted se hace responsable.</font></td>
 											</tr>
-											</table>";
+											</table>
+											";
 			
 			$contenidoPagina .= "<page_footer>";
 			
@@ -282,7 +283,7 @@ class RegistradorOrden {
 </style>
 		
 		
-<page backtop='10mm' backbottom='20mm' backleft='10mm' backright='10mm'>
+<page backtop='10mm' backbottom='20mm' backleft='10mm' backright='10mm' footer='page' >
 		
 		
         <table align='left' style='width:100%;' >
@@ -354,7 +355,8 @@ class RegistradorOrden {
 											</tr>
 											</table>
 					<br>
-					<br>";
+					<br>
+					";
 			
 			$contenidoPagina .= "<page_footer>";
 			
