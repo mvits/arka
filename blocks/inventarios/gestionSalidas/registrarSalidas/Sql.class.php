@@ -160,12 +160,13 @@ class Sql extends \Sql {
             case "buscar_entradas" :
 
                 $cadenaSql = "SELECT DISTINCT entrada.id_entrada, entrada.consecutivo||' - ('||entrada.vigencia||')' entradas ";
-                $cadenaSql .= "FROM entrada  ";
-                $cadenaSql .= "JOIN elemento ON elemento.id_entrada = entrada.id_entrada ";
-                $cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento ";
-                $cadenaSql .= "WHERE cierre_contable ='f' ";
-                $cadenaSql .= "AND   estado_entrada = 1  ";
-                $cadenaSql .= "AND ei.id_salida IS NULL  ";
+                $cadenaSql .= " FROM entrada  ";
+                $cadenaSql .= " JOIN elemento ON elemento.id_entrada = entrada.id_entrada ";
+                //$cadenaSql .= "JOIN elemento_individual ei ON ei.id_elemento_gen = elemento.id_elemento ";
+                $cadenaSql .= " WHERE cierre_contable ='f' ";
+                $cadenaSql .= " AND estado_entrada = 1  ";
+                $cadenaSql .= " AND entrada.id_entrada NOT IN (SELECT id_entrada FROM salida) ";
+                //$cadenaSql .= "AND ei.id_salida IS NULL  ";
                 $cadenaSql .= "AND entrada.estado_registro='t' ";
                 $cadenaSql .= "ORDER BY entrada.id_entrada DESC ";
 
@@ -186,9 +187,9 @@ class Sql extends \Sql {
                 break;
 
             case "proveedor_informacion" :
-                $cadenaSql = " SELECT \"PRO_NIT\",\"PRO_RAZON_SOCIAL\"  ";
-                $cadenaSql .= " FROM arka_parametros.arka_proveedor ";
-                $cadenaSql .= " WHERE \"PRO_NIT\"='" . $variable . "'";
+                $cadenaSql = " SELECT PRO_NIT,PRO_RAZON_SOCIAL  ";
+                $cadenaSql .= " FROM PROVEEDORES ";
+                $cadenaSql .= " WHERE PRO_NIT='" . $variable . "'";
 
                 break;
 
@@ -300,7 +301,8 @@ class Sql extends \Sql {
                 $cadenaSql .= " JOIN  catalogo.catalogo_elemento  ce ON ce.elemento_id = e.nivel ";
                 $cadenaSql .= "JOIN catalogo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
                 $cadenaSql .= "WHERE e.id_entrada='" . $variable . "' ";
-                // $cadenaSql .= "AND cl.lista_activo = 1 ";
+                $cadenaSql .= "AND cantidad_por_asignar <> 0 ;";
+                
                 break;
 
             case "dependencias" :
@@ -436,21 +438,21 @@ class Sql extends \Sql {
                 $cadenaSql .= " cantidad_asignada='" . $variable ['cantidad'] . "' ";
                 $cadenaSql .= "WHERE id_elemento_gen ='" . $variable ['id_elemento'] . "';";
                 break;
-            
-              case "actualizar_elemento_general" :
+
+            case "actualizar_elemento_general" :
                 $cadenaSql = "UPDATE elemento ";
                 $cadenaSql .= "SET cantidad_por_asignar=0 ";
-                $cadenaSql .= "WHERE id_elemento ='" . $variable  . "';";
+                $cadenaSql .= "WHERE id_elemento ='" . $variable . "';";
                 break;
 
-            
+
             case "actualizar_elemento_general_consumo" :
                 $cadenaSql = "UPDATE elemento ";
-                $cadenaSql .= "SET cantidad_por_asignar=cantidad_por_asignar-".$variable['cantidad']." ";
+                $cadenaSql .= "SET cantidad_por_asignar=cantidad_por_asignar-" . $variable['cantidad'] . " ";
                 $cadenaSql .= "WHERE id_elemento ='" . $variable ['id_elemento'] . "';";
                 break;
-            
-            
+
+
 
             case "consulta_elementos_validar" :
                 $cadenaSql = "SELECT COUNT(id_elemento) ";
@@ -508,16 +510,11 @@ class Sql extends \Sql {
                 $cadenaSql .= "'" . $variable ['id_salida'] . "',";
                 $cadenaSql .= "'" . $variable ['cantidad_asignada'] . "') ";
                 $cadenaSql .= "RETURNING id_elemento_ind; ";
-
-
                 break;
 
-
             case "idElementoMaxIndividual" :
-
                 $cadenaSql = "SELECT max(id_elemento_ind) ";
                 $cadenaSql .= "FROM elemento_individual  ";
-
                 break;
 
             case "consultaNivel" :
@@ -528,7 +525,33 @@ class Sql extends \Sql {
                 $cadenaSql .= "JOIN catalogo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
                 $cadenaSql .= "WHERE cl.lista_activo = 1  ";
                 $cadenaSql .= "AND  elemento_individual.id_elemento_ind ='" . $variable . "'";
+                break;
 
+            case "elementos_salida" :
+                $cadenaSql = " SELECT ei.id_elemento_ind, nivel, sal.fecha_registro fecha_salida, total_iva_con, grupo_id, grupo_vidautil, sal.id_salida ";
+                $cadenaSql .= " FROM arka_inventarios.salida sal ";
+                $cadenaSql .= " JOIN arka_inventarios.elemento_individual ei ON ei.id_salida=sal.id_salida ";
+                $cadenaSql .= " JOIN arka_inventarios.elemento ele ON ele.id_elemento=ei.id_elemento_gen ";
+                $cadenaSql .= " JOIN catalogo.catalogo_elemento ON catalogo.catalogo_elemento.elemento_id=nivel ";
+                $cadenaSql .= " JOIN grupo.grupo_descripcion ON catalogo.catalogo_elemento.elemento_grupoc=CAST(grupo.grupo_descripcion.grupo_id as character varying)   ";
+                $cadenaSql .= " WHERE 1=1 ";
+                $cadenaSql .= " AND ele.estado=TRUE ";
+                $cadenaSql .= " AND ei.estado_registro=TRUE ";
+                $cadenaSql .= " AND sal.estado_registro=TRUE ";
+                $cadenaSql .= " AND grupo_depreciacion=TRUE ";
+                break;
+
+            case "registro_detalle_depreciacion" :
+                $cadenaSql = " INSERT INTO arka_inventarios.detalle_depreciacion (id_elemento_ind, ";
+                $cadenaSql .= " id_salida,fecha_salida, grupo_contable,vida_util,valor, valor_cuota) VALUES (";
+                $cadenaSql .= " '" . $variable['id_elemento_ind'] . "',";
+                $cadenaSql .= " '" . $variable['id_salida'] . "',";
+                $cadenaSql .= " '" . $variable['fecha_salida'] . "',";
+                $cadenaSql .= " '" . $variable['grupo_contable'] . "',";
+                $cadenaSql .= " '" . $variable['vida_util'] . "',";
+                $cadenaSql .= " '" . $variable['valor'] . "',";
+                $cadenaSql .= " '" . $variable['valor_cuota'] . "'";
+                $cadenaSql .= " );";
                 break;
 
             // _________________________________________________
