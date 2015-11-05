@@ -72,7 +72,7 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		$atributos ["leyenda"] = "Consulta de  Funcionario Radicación Inventario Físico";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-	
+		
 		$esteCampo = "funcionario";
 		$atributos ['nombre'] = $esteCampo;
 		$atributos ['id'] = $esteCampo;
@@ -92,19 +92,28 @@ class registrarForm {
 		$atributos ['ajax_function'] = "";
 		$atributos ['ajax_control'] = $esteCampo;
 		$atributos ['estilo'] = "jqueryui";
-		$atributos ['validar'] = " ";
+		$atributos ['validar'] = "required";
 		$atributos ['limitar'] = true;
 		$atributos ['anchoCaja'] = 52;
 		$atributos ['miEvento'] = '';
 		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "funcionarios" );
-		$matrizItems = array (
+		
+		$matrizItemDinFun = array (
 				array (
 						0,
-						' ' 
+						'No Exiten Funcionario con elementos ' 
 				) 
 		);
+		
 		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-		$atributos ['matrizItems'] = $matrizItems;
+		
+		if ($matrizItems == false) {
+			
+			$atributos ['matrizItems'] = $matrizItemDinFun;
+		} else {
+			$atributos ['matrizItems'] = $matrizItems;
+		}
+		
 		// $atributos['miniRegistro']=;
 		$atributos ['baseDatos'] = "inventarios";
 		// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
@@ -113,7 +122,6 @@ class registrarForm {
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
-		
 		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 		
@@ -171,7 +179,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Consultar";
-		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
+		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
 		 * Para ello utiliza la hora en que es creado el formulario para
