@@ -122,7 +122,7 @@ class BotonHtml extends HtmlBase{
         
         
         	// Utilizar esto para garantizar que no se envie el formulario varias veces con la misma información 
-        	$cadena .= "ondblclick=\"this.disabled=true;\" ";
+        	$cadena .= "onsubmit=\"this.disabled=true;\" ";
     
         return $cadena;
     
