@@ -34,10 +34,11 @@ class Sql extends \Sql {
 			
 			case "Registrar_Radicacion" :
 				$cadenaSql = " INSERT INTO arka_movil.radicado_levantamiento(  ";
-				$cadenaSql .= "funcionario,sede,dependencia,estado_radicacion, fecha_registro)  ";
+				$cadenaSql .= "funcionario,sede,dependencia,numero_elementos,estado_radicacion, fecha_registro)  ";
 				$cadenaSql .= "VALUES ('" . $variable ['identificacion'] . "',";
 				$cadenaSql .= "'" . $variable ['cod_sede'] . "',";
 				$cadenaSql .= "'" . $variable ['cod_dependencia'] . "',";
+				$cadenaSql .= "'" . $variable ['num_ele'] . "',";
 				$cadenaSql .= " 'TRUE',  ";
 				$cadenaSql .= "'" . date ( 'Y-m-d' ) . "');";
 				
@@ -261,9 +262,19 @@ class Sql extends \Sql {
 				
 				break;
 			
+			case "ConsultarSedesRadicado" :
+				
+				$cadenaSql = "SELECT  DISTINCT  sede, codigo_sede " ;
+				$cadenaSql .= "FROM  radicados_actuales ";
+				$cadenaSql .= "ORDER BY  sede ASC ;";
+// 				$cadenaSql .= "INNER JOIN  elemento_individual eli ON  eli.funcionario= fun.\"FUN_IDENTIFICACION\" ";
+// 				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
+				
+				break;
+			
 			case "consultarFuncionariosaCargoElementos" :
 				
-				$cadenaSql = "SELECT DISTINCT con_radicado.*
+				$cadenaSql = "SELECT  con_radicado.*
 								FROM (";
 				
 				$cadenaSql .= "SELECT  DISTINCT fun.\"FUN_IDENTIFICACION\" identificacion,
@@ -283,7 +294,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND  eli.estado_registro = 'TRUE'  ";
 				$cadenaSql .= " AND tb.id_tipo_bienes <> 1  ";
 				$cadenaSql .= " AND eli.funcionario <> 0  ";
-				$cadenaSql .= " AND eli.funcionario <> 0  ";
+				
 				$cadenaSql .= " AND rl.dependencia = ad.\"ESF_CODIGO_DEP\" ";
 				
 				if ($variable != '') {
@@ -303,19 +314,19 @@ class Sql extends \Sql {
 				$cadenaSql .= 'JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
 				$cadenaSql .= 'JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
 				$cadenaSql .= 'JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
-				$cadenaSql .= "LEFT JOIN  arka_movil.radicado_levantamiento rl ON rl.funcionario =  eli.funcionario ";
+				// $cadenaSql .= "LEFT JOIN arka_movil.radicado_levantamiento rl ON rl.funcionario = eli.funcionario ";
 				$cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
 				$cadenaSql .= "JOIN tipo_bienes tb ON tb.id_tipo_bienes = ele.tipo_bien ";
 				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
 				$cadenaSql .= " AND  eli.estado_registro = 'TRUE'  ";
 				$cadenaSql .= " AND tb.id_tipo_bienes <> 1  ";
 				$cadenaSql .= " AND eli.funcionario <> 0  ";
-				$cadenaSql .= " AND eli.funcionario <> 0  ";
+				// $cadenaSql .= " AND rl.dependencia IS NOT NULL ";
 				
 				if ($variable != '') {
 					$cadenaSql .= "AND eli.funcionario='" . $variable . "' ";
 				}
-				$cadenaSql .= 'GROUP BY fun."FUN_IDENTIFICACION",fun."FUN_NOMBRE",sas."ESF_SEDE",ad."ESF_DEP_ENCARGADA",sas."ESF_COD_SEDE",ad."ESF_CODIGO_DEP", rl.estado_radicacion  ';
+				$cadenaSql .= 'GROUP BY fun."FUN_IDENTIFICACION",fun."FUN_NOMBRE",sas."ESF_SEDE",ad."ESF_DEP_ENCARGADA",sas."ESF_COD_SEDE",ad."ESF_CODIGO_DEP"  ';
 				
 				$cadenaSql .= ' ) con_radicado ON  con_radicado.codigo_dependencia= radicado.codigo_dependencia ';
 				$cadenaSql .= "WHERE radicado.codigo_dependencia IS NULL  ";
@@ -326,7 +337,7 @@ class Sql extends \Sql {
 				
 						                 fun.\"FUN_NOMBRE\"   funcionario,
 										CASE rl.estado_radicacion WHEN 'TRUE' THEN 'TRUE' ELSE 'FALSE' END radicacion,
-										sas.\"ESF_SEDE\" sede,sas.\"ESF_ID_SEDE\" codigo_sede,ad.\"ESF_CODIGO_DEP\" codigo_dependencia, ad.\"ESF_DEP_ENCARGADA\" dependencia,count(placa) num_ele ";
+										sas.\"ESF_SEDE\" sede,sas.\"ESF_ID_SEDE\" codigo_sede,ad.\"ESF_CODIGO_DEP\" codigo_dependencia, ad.\"ESF_DEP_ENCARGADA\" dependencia,numero_elementos num_ele ";
 				$cadenaSql .= "FROM  arka_parametros.arka_funcionarios fun ";
 				$cadenaSql .= "JOIN  elemento_individual eli ON  eli.funcionario= fun.\"FUN_IDENTIFICACION\" ";
 				$cadenaSql .= 'JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
@@ -345,36 +356,10 @@ class Sql extends \Sql {
 				if ($variable != '') {
 					$cadenaSql .= "AND eli.funcionario='" . $variable . "' ";
 				}
-				$cadenaSql .= 'GROUP BY placa,fun."FUN_IDENTIFICACION",fun."FUN_NOMBRE",sas."ESF_SEDE",ad."ESF_DEP_ENCARGADA",sas."ESF_COD_SEDE",ad."ESF_CODIGO_DEP", rl.estado_radicacion ';
+				$cadenaSql .= 'GROUP BY placa,fun."FUN_IDENTIFICACION",fun."FUN_NOMBRE",sas."ESF_SEDE",ad."ESF_DEP_ENCARGADA",sas."ESF_COD_SEDE",ad."ESF_CODIGO_DEP", rl.estado_radicacion , numero_elementos ';
+				$cadenaSql .= 'ORDER BY sede ASC ;';
 				
-// 				echo $cadenaSql;exit;
 				
-				
-// 				$cadenaSql = "
-// select a1.*, Case When a1.codigo_dependencia in  (select dependencia from arka_movil.radicado_levantamiento) THEN 'TRUE'  Else 'FALSE'  END as radicacion from (SELECT DISTINCT 
-// fun.\"FUN_IDENTIFICACION\" identificacion,
-// fun.\"FUN_NOMBRE\" funcionario, 
-// sas.\"ESF_SEDE\" sede,
-// sas.\"ESF_ID_SEDE\" codigo_sede,
-// ad.\"ESF_CODIGO_DEP\" codigo_dependencia,
-// ad.\"ESF_DEP_ENCARGADA\" dependencia
-// --,  Case When rl.dependencia=ad.\"ESF_CODIGO_DEP\" THEN 'TRUE'  Else 'FALSE'  END as radicacion
-// FROM arka_parametros.arka_funcionarios fun 
-// JOIN arka_inventarios.elemento_individual eli ON eli.funcionario= fun.\"FUN_IDENTIFICACION\" 
-// JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios.\"ESF_ID_ESPACIO\"=eli.ubicacion_elemento 
-// JOIN arka_parametros.arka_dependencia as ad ON ad.\"ESF_ID_ESPACIO\"=eli.ubicacion_elemento
-// JOIN arka_parametros.arka_sedes as sas ON sas.\"ESF_COD_SEDE\"=espacios.\"ESF_COD_SEDE\" 
-// JOIN arka_movil.radicado_levantamiento rl ON rl.funcionario = eli.funcionario 
-// JOIN arka_inventarios.elemento ele  ON ele.id_elemento =eli .id_elemento_gen 
-// JOIN arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ele.tipo_bien 
-// --RIGHT JOIN arka_movil.radicado_levantamiento r ON r.dependencia = ad.\"ESF_CODIGO_DEP\" 
-// WHERE \"FUN_ESTADO\"='A' 
-// AND eli.estado_registro = 'TRUE' 
-// AND tb.id_tipo_bienes <> 1 
-// AND eli.funcionario <> 0 
-// --AND rl.dependencia != ad.\"ESF_CODIGO_DEP\" 
-// AND eli.funcionario='79950025'
-// GROUP BY rl.dependencia,fun.\"FUN_IDENTIFICACION\",fun.\"FUN_NOMBRE\",sas.\"ESF_SEDE\",ad.\"ESF_DEP_ENCARGADA\",sas.\"ESF_COD_SEDE\",ad.\"ESF_CODIGO_DEP\", rl.estado_radicacion) as a1 ";
 				break;
 			
 			case "buscar_placa" :
