@@ -77,14 +77,16 @@ class Funcion {
 				$this->RegistrarObservaciones ();
 			}
 			
-			if (isset ( $_REQUEST ['botonGenerarPdf'] )) {
-				
-				$this->documentoPDF ();
-			}
-			
 			if ($_REQUEST ['opcion'] == 'Accion') {
 				
-				$this->Verificacion ();
+			
+				
+				if (isset ( $_REQUEST ['botonGenerarPdf'] ) && $_REQUEST ['botonGenerarPdf'] == 'true') {
+					$this->documentoPDF ();
+				} else if(isset ( $_REQUEST ['botonGuadar'] ) && $_REQUEST ['botonGuadar'] == 'true') {
+					
+					$this->Verificacion ();
+				}
 			}
 		}
 	}

@@ -210,7 +210,8 @@ class registrarForm {
 						$atributos ['valor'] = serialize ( array (
 								"identificacion" => $resultado [$i] ['identificacion'],
 								"cod_sede" => $resultado [$i] ['codigo_sede'],
-								"cod_dependencia" => $resultado [$i] ['codigo_dependencia'] 
+								"cod_dependencia" => $resultado [$i] ['codigo_dependencia'],
+								"num_ele" => $resultado [$i] ['num_ele']
 						) );
 						$atributos ['deshabilitado'] = false;
 						$tab ++;
@@ -275,14 +276,38 @@ class registrarForm {
 				echo $this->miFormulario->campoBoton ( $atributos );
 				unset ( $atributos );
 				
+				
+				
+				
+				// -----------------CONTROL: Botón ----------------------------------------------------------------
+				$esteCampo = 'botonGenerarPdf';
+				$atributos ["id"] = $esteCampo;
+				$atributos ["tabIndex"] = $tab;
+				$atributos ["tipo"] = 'boton';
+				// submit: no se coloca si se desea un tipo button genérico
+				$atributos ['submit'] = true;
+				$atributos ["estiloMarco"] = '';
+				$atributos ["estiloBoton"] = 'jqueryui';
+				// verificar: true para verificar el formulario antes de pasarlo al servidor.
+				$atributos ["verificar"] = '';
+				$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+				$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+				$tab ++;
+					
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoBoton ( $atributos );
+				unset ( $atributos );
+					
 				// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 				
-				// ---------------------------------------------------------
+
+				// ------------------Fin Division para los botones-------------------------
+				echo $this->miFormulario->division ( "fin" );
+				unset ( $atributos );
 			}
-			
-			// ------------------Fin Division para los botones-------------------------
-			echo $this->miFormulario->division ( "fin" );
-			unset ( $atributos );
+	
 		}
 		
 		if ($resultado_periodo == false) {
@@ -326,6 +351,9 @@ class registrarForm {
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Accion";
 		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
+		$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
+		
+		
 		// $valorCodificado .= "&opcion=mensaje";
 		// $valorCodificado .= "&mensaje=mantenimiento";
 		
