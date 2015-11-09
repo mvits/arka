@@ -32,7 +32,7 @@ class RegistradorOrden {
 		
 		$funcionario = $_REQUEST ['funcionario'];
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarFuncionariosaCargoElementos', $funcionario );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarFuncionariosaCargoElementos', '' );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
@@ -79,7 +79,7 @@ class RegistradorOrden {
 </style>				
 				
 				
-<page backtop='5mm' backbottom='5mm' backleft='5mm' backright='5mm' footer='page'>
+<page backtop='1mm' backbottom='1mm' backleft='5mm' backright='5mm' footer='page'>
 	
 
         <table align='left' style='width:100%;' >
@@ -107,13 +107,16 @@ class RegistradorOrden {
             </tr>
         </table>";
 		
+		$num_radicados_global = 0;
+		$num_no_radicados_global = 0;
+		
 		foreach ( $resultado_sedes as $sede ) {
 			
 			$contenidoPagina .= "
             
             <table style='width:100%;border=none;'>
             <tr> 
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>NOMBRE SEDE : " . $sede ['sede'] . "</td>
+			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'><b>NOMBRE SEDE : " . $sede ['sede'] . "</b></td>
 			 			
  		 	</tr>
 			</table>
@@ -134,19 +137,17 @@ class RegistradorOrden {
 				
 				if ($sede ['codigo_sede'] == $valor ['codigo_sede']) {
 					
-
 					if ($valor ['radicacion'] == 'FALSE') {
 						$num_no_radicados = $num_no_radicados + 1;
-					
-					} elseif($valor ['radicacion'] == 'TRUE'){
-					
-						$num_radicados = $num_radicados + 1;
-					}
+						$num_no_radicados_global = $num_no_radicados_global + 1;
+					} elseif ($valor ['radicacion'] == 'TRUE') {
 						
-					
+						$num_radicados = $num_radicados + 1;
+						$num_radicados_global = $num_radicados_global + 1;
+					}
 					
 					$valor ['radicacion'] = ($valor ['radicacion'] != 'FALSE') ? 'Radicado' : 'No Radicado ';
-			
+					
 					$contenidoPagina .= " 
 								<tr>
                     			<td style='width:35%;text-align=center;'>" . $valor ['dependencia'] . "</td>
@@ -158,44 +159,79 @@ class RegistradorOrden {
 				}
 			}
 			
-			$contenidoPagina .= "</table>";
-			
-			
-			
+			$contenidoPagina .= "";
 			
 			$total_inventario = $num_radicados + $num_no_radicados;
-			
-			
 			
 			$porcentaje_avance = ($num_radicados / $total_inventario) * 100;
 			
 			$contenidoPagina .= "
 			
-            <table style='width:100%;border=none;'>
+            
             <tr>
-			<td style='width:90%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'>Total Radicados:</td>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:10%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'>Total Radicados:</td>
 			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $num_radicados . "</td>
 			</tr>
 		    <tr>
-			<td style='width:90%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'>Total No Radicado:</td>
-			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" .$num_no_radicados . "</td>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>		
+			<td style='width:10%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'>Total No Radicado:</td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $num_no_radicados . "</td>
 			</tr>			
 			<tr>
-			<td style='width:90%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'>Total Inventarios:</td>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>		
+			<td style='width:10%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'>Total Inventarios:</td>
 			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $total_inventario . "</td>
 			</tr>		
 			<tr>
-			<td style='width:90%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'>% Avance:</td>
-			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $porcentaje_avance. "  %</td>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>		
+			<td style='width:10%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'><b>% Avance:</b></td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'><b>" . $porcentaje_avance . " %</b></td>
 			</tr>		
-			
-					
 			</table>
-			<br>
-			<br>		
-			<br>
-					";
+			";
 		}
+		
+		$total_inventario_global = $num_radicados_global + $num_no_radicados_global;
+		
+		$porcentaje_avance_global = ($num_radicados_global / $total_inventario_global) * 100;
+			
+
+
+
+
+		$contenidoPagina .= "
+		
+			<page_footer  backbottom='10mm'>
+			
+			<table style='width:100%;border=none;'>
+            <tr>
+			<td style='width:50%;text-align:center;'><b>TOTAL RADICADO GLOBAL:</b></td>
+			<td style='width:50%;text-align:center;'><b>".$num_radicados_global."</b></td>
+ 		 	</tr>
+			<tr>
+			<td style='width:50%;text-align:center;'><b>TOTAL NO RADICADOS GLOBAL:</b></td>
+			<td style='width:50%;text-align:center;'><b>".$num_no_radicados_global."</b></td>
+ 		 	</tr>
+			<tr>
+			<td style='width:50%;text-align:center;'><b>TOTAL INVENTARIOS:</b></td>
+			<td style='width:50%;text-align:center;'><b>".$total_inventario_global."</b></td>
+ 		 	</tr>
+			<tr>
+			<td style='width:50%;text-align:center;'><b>% AVANCE:</b></td>
+			<td style='width:50%;text-align:center;'><b>".$porcentaje_avance_global." %</b></td>
+ 		 	</tr>
+			</table>
+			</page_footer>
+					";
 		
 		$contenidoPagina .= "</page>";
 		
@@ -210,9 +246,9 @@ $textos = $miRegistrador->documento ();
 ob_start ();
 $html2pdf = new \HTML2PDF ( 'L', 'LETTER', 'es', true, 'UTF-8', array (
 		1,
-		1,
-		1,
-		1 
+		2,
+		2,
+		10
 ) );
 $html2pdf->pdf->SetDisplayMode ( 'fullpage' );
 $html2pdf->WriteHTML ( $textos );
