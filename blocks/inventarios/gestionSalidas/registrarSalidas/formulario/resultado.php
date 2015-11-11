@@ -53,8 +53,6 @@ class registrarForm {
         $conexion = "inventarios";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-
-
         if (isset($_REQUEST ['fecha_inicio']) && $_REQUEST ['fecha_inicio'] != '') {
             $fechaInicio = $_REQUEST ['fecha_inicio'];
         } else {
@@ -93,7 +91,7 @@ class registrarForm {
             $proveedor
         );
 
-        $cadenaSql = $this->miSql->getCadenaSql('consultarEntrada', $arreglo);
+        $cadenaSql = $this->miSql->getCadenaSql('consultarEntrada_busqueda', $arreglo);
         
         $entrada = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
