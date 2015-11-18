@@ -267,6 +267,7 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT  DISTINCT  sede, codigo_sede " ;
 				$cadenaSql .= "FROM  radicados_actuales ";
 				$cadenaSql .= "ORDER BY  sede ASC ;";
+				
 // 				$cadenaSql .= "INNER JOIN  elemento_individual eli ON  eli.funcionario= fun.\"FUN_IDENTIFICACION\" ";
 // 				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
 				
@@ -350,16 +351,15 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND  eli.estado_registro = 'TRUE'  ";
 				$cadenaSql .= " AND tb.id_tipo_bienes <> 1  ";
 				$cadenaSql .= " AND eli.funcionario <> 0  ";
-				$cadenaSql .= " AND eli.funcionario <> 0  ";
 				$cadenaSql .= " AND rl.dependencia = ad.\"ESF_CODIGO_DEP\" ";
 				
 				if ($variable != '') {
 					$cadenaSql .= "AND eli.funcionario='" . $variable . "' ";
 				}
 				$cadenaSql .= 'GROUP BY placa,fun."FUN_IDENTIFICACION",fun."FUN_NOMBRE",sas."ESF_SEDE",ad."ESF_DEP_ENCARGADA",sas."ESF_COD_SEDE",ad."ESF_CODIGO_DEP", rl.estado_radicacion , numero_elementos ';
-				$cadenaSql .= 'ORDER BY sede ASC ;';
+				$cadenaSql .= 'ORDER BY sede, dependencia  ASC ;';
 				
-				
+				echo $cadenaSql;exit;
 				break;
 			
 			case "buscar_placa" :
