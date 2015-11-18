@@ -61,7 +61,6 @@ class registrarForm {
         $elementos = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         $cadenaSql = $this->miSql->getCadenaSql('consulta_elementos_validar', $_REQUEST ['numero_entrada']);
-        
         $elementos_validacion = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         $datosgenerales = unserialize($_REQUEST ['datosGenerales']);
@@ -92,8 +91,7 @@ class registrarForm {
         // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
         // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
         $atributos ['tipoEtiqueta'] = 'inicio';
-        echo $this->miFormulario->formulario($atributos);
-        {
+        echo $this->miFormulario->formulario($atributos); {
             $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
 
             $directorio = $this->miConfigurador->getVariableConfiguracion("host");
@@ -185,8 +183,7 @@ class registrarForm {
 // 				var_dump(unserialize($_REQUEST['datosGenerales']));
 
 
-                unset($atributos);
-                {
+                unset($atributos); {
 
                     $esteCampo = 'numero_entrada_c';
                     $atributos ['id'] = $esteCampo;
@@ -328,8 +325,7 @@ class registrarForm {
                     // Aplica atributos globales al control
                     $atributos = array_merge($atributos, $atributosGlobales);
                     echo $this->miFormulario->campoCuadroLista($atributos);
-                    unset($atributos);
-                    {
+                    unset($atributos); {
                         $cantidaditems = count($elementos);
 
                         if ($elementos) {
@@ -371,7 +367,7 @@ class registrarForm {
                                 $atributos ['textoFondo'] = "Cantidad";
                                 $atributos ['dobleLinea'] = 0;
                                 $atributos ['tabIndex'] = $tab;
-                                $atributos ['validar'] = 'custom[onlyNumberSp]';
+                                $atributos ['validar'] = 'custom[number]';
                                 if (isset($_REQUEST [$esteCampo])) {
                                     $atributos ['valor'] = $_REQUEST [$esteCampo];
                                 } else {
