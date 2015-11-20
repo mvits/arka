@@ -40,6 +40,14 @@ class RegistradorOrden {
 		
 		$resultado_sedes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		
+		
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'jefe_recursos_fisicos' );
+		// echo $cadenaSql;
+		$jefe = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$jefe = $jefe [0];
+		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( 'rutaUrlBloque' );
 		
 		$contenidoPagina = '';
@@ -161,7 +169,7 @@ class RegistradorOrden {
 			
 			$total_inventario = $num_radicados + $num_no_radicados;
 			
-			$porcentaje_avance = ($num_radicados / $total_inventario) * 100;
+			$porcentaje_avance =round(($num_radicados / $total_inventario) * 100,3);
 			
 			$contenidoPagina .= "
 			
@@ -200,7 +208,7 @@ class RegistradorOrden {
 		
 		$total_inventario_global = count($resultado);
 		
-		$porcentaje_avance_global = ($num_radicados_global / $total_inventario_global) * 100;
+		$porcentaje_avance_global = round(($num_radicados_global / $total_inventario_global) * 100,3);
 			
 
 
@@ -210,6 +218,23 @@ class RegistradorOrden {
 		
 			<page_footer  backbottom='10mm'>
 			
+				
+			<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
+			<tr>
+			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>_______________________________________________________</td>
+			</tr>
+			<tr>
+			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $jefe ['nombre'] . "</td>
+			</tr>
+			<tr>
+			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Jefe Sección Almacén General e Inventarios</td>
+			</tr>
+			</table>				
+				
+				
+				
+				
+				
 			<table style='width:100%;border=none;'>
             <tr>
 			<td style='width:50%;text-align:center;'><b>TOTAL RADICADO GLOBAL:</b></td>

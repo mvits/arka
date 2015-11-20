@@ -268,12 +268,9 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM  arka_movil.radicados_actuales ";
 				$cadenaSql .= "ORDER BY  sede ASC ;";
 				
-
 				break;
 			
 			case "consultarFuncionariosaCargoElementos" :
-				
-			
 				
 				$cadenaSql = 'SELECT eli_cla.*,rc.id_radicado radicacion ';
 				$cadenaSql .= 'FROM (SELECT eli.funcionario identificacion,fun."FUN_NOMBRE" funcionario,sas."ESF_SEDE" sede,sas."ESF_ID_SEDE" codigo_sede,ad."ESF_CODIGO_DEP" codigo_dependencia,ad."ESF_DEP_ENCARGADA" dependencia,count(placa) num_ele ';
@@ -659,6 +656,19 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM grupo.catalogo_elemento ce ";
 				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
 				$cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
+				
+				break;
+			
+			case "jefe_recursos_fisicos" :
+				
+				$cadenaSql = 'SELECT "FUN_IDENTIFICACION" identificacion, "FUN_NOMBRE" nombre ';
+				$cadenaSql .= " FROM arka_parametros.arka_funcionarios ";
+				$cadenaSql .= " WHERE 1=1 ";
+				$cadenaSql .= ' AND "FUN_ESTADO"=';
+				$cadenaSql .= "'A'  ";
+				$cadenaSql .= ' AND "FUN_CARGO" ';
+				$cadenaSql .= " ='JEFE DE SECCION' ";
+				$cadenaSql .= ' AND "FUN_DEP_COD_ACADEMICA"=60 ; ';
 				
 				break;
 		}
