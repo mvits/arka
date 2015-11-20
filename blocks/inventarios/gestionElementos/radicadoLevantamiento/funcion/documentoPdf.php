@@ -39,8 +39,6 @@ class RegistradorOrden {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'ConsultarSedesRadicado' );
 		
 		$resultado_sedes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		// var_dump ( $resultado_sedes );
-		// exit ();
 		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( 'rutaUrlBloque' );
 		
@@ -137,16 +135,16 @@ class RegistradorOrden {
 				
 				if ($sede ['codigo_sede'] == $valor ['codigo_sede']) {
 					
-					if ($valor ['radicacion'] == 'FALSE') {
+					if (is_null($valor ['radicacion'])== true) {
 						$num_no_radicados = $num_no_radicados + 1;
 						$num_no_radicados_global = $num_no_radicados_global + 1;
-					} elseif ($valor ['radicacion'] == 'TRUE') {
+					} else {
 						
 						$num_radicados = $num_radicados + 1;
 						$num_radicados_global = $num_radicados_global + 1;
 					}
 					
-					$valor ['radicacion'] = ($valor ['radicacion'] != 'FALSE') ? 'Radicado' : 'No Radicado ';
+					$valor ['radicacion'] = (is_null($valor ['radicacion'])== true) ? 'No Radicado':'Radicado';
 					
 					$contenidoPagina .= " 
 								<tr>
@@ -200,7 +198,7 @@ class RegistradorOrden {
 			";
 		}
 		
-		$total_inventario_global = $num_radicados_global + $num_no_radicados_global;
+		$total_inventario_global = count($resultado);
 		
 		$porcentaje_avance_global = ($num_radicados_global / $total_inventario_global) * 100;
 			

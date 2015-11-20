@@ -108,7 +108,7 @@ class registrarForm {
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = "Funcionarios Con Invetario Físico a Cargo";
+			$atributos ["leyenda"] = "Funcionarios Con Inventario Físico a Cargo";
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			unset ( $atributos );
 			{
@@ -218,7 +218,7 @@ class registrarForm {
 						
 						// Aplica atributos globales al control
 						$atributos = array_merge ( $atributos, $atributosGlobales );
-						$mostrarHtml .= ($resultado [$i] ['radicacion'] == 'TRUE') ? '&#8730 ' : $this->miFormulario->campoCuadroSeleccion ( $atributos );
+						$mostrarHtml .= (is_null($resultado [$i] ['radicacion']) == true) ? $this->miFormulario->campoCuadroSeleccion ( $atributos ):'&#8730';
 						
 						$mostrarHtml .= "</center> </td> </tr>";
 					}

@@ -72,22 +72,30 @@ class Funcion {
 				redireccion::redireccionar ( $_REQUEST ['opcion'] );
 			}
 			
-			if ($_REQUEST ['opcion'] == 'registrarObservaciones') {
+			if (isset ( $_REQUEST ['botonGenerarPdf'] ) && $_REQUEST ['botonGenerarPdf'] == 'true') {
 				
-				$this->RegistrarObservaciones ();
+				$_REQUEST ["opcion"]='GenerarPdf';
+				
 			}
 			
-			if ($_REQUEST ['opcion'] == 'Accion') {
-				
 			
+			
+			switch ($_REQUEST ["opcion"]) {
 				
-				if (isset ( $_REQUEST ['botonGenerarPdf'] ) && $_REQUEST ['botonGenerarPdf'] == 'true') {
-					$this->documentoPDF ();
-				} else if(isset ( $_REQUEST ['botonGuadar'] ) && $_REQUEST ['botonGuadar'] == 'true') {
-					
+				case 'registrarObservaciones' :
+					$this->RegistrarObservaciones ();
+					break;
+				
+				case 'Accion' :
 					$this->Verificacion ();
-				}
+					break;
+				
+				case 'GenerarPdf' :
+					$this->documentoPDF ();
+					break;
 			}
+			
+			
 		}
 	}
 	function __construct() {
