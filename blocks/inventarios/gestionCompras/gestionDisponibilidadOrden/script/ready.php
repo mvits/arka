@@ -3,7 +3,7 @@
 ?>
 
 // Asociar el widget de validación al formulario
-              $("#registrarElementoOrden").validationEngine({
+              $("#gestionDisponibilidadOrden").validationEngine({
             promptPosition : "centerRight", 
             scroll: false,
             autoHidePrompt: true,
@@ -12,8 +12,8 @@
 	
         
         $(function() {
-            $("#registrarElementoOrden").submit(function() {
-                $resultado=$("#registrarElementoOrden").validationEngine("validate");
+            $("#gestionDisponibilidadOrden").submit(function() {
+                $resultado=$("#gestionDisponibilidadOrden").validationEngine("validate");
                    
                 if ($resultado) {
                 
@@ -22,8 +22,6 @@
                 return false;
             });
         });
-
-
 
 
 // Asociar el widget tabs a la división cuyo id es tabs
@@ -52,8 +50,9 @@ event.preventDefault();
               	 });              	            
               	 			
 			
-$("#<?php echo $this->campoSeguro('clase')?>").select2();
-$("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
+$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").select2();
+$("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").select2();
+$("#<?php echo $this->campoSeguro('diponibilidad')?>").select2();
 
         
              

@@ -1,14 +1,8 @@
-
 <?php
-
-
-
-
 // Gestión Disponibilidades
 
 $this->idioma ["tabContratoConsultarCrear"] ="Registro de Disponibilidades Presupuestales";
 $this->idioma ["tabContratoConsultarModificar"] = "Consultar y Modificar Disponibilidades Presupuestales";
-
 
 $this->idioma ["sedeConsulta"] = "Sede : ";
 $this->idioma ["sedeConsultaTitulo"] = "Seleccione Sede";
@@ -33,7 +27,8 @@ $this->idioma ["unidad_ejecutora"] = "Unidad Ejecutoria: ";
 $this->idioma ["unidad_ejecutoraTitulo"] = "Seleccione Unidad Ejecutoria ";
 
 
-
+$this->idioma ["valor_solicitud"] = "Valor a Solicitar ($): ";
+$this->idioma ["valor_solicitudTitulo"] = "Ingrese Valor a Solicitar de la Disponibilidad";
 
 
 // --Consulta Acta Recibido .----------------------------------------
@@ -286,8 +281,6 @@ $this->idioma ["fecha_disponibilidadTitulo"] = "Ingrese Fecha Disponibilidad Pre
 $this->idioma ["numero_disponibilidad"] = "Número :";
 $this->idioma ["numero_disponibilidadTitulo"] = "Ingrese Número de Disponibilidad Presupuestal ";
 
-$this->idioma ["valor_disponibilidad"] = "Valor :";
-$this->idioma ["valor_disponibilidadTitulo"] = "Ingrese Valor de Disponibilidad Presupuestal ";
 
 $this->idioma ["fecha_registro"] = "Fecha  : ";
 $this->idioma ["fecha_registroTitulo"] = "Ingrese Fecha Registro Presupuestal ";

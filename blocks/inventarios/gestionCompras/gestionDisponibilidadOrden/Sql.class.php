@@ -597,6 +597,24 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal; ";
 				
 				break;
+			
+			case "info_disponibilidad" :
+				$cadenaSql = "SELECT DISTINCT \"DIS_FECHA_REGISTRO\" AS FECHA, \"DIS_VALOR\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
+				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [1] . "' ";
+				$cadenaSql .= "AND  \"DIS_IDENTIFICADOR\"='" . $variable [0] . "' ";
+				$cadenaSql .= "AND  \"DIS_UNIDAD_EJECUTORA\"='" . $variable [2] . "' ";
+				
+				break;
+			
+			case "buscar_disponibilidad" :
+				$cadenaSql = "SELECT DISTINCT \"DIS_NUMERO_DISPONIBILIDAD\" AS identificador,\"DIS_NUMERO_DISPONIBILIDAD\" AS numero ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal  ";
+				$cadenaSql .= "WHERE \"DIS_VIGENCIA\"='" . $variable [0] . "' ";
+				$cadenaSql .= "AND \"DIS_UNIDAD_EJECUTORA\"='" . $variable [1] . "' ";
+				$cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" DESC ;";
+				
+				break;
 		}
 		return $cadenaSql;
 	}
