@@ -176,10 +176,15 @@ function disponibilidades(elem, request, response){
 		        if(data[0]!="null"){
 		        	$("#<?php echo $this->campoSeguro('fecha_diponibilidad')?>").val(data[0]);
 			    	$("#<?php echo $this->campoSeguro('valor_disponibilidad')?>").val(data[1]);
-				
-			    	valorLetrasDis();
-	
-		            
+
+
+			    	$("#<?php echo $this->campoSeguro('valor_disponibilidad')?>").val(data[1]);
+
+			    	
+			    	$("#<?php echo $this->campoSeguro('valor_solicitud')?>").attr("class","ui-widget ui-widget-content ui-corner-all validate[required,minSize[1],custom[number],max["+data[1]+"]] ");
+			    		    	
+			       	alert('stiv');
+			       	
 			        }
 
 		        
