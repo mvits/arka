@@ -1,6 +1,6 @@
 <?
 
-namespace inventarios\gestionCompras\registrarElementoOrden;
+namespace inventarios\gestionCompras\gestionDisponibilidadOrden;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
@@ -64,7 +64,7 @@ class Frontera {
 			}
 		} else {
 			$_REQUEST ['opcion'] = "mostrar";
-			include_once ($this->ruta . "/formulario/consulta.php");
+			include_once ($this->ruta . "/formulario/nuevo.php");
 		}
 	}
 }

@@ -23,11 +23,22 @@
             });
         });
 
-        setTimeout(function() {
-    		$('#marcoDatosBasicosMensaje').hide( "drop", { direction: "up" }, "slow" );
-			}, 1000000); // <-- time in milliseconds
-        
-              
+
+
+
+// Asociar el widget tabs a la división cuyo id es tabs
+$(function() {
+$("#tabs").tabs();
+}); 
+
+$(function() {
+$( "input[type=submit], button" )
+.button()
+.click(function( event ) {
+event.preventDefault();
+});
+});
+
 
   $('#<?php echo $this->campoSeguro('sedeConsulta')?>').width(290);              	 
  $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2({

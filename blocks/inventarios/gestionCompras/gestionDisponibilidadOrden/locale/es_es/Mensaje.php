@@ -1,5 +1,15 @@
 
 <?php
+// Gestión Disponibilidades
+
+$this->idioma ["tabContratoConsultarCrear"] ="Registro de Disponibilidades Presupuestales";
+$this->idioma ["tabContratoConsultarModificar"] = "Consultar y Modificar Disponibilidades Presupuestales";
+
+
+$this->idioma ["sedeConsulta"] = "Sede : ";
+$this->idioma ["sedeConsultaTitulo"] = "Seleccione Sede";
+
+
 
 // --Consulta Acta Recibido .----------------------------------------
 
