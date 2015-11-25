@@ -1,5 +1,9 @@
 
 <?php
+
+
+
+
 // Gestión Disponibilidades
 
 $this->idioma ["tabContratoConsultarCrear"] ="Registro de Disponibilidades Presupuestales";
@@ -8,6 +12,27 @@ $this->idioma ["tabContratoConsultarModificar"] = "Consultar y Modificar Disponi
 
 $this->idioma ["sedeConsulta"] = "Sede : ";
 $this->idioma ["sedeConsultaTitulo"] = "Seleccione Sede";
+
+
+$this->idioma ["vigencia_disponibilidad"] = "Vigencia :";
+$this->idioma ["vigencia_disponibilidadTitulo"] = "Seleccione Vigencia";
+
+$this->idioma ["diponibilidad"] = "Número Disponibilidad : ";
+$this->idioma ["diponibilidadTitulo"] = "Seleccione Número Disponibilidad";
+
+$this->idioma ["valorLetras_disponibilidad"] = "Valor en Letras: ";
+$this->idioma ["valorLetras_disponibilidadTitulo"] = "Valor en Letras Disponibilidad Presupuestal";
+
+$this->idioma ["valor_disponibilidad"] = "Valor Disponibilidad ($): ";
+$this->idioma ["valor_disponibilidadTitulo"] = "Valor Disponibilidad Presupuestal";
+
+$this->idioma ["fecha_diponibilidad"] = "Fecha Disponibilidad : ";
+$this->idioma ["fecha_diponibilidadTitulo"] = "Ingrese Fecha Disponibilidad Presupuestal (YYYY-MM-DD)";
+
+$this->idioma ["unidad_ejecutora"] = "Unidad Ejecutoria: ";
+$this->idioma ["unidad_ejecutoraTitulo"] = "Seleccione Unidad Ejecutoria ";
+
+
 
 
 

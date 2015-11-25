@@ -106,6 +106,7 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarOrden', $arreglo );
 		
 		$Orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
 		$arreglo=serialize($arreglo);
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -152,6 +153,8 @@ class registrarForm {
 		
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 		
+		
+	
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -170,7 +173,7 @@ class registrarForm {
             					<th>Identificación<br>Nombre Contratista</th>
                                 <th>Sede</th>
                                 <th>Dependencia</th>
-                                <th>Cargar Elementos</th>
+                                <th>Registrar<br>Disponibilidades Presupuestales</th>
                                 
                              </tr>
             </thead>
@@ -178,13 +181,13 @@ class registrarForm {
 			
 			for($i = 0; $i < count ( $Orden ); $i ++) {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-				$variable .= "&opcion=cargarElemento";
+				$variable .= "&opcion=cargarDisponibilidad";
 				$variable .= "&id_orden=" . $Orden [$i] ['id_orden'];
 				$variable .= "&arreglo=" . $arreglo;
 				$variable .= "&usuario=" . $_REQUEST['usuario'];
 				$variable .= "&mensaje_titulo=" . $Orden [$i] ['tipo_contrato'] ."<br>VIGENCIA Y/O NÚMERO ORDEN : ".$Orden [$i] ['identificador'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-				
+
 				$mostrarHtml = "<tr>
                     <td><center>" . $Orden [$i] ['tipo_contrato'] . "</center></td>
                     <td><center>" . $Orden [$i] ['identificador'] . "</center></td>		

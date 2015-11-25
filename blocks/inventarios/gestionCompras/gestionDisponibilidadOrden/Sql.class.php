@@ -195,16 +195,17 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN  tipo_contrato tc ON tc.id_tipo = ro.tipo_orden	 ";
 				$cadenaSql .= "JOIN  arka_parametros.arka_dependencia dep ON dep.\"ESF_CODIGO_DEP\" = ro.dependencia_solicitante	 ";
 				$cadenaSql .= "JOIN  arka_parametros.arka_sedes se ON se.\"ESF_ID_SEDE\" = ro.sede	 ";
+				$cadenaSql .= "JOIN  elemento_acta_recibido ac ON ac.id_orden = ro.id_orden	 ";
+				
 				$cadenaSql .= "WHERE 1 = 1 ";
 				$cadenaSql .= "AND ro.estado = 't' ";
 				if ($variable ['tipo_orden'] != '') {
 					$cadenaSql .= " AND ro.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
 				}
-
+				
 				if ($variable ['numero_orden'] != '') {
 					$cadenaSql .= " AND ro.id_orden = '" . $variable ['numero_orden'] . "' ";
 				}
-				
 				
 				if ($variable ['nit'] != '') {
 					$cadenaSql .= " AND cn.identificacion = '" . $variable ['nit'] . "' ";
@@ -572,8 +573,28 @@ class Sql extends \Sql {
 										WHEN 9 THEn vigencia || ' - ' || consecutivo_servicio
 								 END  valor  ";
 				$cadenaSql .= " FROM orden ";
-				$cadenaSql .= " WHERE tipo_orden ='".$variable."';";
+				$cadenaSql .= " WHERE tipo_orden ='" . $variable . "';";
 				
+				break;
+			
+			case "consultarValorElementos" :
+				
+				$cadenaSql = "SELECT id_orden,SUM(total_iva_con) valor ";
+				$cadenaSql .= " FROM elemento_acta_recibido  ";
+				$cadenaSql .= " WHERE id_orden='" . $variable . "' ";
+				$cadenaSql .= " GROUP BY id_orden;  ";
+				break;
+			
+			case "vigencia_disponibilidad" :
+				$cadenaSql = "SELECT \"DIS_VIGENCIA\" AS valor, \"DIS_VIGENCIA\" AS vigencia  ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal ";
+				$cadenaSql .= "GROUP BY \"DIS_VIGENCIA\" ORDER BY  \"DIS_VIGENCIA\"  DESC; ";
+				break;
+			
+			case "Unidad_Ejecutoria" :
+				
+				$cadenaSql = " SELECT DISTINCT \"DIS_UNIDAD_EJECUTORA\" valor ,\"DIS_UNIDAD_EJECUTORA\" descripcion  ";
+				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal; ";
 				
 				break;
 		}
