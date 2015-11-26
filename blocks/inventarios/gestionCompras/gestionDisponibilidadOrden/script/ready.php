@@ -38,6 +38,13 @@ event.preventDefault();
 });
 
 
+
+
+        setTimeout(function() {
+    		$('#ventanaEmergente').hide( "drop", { direction: "up" }, "slow" );
+			}, 2000); // <-- time in milliseconds
+        
+
   $('#<?php echo $this->campoSeguro('sedeConsulta')?>').width(290);              	 
  $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2({
              	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
@@ -344,6 +351,12 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").select2();
 	          $('#tablaTitulos').dataTable( {
                 "sPaginationType": "full_numbers"
                  } );
+                 
+              $('#tablaDisponibilidades').dataTable( {
+                "sPaginationType": "full_numbers"
+                 } );
+                 
+                 
 	   
           
 

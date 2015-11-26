@@ -1,11 +1,11 @@
 <?
 
-namespace inventarios\gestionActa\registrarElementoOrden\funcion;
+namespace inventarios\gestionCompras\gestionDisponibilidadOrden\funcion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("index.php");
 	exit ();
-} 
+}
 class redireccion {
 	public static function redireccionar($opcion, $valor = "", $valor1 = "") {
 		$miConfigurador = \Configurador::singleton ();
@@ -30,40 +30,24 @@ class redireccion {
 				
 				break;
 			
-			case "inserto" :
+			case "insertoDisponibilidad" :
 				
 				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=cargarElemento";
+				$variable .= "&opcion=cargarDisponibilidad";
+				$variable .= "&id_orden=" . $valor [0];
+				$variable .= "&mensaje_titulo=" . $valor [1];
+				$variable .= "&usuario=" . $valor [2];
 				$variable .= "&mensaje=registro";
-				$variable .= "&mensaje_titulo=" . $valor [0];
-				$variable .= "&id_orden=" . $valor [1];
-				$variable .= "&fecha_orden=" . $valor [2];
-				if ($valor [3] == '\'true\'') {
-					$variable .= "&registroOrden=true";
-				} else {
-					
-					$variable .= "&arreglo=" . $valor [3];
-				}
-				$variable .= "&usuario=" . $valor [4];
 				
 				break;
 			
-			case "inserto_cargue_masivo" :
-				
+			case "noInsertoDisponibilidad" :
 				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=mensaje";
-				$variable .= "&mensaje=confirmaMasivo";
-				$variable .= "&id_orden=" . $valor [1];
-				$variable .= "&mensaje_titulo=" . $valor [0];
-				$variable .= "&fecha_orden=" . $valor [2];
-				$variable .= "&usuario=" . $valor [4];
-				
-				if ($valor [3] == '') {
-					$variable .= "&registroOrden=true";
-				} else {
-					
-					$variable .= "&arreglo=" . $valor [3];
-				}
+				$variable .= "&opcion=cargarDisponibilidad";
+				$variable .= "&id_orden=" . $valor [0];
+				$variable .= "&mensaje_titulo=" . $valor [1];
+				$variable .= "&usuario=" . $valor [2];
+				$variable .= "&mensaje=Noregistro";
 				break;
 			
 			case "noFormatoImagen" :
@@ -71,7 +55,7 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=noFormatoImagen";
-				$variable .= "&usuario=".$valor;
+				$variable .= "&usuario=" . $valor;
 				break;
 			
 			case "noExtension" :

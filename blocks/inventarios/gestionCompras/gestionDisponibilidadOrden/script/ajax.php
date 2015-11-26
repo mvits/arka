@@ -183,7 +183,7 @@ function disponibilidades(elem, request, response){
 			    	
 			    	$("#<?php echo $this->campoSeguro('valor_solicitud')?>").attr("class","ui-widget ui-widget-content ui-corner-all validate[required,minSize[1],custom[number],max["+data[1]+"]] ");
 			    		    	
-			       	alert('stiv');
+			       	
 			       	
 			        }
 
@@ -202,7 +202,7 @@ function disponibilidades(elem, request, response){
 			  $.ajax({
 			    url: "<?php echo $urlFinalLetrasNumeros?>",
 			    dataType: "json",
-			    data: { valor:$("#<?php echo $this->campoSeguro('valor_disponibilidad')?>").val()},
+			    data: { valor:$("#<?php echo $this->campoSeguro('valor_solicitud')?>").val()},
 			    success: function(data){ 
 
 
@@ -376,6 +376,20 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 		
 		
 		});
+
+$("#<?php echo $this->campoSeguro('valor_solicitud')?>").keypress(function() {
+
+	if($("#<?php echo $this->campoSeguro('valor_solicitud')?>").val()!=''){
+	
+		valorLetras();	
+		
+	
+	}
+	
+	
+	});
+
+
 
 
 

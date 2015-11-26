@@ -34,8 +34,14 @@ class registrarForm {
 		 * $atributos= array_merge($atributos,$atributosGlobales);
 		 */
 		
-		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionActa/";
-		$rutaBloque .= $esteBloque ['nombre'];
+				
+		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
+		$rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/";
+		$rutaBloque .= $esteBloque ['grupo'] . "/".$esteBloque ['nombre'];
+		
+		
+		
+		
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/gestionCompras/" . $esteBloque ['nombre'] . "/plantilla/archivo_elementos.xlsx";
 		
 		$atributosGlobales ['campoSeguro'] = 'true';
@@ -109,6 +115,71 @@ class registrarForm {
 				$valores_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				$valores_orden = $valores_orden [0];
 				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarDisponibilidades', $_REQUEST ['id_orden'] );
+				
+				$disponibilidades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				var_dump($_REQUEST);
+				var_dump($disponibilidades);
+				if($disponibilidades){
+					$esteCampo = "Disponibilidades Presupuestales Registradas";
+					$atributos ['id'] = $esteCampo;
+					$atributos ['leyenda'] = "Certificados Disponibilidad Presupuestal Registrados";
+					echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+					{
+						
+						echo "<table id='tablaDisponibilidades'>";
+						
+						echo "<thead>
+                             <tr>
+								<th>Vigencia</th>
+								<th>Unidad Ejecutora</th>
+                                <th>Número Disponibilidad</th>
+                    			<th>Fecha Disponibilidad</th>
+            					<th>Valor Disponibilidad</th>
+								<th>Valor Solicitado<br>Disponibilidad</th>
+								<th>Modificar</th>
+                             </tr>
+				            </thead>
+				            <tbody>";
+						
+						
+						
+						foreach ($disponibilidades as $valor) {
+							$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+							$variable .= "&opcion=ModificarDisponibilidad";
+							$variable .= "&id_orden=" . $valor   ['id_orden'];
+							$variable .= "&id_disponibilidad=" . $valor   ['id_orden'];
+							$variable .= "&usuario=" . $_REQUEST['usuario'];
+							$variable .= "&mensaje_titulo=" .$_REQUEST['mensaje_titulo'];
+							$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+						
+							$mostrarHtml = "<tr>
+    					                    <td><center>" . $valor  ['vigencia'] . "</center></td>
+    					                    <td><center>" . $valor  ['unidad_ejecutora'] . "</center></td>
+						                    <td><center>" . $valor   ['numero_diponibilidad'] . "</center></td>
+						                    <td><center>" . $valor   ['fecha_disponibilidad'] . "</center></td>
+						                    <td><center>" .number_format ( $valor   ['valor_diponibilidad'], 2, ",", "." )  . "</center></td>
+						                    <td><center>" .number_format ( $valor   ['valor_solicitado'], 2, ",", "." )  . "</center></td>
+						                    <td><center>
+						                    	<a href='" . $variable . "'>
+						                            <img src='" . $rutaBloque . "/css/images/modificar.png' width='25px'>
+						                        </a>
+						                  	</center> </td>
+						                    </tr>";
+							echo $mostrarHtml;
+							unset ( $mostrarHtml );
+							unset ( $variable );
+						
+						
+						
+						}
+						echo "</tbody>";
+						
+						echo "</table >";
+					}
+					echo $this->miFormulario->agrupacion ( 'fin' );
+				}
 				
 				$esteCampo = "AgrupacionDisponibilidad";
 				$atributos ['id'] = $esteCampo;
@@ -125,7 +196,7 @@ class registrarForm {
 						$atributos ["estilo"] = $esteCampo;
 						$atributos ['columnas'] = 1;
 						$atributos ["estilo"] = $esteCampo;
-						$atributos ['texto'] = "Valor Orden  : $ ".number_format($valores_orden['valor'], 2, ",", ".");
+						$atributos ['texto'] = "Valor Orden  : $ " . number_format ( $valores_orden ['valor'], 2, ",", "." );
 						$tab ++;
 						echo $this->miFormulario->campoTexto ( $atributos );
 						unset ( $atributos );
@@ -280,7 +351,7 @@ class registrarForm {
 					$atributos ['tabIndex'] = $tab;
 					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 					$atributos ['validar'] = '';
-						
+					
 					if (isset ( $_REQUEST [$esteCampo] )) {
 						$atributos ['valor'] = $_REQUEST [$esteCampo];
 					} else {
@@ -292,13 +363,12 @@ class registrarForm {
 					$atributos ['maximoTamanno'] = '';
 					$atributos ['anchoEtiqueta'] = 180;
 					$tab ++;
-						
+					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-						
+					
 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
-					
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'valor_disponibilidad';
@@ -347,7 +417,7 @@ class registrarForm {
 					$atributos ['tabIndex'] = $tab;
 					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 					$atributos ['validar'] = 'required,minSize[1],custom[number]';
-						
+					
 					if (isset ( $_REQUEST [$esteCampo] )) {
 						$atributos ['valor'] = $_REQUEST [$esteCampo];
 					} else {
@@ -359,15 +429,12 @@ class registrarForm {
 					$atributos ['maximoTamanno'] = '';
 					$atributos ['anchoEtiqueta'] = 180;
 					$tab ++;
-						
+					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-						
+					
 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
-						
-					
-					
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'valorLetras_disponibilidad';
@@ -467,11 +534,6 @@ class registrarForm {
 			$valorCodificado .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 			$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 			
-			if (! isset ( $_REQUEST ['registroOrden'] )) {
-				$valorCodificado .= "&arreglo=" . $_REQUEST ['arreglo'];
-			} else {
-				$valorCodificado .= "&registroOrden='true'";
-			}
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.
 			 * Para ello utiliza la hora en que es creado el formulario para
@@ -558,20 +620,17 @@ class registrarForm {
 			echo $this->miFormulario->formulario ( $atributos );
 			{
 				
-				$esteCampo = "marcoDatosBasicosMensaje";
-				$atributos ['id'] = $esteCampo;
-				$atributos ["estilo"] = "jqueryui";
-				$atributos ['tipoEtiqueta'] = 'inicio';
-				
-				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+				// ------------------Division para los botones-------------------------
+				$atributos ["id"] = "ventanaEmergente";
+				$atributos ["estilo"] = " ";
+				echo $this->miFormulario->division ( "inicio", $atributos );
 				
 				{
-					
 					if ($_REQUEST ['mensaje'] == 'registro') {
-						$atributos ['mensaje'] = "<center>SE CARGO ELEMENTO " . $_REQUEST ['mensaje_titulo'] . "<br>Fecha : " . date ( 'Y-m-d' ) . "</center>";
+						$atributos ['mensaje'] = "<center>SE REGISTRO DISPONIBILIDAD PRESUPUESTAL</center>";
 						$atributos ["estilo"] = 'success';
 					} else {
-						$atributos ['mensaje'] = "<center>Error al Cargar Elemento Verifique los Datos</center>";
+						$atributos ['mensaje'] = "<center>ERROR AL REGISTRAR DISPONIBILIDAD PRESUPUESTAL<BR>Verifique los Datos</center>";
 						$atributos ["estilo"] = 'error';
 					}
 					
@@ -585,99 +644,19 @@ class registrarForm {
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->campoMensaje ( $atributos );
 					unset ( $atributos );
-					
-					// ------------------Division para los botones-------------------------
-					$atributos ["id"] = "botones";
-					$atributos ["estilo"] = "marcoBotones";
-					echo $this->miFormulario->division ( "inicio", $atributos );
-					
-					$esteCampo = 'desicion';
-					$atributos ['id'] = $esteCampo;
-					$atributos ['nombre'] = $esteCampo;
-					$atributos ['tipo'] = 'text';
-					$atributos ['estilo'] = 'textoCentrar';
-					$atributos ['marco'] = true;
-					$atributos ['estiloMarco'] = '';
-					$atributos ['texto'] = $this->lenguaje->getCadena ( $esteCampo );
-					$atributos ["etiquetaObligatorio"] = false;
-					$atributos ['columnas'] = 1;
-					$atributos ['dobleLinea'] = 0;
-					$atributos ['tabIndex'] = $tab;
-					$atributos ['validar'] = '';
-					// $atributos ['etiqueta'] =$this->lenguaje->getCadena ( $esteCampo."Nota" );
-					if (isset ( $_REQUEST [$esteCampo] )) {
-						$atributos ['valor'] = $_REQUEST [$esteCampo];
-					} else {
-						$atributos ['valor'] = '';
-					}
-					$atributos ['titulo'] = '';
-					$atributos ['deshabilitado'] = true;
-					$atributos ['tamanno'] = 10;
-					$atributos ['maximoTamanno'] = '';
-					$atributos ['anchoEtiqueta'] = 10;
-					$tab ++;
-					
-					// Aplica atributos globales al control
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoTexto ( $atributos );
-					unset ( $atributos );
-					
-					echo "<br><br><br>";
-					
-					$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
-					$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
-					$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-					
-					$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-					$variable = "pagina=indexAlmacen";
-					
-					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-					
-					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-					$esteCampo = 'botonSalir';
-					$atributos ['id'] = $esteCampo;
-					$atributos ['enlace'] = $variable;
-					$atributos ['tabIndex'] = 1;
-					$atributos ['estilo'] = 'textoSubtitulo';
-					$atributos ['enlaceTexto'] = "<< Salir >>";
-					$atributos ['ancho'] = '10%';
-					$atributos ['alto'] = '10%';
-					$atributos ['redirLugar'] = true;
-					echo $this->miFormulario->enlace ( $atributos );
-					unset ( $atributos );
-					
-					$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-					
-					$variable = "action=consultaOrdenServicios";
-					$variable .= "&pagina=consultaOrdenServicios";
-					$variable .= "&bloque=consultaOrdenServicios";
-					$variable .= "&bloqueGrupo=inventarios/gestionCompras/";
-					$variable .= "&opcion=generarDocumento";
-					$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
-					$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
-					
-					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-					
-					echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
-					// -----------------CONTROL: Botón ----------------------------------------------------------------
-					$esteCampo = 'botonSalida';
-					$atributos ['id'] = $esteCampo;
-					$atributos ['enlace'] = $variable;
-					$atributos ['tabIndex'] = 1;
-					$atributos ['estilo'] = 'textoSubtitulo';
-					$atributos ['enlaceTexto'] = "<< Generar PDF Documento Orden >>";
-					$atributos ['ancho'] = '10%';
-					$atributos ['alto'] = '10%';
-					$atributos ['redirLugar'] = true;
-					echo $this->miFormulario->enlace ( $atributos );
-					unset ( $atributos );
-					
-					// -----------------FIN CONTROL: Botón -----------------------------------------------------------
-					
-					// ---------------- FIN SECCION: División ----------------------------------------------------------
-					echo $this->miFormulario->division ( 'fin' );
 				}
-				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+				echo $this->miFormulario->division ( "fin" );
+				unset ( $atributos );
+				
+				// $esteCampo = "marcoDatosBasicosMensaje";
+				// $atributos ['id'] = $esteCampo;
+				// $atributos ["estilo"] = "jqueryui";
+				// $atributos ['tipoEtiqueta'] = 'inicio';
+				
+				// echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+				
+				// echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 			}
 			
 			// Paso 1: crear el listado de variables

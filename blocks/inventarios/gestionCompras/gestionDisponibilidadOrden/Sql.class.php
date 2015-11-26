@@ -615,6 +615,32 @@ class Sql extends \Sql {
 				$cadenaSql .= "ORDER BY \"DIS_NUMERO_DISPONIBILIDAD\" DESC ;";
 				
 				break;
+			
+			case "registrarDisponibilidad" :
+				$cadenaSql = "INSERT INTO arka_inventarios.disponibilidad_orden( ";
+				$cadenaSql .= "id_orden, vigencia, unidad_ejecutora, numero_diponibilidad, ";
+				$cadenaSql .= "fecha_disponibilidad,valor_diponibilidad, valor_solicitado,valor_letras_solicitud, fecha_registro)";
+				$cadenaSql .= "VALUES(";
+				$cadenaSql .= "'" . $variable ['id_orden'] . "',  ";
+				$cadenaSql .= "'" . $variable ['vigencia'] . "',  ";
+				$cadenaSql .= "'" . $variable ['unidad_ejecutora'] . "',  ";
+				$cadenaSql .= "'" . $variable ['diponibilidad'] . "',  ";
+				$cadenaSql .= "'" . $variable ['fecha_diponibilidad'] . "',  ";
+				$cadenaSql .= "'" . $variable ['valor_disponibilidad'] . "',  ";
+				$cadenaSql .= "'" . $variable ['valor_solicitud'] . "',  ";
+				$cadenaSql .= "'" . $variable ['valorLetras_disponibilidad'] . "',  ";
+				$cadenaSql .= "'" . date ( 'Y-m-d' ) . "' ) ";
+				
+				break;
+			
+			case "consultarDisponibilidades" :
+				
+				$cadenaSql = "SELECT *  ";
+				$cadenaSql .= " FROM disponibilidad_orden  ";
+				$cadenaSql .= " WHERE id_orden='" . $variable . "' ";
+				$cadenaSql .= " AND estado_registro='t'  ";
+				$cadenaSql .= " ORDER BY id_orden ASC;  ";
+				break;
 		}
 		return $cadenaSql;
 	}
