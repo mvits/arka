@@ -6,31 +6,64 @@
         Purpose of the stylesheet follows.
 */
 #scroll {
-     width:600px;
-     height:270px;
-     background-color:#F2F2F2;
-     overflow:auto;
+	width: 600px;
+	height: 270px;
+	background-color: #F2F2F2;
+	overflow: auto;
 }
 
-.contenedor-tabla{
-
-display: table;
-
+.ValorResidual {
+	margin-bottom: 10px;
+	text-align: right;
 }
 
-.contenedor-fila{
-
-display: table-row;
-
+.Mensaje {
+	
 }
 
-.contenedor-columna{
 
-display: table-cell;
 
+.Valor_Orden {
+	margin-bottom: 10px;
+	text-align: right;
+}
+.ValorFaltante {
+	margin-bottom: 10px;
+	text-align: right;
 }
 
-#tablaCandidatos{	border: solid 1px #333;	width: 100%; }
-#tablaCandidatos tbody tr{ background: #E0F0FA; }
-.fila-base{ display: none; } /* fila base oculta */
-.eliminar{ cursor: pointer; color: #000; }
+#divMensaje {
+	position: fixed;
+	z-index: 1;
+	left: 15%;
+    top: 50%;
+}
+
+.contenedor-tabla {
+	display: table;
+}
+
+.contenedor-fila {
+	display: table-row;
+}
+
+.contenedor-columna {
+	display: table-cell;
+}
+
+#tablaCandidatos {
+	border: solid 1px #333;
+	width: 100%;
+}
+
+#tablaCandidatos tbody tr {
+	background: #E0F0FA;
+}
+
+.fila-base {
+	display: none;
+} /* fila base oculta */
+.eliminar {
+	cursor: pointer;
+	color: #000;
+}

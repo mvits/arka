@@ -25,7 +25,18 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+		$datos = array (
+				$_REQUEST ['id_orden'],
+				$_REQUEST ['mensaje_titulo'],
+				$_REQUEST ['usuario'] 
+		);
+		
+		if ($_REQUEST ['valor_orden'] < ($_REQUEST ['total_solicitado'] + $_REQUEST ['valor_solicitud'])) {
 			
+			redireccion::redireccionar ( "ErrorValorAsignar", $datos );
+			
+			exit ();
+		}
 		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -44,20 +55,17 @@ class RegistradorOrden {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'registrarDisponibilidad', $arregloDatos );
 		
 		$Orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-
-		
-		$datos = array (
-				$_REQUEST ['id_orden'],
-				$_REQUEST ['mensaje_titulo'],
-				$_REQUEST ['usuario'],
-				
-		);
 		
 		if ($Orden == true) {
 			$this->miConfigurador->setVariableConfiguracion ( "cache", true );
 			
-			redireccion::redireccionar ( "insertoDisponibilidad", $datos );
-			exit ();
+			if ($_REQUEST ['valor_orden'] == ($_REQUEST ['total_solicitado'] + $_REQUEST ['valor_solicitud'])) {
+				redireccion::redireccionar("insertoDisponibilidadCompleta",$datos);
+				exit ();
+			} else {
+				redireccion::redireccionar ( "insertoDisponibilidad", $datos );
+				exit ();
+			}
 		} else {
 			
 			redireccion::redireccionar ( "noInsertoDisponibilidad", $datos );

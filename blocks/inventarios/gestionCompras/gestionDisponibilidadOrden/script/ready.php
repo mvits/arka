@@ -41,8 +41,8 @@ event.preventDefault();
 
 
         setTimeout(function() {
-    		$('#ventanaEmergente').hide( "drop", { direction: "up" }, "slow" );
-			}, 2000); // <-- time in milliseconds
+    		$('#divMensaje').hide( "drop", { direction: "up" }, "slow" );
+			}, 3000); // <-- time in milliseconds
         
 
   $('#<?php echo $this->campoSeguro('sedeConsulta')?>').width(290);              	 
@@ -353,7 +353,9 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").select2();
                  } );
                  
               $('#tablaDisponibilidades').dataTable( {
-                "sPaginationType": "full_numbers"
+                   "sScrollY": "100px",
+		         "bPaginate": false
+        
                  } );
                  
                  

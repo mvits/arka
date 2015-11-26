@@ -377,7 +377,7 @@ $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
 		
 		});
 
-$("#<?php echo $this->campoSeguro('valor_solicitud')?>").keypress(function() {
+$("#<?php echo $this->campoSeguro('valor_solicitud')?>").change(function() {
 
 	if($("#<?php echo $this->campoSeguro('valor_solicitud')?>").val()!=''){
 	

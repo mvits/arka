@@ -50,6 +50,25 @@ class redireccion {
 				$variable .= "&mensaje=Noregistro";
 				break;
 			
+			case "ErrorValorAsignar" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=cargarDisponibilidad";
+				$variable .= "&id_orden=" . $valor [0];
+				$variable .= "&mensaje_titulo=" . $valor [1];
+				$variable .= "&usuario=" . $valor [2];
+				$variable .= "&mensaje=ErrorValorAsignar";
+				break;
+			
+			case "insertoDisponibilidadCompleta" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=cargarDisponibilidad";
+				$variable .= "&id_orden=" . $valor [0];
+				$variable .= "&mensaje_titulo=" . $valor [1];
+				$variable .= "&usuario=" . $valor [2];
+				$variable .= "&mostrarFormularioRegistro=false";
+				$variable .= "&mensaje=insertoDisponibilidadCompleta";
+				break;
+			
 			case "noFormatoImagen" :
 				
 				$variable = "pagina=" . $miPaginaActual;
