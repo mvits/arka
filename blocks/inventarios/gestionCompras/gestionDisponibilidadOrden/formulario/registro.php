@@ -187,7 +187,8 @@ class registrarForm {
                     			<th>Fecha Disponibilidad</th>
             					<th>Valor Disponibilidad</th>
 								<th>Valor Solicitado<br>Disponibilidad</th>
-								<th>Modificar</th>
+								<th>Modificar<br>Disponibilidad</th>
+								<th>Asignar Registro<br>Presupuestal</th>
                              </tr>
 				            </thead>
 				            <tbody>";
@@ -200,6 +201,16 @@ class registrarForm {
 							$variable .= "&usuario=" . $_REQUEST ['usuario'];
 							$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 							$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+							
+							$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+							$variable .= "&opcion=ModificarDisponibilidad";
+							$variable .= "&id_orden=" . $valor ['id_orden'];
+							$variable .= "&id_disponibilidad=" . $valor ['id_orden'];
+							$variable .= "&usuario=" . $_REQUEST ['usuario'];
+							$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+							$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+							
+							
 							
 							$mostrarHtml = "<tr>
     					                    <td><center>" . $valor ['vigencia'] . "</center></td>
