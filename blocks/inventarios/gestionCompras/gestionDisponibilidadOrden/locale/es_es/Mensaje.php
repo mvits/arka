@@ -8,6 +8,8 @@ $this->idioma ["sedeConsulta"] = "Sede : ";
 $this->idioma ["sedeConsultaTitulo"] = "Seleccione Sede";
 
 
+
+
 $this->idioma ["vigencia_disponibilidad"] = "Vigencia :";
 $this->idioma ["vigencia_disponibilidadTitulo"] = "Seleccione Vigencia";
 
@@ -223,8 +225,8 @@ $this->idioma ["observaciones_entradaTitulo"] = "Ingrse Observaciones de Entrada
 $this->idioma ["dependencia_solicitante"] = "Dependencia :";
 $this->idioma ["dependencia_solicitanteTitulo"] = "Seleccione Dependencia";
 
-$this->idioma ["rubro"] = "&nbsp&nbspRubro :";
-$this->idioma ["rubroTitulo"] = "Ingrese Rubro";
+$this->idioma ["rubro"] = "Rubro :";
+$this->idioma ["rubroTitulo"] = "Seleccione Rubro";
 
 $this->idioma ["nombre_supervisor"] = "&nbspNombre  :";
 $this->idioma ["nombre_supervisorTitulo"] = "Ingrese Nombre del Supervisor";

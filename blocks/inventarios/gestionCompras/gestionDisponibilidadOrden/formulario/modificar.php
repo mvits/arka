@@ -20,6 +20,7 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
+		var_dump ( $_REQUEST );
 		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
@@ -88,6 +89,16 @@ class registrarForm {
 			
 			$valores_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			$valores_orden = $valores_orden [0];
+			
+			
+			
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarDisponibilidadModificar', $_REQUEST ['id_disponibilidad'] );
+				
+			$disponibilidad_modificar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			echo $cadenaSql;
+			var_dump($disponibilidad_modificar);exit;
+			
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarDisponibilidades', $_REQUEST ['id_orden'] );
 			
@@ -169,109 +180,41 @@ class registrarForm {
 				echo $this->miFormulario->campoTexto ( $atributos );
 				unset ( $atributos );
 				
-				if ($disponibilidades) {
+				$atributos ["id"] = "Valor_Orden";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				unset ( $atributos );
+				{
+					$esteCampo = 'ValorResidual';
+					$atributos ["id"] = $esteCampo;
+					$atributos ["estilo"] = $esteCampo;
+					$atributos ['columnas'] = 1;
+					$atributos ["estilo"] = $esteCampo;
+					$atributos ['texto'] = "Valor Total Solicitado : $ " . number_format ( $total, 2, ",", "." ) . "";
+					$tab ++;
+					echo $this->miFormulario->campoTexto ( $atributos );
+					unset ( $atributos );
 					
-					$esteCampo = "Disponibilidades Presupuestales Registradas";
-					$atributos ['id'] = $esteCampo;
-					$atributos ['leyenda'] = "Certificados Disponibilidad Presupuestal Registrados";
-					echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
-					{
-						
-						echo "<table id='tablaDisponibilidades'>";
-						
-						echo "<thead>
-                             <tr>
-								<th>Vigencia</th>
-								<th>Unidad Ejecutora</th>
-                                <th>Número Disponibilidad</th>
-                    			<th>Fecha Disponibilidad</th>
-            					<th>Valor Disponibilidad</th>
-								<th>Valor Solicitado<br>Disponibilidad</th>
-								<th>Modificar<br>Disponibilidad</th>
-								<th>Asignar Registro<br>Presupuestal</th>
-                             </tr>
-				            </thead>
-				            <tbody>";
-						
-						foreach ( $disponibilidades as $valor ) {
-							$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-							$variable .= "&opcion=ModificarDisponibilidad";
-							$variable .= "&id_orden=" . $valor ['id_orden'];
-							$variable .= "&id_disponibilidad=" . $valor ['id_orden'];
-							$variable .= "&usuario=" . $_REQUEST ['usuario'];
-							$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
-							$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-							
-							$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-							$variable .= "&opcion=ModificarDisponibilidad";
-							$variable .= "&id_orden=" . $valor ['id_orden'];
-							$variable .= "&id_disponibilidad=" . $valor ['id_orden'];
-							$variable .= "&usuario=" . $_REQUEST ['usuario'];
-							$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
-							$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-							
-							
-							
-							$mostrarHtml = "<tr>
-    					                    <td><center>" . $valor ['vigencia'] . "</center></td>
-    					                    <td><center>" . $valor ['unidad_ejecutora'] . "</center></td>
-						                    <td><center>" . $valor ['numero_diponibilidad'] . "</center></td>
-						                    <td><center>" . $valor ['fecha_disponibilidad'] . "</center></td>
-						                    <td><center>$ " . number_format ( $valor ['valor_diponibilidad'], 2, ",", "." ) . "</center></td>
-						                    <td><center>$ " . number_format ( $valor ['valor_solicitado'], 2, ",", "." ) . "</center></td>
-						                    <td><center>
-						                    	<a href='" . $variable . "'>
-						                            <img src='" . $rutaBloque . "/css/images/modificar.png' width='25px'>
-						                        </a>
-						                  	</center> </td>
-						                    </tr>";
-							echo $mostrarHtml;
-							unset ( $mostrarHtml );
-							unset ( $variable );
-							$total = $valor ['valor_solicitado'] + $total;
-						}
-						echo "</tbody>";
-						
-						echo "</table >";
-						
-						$atributos ["id"] = "Valor_Orden";
-						echo $this->miFormulario->division ( "inicio", $atributos );
-						unset ( $atributos );
-						{
-							$esteCampo = 'ValorResidual';
-							$atributos ["id"] = $esteCampo;
-							$atributos ["estilo"] = $esteCampo;
-							$atributos ['columnas'] = 1;
-							$atributos ["estilo"] = $esteCampo;
-							$atributos ['texto'] = "Valor Total Solicitado : $ " . number_format ( $total, 2, ",", "." ) . "";
-							$tab ++;
-							echo $this->miFormulario->campoTexto ( $atributos );
-							unset ( $atributos );
-							
-							$valor_faltante = ($valores_orden ['valor'] - $total);
-							
-							$esteCampo = 'ValorFaltante';
-							$atributos ["id"] = $esteCampo;
-							$atributos ["estilo"] = $esteCampo;
-							$atributos ['columnas'] = 1;
-							$atributos ["estilo"] = $esteCampo;
-							$atributos ['texto'] = "Valor Faltante : $ " . number_format ( $valor_faltante, 2, ",", "." ) . "";
-							$tab ++;
-							echo $this->miFormulario->campoTexto ( $atributos );
-							unset ( $atributos );
-						}
-						
-						echo $this->miFormulario->division ( 'fin' );
-					}
-					echo $this->miFormulario->agrupacion ( 'fin' );
+					$valor_faltante = ($valores_orden ['valor'] - $total);
 					
-					if ($valor_faltante == 0) {
-						
-						$_REQUEST ['mostrarFormularioRegistro'] = false;
-					} else {
-						
-						$_REQUEST ['mostrarFormularioRegistro'] = true;
-					}
+					$esteCampo = 'ValorFaltante';
+					$atributos ["id"] = $esteCampo;
+					$atributos ["estilo"] = $esteCampo;
+					$atributos ['columnas'] = 1;
+					$atributos ["estilo"] = $esteCampo;
+					$atributos ['texto'] = "Valor Faltante : $ " . number_format ( $valor_faltante, 2, ",", "." ) . "";
+					$tab ++;
+					echo $this->miFormulario->campoTexto ( $atributos );
+					unset ( $atributos );
+				}
+				
+				echo $this->miFormulario->division ( 'fin' );
+				
+				if ($valor_faltante == 0) {
+					
+					$_REQUEST ['mostrarFormularioRegistro'] = false;
+				} else {
+					
+					$_REQUEST ['mostrarFormularioRegistro'] = true;
 				}
 				
 				if ($_REQUEST ['mostrarFormularioRegistro'] == true) {

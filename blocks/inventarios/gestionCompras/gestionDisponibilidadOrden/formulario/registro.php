@@ -197,15 +197,15 @@ class registrarForm {
 							$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 							$variable .= "&opcion=ModificarDisponibilidad";
 							$variable .= "&id_orden=" . $valor ['id_orden'];
-							$variable .= "&id_disponibilidad=" . $valor ['id_orden'];
+							$variable .= "&id_disponibilidad=" . $valor ['id_disponibilidad'];
 							$variable .= "&usuario=" . $_REQUEST ['usuario'];
 							$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
-							$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+							$variableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 							
 							$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 							$variable .= "&opcion=ModificarDisponibilidad";
 							$variable .= "&id_orden=" . $valor ['id_orden'];
-							$variable .= "&id_disponibilidad=" . $valor ['id_orden'];
+							$variable .= "&id_disponibilidad=" . $valor ['id_disponibilidad'];
 							$variable .= "&usuario=" . $_REQUEST ['usuario'];
 							$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 							$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
@@ -220,7 +220,7 @@ class registrarForm {
 						                    <td><center>$ " . number_format ( $valor ['valor_diponibilidad'], 2, ",", "." ) . "</center></td>
 						                    <td><center>$ " . number_format ( $valor ['valor_solicitado'], 2, ",", "." ) . "</center></td>
 						                    <td><center>
-						                    	<a href='" . $variable . "'>
+						                    	<a href='" . $variableModificar . "'>
 						                            <img src='" . $rutaBloque . "/css/images/modificar.png' width='25px'>
 						                        </a>
 						                  	</center> </td>
@@ -479,6 +479,54 @@ class registrarForm {
 						
 						echo $this->miFormulario->campoCuadroTexto ( $atributos );
 						unset ( $atributos );
+						
+						
+						
+						// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+						$esteCampo = 'rubro';
+						$atributos ['nombre'] = $esteCampo;
+						$atributos ['id'] = $esteCampo;
+						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+						$atributos ["etiquetaObligatorio"] = true;
+						$atributos ['tab'] = $tab ++;
+						$atributos ['seleccion'] = - 1;
+						$atributos ['anchoEtiqueta'] = 180;
+						$atributos ['evento'] = '';
+						if (isset ( $_REQUEST [$esteCampo] )) {
+							$atributos ['valor'] = $_REQUEST [$esteCampo];
+						} else {
+							$atributos ['valor'] = '';
+						}
+						$atributos ['deshabilitado'] = true;
+						$atributos ['columnas'] = 1;
+						$atributos ['tamanno'] = 1;
+						$atributos ['ajax_function'] = "";
+						$atributos ['ajax_control'] = $esteCampo;
+						$atributos ['estilo'] = "jqueryui";
+						$atributos ['validar'] = "required";
+						$atributos ['limitar'] = 1;
+						$atributos ['anchoCaja'] = 40;
+						$atributos ['miEvento'] = '';
+						// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "numero_disponibilidad" );
+						$matrizItems = array (
+								array (
+										'',
+										''
+								)
+						);
+						// $matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						$atributos ['matrizItems'] = $matrizItems;
+						// $atributos['miniRegistro']=;
+						$atributos ['baseDatos'] = "sicapital";
+						// $atributos ['baseDatos'] = "inventarios";
+						
+						// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
+						
+						// Aplica atributos globales al control
+						$atributos = array_merge ( $atributos, $atributosGlobales );
+						echo $this->miFormulario->campoCuadroLista ( $atributos );
+						unset ( $atributos );
+						
 						
 						// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 						$esteCampo = 'valor_solicitud';

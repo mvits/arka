@@ -37,7 +37,6 @@ class Frontera {
 		$this->funcion = $funcion;
 	}
 	function html() {
-		
 		include_once ("core/builder/FormularioHtml.class.php");
 		
 		$this->ruta = $this->miConfigurador->getVariableConfiguracion ( "rutaBloque" );
@@ -61,6 +60,10 @@ class Frontera {
 				
 				case "cargarDisponibilidad" :
 					include_once ($this->ruta . "/formulario/registro.php");
+					break;
+				
+				case "ModificarDisponibilidad" :
+					include_once ($this->ruta . "/formulario/modificar.php");
 					break;
 			}
 		} else {

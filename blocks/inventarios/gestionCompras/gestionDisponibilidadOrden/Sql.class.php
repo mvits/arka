@@ -641,6 +641,15 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND estado_registro='t'  ";
 				$cadenaSql .= " ORDER BY id_orden ASC;  ";
 				break;
+			
+			case "consultarDisponibilidadModificar" :
+				
+				$cadenaSql = "SELECT *  ";
+				$cadenaSql .= " FROM disponibilidad_orden  ";
+				$cadenaSql .= " WHERE id_disponibilidad ='" . $variable . "' ";
+				$cadenaSql .= " AND estado_registro='t' ; ";
+				
+				break;
 		}
 		return $cadenaSql;
 	}
