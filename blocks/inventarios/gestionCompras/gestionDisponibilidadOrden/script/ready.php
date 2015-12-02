@@ -56,10 +56,19 @@ event.preventDefault();
               	 minimumInputLength: 3,
               	 });              	            
               	 			
-			
+$('#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>').width(100);				
 $("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").select2();
+
+
 $("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").select2();
-$("#<?php echo $this->campoSeguro('diponibilidad')?>").select2();
+
+
+
+$('#<?php echo $this->campoSeguro('diponibilidad')?>').width(300);	
+$("#<?php echo $this->campoSeguro('diponibilidad')?>").select2({
+             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
+              	 minimumInputLength: 1,
+              	 });              	            
 $("#<?php echo $this->campoSeguro('rubro')?>").select2();
 
         

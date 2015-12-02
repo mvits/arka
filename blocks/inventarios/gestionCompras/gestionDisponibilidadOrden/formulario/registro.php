@@ -147,6 +147,26 @@ class registrarForm {
 							$atributos ['mensaje'] = "<center>SE REGISTRO EL TOTAL DEL VALOR DE LA ORDEN<BR>CON LAS DISPONIBILIDADES PRESUPUESTALES</center>";
 							$atributos ["estilo"] = 'success';
 							break;
+						
+						case 'modifico' :
+							$atributos ['mensaje'] = "<center>SE MODIFICO CON EXITO LA DISPONIBILIDAD PRESUPUESTAL</center>";
+							$atributos ["estilo"] = 'success';
+							break;
+						
+						case 'ModificoDisponibilidadCompleta' :
+							$atributos ['mensaje'] = "<center>SE MODIFICO LA DISPONIBILIDAD PRESUPUESTAL <BR> Y SE REGISTRO EL TOTAL DEL VALOR DE LA ORDEN<BR>CON LAS DISPONIBILIDADES PRESUPUESTALES</center>";
+							$atributos ["estilo"] = 'success';
+							break;
+						
+						case 'NoModifico' :
+							$atributos ['mensaje'] = "<center>ERROR AL MODIFICAR DISPONIBILIDAD PRESUPUESTAL<BR>Verifique los Datos</center>";
+							$atributos ["estilo"] = 'error';
+							break;
+						
+						case 'ErrorValorAsignarModificar' :
+							$atributos ['mensaje'] = "<center>ERROR AL MODIFICAR DISPONIBILIDAD PRESUPUESTAL<BR>EL VALOR TOTAL SOLICITADO ES MAYOR AL VALOR DE LA ORDEN<br>Verifique los Datos</center>";
+							$atributos ["estilo"] = 'error';
+							break;
 					}
 					
 					// -------------Control texto-----------------------
@@ -210,8 +230,6 @@ class registrarForm {
 							$variable .= "&usuario=" . $_REQUEST ['usuario'];
 							$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 							$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-							
-							
 							
 							$mostrarHtml = "<tr>
     					                    <td><center>" . $valor ['vigencia'] . "</center></td>
@@ -483,8 +501,6 @@ class registrarForm {
 						echo $this->miFormulario->campoCuadroTexto ( $atributos );
 						unset ( $atributos );
 						
-						
-						
 						// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 						$esteCampo = 'rubro';
 						$atributos ['nombre'] = $esteCampo;
@@ -514,8 +530,8 @@ class registrarForm {
 						$matrizItems = array (
 								array (
 										'',
-										''
-								)
+										'' 
+								) 
 						);
 						// $matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 						$atributos ['matrizItems'] = $matrizItems;
@@ -529,7 +545,6 @@ class registrarForm {
 						$atributos = array_merge ( $atributos, $atributosGlobales );
 						echo $this->miFormulario->campoCuadroLista ( $atributos );
 						unset ( $atributos );
-						
 						
 						// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 						$esteCampo = 'valor_solicitud';

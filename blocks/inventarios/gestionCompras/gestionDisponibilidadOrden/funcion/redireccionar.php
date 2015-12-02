@@ -41,6 +41,17 @@ class redireccion {
 				
 				break;
 			
+			case "ModificarDisponibilidad" :
+				
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=cargarDisponibilidad";
+				$variable .= "&id_orden=" . $valor [0];
+				$variable .= "&mensaje_titulo=" . $valor [1];
+				$variable .= "&usuario=" . $valor [2];
+				$variable .= "&mensaje=modifico";
+				
+				break;
+			
 			case "noInsertoDisponibilidad" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=cargarDisponibilidad";
@@ -48,6 +59,15 @@ class redireccion {
 				$variable .= "&mensaje_titulo=" . $valor [1];
 				$variable .= "&usuario=" . $valor [2];
 				$variable .= "&mensaje=Noregistro";
+				break;
+			
+			case "noModificoDisponibilidad" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=cargarDisponibilidad";
+				$variable .= "&id_orden=" . $valor [0];
+				$variable .= "&mensaje_titulo=" . $valor [1];
+				$variable .= "&usuario=" . $valor [2];
+				$variable .= "&mensaje=NoModifico";
 				break;
 			
 			case "ErrorValorAsignar" :
@@ -58,6 +78,15 @@ class redireccion {
 				$variable .= "&usuario=" . $valor [2];
 				$variable .= "&mensaje=ErrorValorAsignar";
 				break;
+				
+			case "ErrorValorAsignarModificar" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=cargarDisponibilidad";
+				$variable .= "&id_orden=" . $valor [0];
+				$variable .= "&mensaje_titulo=" . $valor [1];
+				$variable .= "&usuario=" . $valor [2];
+				$variable .= "&mensaje=ErrorValorAsignarModificar";
+				break;
 			
 			case "insertoDisponibilidadCompleta" :
 				$variable = "pagina=" . $miPaginaActual;
@@ -67,6 +96,16 @@ class redireccion {
 				$variable .= "&usuario=" . $valor [2];
 				$variable .= "&mostrarFormularioRegistro=false";
 				$variable .= "&mensaje=insertoDisponibilidadCompleta";
+				break;
+			
+			case "ModificarDisponibilidadCompleta" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=cargarDisponibilidad";
+				$variable .= "&id_orden=" . $valor [0];
+				$variable .= "&mensaje_titulo=" . $valor [1];
+				$variable .= "&usuario=" . $valor [2];
+				$variable .= "&mostrarFormularioRegistro=false";
+				$variable .= "&mensaje=ModificoDisponibilidadCompleta";
 				break;
 			
 			case "noFormatoImagen" :

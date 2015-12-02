@@ -40,6 +40,12 @@ class Funcion {
 	function regitrar() {
 		include_once ($this->ruta . "funcion/registrar.php");
 	}
+	
+	function modificar() {
+		include_once ($this->ruta . "funcion/modificar.php");
+	}
+	
+	
 	function action() {
 		
 		//
@@ -67,6 +73,10 @@ class Funcion {
 				
 				case "registrar" :
 					$this->regitrar ();
+					break;
+				
+				case "modificar" :
+					$this->modificar ();
 					break;
 				
 				case "redireccionar" :

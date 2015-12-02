@@ -669,6 +669,21 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE id_orden='" . $variable . "' ;";
 				
 				break;
+			
+			case "modificarDisponibilidades" :
+				
+				$cadenaSql = "UPDATE disponibilidad_orden ";
+				$cadenaSql .= "SET  vigencia='" . $variable ['vigencia'] . "', ";
+				$cadenaSql .= "unidad_ejecutora='" . $variable ['unidad_ejecutora'] . "', ";
+				$cadenaSql .= "numero_diponibilidad='" . $variable ['diponibilidad'] . "', ";
+				$cadenaSql .= "fecha_disponibilidad='" . $variable ['fecha_diponibilidad'] . "', ";
+				$cadenaSql .= "id_rubro='" . $variable ['id_rubro'] . "', ";
+				$cadenaSql .= "valor_diponibilidad='" . $variable ['valor_disponibilidad'] . "', ";
+				$cadenaSql .= "valor_solicitado='" . $variable ['valor_solicitud'] . "', ";
+				$cadenaSql .= "valor_letras_solicitud='" . $variable ['valorLetras_disponibilidad'] . "'  ";
+				$cadenaSql .= " WHERE id_disponibilidad='" . $variable ['id_disponibilidad'] . "' ;";
+				
+				break;
 		}
 		return $cadenaSql;
 	}

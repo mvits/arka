@@ -20,7 +20,6 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-		var_dump ( $_REQUEST );
 		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
@@ -93,20 +92,20 @@ class registrarForm {
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarDisponibilidadModificar', $_REQUEST ['id_disponibilidad'] );
 			
 			$disponibilidad_modificar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			$disponibilidad_modificar = $disponibilidad_modificar [0];
 			
 			$arreglo = array (
-					"vigencia_disponibilidad" => $_REQUEST ['vigencia'],
-					"unidad_ejecutora" => $_REQUEST ['unidad_ejecutora'],
-					"diponibilidad" => $_REQUEST ['numero_diponibilidad'],
-					"fecha_diponibilidad" => $_REQUEST ['fecha_disponibilidad'],
-					"rubro" => $_REQUEST ['id_rubro'],
-					"valor_disponibilidad" => $_REQUEST ['valor_diponibilidad'],
-					"valor_solicitud" => $_REQUEST ['valor_solicitado'],
-					"valorLetras_disponibilidad" => $_REQUEST ['valor_letras_solicitud'],
-			)
-			;
+					"vigencia_disponibilidad" => $disponibilidad_modificar ['vigencia'],
+					"unidad_ejecutora" => $disponibilidad_modificar ['unidad_ejecutora'],
+					"diponibilidad" => $disponibilidad_modificar ['numero_diponibilidad'],
+					"fecha_diponibilidad" => $disponibilidad_modificar ['fecha_disponibilidad'],
+					"rubro" => $disponibilidad_modificar ['id_rubro'],
+					"valor_disponibilidad" => $disponibilidad_modificar ['valor_diponibilidad'],
+					"valor_solicitud" => $disponibilidad_modificar ['valor_solicitado'],
+					"valorLetras_disponibilidad" => $disponibilidad_modificar ['valor_letras_solicitud'] 
+			);
 			
-			var_dump ( $disponibilidad_modificar );
+			$_REQUEST = array_merge ( $_REQUEST, $arreglo );
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarDisponibilidades', $_REQUEST ['id_orden'] );
 			
@@ -115,8 +114,6 @@ class registrarForm {
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarValorDisponibilidades', $_REQUEST ['id_orden'] );
 			
 			$disponibilidadesvalor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			
-			var_dump ( $disponibilidadesvalor );
 			
 			$total = $disponibilidadesvalor [0] [0];
 			
@@ -234,7 +231,7 @@ class registrarForm {
 				if ($_REQUEST ['mostrarFormularioRegistro'] == true) {
 					$esteCampo = "AgrupacionDisponibilidad";
 					$atributos ['id'] = $esteCampo;
-					$atributos ['leyenda'] = "Registro de Certificado Disponibilidad Presupuestal";
+					$atributos ['leyenda'] = "Modificación de Certificado Disponibilidad Presupuestal";
 					echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 					{
 						
@@ -332,15 +329,15 @@ class registrarForm {
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 						$atributos ["etiquetaObligatorio"] = true;
 						$atributos ['tab'] = $tab ++;
-						$atributos ['seleccion'] = - 1;
+						
 						$atributos ['anchoEtiqueta'] = 180;
 						$atributos ['evento'] = '';
 						if (isset ( $_REQUEST [$esteCampo] )) {
-							$atributos ['valor'] = $_REQUEST [$esteCampo];
+							$atributos ['seleccion'] = $_REQUEST [$esteCampo];
 						} else {
-							$atributos ['valor'] = '';
+							$atributos ['seleccion'] = - 1;
 						}
-						$atributos ['deshabilitado'] = true;
+						$atributos ['deshabilitado'] = false;
 						$atributos ['columnas'] = 2;
 						$atributos ['tamanno'] = 1;
 						$atributos ['ajax_function'] = "";
@@ -348,16 +345,14 @@ class registrarForm {
 						$atributos ['estilo'] = "jqueryui";
 						$atributos ['validar'] = "required";
 						$atributos ['limitar'] = 1;
-						$atributos ['anchoCaja'] = 40;
+						$atributos ['anchoCaja'] = 50;
 						$atributos ['miEvento'] = '';
-						// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "numero_disponibilidad" );
-						$matrizItems = array (
-								array (
-										'',
-										'' 
-								) 
-						);
-						// $matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscar_disponibilidad", array (
+								$_REQUEST ['vigencia_disponibilidad'],
+								$_REQUEST ['unidad_ejecutora'] 
+						) );
+						
+						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 						$atributos ['matrizItems'] = $matrizItems;
 						// $atributos['miniRegistro']=;
 						$atributos ['baseDatos'] = "sicapital";
@@ -410,15 +405,15 @@ class registrarForm {
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 						$atributos ["etiquetaObligatorio"] = true;
 						$atributos ['tab'] = $tab ++;
-						$atributos ['seleccion'] = - 1;
+						
 						$atributos ['anchoEtiqueta'] = 180;
 						$atributos ['evento'] = '';
 						if (isset ( $_REQUEST [$esteCampo] )) {
-							$atributos ['valor'] = $_REQUEST [$esteCampo];
+							$atributos ['seleccion'] = $_REQUEST [$esteCampo];
 						} else {
-							$atributos ['valor'] = '';
+							$atributos ['seleccion'] = - 1;
 						}
-						$atributos ['deshabilitado'] = true;
+						$atributos ['deshabilitado'] = false;
 						$atributos ['columnas'] = 1;
 						$atributos ['tamanno'] = 1;
 						$atributos ['ajax_function'] = "";
@@ -426,16 +421,11 @@ class registrarForm {
 						$atributos ['estilo'] = "jqueryui";
 						$atributos ['validar'] = "required";
 						$atributos ['limitar'] = 1;
-						$atributos ['anchoCaja'] = 40;
+						$atributos ['anchoCaja'] = 80;
 						$atributos ['miEvento'] = '';
-						// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "numero_disponibilidad" );
-						$matrizItems = array (
-								array (
-										'',
-										'' 
-								) 
-						);
-						// $matrizItems = $esteRecursoDBO->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarRubro", $_REQUEST ['vigencia_disponibilidad'] );
+						
+						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 						$atributos ['matrizItems'] = $matrizItems;
 						// $atributos['miniRegistro']=;
 						$atributos ['baseDatos'] = "sicapital";
@@ -545,6 +535,7 @@ class registrarForm {
 						echo $this->miFormulario->campoTextArea ( $atributos );
 						unset ( $atributos );
 					}
+					
 					echo $this->miFormulario->agrupacion ( 'fin' );
 					
 					// ------------------Division para los botones-------------------------
@@ -608,8 +599,9 @@ class registrarForm {
 			$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-			$valorCodificado .= "&opcion=registrar";
+			$valorCodificado .= "&opcion=modificar";
 			$valorCodificado .= "&id_orden=" . $_REQUEST ['id_orden'];
+			$valorCodificado .= "&id_disponibilidad=" . $_REQUEST ['id_disponibilidad'];
 			$valorCodificado .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 			$valorCodificado .= "&total_solicitado=" . $total;
 			$valorCodificado .= "&valor_orden=" . $valores_orden ['valor'];
@@ -642,110 +634,6 @@ class registrarForm {
 			echo $this->miFormulario->formulario ( $atributos );
 			
 			unset ( $atributos );
-			return true;
-		}
-	}
-	function mensaje() {
-		$atributosGlobales ['campoSeguro'] = 'true';
-		
-		$_REQUEST ['tiempo'] = time ();
-		
-		// Si existe algun tipo de error en el login aparece el siguiente mensaje
-		$mensaje = $this->miConfigurador->getVariableConfiguracion ( 'mostrarMensaje' );
-		
-		$this->miConfigurador->setVariableConfiguracion ( 'mostrarMensaje', null );
-		
-		if (isset ( $_REQUEST ['mensaje'] )) {
-			
-			// Rescatar los datos de este bloque
-			$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
-			
-			// ---------------- SECCION: Parámetros Globales del Formulario ----------------------------------
-			/**
-			 * Atributos que deben ser aplicados a todos los controles de este formulario.
-			 * Se utiliza un arreglo
-			 * independiente debido a que los atributos individuales se reinician cada vez que se declara un campo.
-			 *
-			 * Si se utiliza esta técnica es necesario realizar un mezcla entre este arreglo y el específico en cada control:
-			 * $atributos= array_merge($atributos,$atributosGlobales);
-			 */
-			
-			$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionElementos/";
-			$rutaBloque .= $esteBloque ['nombre'];
-			$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/gestionElementos/" . $esteBloque ['nombre'] . "/plantilla/archivo_elementos.xlsx";
-			
-			$atributosGlobales ['campoSeguro'] = 'true';
-			
-			$_REQUEST ['tiempo'] = time ();
-			$tiempo = $_REQUEST ['tiempo'];
-			
-			// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
-			$esteCampo = "Mensaje";
-			$atributos ['id'] = $esteCampo;
-			$atributos ['nombre'] = $esteCampo;
-			// Si no se coloca, entonces toma el valor predeterminado 'application/x-www-form-urlencoded'
-			$atributos ['tipoFormulario'] = '';
-			// Si no se coloca, entonces toma el valor predeterminado 'POST'
-			$atributos ['metodo'] = 'POST';
-			// Si no se coloca, entonces toma el valor predeterminado 'index.php' (Recomendado)
-			$atributos ['action'] = 'index.php';
-			// $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
-			// Si no se coloca, entonces toma el valor predeterminado.
-			$atributos ['estilo'] = '';
-			$atributos ['marco'] = false;
-			$tab = 1;
-			// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
-			
-			// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
-			$atributos ['tipoEtiqueta'] = 'inicio';
-			echo $this->miFormulario->formulario ( $atributos );
-			{
-				
-				// $esteCampo = "marcoDatosBasicosMensaje";
-				// $atributos ['id'] = $esteCampo;
-				// $atributos ["estilo"] = "jqueryui";
-				// $atributos ['tipoEtiqueta'] = 'inicio';
-				
-				// echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-				
-				// echo $this->miFormulario->marcoAgrupacion ( 'fin' );
-			}
-			
-			// Paso 1: crear el listado de variables
-			
-			$valorCodificado = "actionBloque=" . $esteBloque ["nombre"];
-			$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
-			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-			$valorCodificado .= "&opcion=redireccionar";
-			$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
-			
-			/**
-			 * SARA permite que los nombres de los campos sean dinámicos.
-			 * Para ello utiliza la hora en que es creado el formulario para
-			 * codificar el nombre de cada campo. Si se utiliza esta técnica es necesario pasar dicho tiempo como una variable:
-			 * (a) invocando a la variable $_REQUEST ['tiempo'] que se ha declarado en ready.php o
-			 * (b) asociando el tiempo en que se está creando el formulario
-			 */
-			$valorCodificado .= "&campoSeguro=" . $_REQUEST ['tiempo'];
-			$valorCodificado .= "&tiempo=" . time ();
-			$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-			
-			$atributos ["id"] = "formSaraData"; // No cambiar este nombre
-			$atributos ["tipo"] = "hidden";
-			$atributos ['estilo'] = '';
-			$atributos ["obligatorio"] = false;
-			$atributos ['marco'] = true;
-			$atributos ["etiqueta"] = "";
-			$atributos ["valor"] = $valorCodificado;
-			echo $this->miFormulario->campoCuadroTexto ( $atributos );
-			unset ( $atributos );
-			
-			$atributos ['marco'] = true;
-			$atributos ['tipoEtiqueta'] = 'fin';
-			echo $this->miFormulario->formulario ( $atributos );
-			unset ( $atributos );
-			
 			return true;
 		}
 	}
