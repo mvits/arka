@@ -619,7 +619,7 @@ class Sql extends \Sql {
 			case "registrarDisponibilidad" :
 				$cadenaSql = "INSERT INTO arka_inventarios.disponibilidad_orden( ";
 				$cadenaSql .= "id_orden, vigencia, unidad_ejecutora, numero_diponibilidad, ";
-				$cadenaSql .= "fecha_disponibilidad,valor_diponibilidad, valor_solicitado,valor_letras_solicitud, fecha_registro)";
+				$cadenaSql .= "fecha_disponibilidad,valor_diponibilidad, valor_solicitado,valor_letras_solicitud,id_rubro, fecha_registro)";
 				$cadenaSql .= "VALUES(";
 				$cadenaSql .= "'" . $variable ['id_orden'] . "',  ";
 				$cadenaSql .= "'" . $variable ['vigencia'] . "',  ";
@@ -629,17 +629,20 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['valor_disponibilidad'] . "',  ";
 				$cadenaSql .= "'" . $variable ['valor_solicitud'] . "',  ";
 				$cadenaSql .= "'" . $variable ['valorLetras_disponibilidad'] . "',  ";
+				$cadenaSql .= "'" . $variable ['id_rubro'] . "',  ";
 				$cadenaSql .= "'" . date ( 'Y-m-d' ) . "' ) ";
 				
 				break;
 			
 			case "consultarDisponibilidades" :
 				
-				$cadenaSql = "SELECT *  ";
-				$cadenaSql .= " FROM disponibilidad_orden  ";
+				$cadenaSql = "SELECT disponibilidad_orden.* ,rb.\"RUB_RUBRO\" ||' - '|| rb.\"RUB_NOMBRE_RUBRO\" rubro ";
+				$cadenaSql .= " FROM disponibilidad_orden   ";
+				$cadenaSql .= " JOIN   arka_parametros.arka_rubros rb ON rb.\"RUB_VIGENCIA\"=to_number(disponibilidad_orden.vigencia,text(9999)) AND  rb.\"RUB_IDENTIFICADOR\"= disponibilidad_orden.id_rubro  ";
 				$cadenaSql .= " WHERE id_orden='" . $variable . "' ";
 				$cadenaSql .= " AND estado_registro='t'  ";
 				$cadenaSql .= " ORDER BY id_orden ASC;  ";
+				
 				break;
 			
 			case "consultarDisponibilidadModificar" :
@@ -648,6 +651,14 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM disponibilidad_orden  ";
 				$cadenaSql .= " WHERE id_disponibilidad ='" . $variable . "' ";
 				$cadenaSql .= " AND estado_registro='t' ; ";
+				
+				break;
+			
+			case "consultarRubro" :
+				$cadenaSql = " SELECT \"RUB_IDENTIFICADOR\" identificador, \"RUB_RUBRO\" ||' - '|| \"RUB_NOMBRE_RUBRO\" descripcion ";
+				$cadenaSql .= "FROM arka_parametros.arka_rubros ";
+				$cadenaSql .= "WHERE \"RUB_VIGENCIA\"='" . $variable . "' ";
+				$cadenaSql .= "LIMIT 10 ;";
 				
 				break;
 		}

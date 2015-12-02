@@ -184,6 +184,7 @@ class registrarForm {
 								<th>Vigencia</th>
 								<th>Unidad Ejecutora</th>
                                 <th>Número Disponibilidad</th>
+								<th>Rubro</th>
                     			<th>Fecha Disponibilidad</th>
             					<th>Valor Disponibilidad</th>
 								<th>Valor Solicitado<br>Disponibilidad</th>
@@ -216,6 +217,7 @@ class registrarForm {
     					                    <td><center>" . $valor ['vigencia'] . "</center></td>
     					                    <td><center>" . $valor ['unidad_ejecutora'] . "</center></td>
 						                    <td><center>" . $valor ['numero_diponibilidad'] . "</center></td>
+						                    <td><center>" . $valor ['rubro'] . "</center></td>
 						                    <td><center>" . $valor ['fecha_disponibilidad'] . "</center></td>
 						                    <td><center>$ " . number_format ( $valor ['valor_diponibilidad'], 2, ",", "." ) . "</center></td>
 						                    <td><center>$ " . number_format ( $valor ['valor_solicitado'], 2, ",", "." ) . "</center></td>
@@ -224,6 +226,7 @@ class registrarForm {
 						                            <img src='" . $rutaBloque . "/css/images/modificar.png' width='25px'>
 						                        </a>
 						                  	</center> </td>
+						                    <td></td>        		
 						                    </tr>";
 							echo $mostrarHtml;
 							unset ( $mostrarHtml );

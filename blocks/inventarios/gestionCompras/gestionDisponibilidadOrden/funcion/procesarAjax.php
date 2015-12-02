@@ -350,4 +350,19 @@ if ($_REQUEST ['funcion'] == 'consultarNumeroOrden') {
 	echo $resultado;
 }
 
+
+if ($_REQUEST ['funcion'] == 'consultarRubro') {
+
+	$cadenaSql = $this->sql->getCadenaSql ( 'consultarRubro', $_REQUEST ['vigencia'] );
+
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+
+	$resultado = json_encode ( $resultado );
+
+	echo $resultado;
+}
+
+
+
 ?>

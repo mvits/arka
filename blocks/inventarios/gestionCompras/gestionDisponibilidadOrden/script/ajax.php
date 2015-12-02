@@ -121,6 +121,26 @@ $cadenaACodificarLetrasNumeros = $this->miConfigurador->fabricaConexiones->crypt
 // URL definitiva
 $urlFinalLetrasNumeros = $url . $cadenaACodificarLetrasNumeros;
 
+
+
+// Variables
+$cadenaACodificarRubro = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificarRubro .= "&procesarAjax=true";
+$cadenaACodificarRubro .= "&action=index.php";
+$cadenaACodificarRubro .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarRubro .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarRubro .= "&funcion=consultarRubro";
+$cadenaACodificarRubro .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlaceRubro = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadenaRubro = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarRubro, $enlace );
+
+// URL definitiva
+$urlFinalRubro = $url . $cadenaRubro;
+
+
+
 ?>
 <script type='text/javascript'>
 
@@ -162,6 +182,43 @@ function disponibilidades(elem, request, response){
 	   });
 	};
 
+
+
+	function rubro(elem, request, response){
+		  $.ajax({
+		    url: "<?php echo $urlFinalRubro;  ?>",
+		    dataType: "json",
+		    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val()},
+		    success: function(data){ 
+		        if(data[0]!=" "){
+
+		            $("#<?php echo $this->campoSeguro('rubro')?>").html('');
+		            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('rubro')?>");
+		            $.each(data , function(indice,valor){
+
+		            	$("<option value='"+data[ indice ].identificador+"'>"+data[ indice ].descripcion+"</option>").appendTo("#<?php echo $this->campoSeguro('rubro')?>");
+		            	
+		            });
+		            $("#<?php echo $this->campoSeguro('rubro')?>").removeAttr('disabled');
+
+
+
+
+		            $('#<?php echo $this->campoSeguro('rubro')?>').width(900);	
+		            $("#<?php echo $this->campoSeguro('rubro')?>").select2();
+		            
+		            
+			        }
+
+		        
+
+
+			     }
+			                    
+		   });
+		};
+
+	
 
 
 	function infodisponibilidades(elem, request, response){
@@ -342,6 +399,7 @@ $(function() {
 				if($("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val()!=''){
 
 					disponibilidades();	
+					rubro();
 		
 				}else{}
 

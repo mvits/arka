@@ -49,7 +49,8 @@ class RegistradorOrden {
 				"valor_disponibilidad" => $_REQUEST ['valor_disponibilidad'],
 				"valor_solicitud" => $_REQUEST ['valor_solicitud'],
 				"valorLetras_disponibilidad" => $_REQUEST ['valorLetras_disponibilidad'],
-				"id_orden" => $_REQUEST ['id_orden'] 
+				"id_orden" => $_REQUEST ['id_orden'],
+				"id_rubro"=>$_REQUEST['rubro']
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'registrarDisponibilidad', $arregloDatos );
