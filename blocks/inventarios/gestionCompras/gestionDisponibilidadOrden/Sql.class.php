@@ -661,6 +661,14 @@ class Sql extends \Sql {
 				$cadenaSql .= "LIMIT 10 ;";
 				
 				break;
+			
+			case "consultarValorDisponibilidades" :
+				
+				$cadenaSql = "SELECT sum(valor_solicitado) ";
+				$cadenaSql .= " FROM disponibilidad_orden  ";
+				$cadenaSql .= " WHERE id_orden='" . $variable . "' ;";
+				
+				break;
 		}
 		return $cadenaSql;
 	}
