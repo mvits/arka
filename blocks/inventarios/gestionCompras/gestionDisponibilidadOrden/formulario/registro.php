@@ -93,7 +93,11 @@ class registrarForm {
 			
 			$disponibilidades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
-			$total = 0;
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarValorDisponibilidades', $_REQUEST ['id_orden'] );
+			
+			$disponibilidadesvalor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			$total = $disponibilidadesvalor [0] [0];
 			
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			
@@ -189,6 +193,10 @@ class registrarForm {
 				echo $this->miFormulario->campoTexto ( $atributos );
 				unset ( $atributos );
 				
+				
+				$valor_faltante = ($valores_orden ['valor'] - $total);
+				
+				
 				if ($disponibilidades) {
 					
 					$esteCampo = "Disponibilidades Presupuestales Registradas";
@@ -220,6 +228,7 @@ class registrarForm {
 							$variable .= "&id_orden=" . $valor ['id_orden'];
 							$variable .= "&id_disponibilidad=" . $valor ['id_disponibilidad'];
 							$variable .= "&usuario=" . $_REQUEST ['usuario'];
+							$variable .= "&solicitado_anterior=".$valor ['valor_solicitado'];
 							$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 							$variableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 							
@@ -229,7 +238,7 @@ class registrarForm {
 							$variable .= "&id_disponibilidad=" . $valor ['id_disponibilidad'];
 							$variable .= "&usuario=" . $_REQUEST ['usuario'];
 							$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
-							$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+							$variableRegistro = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 							
 							$mostrarHtml = "<tr>
     					                    <td><center>" . $valor ['vigencia'] . "</center></td>
@@ -249,7 +258,7 @@ class registrarForm {
 							echo $mostrarHtml;
 							unset ( $mostrarHtml );
 							unset ( $variable );
-							$total = $valor ['valor_solicitado'] + $total;
+							
 						}
 						echo "</tbody>";
 						
@@ -269,7 +278,7 @@ class registrarForm {
 							echo $this->miFormulario->campoTexto ( $atributos );
 							unset ( $atributos );
 							
-							$valor_faltante = ($valores_orden ['valor'] - $total);
+							
 							
 							$esteCampo = 'ValorFaltante';
 							$atributos ["id"] = $esteCampo;

@@ -34,7 +34,9 @@ class RegistradorOrden {
 				$_REQUEST ['usuario'] 
 		);
 		
-		if ($_REQUEST ['valor_orden'] < ($_REQUEST ['total_solicitado'] + $_REQUEST ['valor_solicitud'])) {
+		
+		
+		if ($_REQUEST ['valor_orden'] < (($_REQUEST ['total_solicitado']-$_REQUEST['solicitado_anterior']) + $_REQUEST ['valor_solicitud'])) {
 			
 			redireccion::redireccionar ( "ErrorValorAsignarModificar", $datos );
 			
@@ -62,7 +64,7 @@ class RegistradorOrden {
 		if ($Orden == true) {
 			$this->miConfigurador->setVariableConfiguracion ( "cache", true );
 			
-			if ($_REQUEST ['valor_orden'] == ($_REQUEST ['total_solicitado'] + $_REQUEST ['valor_solicitud'])) {
+			if ($_REQUEST ['valor_orden'] == (($_REQUEST ['total_solicitado']-$_REQUEST['solicitado_anterior']) + $_REQUEST ['valor_solicitud'])) {
 				redireccion::redireccionar("ModificarDisponibilidadCompleta",$datos);
 				exit ();
 			} else {
