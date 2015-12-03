@@ -65,6 +65,10 @@ class Frontera {
 				case "ModificarDisponibilidad" :
 					include_once ($this->ruta . "/formulario/modificar.php");
 					break;
+				
+				case "GestionRegistroPresupuestal" :
+					include_once ($this->ruta . "/formulario/gestionRegistro.php");
+					break;
 			}
 		} else {
 			$_REQUEST ['opcion'] = "mostrar";

@@ -684,6 +684,15 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE id_disponibilidad='" . $variable ['id_disponibilidad'] . "' ;";
 				
 				break;
+			
+			case "ConsultarRegistrosPresupuestales" :
+				$cadenaSql = "SELECT * ";
+				$cadenaSql .= "FROM arka_parametros.arka_registropresupuestal ";
+				$cadenaSql .= "WHERE \"REP_VIGENCIA\"='" . $variable [0] . "'";
+				$cadenaSql .= "AND  \"REP_NUMERO_DISPONIBILIDAD\"='" . $variable [1] . "'";
+				$cadenaSql .= "AND  \"REP_UNIDAD_EJECUTORA\"='" . $variable [2] . "'";
+				
+				break;
 		}
 		return $cadenaSql;
 	}

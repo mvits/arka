@@ -233,9 +233,12 @@ class registrarForm {
 							$variableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 							
 							$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-							$variable .= "&opcion=ModificarDisponibilidad";
+							$variable .= "&opcion=GestionRegistroPresupuestal";
 							$variable .= "&id_orden=" . $valor ['id_orden'];
 							$variable .= "&id_disponibilidad=" . $valor ['id_disponibilidad'];
+							$variable .= "&numero_disponibilidad=" . $valor ['numero_diponibilidad'];
+							$variable .= "&vigencia=" . $valor ['vigencia'];
+							$variable .= "&unidad_ejecutora=" . $valor ['unidad_ejecutora'];
 							$variable .= "&usuario=" . $_REQUEST ['usuario'];
 							$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 							$variableRegistro = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
@@ -253,7 +256,11 @@ class registrarForm {
 						                            <img src='" . $rutaBloque . "/css/images/modificar.png' width='25px'>
 						                        </a>
 						                  	</center> </td>
-						                    <td></td>        		
+						                     <td><center>
+						                    	<a href='" . $variableRegistro . "'>
+						                            <img src='" . $rutaBloque . "/css/images/registroP.png' width='18px'>
+						                        </a>
+						                  	</center> </td>        		
 						                    </tr>";
 							echo $mostrarHtml;
 							unset ( $mostrarHtml );
