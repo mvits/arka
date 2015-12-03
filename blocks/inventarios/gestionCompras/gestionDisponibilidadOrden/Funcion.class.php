@@ -40,12 +40,16 @@ class Funcion {
 	function regitrar() {
 		include_once ($this->ruta . "funcion/registrar.php");
 	}
-	
 	function modificar() {
 		include_once ($this->ruta . "funcion/modificar.php");
 	}
 	
-	
+	function asignarRegistro() {
+		include_once ($this->ruta . "funcion/asignarRegistro.php");
+	}
+	function desasignarRegistro() {
+		include_once ($this->ruta . "funcion/desasignarRegistro.php");
+	}
 	function action() {
 		
 		//
@@ -62,12 +66,10 @@ class Funcion {
 		// Importante: Es adecuado que sea una variable llamada opcion o action la que guie el procesamiento:
 		if (isset ( $_REQUEST ['procesarAjax'] )) {
 			$this->procesarAjax ();
-		} elseif (isset ( $_REQUEST ["botonActa"] ) && $_REQUEST ["botonActa"] = 'true') {
-			
-			\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'RegistrarActa', $_REQUEST );
-			
-			exit ();
 		} elseif (isset ( $_REQUEST ["opcion"] )) {
+			
+			
+
 			
 			switch ($_REQUEST ['opcion']) {
 				
@@ -77,6 +79,14 @@ class Funcion {
 				
 				case "modificar" :
 					$this->modificar ();
+					break;
+				
+				case "asignarRegistro" :
+					$this->asignarRegistro ();
+					break;
+					
+				case "DesasignarRegistro" :
+					$this->desasignarRegistro ();
 					break;
 				
 				case "redireccionar" :

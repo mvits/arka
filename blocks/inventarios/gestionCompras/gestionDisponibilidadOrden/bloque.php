@@ -87,8 +87,11 @@ class Bloque implements \Bloque {
 			
 			if (! isset ( $_REQUEST ['action'] )) {
 
+				
 				$this->miFrontera->frontera ();
 			} else {
+			
+								
 				
 				$respuesta = $this->miFuncion->action ();
 				

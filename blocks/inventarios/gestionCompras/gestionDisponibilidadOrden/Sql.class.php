@@ -686,11 +686,36 @@ class Sql extends \Sql {
 				break;
 			
 			case "ConsultarRegistrosPresupuestales" :
-				$cadenaSql = "SELECT * ";
-				$cadenaSql .= "FROM arka_parametros.arka_registropresupuestal ";
+				$cadenaSql = "SELECT ar.*,ro.* ";
+				$cadenaSql .= "FROM arka_parametros.arka_registropresupuestal ar ";
+				$cadenaSql .= "LEFT JOIN registro_presupuestal_orden_orden ro ON to_number(ro.vigencia,text(9999))= ar.\"REP_VIGENCIA\" AND ro.numero_registro=ar.\"REP_IDENTIFICADOR\" AND ro.unidad_ejecutora=ar.\"REP_UNIDAD_EJECUTORA\" ";
 				$cadenaSql .= "WHERE \"REP_VIGENCIA\"='" . $variable [0] . "'";
 				$cadenaSql .= "AND  \"REP_NUMERO_DISPONIBILIDAD\"='" . $variable [1] . "'";
 				$cadenaSql .= "AND  \"REP_UNIDAD_EJECUTORA\"='" . $variable [2] . "'";
+				
+				break;
+			
+			case "registrarRegistro" :
+				$cadenaSql = "INSERT INTO registro_presupuestal_orden_orden( ";
+				$cadenaSql .= "id_disponibilidad, numero_disponibilidad,
+									vigencia, unidad_ejecutora,numero_registro, fecha_registro_presupuestal,
+									valor_registro, fecha_registro) ";
+				$cadenaSql .= "VALUES(";
+				$cadenaSql .= "'" . $variable ['id_disponibilidad'] . "',  ";
+				$cadenaSql .= "'" . $variable ['numero_disponibilidad'] . "',  ";
+				$cadenaSql .= "'" . $variable ['vigencia'] . "',  ";
+				$cadenaSql .= "'" . $variable ['unidad_ejecutora'] . "',  ";
+				$cadenaSql .= "'" . $variable ['numero_registro'] . "',  ";
+				$cadenaSql .= "'" . $variable ['fecha_registro'] . "',  ";
+				$cadenaSql .= "'" . $variable ['valor_registro'] . "',  ";
+				$cadenaSql .= "'" . date ( 'Y-m-d' ) . "' ) ";
+				
+				break;
+			
+			case "noRelacionRegistrar" :
+				
+				$cadenaSql = "DELETE FROM registro_presupuestal_orden_orden  ";
+				$cadenaSql .= " WHERE id_disponibilidad='" . $variable . "' ;";
 				
 				break;
 		}

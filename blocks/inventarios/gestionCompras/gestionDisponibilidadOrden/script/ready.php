@@ -149,12 +149,19 @@ $("#<?php echo $this->campoSeguro('rubro')?>").select2();
 			
 	   });
 	   
+	   
+	   			
+	          $('#tablaRegistros').dataTable( {
+                  "sScrollY": "80px",
+		         "bPaginate": false
+                 } );
+	   
 	          $('#tablaTitulos').dataTable( {
                 "sPaginationType": "full_numbers"
                  } );
                  
               $('#tablaDisponibilidades').dataTable( {
-                   "sScrollY": "100px",
+                   "sScrollY": "150px",
 		         "bPaginate": false
         
                  } );

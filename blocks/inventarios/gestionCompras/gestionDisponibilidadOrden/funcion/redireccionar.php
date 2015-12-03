@@ -12,6 +12,33 @@ class redireccion {
 		$miPaginaActual = $miConfigurador->getVariableConfiguracion ( "pagina" );
 		
 		switch ($opcion) {
+			
+			case "NoRelacionRegistro" :
+				
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=GestionRegistroPresupuestal";
+				$variable .= "&usuario=" . $valor ['usuario'];
+				$variable .= "&vigencia=" . $valor ['vigencia'];
+				$variable .= "&unidad_ejecutora=" . $valor ['unidad_ejecutora'];
+				$variable .= "&numero_disponibilidad=" . $valor ['numero_disponibilidad'];
+				$variable .= "&id_disponibilidad=" . $valor ['id_disponibilidad'];
+				$variable .= "&mensaje=NoRelacionRegistro";
+				
+				break;
+			
+			case "insertoRegistro" :
+				
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=GestionRegistroPresupuestal";
+				$variable .= "&usuario=" . $valor ['usuario'];
+				$variable .= "&vigencia=" . $valor ['vigencia'];
+				$variable .= "&unidad_ejecutora=" . $valor ['unidad_ejecutora'];
+				$variable .= "&numero_disponibilidad=" . $valor ['numero_disponibilidad'];
+				$variable .= "&id_disponibilidad=" . $valor ['id_disponibilidad'];
+				$variable .= "&mensaje=registroPresupuestal";
+				
+				break;
+			
 			case "datosVacios" :
 				
 				$variable = "pagina=" . $miPaginaActual;
@@ -78,7 +105,7 @@ class redireccion {
 				$variable .= "&usuario=" . $valor [2];
 				$variable .= "&mensaje=ErrorValorAsignar";
 				break;
-				
+			
 			case "ErrorValorAsignarModificar" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=cargarDisponibilidad";

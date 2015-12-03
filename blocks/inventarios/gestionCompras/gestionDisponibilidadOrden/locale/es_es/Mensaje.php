@@ -327,7 +327,7 @@ $this->idioma ["botonAceptar"] = "Guardar Entrada";
 
 
 
-$this->idioma ["botonActa"] = "Registrar Acta";
+$this->idioma ["botonAceptarCambios"] = "Guardar Cambios";
 
 $this->idioma ["botonCancelar"] = "Cancelar";
 $this->idioma ["botonContinuar"] = "Salir";
