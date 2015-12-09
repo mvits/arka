@@ -208,10 +208,10 @@ class registrarForm {
                     <td><center>" . $elementos_contratista [$i] ['marca'] . "</center></td>
                     <td><center>" . $elementos_contratista [$i] ['placa'] . "</center></td>
                     <td><center>" . $elementos_contratista [$i] ['serie'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i] ['valor'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i] ['subtotal_sin_iva'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i] ['total_iva'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i] ['total_iva_con'] . "</center></td>
+                    <td><center>$" .number_format (  $elementos_contratista [$i]['valor'], 2, ",", "." )  . "</center></td>
+                    <td><center>$" .number_format (  $elementos_contratista [$i]['subtotal_sin_iva'], 2, ",", "." )   . "</center></td>
+                    <td><center>$" .number_format (  $elementos_contratista [$i]['total_iva'] , 2, ",", "." )  . "</center></td>
+                    <td><center>$" .number_format (  $elementos_contratista [$i]['total_iva_con'], 2, ",", "." )   . "</center></td>
                     <td><center>";
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$nombre = 'item_cont' . $i;

@@ -183,12 +183,12 @@ class Sql extends \Sql {
                 $cadenaSql = " SELECT id_elemento_ind,nivel, marca, ";
                 $cadenaSql.= " elemento_individual.placa,elemento_individual.serie, valor, subtotal_sin_iva, ";
                 $cadenaSql.= " total_iva, total_iva_con ";
-                $cadenaSql.= " FROM asignar_elementos, salida, elemento ";
+                $cadenaSql.= " FROM asignar_elementos,elemento ";
                 $cadenaSql.= " JOIN elemento_individual ON elemento.id_elemento=elemento_individual.id_elemento_gen ";
                 $cadenaSql.= " WHERE elemento_individual.estado_registro=TRUE  ";
                 $cadenaSql.= " AND elemento_individual.id_elemento_ind=asignar_elementos.id_elemento  ";
                 $cadenaSql.= " AND elemento_individual.estado_asignacion=TRUE  ";
-                $cadenaSql.= " AND salida.id_entrada=elemento.id_entrada ";
+                
                 //$cadenaSql.= " AND supervisor='" . $variable[0] . "'  ";
                 $cadenaSql.= " AND contratista='" . $variable[1] . "' ORDER BY nivel ASC ";
                 break;
@@ -269,11 +269,11 @@ class Sql extends \Sql {
                 break;
 
             case "contratistas":
-                $cadenaSql = "SELECT DISTINCT CON_IDENTIFICACION,CON_IDENTIFICACION ||' '|| CON_NOMBRE ";
-                /* $cadenaSql .= " CON_CARGO, ";
-                  $cadenaSql .= " CON_DIRECCION, ";
-                  $cadenaSql .= " CON_TELEFONO "; */
-                $cadenaSql .= " FROM CONTRATISTAS ";
+                $cadenaSql = "SELECT DISTINCT \"CON_IDENTIFICACION\", \"CON_IDENTIFICACION\" ||'-'|| \"CON_NOMBRE\"||': Contrato N#' ||\"CON_NUMERO_CONTRATO\"||' - Vigencia '||\"CON_VIGENCIA_FISCAL\" ";
+				$cadenaSql .= "FROM arka_parametros.arka_contratistas ";
+				$cadenaSql .= "WHERE \"CON_FECHA_INICIO\" <= '" . date ( 'Y-m-d' ) . "' ";
+				$cadenaSql .= "AND \"CON_FECHA_FINAL\" >= '" . date ( 'Y-m-d' ) . "' ";
+				
                 break;
         }
         return $cadenaSql;
