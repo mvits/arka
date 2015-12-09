@@ -126,13 +126,13 @@ class RegistradorOrden {
 						
 			<table style='width:100%;'>
 			<tr> 
-			<td style='width:10%;text-align=center;'>Id Elemento</td>
-			<td style='width:30%;text-align=center;'>Nivel Inventario</td>
-			<td style='width:15%;text-align=center;'>Placa</td>
-			<td style='width:15%;text-align=center;'>Marca</td>
-			<td style='width:15%;text-align=center;'>Serie</td>
-			<td style='width:15%;text-align=center;'>Valor Elemento</td>
-			</tr>";
+			<td style='width:10%;text-align=center;'>Placa</td>
+			<td style='width:30%;text-align=center;'>Descripción</td>
+			<td style='width:10%;text-align=center;'>Marca Serie</td> 
+			<td style='width:10%;text-align=center;'>Sede</td>
+			<td style='width:20%;text-align=center;'>Dependencia</td>
+			<td style='width:20%;text-align=center;'>Ubicación<br>Especifica</td>
+					</tr>";
 			
 		
 			foreach ( $elementos_contratista as $valor ) {
@@ -140,12 +140,12 @@ class RegistradorOrden {
 		
 					$contenidoPagina .= " 
 								<tr>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['id_elemento_ind'] . "</td>
-                    			<td style='width:30%;text-align=center;'>" . $valor ['nivel'] . "</td>
-                    			<td style='width:15%;text-align=center;'>" . $valor ['placa'] . "</td>
-                    			<td style='width:15%;text-align=center;'>" . $valor ['marca'] . "</td>
-                    			<td style='width:15%;text-align=center;'>" . $valor ['serie'] . "</td>
-                    		    <td style='width:15%;text-align=center;'>$" . number_format ($valor ['total_iva_con'], 2, ",", "." ) . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['placa'] . "</td>
+                    			<td style='width:30%;text-align=center;'>" . $valor ['descripcion'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['marca']." ".$valor ['serie'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['sede'] . "</td>
+                    			<td style='width:20%;text-align=center;'>" . $valor ['dependencia'] . "</td>
+                    		    <td style='width:20%;text-align=center;'>" . $valor ['espacio_fisico'] . "</td>
                     			</tr>";
 				
 			}
@@ -206,7 +206,7 @@ $miRegistrador = new RegistradorOrden ( $this->lenguaje, $this->sql, $this->func
 $textos = $miRegistrador->documento ();
  
 ob_start ();
-$html2pdf = new \HTML2PDF ( 'P', 'LETTER', 'es', true, 'UTF-8', array (
+$html2pdf = new \HTML2PDF ( 'L' , 'LETTER', 'es', true, 'UTF-8', array (
 		1,
 		2,
 		2,

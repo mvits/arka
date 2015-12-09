@@ -172,9 +172,13 @@ class Sql extends \Sql {
 			case "consultarElementosContratista" :
 				$cadenaSql = " SELECT id_elemento_ind,elemento_nombre as nivel, marca, ";
 				$cadenaSql .= " elemento_individual.placa,elemento_individual.serie, valor, subtotal_sin_iva, ";
-				$cadenaSql .= " total_iva, total_iva_con, asignar_elementos.verificar_existencia,supervisor ";
+				$cadenaSql .= " total_iva, total_iva_con, asignar_elementos.verificar_existencia,supervisor, elemento.descripcion ,
+						       sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia,espacios.\"ESF_NOMBRE_ESPACIO\" espacio_fisico ";
 				$cadenaSql .= " FROM asignar_elementos, elemento ";
 				$cadenaSql .= " JOIN elemento_individual ON elemento.id_elemento=elemento_individual.id_elemento_gen ";
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
 				$cadenaSql .= " JOIN catalogo.catalogo_elemento ON catalogo.catalogo_elemento.elemento_id=nivel ";
 				$cadenaSql .= " WHERE elemento_individual.estado_registro=TRUE  ";
 				$cadenaSql .= " AND elemento_individual.id_elemento_ind=asignar_elementos.id_elemento  ";
@@ -268,9 +272,11 @@ class Sql extends \Sql {
 				break;
 			
 			case "nombreContratista" :
-				$cadenaSql = " SELECT DISTINCT \"CON_NOMBRE\",\"CON_IDENTIFICACION\" ";
+				$cadenaSql = " SELECT *  ";
 				$cadenaSql .= "FROM arka_parametros.arka_contratistas ";
 				$cadenaSql .= " WHERE \"CON_IDENTIFICACION\"='" . $variable . "' ";
+				$cadenaSql .= " AND  \"CON_FECHA_INICIO\" <= '" . date('Y-m-d') . "' ";
+				$cadenaSql .= " AND \"CON_FECHA_FINAL\"  >='" . date('Y-m-d') . "' ";
 				break;
 			
 			case "datosFuncionario" :

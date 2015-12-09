@@ -35,6 +35,10 @@ if ($_REQUEST ['funcion'] = "ConsultarInventario") {
 	
 	$i = 0;
 	
+	
+
+	
+	
 	foreach ( $elementos_supervisor as $valor ) {
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -76,15 +80,13 @@ if ($_REQUEST ['funcion'] = "ConsultarInventario") {
 		
 		
 		$resultadoFinal [] = array (
-				'id_elemento' => "<center>" . $valor ['id_elemento_ind'] . "</center>",
-				'nivel' => "<center>" . $valor ['nivel'] . "</center>",
-				'marca' => "<center>" . $valor ['marca'] . "</center>",
 				'placa' => "<center>" . $valor ['placa'] . "</center>",
+				'descripcion' => "<center>" . $valor ['descripcion'] . "</center>",
+				'marca' => "<center>" . $valor ['marca'] . "</center>",
 				'serie' => "<center>" . $valor ['serie'] . "</center>",
-				'valor_unitario' => "<center>$" .number_format ( $valor ['valor'], 2, ",", "." ) . "</center>",
-				'sub_total' => "<center>$" .number_format ( $valor ['subtotal_sin_iva'], 2, ",", "." ). "</center>",
-				'total_iva' => "<center>$" .number_format ( $valor ['total_iva'], 2, ",", "." ). "</center>",
-				'total_ajustado' => "<center>$" . number_format ( $valor ['total_iva_con'], 2, ",", "." ). "</center>",
+				'sede' => "<center>" . $valor ['sede'] . "</center>",
+				'dependencia' => "<center>" . $valor ['dependencia'] . "</center>",
+				'ubicacion' => "<center>" . $valor ['espacio_fisico'] . "</center>",
 				'seleccion' => "<center>" . $item . "</center>" 
 		);
 		

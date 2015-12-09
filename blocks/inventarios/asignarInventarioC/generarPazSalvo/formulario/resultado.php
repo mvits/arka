@@ -147,15 +147,13 @@ class registrarForm {
 
                 echo "<thead>
                 <tr>
-                <th>ID Elemento</th>
-                <th>Nivel de Inventario</th>
-                <th>Marca Elementos</th>
-                <th>Placa Elementos</th>
-                <th>Serie Elemento</th>
-                <th>Valor Unitario</th>
-                <th>Subtotal</th>
-                <th>Total IVA</th>
-                <th>Total Ajustado</th>
+                <th>Placa</th>
+                <th>Descripición</th>
+                <th>Marca</th>
+                <th>Serie</th>
+               	<th>Sede</th>
+				<th>Dependencia</th>
+				<th>Ubicación<br>Especifica</th> 		
                 </tr>
             </thead>
             <tbody>";
@@ -166,15 +164,13 @@ class registrarForm {
 
                         $mostrarHtml = "
                     <tr>
-                    <td><center>" . $elementos_contratista [$i]['id_elemento_ind'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i]['nivel'] . "</center></td>
+                    <td><center>" . $elementos_contratista [$i]['placa'] . "</center></td>  		
+                    <td><center>" . $elementos_contratista [$i]['descripcion'] . "</center></td>
                     <td><center>" . $elementos_contratista [$i]['marca'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i]['placa'] . "</center></td>
                     <td><center>" . $elementos_contratista [$i]['serie'] . "</center></td>
-                    <td><center>$" .number_format (  $elementos_contratista [$i]['valor'], 2, ",", "." )  . "</center></td>
-                    <td><center>$" .number_format (  $elementos_contratista [$i]['subtotal_sin_iva'], 2, ",", "." )   . "</center></td>
-                    <td><center>$" .number_format (  $elementos_contratista [$i]['total_iva'] , 2, ",", "." )  . "</center></td>
-                    <td><center>$" .number_format (  $elementos_contratista [$i]['total_iva_con'], 2, ",", "." )   . "</center></td>
+                    <td><center>" . $elementos_contratista [$i] ['sede'] . "</center></td>
+                    <td><center>" . $elementos_contratista [$i] ['dependencia'] . "</center></td>
+                    <td><center>" . $elementos_contratista [$i] ['espacio_fisico'] . "</center></td>
                     </tr>";
                         echo $mostrarHtml;
                         unset($mostrarHtml);

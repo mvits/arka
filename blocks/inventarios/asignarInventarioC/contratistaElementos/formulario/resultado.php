@@ -70,7 +70,7 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosContratista',$_REQUEST['identificacion'] );
 		$elementos_contratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		
+// 		var_dump($elementos_contratista);
 		$cadenaSql2 = $this->miSql->getCadenaSql ( 'nombreContratista', $_REQUEST['identificacion']);
 		
 		$nombreContratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql2, "busqueda" );
@@ -143,12 +143,13 @@ class registrarForm {
 			
 			echo "<thead>
                 <tr>
-                <th>ID Elemento</th>
-                <th>Nivel de Inventario</th>
-                <th>Marca Elementos</th>
-                <th>Placa Elementos</th>
-                <th>Serie Elemento</th>
-                <th>Valor Elemento</th>
+                <th>Placa</th>
+				<th>Descripción</th>
+                <th>Marca</th>
+				<th>Serie</th>
+				<th>Sede</th>
+				<th>Dependencia</th>
+				<th>Ubicación<br>Especifica</th>
 				<th>Verificar</th>
                 </tr>
             </thead>
@@ -194,7 +195,7 @@ class registrarForm {
 			
 			// $mostrarHtml .= "</center></td>
 			// </tr>";
-			// echo $mostrarHtml;
+			// echo $mostrarHtml;	
 			// unset ( $mostrarHtml );
 			// unset ( $variable );
 			// }
@@ -205,12 +206,13 @@ class registrarForm {
 					
 					$mostrarHtml = "
                     <tr>
-                    <td><center>" . $elementos_contratista [$i] ['id_elemento_ind'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i] ['nivel'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i] ['marca'] . "</center></td>
                     <td><center>" . $elementos_contratista [$i] ['placa'] . "</center></td>
+                    <td><center>" . $elementos_contratista [$i] ['descripcion'] . "</center></td>
+                    <td><center>" . $elementos_contratista [$i] ['marca'] . "</center></td>
                     <td><center>" . $elementos_contratista [$i] ['serie'] . "</center></td>
-                    <td><center>$" .number_format (  $elementos_contratista [$i]['total_iva_con'], 2, ",", "." )   . "</center></td>
+                    <td><center>" . $elementos_contratista [$i] ['sede'] . "</center></td>
+                    <td><center>" . $elementos_contratista [$i] ['dependencia'] . "</center></td>
+                    <td><center>" . $elementos_contratista [$i] ['espacio_fisico'] . "</center></td>
                     <td><center>";
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$nombre = 'item_cont' . $i;

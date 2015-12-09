@@ -114,7 +114,7 @@ class registrarForm {
 			{
 				if (isset($_REQUEST ['mensaje'])&&$_REQUEST ['mensaje'] == 'confirma') {
 					
-					$mensaje = "Se realizó la Modificación de los items para el contratista ".$_REQUEST['contratista'];
+					$mensaje = "Se realizó la Modificación de los Elementos del Contratista ".$_REQUEST['contratista'];
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';
@@ -132,7 +132,7 @@ class registrarForm {
 				}
 				if (isset($_REQUEST ['mensaje'])&&$_REQUEST ['mensaje'] == 'error') {
 					
-					$mensaje = "No fue posible realizar la asignación de los items al contratista.";
+					$mensaje = "No fue posible realizar modificación de  la asignación de los items al contratista.<br>Verifique los Datos";
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';

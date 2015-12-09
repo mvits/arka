@@ -72,15 +72,13 @@ $(function() {
                       dataSrc:"data"                                                                  
                   },
                   columns: [
-                  { data :"id_elemento" },
-                  { data :"nivel" },
-                  { data :"marca" },
-                  { data :"placa" },
+				  { data :"placa" },
+				  { data :"descripcion" },
+	              { data :"marca" },
                   { data :"serie" },
-                  { data :"valor_unitario" },
-                  { data :"sub_total" },
-                  { data :"total_iva" },
-                  { data :"total_ajustado" },
+                  { data :"sede" },
+                  { data :"dependencia" },
+                  { data :"ubicacion" },
                   { data :"seleccion" },
                             ]
              });

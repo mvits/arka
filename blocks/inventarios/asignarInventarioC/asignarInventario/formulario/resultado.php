@@ -57,7 +57,15 @@ class registrarForm {
 		
 		$elementos_supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		
+		
+		
 		$cadenaSql2 = $this->miSql->getCadenaSql ( 'nombreContratista', $_REQUEST ['documentoContratista'] );
+		
+		
+		
+		
+		
 		$nombreContratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql2, "busqueda" );
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -127,16 +135,14 @@ class registrarForm {
 			
 			echo "<thead>
                 <tr>
-                <th>ID Elemento</th>
-                <th>Nivel de Inventario</th>
-                <th>Marca Elementos</th>
                 <th>Placa Elementos</th>
-                <th>Serie Elemento</th>
-                <th>Valor Unitario</th>
-                <th>Subtotal</th>
-                <th>Total IVA</th>
-                <th>Total Ajustado</th>
-				<th>Seleccionar</th>
+                <th>Descripción</th>
+				<th>Marca</th>
+                <th>Serie</th>
+				<th>Dependencia</th>
+			    <th>Sede</th>
+				<th>Ubicación<br>Especifica</th>
+                <th>Seleccionar</th>
                 </tr>
             </thead>
            </table>	

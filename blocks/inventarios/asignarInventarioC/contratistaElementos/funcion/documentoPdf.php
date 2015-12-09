@@ -121,7 +121,10 @@ class RegistradorOrden {
             </tr>
         </table>
                 <br> <br>  <br>
-         ";
+           Yo , ".$contratista[0]['CON_NOMBRE']." con identificación número ".$contratista[0]['CON_IDENTIFICACION'].",
+           		certifico de conformidad con el Contrato Número ".$contratista[0]['CON_NUMERO_CONTRATO']."  y Vigencia ".$contratista[0]['CON_VIGENCIA_FISCAL']." por parte del supervisor
+           		y/o funcionario ".$funcionario[0]['FUN_NOMBRE']." los siguientes Elementos: <br><br> ";
+         
 		
 		
 
@@ -129,12 +132,12 @@ class RegistradorOrden {
 						
 			<table style='width:100%;'>
 			<tr> 
-			<td style='width:10%;text-align=center;'>Id Elemento</td>
-			<td style='width:30%;text-align=center;'>Nivel Inventario</td>
-			<td style='width:15%;text-align=center;'>Placa</td>
-			<td style='width:15%;text-align=center;'>Marca</td>
-			<td style='width:10%;text-align=center;'>Serie</td> 
-			<td style='width:10%;text-align=center;'>Valor Elemento</td>
+			<td style='width:10%;text-align=center;'>Placa</td>
+			<td style='width:20%;text-align=center;'>Descripción</td>
+			<td style='width:10%;text-align=center;'>Marca Serie</td>
+			<td style='width:10%;text-align=center;'>Sede</td>
+			<td style='width:20%;text-align=center;'>Dependencia</td>
+			<td style='width:20%;text-align=center;'>Ubicación<br>Especifica</td> 
 			<td style='width:10%;text-align=center;'>Verificación Existencia</td>
 			</tr>";
 			
@@ -148,12 +151,12 @@ class RegistradorOrden {
 		
 					$contenidoPagina .= " 
 								<tr>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['id_elemento_ind'] . "</td>
-                    			<td style='width:30%;text-align=center;'>" . $valor ['nivel'] . "</td>
-                    			<td style='width:15%;text-align=center;'>" . $valor ['placa'] . "</td>
-                    			<td style='width:15%;text-align=center;'>" . $valor ['marca'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['serie'] . "</td>
-                    		    <td style='width:10%;text-align=center;'>$" . number_format ($valor ['total_iva_con'], 2, ",", "." ) . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['placa'] . "</td>
+                    			<td style='width:20%;text-align=center;'>" . $valor ['descripcion'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['marca']." ".$valor['serie'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['sede'] . "</td>
+                    			<td style='width:20%;text-align=center;'>" . $valor ['dependencia'] . "</td>
+                    		    <td style='width:20%;text-align=center;'>" . $valor ['espacio_fisico'] . "</td>
                     		    <td style='width:10%;text-align=center;'>" . $existencia . "</td>		
                     			</tr>";
 				

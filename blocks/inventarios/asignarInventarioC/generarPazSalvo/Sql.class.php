@@ -182,9 +182,13 @@ class Sql extends \Sql {
         case "consultarElementosContratista" :
                 $cadenaSql = " SELECT id_elemento_ind,nivel, marca, ";
                 $cadenaSql.= " elemento_individual.placa,elemento_individual.serie, valor, subtotal_sin_iva, ";
-                $cadenaSql.= " total_iva, total_iva_con ";
+                $cadenaSql.= " total_iva, total_iva_con,elemento.descripcion,
+                		      sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia,espacios.\"ESF_NOMBRE_ESPACIO\" espacio_fisico ";
                 $cadenaSql.= " FROM asignar_elementos,elemento ";
                 $cadenaSql.= " JOIN elemento_individual ON elemento.id_elemento=elemento_individual.id_elemento_gen ";
+                $cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
+                $cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
+                $cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
                 $cadenaSql.= " WHERE elemento_individual.estado_registro=TRUE  ";
                 $cadenaSql.= " AND elemento_individual.id_elemento_ind=asignar_elementos.id_elemento  ";
                 $cadenaSql.= " AND elemento_individual.estado_asignacion=TRUE  ";
