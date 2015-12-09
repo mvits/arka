@@ -275,6 +275,31 @@ class registrarForm {
 			// Aplica atributos globales al control
 			$atributos = array_merge ( $atributos, $atributosGlobales );
 			echo $this->miFormulario->campoBoton ( $atributos );
+			
+			
+			// -----------------CONTROL: Botón ----------------------------------------------------------------
+			$esteCampo = 'botonDocumentoSoporte';
+			$atributos ["id"] = $esteCampo;
+			$atributos ["tabIndex"] = $tab;
+			$atributos ["tipo"] = 'boton';
+			// submit: no se coloca si se desea un tipo button genérico
+			$atributos ['submit'] = 'true';
+			$atributos ["estiloMarco"] = '';
+			$atributos ["estiloBoton"] = 'jqueryui';
+			// verificar: true para verificar el formulario antes de pasarlo al servidor.
+			$atributos ["verificar"] = '';
+			$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+			$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+			$tab ++;
+				
+			// Aplica atributos globales al control
+			$atributos = array_merge ( $atributos, $atributosGlobales );
+			echo $this->miFormulario->campoBoton ( $atributos );
+			
+			
+			
+			
 			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 			
 			echo $this->miFormulario->division ( 'fin' );
@@ -299,7 +324,7 @@ class registrarForm {
 			// En este formulario se utiliza el mecanismo (b) para pasar las siguientes variables:
 			// Paso 1: crear el listado de variables
 			
-			$valorCodificado = "actionBloque=" . $esteBloque ["nombre"];
+			$valorCodificado = "action=" . $esteBloque ["nombre"];
 			$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];

@@ -180,8 +180,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND elemento_individual.id_elemento_ind=asignar_elementos.id_elemento  ";
 				$cadenaSql .= " AND elemento_individual.estado_asignacion=TRUE  ";
 				$cadenaSql .= " AND asignar_elementos.estado=1  ";
-				$cadenaSql .= " AND supervisor='" . $variable[1]. "' ";
-				$cadenaSql .= " AND contratista='" . $variable[0]. "' ORDER BY nivel ASC ";
+				$cadenaSql .= " AND supervisor='" . $variable [1] . "' ";
+				$cadenaSql .= " AND contratista='" . $variable [0] . "' ORDER BY nivel ASC ";
 				break;
 			
 			case "asignarElemento" :
@@ -268,9 +268,28 @@ class Sql extends \Sql {
 				break;
 			
 			case "nombreContratista" :
-				$cadenaSql = " SELECT \"CON_IDENTIFICACION\", \"CON_NOMBRE\" ";
+				$cadenaSql = " SELECT * ";
 				$cadenaSql .= "FROM arka_parametros.arka_contratistas ";
 				$cadenaSql .= " WHERE \"CON_IDENTIFICACION\"='" . $variable . "' ";
+				break;
+			
+			case "datosFuncionario" :
+				$cadenaSql = " SELECT * ";
+				$cadenaSql .= "FROM arka_parametros.arka_funcionarios ";
+				$cadenaSql .= " WHERE \"FUN_IDENTIFICACION\"='" . $variable . "' ";
+				break;
+			
+			case "jefe_recursos_fisicos" :
+				
+				$cadenaSql = 'SELECT "FUN_IDENTIFICACION" identificacion, "FUN_NOMBRE" nombre ';
+				$cadenaSql .= " FROM arka_parametros.arka_funcionarios ";
+				$cadenaSql .= " WHERE 1=1 ";
+				$cadenaSql .= ' AND "FUN_ESTADO"=';
+				$cadenaSql .= "'A'  ";
+				$cadenaSql .= ' AND "FUN_CARGO" ';
+				$cadenaSql .= " ='JEFE DE SECCION' ";
+				$cadenaSql .= ' AND "FUN_DEP_COD_ACADEMICA"=60 ; ';
+				 
 				break;
 		}
 		return $cadenaSql;

@@ -107,6 +107,16 @@ $('#tablaTitulos').dataTable( {
 } );
 
 
+	    $("#consultarAsignacion").mousemove(function() {
+              	    
+              	    
+              	    $("#<?php echo $this->campoSeguro('botonDocumentoSoporte')?>").val('false');
+              	    $("#<?php echo $this->campoSeguro('botonGuadar')?>").val('false');
+              	    
+              	    
+              	    });  
+
+
 
 $('#<?php echo $this->campoSeguro('documentoContratista')?>').width(650);
 $("#<?php echo $this->campoSeguro('documentoContratista') ?>").select2();
