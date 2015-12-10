@@ -313,7 +313,7 @@ class Sql extends \Sql {
 				$cadenaSql .= ' LEFT JOIN  arka_parametros.arka_contratistas crn ON crn."CON_IDENTIFICACION"=asl.contratista  ';	
 				$cadenaSql .= "WHERE tb.id_tipo_bienes <> 1 ";
 				$cadenaSql .= " AND eli.estado_registro = 'TRUE'  ";
-				$cadenaSql .= " AND asl.estado = 1  ";
+				
 				$cadenaSql .= " AND eli.funcionario= '" . $variable ['funcionario'] . "' ";
 				
 				if ($variable ['sede'] != '') {
@@ -329,7 +329,7 @@ class Sql extends \Sql {
 					$cadenaSql .= ' AND espacios."ESF_ID_ESPACIO" = ';
 					$cadenaSql .= " '" . $variable ['ubicacion'] . "' ";
 				}
-				
+				$cadenaSql .= " OR asl.estado = 1  ";
 				$cadenaSql .= " ORDER BY dependencia DESC   ;  ";
 				
 				break;
