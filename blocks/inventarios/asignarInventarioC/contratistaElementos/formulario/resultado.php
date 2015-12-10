@@ -134,7 +134,7 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Elementos a Cargo Contratista: " . $nombreContratista[0][0] . " - " . $nombreContratista [0] [1];
+		$atributos ["leyenda"] = "Elementos a Cargo Contratista: " . $nombreContratista[0]['CON_NOMBRE'] . " - " . $nombreContratista [0] ['CON_IDENTIFICACION'];
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
 		if ($elementos_contratista !== false) {

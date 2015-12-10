@@ -122,7 +122,7 @@ class RegistradorOrden {
         </table>
                 <br> <br>  <br>
            Yo , ".$contratista[0]['CON_NOMBRE']." con identificación número ".$contratista[0]['CON_IDENTIFICACION'].",
-           		certifico de conformidad con el Contrato Número ".$contratista[0]['CON_NUMERO_CONTRATO']."  y Vigencia ".$contratista[0]['CON_VIGENCIA_FISCAL']." por parte del supervisor
+           		certifico de conformidad con el Contrato Número ".$contratista[0]['CON_NUMERO_CONTRATO']."  y Vigencia ".$contratista[0]['CON_VIGENCIA_FISCAL']." la entrega por parte del supervisor
            		y/o funcionario ".$funcionario[0]['FUN_NOMBRE']." los siguientes Elementos: <br><br> ";
          
 		
