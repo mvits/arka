@@ -1,9 +1,9 @@
 <?php
+
 /**
  *
  * Los datos del bloque se encuentran en el arreglo $esteBloque.
  */
-
 
 // Variables
 $cadenaACodificar = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -12,17 +12,18 @@ $cadenaACodificar .= "&action=index.php";
 $cadenaACodificar .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar .= "&funcion=Consulta";
-$cadenaACodificar .= "&usuario=".$_REQUEST ['usuario'];
+$cadenaACodificar .= "&usuario=" . $_REQUEST ['usuario'];
 $cadenaACodificar .= "&tiempo=" . $_REQUEST ['tiempo'];
 
-if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor']=='true' ) {
-		
+if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+	
 	$_REQUEST ['funcionario'] = $_REQUEST ['usuario'];
+	$cadenaACodificar .= "&accesoCondor='true'";
 }
 
 if (isset ( $_REQUEST ['funcionario'] ) && $_REQUEST ['funcionario'] != '') {
 	$funcionario = $_REQUEST ['funcionario'];
-}else {
+} else {
 	$funcionario = '';
 }
 
@@ -49,8 +50,7 @@ $arreglo = array (
 		'sede' => $sede,
 		'dependencia' => $dependencia,
 		'ubicacion' => $ubicacion 
-)
-;
+);
 
 $arreglo = serialize ( $arreglo );
 
@@ -77,7 +77,7 @@ $(function() {
 				language: {
                 url: "<?php echo $urlDirectorio?>"
             			},
-             	 processing: true,
+             	processing: true,
 		"aLengthMenu": [[10,25, 50,100,300,500,1000,-1], [10,25, 50,100,300,500,1000,'Todos']],
 //                   ordering: true,
                   searching: true,
@@ -100,6 +100,7 @@ $(function() {
                   { data :"descripcion" },
                   { data :"sede" },
                   { data :"dependencia" },
+                  { data :"espaciofisico" },
                   { data :"estadoelemento" },
                   { data :"detalle" },
                   { data :"observaciones" },
@@ -114,5 +115,4 @@ $(function() {
 
 
 
-</script
->
+</script>

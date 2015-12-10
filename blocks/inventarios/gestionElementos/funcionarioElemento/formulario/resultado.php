@@ -20,6 +20,7 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
+		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -43,7 +44,6 @@ class registrarForm {
 		 */
 		
 		$atributosGlobales ['campoSeguro'] = 'true';
-		
 		
 		// -------------------------------------------------------------------------------------------------
 		$conexion = "inventarios";
@@ -165,7 +165,7 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Inventario  : CC. " . $_REQUEST['funcionario'] . "    " . $datosfuncionarioNombre;
+		$atributos ["leyenda"] = "Inventario  : CC. " . $_REQUEST ['funcionario'] . "    " . $datosfuncionarioNombre;
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		unset ( $atributos );
 		{
@@ -224,7 +224,7 @@ class registrarForm {
 					$atributos ["etiquetaObligatorio"] = false;
 					$atributos ['tab'] = $tab ++;
 					$atributos ['seleccion'] = 0;
-					$atributos ['anchoEtiqueta'] = 150;
+					$atributos ['anchoEtiqueta'] = 130;
 					$atributos ['evento'] = '';
 					if (isset ( $_REQUEST [$esteCampo] )) {
 						$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -239,7 +239,7 @@ class registrarForm {
 					$atributos ['estilo'] = "jqueryui";
 					$atributos ['validar'] = "required";
 					$atributos ['limitar'] = false;
-					$atributos ['anchoCaja'] = 24;
+					$atributos ['anchoCaja'] = 10;
 					$atributos ['miEvento'] = '';
 					// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "estado_entrada" );
 					$matrizItems = array (
@@ -274,6 +274,7 @@ class registrarForm {
 					<th>Descripción</th>
 					<th>Sede</th>
 					<th>Dependencia</th>
+					<th>Espacio Físico</th>
                 	<th>Estado Elemento</th>
 					<th>Detalle Elemento</th> 
 					<th>Registrar<br>Observaciones</th> 

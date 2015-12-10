@@ -101,6 +101,27 @@ class registrarForm {
 			
 			{
 				
+				if ($_REQUEST ['mensaje'] == 'noSelecciono') {
+						
+					$mensaje = "No se selecciono ningun elemento a Preaprobar.";
+						
+					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+					$esteCampo = 'mensajeRegistro';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['tipo'] = 'error';
+					$atributos ['estilo'] = 'textoCentrar';
+					$atributos ['mensaje'] = $mensaje;
+						
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+				}
+				
+				
+				
 				if ($_REQUEST ['mensaje'] == 'Aprobado') {
 					
 					$mensaje = "Se ha Aprobado el Inventario.";

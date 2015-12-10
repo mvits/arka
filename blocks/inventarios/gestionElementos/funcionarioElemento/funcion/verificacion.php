@@ -24,8 +24,6 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		
-		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -35,14 +33,22 @@ class RegistradorOrden {
 			}
 		}
 		
+		if (isset ( $elementos ) == false) {
+			redireccion::redireccionar ( 'noSeleccion', array (
+					$_REQUEST ['funcionario'],
+					$_REQUEST ['usuario'] 
+			) );
+			
+			
+			exit;
+		}
+		
 		if (isset ( $_REQUEST ['botonAprobar'] ) && $_REQUEST ['botonAprobar'] == 'Aprobar') {
 			foreach ( $elementos as $valor ) {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'Elemento_Existencia_Aprobado', $valor );
-				 
+				
 				$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "Elemento_Existencia_Aprobado" );
-				
-				
 			}
 			
 			$mensaje = array (
@@ -58,10 +64,6 @@ class RegistradorOrden {
 				$cadenaSql = $this->miSql->getCadenaSql ( 'Elemento_Existencia_Tipo_Confirmada', $valor );
 				
 				$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "Elemento_Existencia_Tipo_Confirmada" );
-				
-				
-				
-				
 			}
 			
 			if ($estado == true) {

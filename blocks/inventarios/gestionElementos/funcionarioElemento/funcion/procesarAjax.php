@@ -1,4 +1,6 @@
 <?php
+
+// var_dump($_REQUEST);exit;
 use inventarios\gestionElementos\modificarElemento\Sql;
 
 include_once ("core/builder/FormularioHtml.class.php");
@@ -35,14 +37,20 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
 	
 	for($i = 0; $i < count ( $resultado ); $i ++) {
 		
-		$VariableDetalles = "pagina=detalleElemento"; // pendiente la pagina para modificar parametro
+		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+			$VariableDetalles = "pagina=elementoDetalle";
+		} else {
+			$VariableDetalles = "pagina=detalleElemento";
+		}
+		
+		// pendiente la pagina para modificar parametro
 		$VariableDetalles .= "&opcion=detalle";
 		$VariableDetalles .= "&elemento=" . $resultado [$i] ['identificador_elemento_individual'];
 		$VariableDetalles .= "&funcionario=" . $arreglo ['funcionario'];
 		$VariableDetalles .= "&usuario=" . $_REQUEST ['usuario'];
 		$VariableDetalles .= "&periodo=" . $resultado_periodo [0] [0];
 		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
-			$valorCodificado .= "&accesoCondor=true";
+			$VariableDetalles .= "&accesoCondor=true";
 		}
 		
 		$VariableDetalles = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableDetalles, $directorio );
@@ -55,8 +63,7 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
 		$VariableObservaciones .= "&usuario=" . $_REQUEST ['usuario'];
 		$VariableObservaciones .= "&periodo=" . $resultado_periodo [0] [0];
 		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
-			
-			$valorCodificado .= "&accesoCondor=true";
+			$VariableObservaciones .= "&accesoCondor=true";
 		}
 		
 		$VariableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableObservaciones, $directorio );
@@ -91,12 +98,12 @@ if ($_REQUEST ['funcion'] == 'Consulta') {
 				'descripcion' => "<center>" . $resultado [$i] ['descripcion_elemento'] . "</center>",
 				'sede' => "<center>" . $resultado [$i] ['sede'] . "</center>",
 				'dependencia' => "<center>" . $resultado [$i] ['dependencia'] . "</center>",
+				'espaciofisico' => "<center>" . $resultado [$i] ['espaciofisico'] . "</center>",
 				'estadoelemento' => "<center>" . $resultado [$i] ['estado_bien'] . "</center>",
 				'detalle' => "<center><a href='" . $VariableDetalles . "'><u>Ver Detalles</u></a></center>",
 				'observaciones' => "<center><a href='" . $VariableObservaciones . "'>&#9658; &blk34;</a></center>",
 				'verificacion' => "<center>" . $item . "</center>" 
-		)
-		;
+		);
 	}
 	
 	$total = count ( $resultadoFinal );
@@ -133,7 +140,10 @@ if ($_REQUEST ['funcion'] == 'SeleccionTipoBien') {
 
 if ($_REQUEST ['funcion'] == 'consultarUbicacion') {
 	
-	$cadenaSql = $this->sql->getCadenaSql ( 'ubicacionesConsultadas', $_REQUEST ['valor'] );
+	$cadenaSql = $this->sql->getCadenaSql ( 'ubicacionesConsultadas', array (
+			$_REQUEST ['valorD'],
+			$_REQUEST ['valorS'] 
+	) );
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	$resultado = json_encode ( $resultado );

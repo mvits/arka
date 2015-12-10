@@ -13,6 +13,23 @@ class redireccion {
 		
 		switch ($opcion) {
 			
+			
+			
+			case "noSeleccion" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=noSelecciono";
+				$variable .= "&funcionario=" . $_REQUEST['funcionario'];
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
+				if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+						
+					$variable .= "&accesoCondor=true";
+				}
+			
+				break;
+			
+			
+			
 			case "Verificacion" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
