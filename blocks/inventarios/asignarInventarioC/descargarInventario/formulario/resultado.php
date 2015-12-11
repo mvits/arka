@@ -61,6 +61,7 @@ class registrarForm {
 		$supervisor = $_REQUEST ['usuario'];
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosContratista', $docContratista );
+		
 		$elementos_contratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$total_elementos = count ( $elementos_contratista );
 		

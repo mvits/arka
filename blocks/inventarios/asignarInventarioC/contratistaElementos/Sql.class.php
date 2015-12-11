@@ -174,8 +174,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " elemento_individual.placa,elemento_individual.serie, valor, subtotal_sin_iva, ";
 				$cadenaSql .= " total_iva, total_iva_con, asignar_elementos.verificar_existencia,supervisor, elemento.descripcion ,
 						       sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia,espacios.\"ESF_NOMBRE_ESPACIO\" espacio_fisico ";
-				$cadenaSql .= " FROM asignar_elementos, elemento ";
-				$cadenaSql .= " JOIN elemento_individual ON elemento.id_elemento=elemento_individual.id_elemento_gen ";
+				$cadenaSql .= " FROM asignar_elementos ";
+				$cadenaSql .= " JOIN elemento_individual ON elemento_individual.id_elemento_ind=asignar_elementos.id_elemento ";
+				$cadenaSql .= " JOIN elemento ON elemento.id_elemento=elemento_individual.id_elemento_gen ";
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
@@ -186,6 +187,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND asignar_elementos.estado=1  ";
 				
 				$cadenaSql .= " AND contratista='" . $variable . "' ORDER BY nivel ASC ";
+				
 				break;
 			
 			case "asignarElemento" :

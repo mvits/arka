@@ -184,8 +184,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND elemento_individual.id_elemento_ind=asignar_elementos.id_elemento  ";
 				$cadenaSql .= " AND elemento_individual.estado_asignacion=TRUE  ";
 				$cadenaSql .= " AND asignar_elementos.estado=1  ";
-				$cadenaSql .= " AND supervisor='" . $variable [1] . "' ";
-				$cadenaSql .= " AND contratista='" . $variable [0] . "' ORDER BY nivel ASC ";
+				$cadenaSql .= " AND supervisor='" . $variable [0] . "' ";
+				$cadenaSql .= " AND contratista='" . $variable [1] . "' ORDER BY nivel ASC ";
+				
 				break;
 			
 			case "asignarElemento" :
@@ -239,8 +240,8 @@ class Sql extends \Sql {
 			case "inactivarAsignacion" :
 				$cadenaSql = "UPDATE asignar_elementos ";
 				$cadenaSql .= " SET ";
-				$cadenaSql .= " estado='" . $variable [1] . "' ";
-				// $cadenaSql.= " fecha_registro='" . $variable[2] . "', ";
+				$cadenaSql .= " estado='" . $variable [1] . "' ,";
+				$cadenaSql.= " fecha_registro='" . $variable[2] . "' ";
 				$cadenaSql .= " WHERE id_elemento= '" . $variable [0] . "'; ";
 				break;
 			

@@ -47,6 +47,7 @@ class RegistradorActa {
 		
 		// Consultar Elementos Asignados al contratista
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosContratista', $variables );
+		
 		$elementos_contratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		// recuperar datos de la asignacion
@@ -161,16 +162,16 @@ class RegistradorActa {
 							$fechaActual 
 					);
 					$cadenaSql = $this->miSql->getCadenaSql ( 'activarElemento', $datosActivar );
-					$asignar_cont = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar", $datosActivar, "activarElemento" );
+					$asignar_cont = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $datosActivar, "activarElemento" );
 					$cadenaSql2 = $this->miSql->getCadenaSql ( 'inactivarAsignacion', $datosInactivar );
-					$inactivar_cont = $esteRecursoDB->ejecutarAcceso ( $cadenaSql2, "insertar", $datosInactivar, "inactivarAsignacion" );
+					$inactivar_cont = $esteRecursoDB->ejecutarAcceso ( $cadenaSql2, "acceso", $datosInactivar, "inactivarAsignacion" );
 				}
 				$valor = 0;
 			}
 		}
 		
 		// inactivar item para asignar
-		if (isset ( $asignar_cont ) == true && isset ( $asignar_sup ) == true || isset ( $inactivar_cont ) == true || isset ( $inactivar_sup ) == true) {
+		if ($asignar_cont == true && $inactivar_cont == true) {
 			redireccion::redireccionar ( 'inserto', $datos );
 			exit();
 		} else {

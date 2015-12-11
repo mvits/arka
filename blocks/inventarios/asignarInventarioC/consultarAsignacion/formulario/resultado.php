@@ -64,8 +64,9 @@ class registrarForm {
 		// $elementos_supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		// Consultar Elementos Asignados al contratista
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosContratista', array (
+				$_REQUEST ['funcionario'],
 				$_REQUEST ['documentoContratista'],
-				$_REQUEST ['funcionario'] 
+				 
 		) );
 		$elementos_contratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
