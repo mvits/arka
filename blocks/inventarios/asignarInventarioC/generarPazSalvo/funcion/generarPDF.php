@@ -175,20 +175,21 @@ class RegistradorActa {
 				
 			<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
 			<tr>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>    ____________________________________</td>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>  ____________________________________</td>
+			
+			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>  ____________________________________</td>
 			</tr>
 			<tr>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $jefe ['nombre'] . "</td>		
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $funcionario [0]['FUN_NOMBRE'] . "</td>
+					
+			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $funcionario [0]['FUN_NOMBRE'] . "</td>
 			
 			</tr>
 			<tr>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Jefe Sección Almacén General e Inventarios</td>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Funcionario y/o Supervisor</td>
+			
+			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Funcionario y/o Supervisor</td>
 			</tr>
 			</table>
-		  
+		  <br><br><br><br><br>
+					
 					
 					 <table align='center' width='100%'>
         <tr>

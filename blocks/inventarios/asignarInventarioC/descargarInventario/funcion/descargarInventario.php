@@ -105,7 +105,7 @@ class RegistradorActa {
 		
 		
 		
-		if ($inactivar == true && $inasignar == true) {
+		if ( $inactivar == true && $inasignar==true) {
 			redireccion::redireccionar ( 'inserto', $datos );
 			exit;
 		} else {

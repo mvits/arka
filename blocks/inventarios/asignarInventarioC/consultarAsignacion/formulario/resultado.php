@@ -129,7 +129,7 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Modificar Asignación de Elementos: " . $docContratista . " - " . $nombreContratista [0] [1];
+		$atributos ["leyenda"] = "Modificar Asignación de Elementos: " . $nombreContratista[0]['CON_IDENTIFICACION']. " - " . $nombreContratista [0] ['CON_NOMBRE'];
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
 		if ($elementos_contratista !== false) {

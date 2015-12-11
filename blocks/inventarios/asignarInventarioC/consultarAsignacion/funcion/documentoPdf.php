@@ -118,7 +118,7 @@ class RegistradorOrden {
             </tr>
         </table>
                 <br> <br>  <br>
-          Yo , ".$contratista[0]['CON_NOMBRE']." con identificación número ".$contratista[0]['CON_IDENTIFICACION'].", recibo de conformidad con el Contrato Número ".$contratista[0]['CON_NUMERO_CONTRATO']."  y Vigencia ".$contratista[0]['CON_VIGENCIA_FISCAL']." la entrega por parte del supervisor y/o funcionario ".$funcionario[0]['FUN_NOMBRE']." los siguientes Elementos: <br><br> ";
+          Yo , ".$contratista[0]['CON_NOMBRE']." con identificación número ".$contratista[0]['CON_IDENTIFICACION'].", recibo de conformidad con el Contrato Número ".$contratista[0]['CON_NUMERO_CONTRATO']."  y Vigencia ".$contratista[0]['CON_VIGENCIA_FISCAL']." por parte del supervisor y/o funcionario ".$funcionario[0]['FUN_NOMBRE']." los siguientes Elementos: <br><br> ";
 		
 		
 
@@ -165,32 +165,15 @@ class RegistradorOrden {
 			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>  ____________________________________</td>
 			</tr>
 			<tr>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $jefe ['nombre'] . "</td>		
+			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $contratista [0]['CON_NOMBRE'] . "</td>		
 			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $funcionario [0]['FUN_NOMBRE'] . "</td>
 			
 			</tr>
 			<tr>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Jefe Sección Almacén General e Inventarios</td>
+			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Contratista</td>
 			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Funcionario y/o Supervisor</td>
 			</tr>
 			</table>
-			<BR>
-			<BR>
-			<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-			<tr>
-			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'> ____________________________________</td>
-			</tr>
-			<tr>
-			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $contratista [0]['CON_NOMBRE'] . "</td>
-			</tr>
-			<tr>
-			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Contratista</td>
-			</tr>
-			</table>
-					
-
-				
-		
 			</page_footer>
 					";
 		
