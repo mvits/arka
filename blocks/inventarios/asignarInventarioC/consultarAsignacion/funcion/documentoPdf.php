@@ -24,8 +24,6 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function documento() {
-		
-		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -35,23 +33,22 @@ class RegistradorOrden {
 		
 		$contratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'datosFuncionario', $_REQUEST ['funcionario'] );
 		
 		$funcionario = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosContratista', array (
-				$_REQUEST ['contratista'],
-				$_REQUEST ['funcionario'] 
+				
+				$_REQUEST ['funcionario'],
+				$_REQUEST ['contratista'] 
 		) );
 		$elementos_contratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-// 		var_dump($elementos_contratista);
+		// var_dump($elementos_contratista);
 		$cadenaSql = $this->miSql->getCadenaSql ( 'jefe_recursos_fisicos' );
 		// echo $cadenaSql;
 		$jefe = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$jefe = $jefe [0];
-// 		var_dump($jefe);
+		// var_dump($jefe);
 		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( 'rutaUrlBloque' );
 		
@@ -118,11 +115,9 @@ class RegistradorOrden {
             </tr>
         </table>
                 <br> <br>  <br>
-          Yo , ".$contratista[0]['CON_NOMBRE']." con identificación número ".$contratista[0]['CON_IDENTIFICACION'].", recibo de conformidad con el Contrato Número ".$contratista[0]['CON_NUMERO_CONTRATO']."  y Vigencia ".$contratista[0]['CON_VIGENCIA_FISCAL']." por parte del supervisor y/o funcionario ".$funcionario[0]['FUN_NOMBRE']." los siguientes Elementos: <br><br> ";
+          Yo , " . $contratista [0] ['CON_NOMBRE'] . " con identificación número " . $contratista [0] ['CON_IDENTIFICACION'] . ", recibo de conformidad con el Contrato Número " . $contratista [0] ['CON_NUMERO_CONTRATO'] . "  y Vigencia " . $contratista [0] ['CON_VIGENCIA_FISCAL'] . " por parte del supervisor y/o funcionario " . $funcionario [0] ['FUN_NOMBRE'] . " los siguientes Elementos: <br><br> ";
 		
-		
-
-			$contenidoPagina .= "<br>
+		$contenidoPagina .= "<br>
 						
 			<table style='width:100%;'>
 			<tr> 
@@ -133,28 +128,23 @@ class RegistradorOrden {
 			<td style='width:20%;text-align=center;'>Dependencia</td>
 			<td style='width:20%;text-align=center;'>Ubicación<br>Especifica</td>
 					</tr>";
+		
+		foreach ( $elementos_contratista as $valor ) {
 			
-		
-			foreach ( $elementos_contratista as $valor ) {
-				
-		
-					$contenidoPagina .= " 
+			$contenidoPagina .= " 
 								<tr>
                     			<td style='width:10%;text-align=center;'>" . $valor ['placa'] . "</td>
                     			<td style='width:30%;text-align=center;'>" . $valor ['descripcion'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['marca']." ".$valor ['serie'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['marca'] . " " . $valor ['serie'] . "</td>
                     			<td style='width:10%;text-align=center;'>" . $valor ['sede'] . "</td>
                     			<td style='width:20%;text-align=center;'>" . $valor ['dependencia'] . "</td>
                     		    <td style='width:20%;text-align=center;'>" . $valor ['espacio_fisico'] . "</td>
                     			</tr>";
-				
-			}
-			
+		}
+		
 		$contenidoPagina .= "</table> ";
-			
-
-			
-			$contenidoPagina.="
+		
+		$contenidoPagina .= "
 		
 			<page_footer  '1mm' backbottom='1mm' backleft='10mm' backright='10mm'>
 			
@@ -165,8 +155,8 @@ class RegistradorOrden {
 			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>  ____________________________________</td>
 			</tr>
 			<tr>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $contratista [0]['CON_NOMBRE'] . "</td>		
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $funcionario [0]['FUN_NOMBRE'] . "</td>
+			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $contratista [0] ['CON_NOMBRE'] . "</td>		
+			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $funcionario [0] ['FUN_NOMBRE'] . "</td>
 			
 			</tr>
 			<tr>
@@ -179,7 +169,7 @@ class RegistradorOrden {
 		
 		$contenidoPagina .= "</page>";
 		
-// 		echo  $contenidoPagina;exit;
+		// echo $contenidoPagina;exit;
 		return $contenidoPagina;
 	}
 }
@@ -187,9 +177,9 @@ class RegistradorOrden {
 $miRegistrador = new RegistradorOrden ( $this->lenguaje, $this->sql, $this->funcion );
 
 $textos = $miRegistrador->documento ();
- 
+
 ob_start ();
-$html2pdf = new \HTML2PDF ( 'L' , 'LETTER', 'es', true, 'UTF-8', array (
+$html2pdf = new \HTML2PDF ( 'L', 'LETTER', 'es', true, 'UTF-8', array (
 		1,
 		2,
 		2,
