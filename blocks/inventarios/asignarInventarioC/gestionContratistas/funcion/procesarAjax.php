@@ -75,18 +75,24 @@ if ($_REQUEST ['funcion'] == 'ConsultarContratistas') {
 		$VariableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableModificar, $directorio );
 		
 		$resultadoFinal [] = array (
-				'vigencia' => "<center>" . $valor ['nombre_tipo_bienes'] . "</center>",
-				'numero' => "<center>" . $valor ['placa'] . "</center>",
-				'identificacion' => "<center>" . $valor ['descripcion_elemento'] . "</center>",
-				'nombre' => "<center>" . $valor ['sede'] . "</center>",
-				'fecha_inicio' => "<center>" . $valor ['dependencia'] . "</center>",
-				'fecha_final' => "<center>" . $valor ['espaciofisico'] . "</center>",
+				'vigencia' => "<center>" . $valor ['CON_VIGENCIA_FISCAL'] . "</center>",
+				'numero' => "<center>" . $valor ['CON_NUMERO_CONTRATO'] . "</center>",
+				'identificacion' => "<center>" . $valor ['CON_IDENTIFICACION'] . "</center>",
+				'nombre' => "<center>" . $valor ['CON_NOMBRE'] . "</center>",
+				'fecha_inicio' => "<center>" . $valor ['CON_FECHA_INICIO'] . "</center>",
+				'fecha_final' => "<center>" . $valor ['CON_FECHA_FINAL'] . "</center>",
 				'modificar' => "<center><a href='" . $VariableModificar . "'>&#9658; &blk34;</a></center>" 
-		)
-		;
+		);
 	}
 	
-	$resultado = json_encode ( $resultado );
+	$total = count ( $resultadoFinal );
+	
+	$resultado = json_encode ( $resultadoFinal );
+	
+	$resultado = '{
+                "recordsTotal":' . $total . ',
+                "recordsFiltered":' . $total . ',
+				"data":' . $resultado . '}';
 	
 	echo $resultado;
 }

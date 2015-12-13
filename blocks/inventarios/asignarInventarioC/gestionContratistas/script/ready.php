@@ -28,6 +28,23 @@
 			}, 10000); // <-- time in milliseconds
         
               
+              
+// Asociar el widget tabs a la división cuyo id es tabs
+$(function() {
+$("#tabs").tabs();
+}); 
+
+
+$(function() {
+$( "input[type=submit], button" )
+.button()
+.click(function( event ) {
+event.preventDefault();
+});
+});
+
+              
+              
 $("#<?php echo $this->campoSeguro('clase')?>").select2();
 $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();
 

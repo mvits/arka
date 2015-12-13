@@ -3,7 +3,7 @@ if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();
 }
-class registrarForm {
+class consultarForm {
 	var $miConfigurador;
 	var $lenguaje;
 	var $miFormulario;
@@ -49,50 +49,6 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$conexion = "sicapital";
-		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		
-		if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
-			$fechaInicio = $_REQUEST ['fecha_inicio'];
-		} else {
-			$fechaInicio = '';
-		}
-		
-		if (isset ( $_REQUEST ['fecha_final'] ) && $_REQUEST ['fecha_final'] != '') {
-			$fechaFinal = $_REQUEST ['fecha_final'];
-		} else {
-			$fechaFinal = '';
-		}
-		
-		if (isset ( $_REQUEST ['numero_entrada'] ) && $_REQUEST ['numero_entrada'] != '') {
-			$numeroEntrada = $_REQUEST ['numero_entrada'];
-		} else {
-			$numeroEntrada = '';
-		}
-		
-		if (isset ( $_REQUEST ['clase'] ) && $_REQUEST ['clase'] != '') {
-			$clase = $_REQUEST ['clase'];
-		} else {
-			$clase = '';
-		}
-		
-		if (isset ( $_REQUEST ['id_proveedor'] ) && $_REQUEST ['id_proveedor'] != '') {
-			$proveedor = $_REQUEST ['id_proveedor'];
-		} else {
-			$proveedor = '';
-		}
-		
-		$arreglo = array (
-				$numeroEntrada,
-				$fechaInicio,
-				$fechaFinal,
-				$clase,
-				$proveedor 
-		);
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntrada', $arreglo ); 
-		
-		$entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -114,32 +70,7 @@ class registrarForm {
 		// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		echo $this->miFormulario->formulario ( $atributos );
-		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
-		
-		$variable = "pagina=" . $miPaginaActual;
-		$variable .= "&usuario=".$_REQUEST['usuario'];
-		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-		
-		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-		$esteCampo = 'botonRegresar';
-		$atributos ['id'] = $esteCampo;
-		$atributos ['enlace'] = $variable;
-		$atributos ['tabIndex'] = 1;
-		$atributos ['estilo'] = 'textoSubtitulo';
-		$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['ancho'] = '10%';
-		$atributos ['alto'] = '10%';
-		$atributos ['redirLugar'] = true;
-		echo $this->miFormulario->enlace ( $atributos );
-		
-		$esteCampo = "marcoDatosBasicos";
-		$atributos ['id'] = $esteCampo;
-		$atributos ["estilo"] = "jqueryui";
-		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Contratistas";
-		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-		
-		// ---------------------------------------------------------
+
 		
 		// ------------------Fin Division para los botones-------------------------
 		
@@ -221,7 +152,7 @@ class registrarForm {
 		
 		echo $this->miFormulario->agrupacion ( 'fin' );
 		
-		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+		
 		
 		// ------------------- SECCION: Paso de variables ------------------------------------------------
 		
@@ -275,7 +206,7 @@ class registrarForm {
 	}
 }
 
-$miSeleccionador = new registrarForm ( $this->lenguaje, $this->miFormulario, $this->sql );
+$miSeleccionador = new consultarForm ( $this->lenguaje, $this->miFormulario, $this->sql );
 
 $miSeleccionador->miForm ();
 ?>

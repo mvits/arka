@@ -18,50 +18,59 @@ $cripto = Encriptador::singleton ();
 $valorCodificado = "action=" . $esteBloque ["nombre"];
 $valorCodificado .= "&bloque=" . $esteBloque ["id_bloque"];
 $valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+
 $valorCodificado = $cripto->codificar ( $valorCodificado );
 $directorio = $this->miConfigurador->getVariableConfiguracion ( "rutaUrlBloque" ) . "/imagen/";
 
 // ------------------Division para las pestañas-------------------------
 $atributos ["id"] = "tabs";
 $atributos ["estilo"] = "";
+
 echo $this->miFormulario->division ( "inicio", $atributos );
-// unset ( $atributos );
+unset ( $atributos );
 {
 	// -------------------- Listado de Pestañas (Como lista No Ordenada) -------------------------------
 	
 	$items = array (
-			"tabRegistrar" => $this->lenguaje->getCadena ( "tabRegistrar" ),
-			"tabRegistrarMasivo" => $this->lenguaje->getCadena ( "tabRegistrarMasivo" ) 
+			
+			"tabContratistaCrear" => $this->lenguaje->getCadena ( "tabContratistaCrear" ),
+			"tabContratistaConsultar" => $this->lenguaje->getCadena ( "tabContratistaConsultar" ),
+			
+			
 	);
 	$atributos ["items"] = $items;
 	$atributos ["estilo"] = "jqueryui";
 	$atributos ["pestañas"] = "true";
 	echo $this->miFormulario->listaNoOrdenada ( $atributos );
-	// unset ( $atributos );
 	
-	$atributos ["id"] = "tabRegistrar";
-	$atributos ["estilo"] = "";
-	echo $this->miFormulario->division ( "inicio", $atributos );
+	$esteCampo = "tabContratistaConsultar";
+	$atributos ['id'] = $esteCampo;
+	$atributos ["estilo"] = "jqueryui";
+	$atributos ['tipoEtiqueta'] = 'inicio';
+	// $atributos ["leyenda"] = "Contratos ViceRectoria";
+	echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+	unset ( $atributos );
 	{
-		include ($this->ruta . "formulario/tabs/registro.php");
 		
+		include ($this->ruta . "formulario/tabFormularioConsultar.php");
+		// -----------------Fin Division para la pestaña 2-------------------------
+	}
+	echo $this->miFormulario->agrupacion ( 'fin' );
+	
+	$esteCampo = "tabContratistaCrear";
+	$atributos ['id'] = $esteCampo;
+	$atributos ["estilo"] = "jqueryui";
+	$atributos ['tipoEtiqueta'] = 'inicio';
+	// $atributos ["leyenda"] = "Contratos ViceRectoria";
+	echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+	unset ( $atributos );
+	{
+		
+		include ($this->ruta . "formulario/tabFormularioCrear.php");
 		// -----------------Fin Division para la pestaña 1-------------------------
 	}
-	echo $this->miFormulario->division ( "fin" );
-	
-	// ------------------Division para la pestaña 2-------------------------
-	$atributos ["id"] = "tabRegistrarMasivo";
-	$atributos ["estilo"] = "";
-	echo $this->miFormulario->division ( "inicio", $atributos );
-	{
-		include ($this->ruta . "formulario/tabs/registro_masivo.php");
-	}
-	
-	// -----------------Fin Division para la pestaña 2-------------------------
-	echo $this->miFormulario->division ( "fin" );
-	
+	echo $this->miFormulario->agrupacion ( 'fin' );
 }
-
 echo $this->miFormulario->division ( "fin" );
 
 ?>
