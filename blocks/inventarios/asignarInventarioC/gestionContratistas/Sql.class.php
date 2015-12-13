@@ -272,9 +272,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN catalogo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
 				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
 				$cadenaSql .= "AND  ce.elemento_id > 0  ";
-                $cadenaSql .= "AND  ce.elemento_padre > 0  ";
+				$cadenaSql .= "AND  ce.elemento_padre > 0  ";
 				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
-				
 				
 				break;
 			
@@ -331,7 +330,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [13] . "',";
 				$cadenaSql .= "'" . $variable [14] . "',";
 				$cadenaSql .= "'" . $variable [15] . "',";
-                                $cadenaSql .= "'" . $variable [16] . "',";
+				$cadenaSql .= "'" . $variable [16] . "',";
 				$cadenaSql .= "'" . $variable [4] . "') ";
 				$cadenaSql .= "RETURNING  id_elemento; ";
 				
@@ -371,7 +370,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [16] . "',";
 				$cadenaSql .= "'" . $variable [17] . "',";
 				$cadenaSql .= "'" . $variable [18] . "',";
-                                $cadenaSql .= "'" . $variable [19] . "',";
+				$cadenaSql .= "'" . $variable [19] . "',";
 				$cadenaSql .= "'" . $variable [4] . "') ";
 				$cadenaSql .= "RETURNING  id_elemento; ";
 				
@@ -401,7 +400,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [14] . "',";
 				$cadenaSql .= "'" . $variable [15] . "',";
 				$cadenaSql .= "'" . $variable [16] . "',";
-                                $cadenaSql .= "'" . $variable [17] . "',";
+				$cadenaSql .= "'" . $variable [17] . "',";
 				$cadenaSql .= "'" . $variable [4] . "') ";
 				$cadenaSql .= "RETURNING  id_elemento; ";
 				
@@ -464,6 +463,20 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM arka_parametros.arka_proveedor  ";
 				$cadenaSql .= "WHERE cast(\"PRO_NIT\" as text) LIKE '%" . $variable . "%' ";
 				$cadenaSql .= "OR \"PRO_RAZON_SOCIAL\" LIKE '%" . $variable . "%' LIMIT 10; ";
+				
+				break;
+			
+				
+// 				SELECT "CON_IDENTIFICADOR", "CON_IDENTIFICACION", "CON_NOMBRE", "CON_NUMERO_CONTRATO",
+// 				"CON_VIGENCIA_FISCAL", "CON_FECHA_INICIO", "CON_FECHA_FINAL"
+// 						FROM arka_parametros.arka_contratistas;
+				
+				
+				
+			case "Consultar_Contratistas" :
+				$cadenaSql = " SELECT *  ";
+				$cadenaSql .= " FROM arka_parametros.arka_contratistas  ";
+				$cadenaSql .= "WHERE \"CON_VIGENCIA_FISCAL\"= '" . $variable . "'; ";
 				
 				break;
 		}

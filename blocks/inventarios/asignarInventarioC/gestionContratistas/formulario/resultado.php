@@ -90,7 +90,7 @@ class registrarForm {
 				$proveedor 
 		);
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntrada', $arreglo );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntrada', $arreglo ); 
 		
 		$entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
@@ -136,7 +136,7 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Consultar Entrada";
+		$atributos ["leyenda"] = "Contratistas";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
 		// ---------------------------------------------------------
@@ -145,81 +145,28 @@ class registrarForm {
 		
 		$esteCampo = "AgrupacionInformacion";
 		$atributos ['id'] = $esteCampo;
-		$atributos ['leyenda'] = "Información Referente a Entradas";
+		$atributos ['leyenda'] = "Información Referente a Contratistas";
 		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 		
 		// var_dump($entrada);exit;
 		
-		if ($entrada) {
+// 		if ($entrada) {
 			
-			echo "<table id='tablaTitulos'>";
+			echo "<table id='tablaTitulos'>
+					<thead>
+		                <tr>
+		                   <th>Vigencia</th>
+		                    <th>Número de Contrato</th>
+		                    <th>Identificación<br>Contratista</th>
+							<th>Nombre y Apellidos<br>Contratistas</th>
+							<th>Fecha de Inicio<br>Contrato</th>
+					        <th>Fecha de Final<br>Contrato</th>
+							<th>Modificar</th>
+		                </tr>
+		            </thead>
+            	</table>";
 			
-			echo "<thead>
-                <tr>
-                   <th>Número Entrada y/o<br>Vigencia</th>
-                    <th>Fecha Registro </th>
-                    <th>Clase Entrada</th>
-					<th>Nit<br>Proveedor</th>
-					<th>Razon Social<br>Proveedor</th>
-			        <th>Cargar Elementos</th>
-                </tr>
-            </thead>
-            <tbody>";
 			
-			for($i = 0; $i < count ( $entrada ); $i ++) {
-				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-				$variable .= "&opcion=cargarElemento";
-				$variable .= "&numero_entrada=" . $entrada [$i] [0];
-				$variable .= "&usuario=".$_REQUEST['usuario'];
-				
-				if ($entrada [$i] [3] == 0) {
-					
-					$arreglo = array (
-							$entrada [$i] [4],
-							$entrada [$i] [1],
-							$entrada [$i] [2],
-							$entrada [$i] ['nit'] = 'NO APLICA',
-							$entrada [$i] ['razon_social'] = 'NO APLICA',
-							$entrada [$i] ['vigencia'] 
-					)
-					;
-				} else {
-					
-					$arreglo = array (
-							$entrada [$i] [4],
-							$entrada [$i] [1],
-							$entrada [$i] [2],
-							$entrada [$i] ['nit'],
-							str_replace ( "&", "", $entrada [$i] ['razon_social'] ),
-							$entrada [$i] ['vigencia'] 
-					)
-					;
-				}
-				$arreglo = serialize ( $arreglo );
-				$variable .= "&datosGenerales=" . $arreglo;
-				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-				
-				$mostrarHtml = "<tr>
-                    <td><center>" . $entrada [$i] [4] . "</center></td>
-                    <td><center>" . $entrada [$i] [1] . "</center></td>
-                    <td><center>" . $entrada [$i] [2] . "</center></td>
-                    <td><center>" . $entrada[$i]['nit'] . "</center></td>
-                    <td><center>" . $entrada[$i]['razon_social'] . "</center></td>
-                    <td><center>
-                    <a href='" . $variable . "'>
-                            <img src='" . $rutaBloque . "/css/images/item.png' width='15px'>
-                        </a>
-                  	</center> </td>
-           
-                </tr>";
-				echo $mostrarHtml;
-				unset ( $mostrarHtml );
-				unset ( $variable );
-			}
-			
-			echo "</tbody>";
-			
-			echo "</table>";
 			// // ------------------Division para los botones-------------------------
 			// $atributos ["id"] = "botones";
 			// $atributos ["estilo"] = "marcoBotones";
@@ -253,24 +200,24 @@ class registrarForm {
 			
 			// Fin de Conjunto de Controles
 			// echo $this->miFormulario->marcoAgrupacion("fin");
-		} else {
+// 		} else {
 			
-			$mensaje = "No Se Encontraron<br>Registros de Entradas";
+// 			$mensaje = "No Se Encontraron<br>Registros de Entradas";
 			
-			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-			$esteCampo = 'mensajeRegistro';
-			$atributos ['id'] = $esteCampo;
-			$atributos ['tipo'] = 'error';
-			$atributos ['estilo'] = 'textoCentrar';
-			$atributos ['mensaje'] = $mensaje;
+// 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+// 			$esteCampo = 'mensajeRegistro';
+// 			$atributos ['id'] = $esteCampo;
+// 			$atributos ['tipo'] = 'error';
+// 			$atributos ['estilo'] = 'textoCentrar';
+// 			$atributos ['mensaje'] = $mensaje;
 			
-			$tab ++;
+// 			$tab ++;
 			
-			// Aplica atributos globales al control
-			$atributos = array_merge ( $atributos, $atributosGlobales );
-			echo $this->miFormulario->cuadroMensaje ( $atributos );
-			// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
-		}
+// 			// Aplica atributos globales al control
+// 			$atributos = array_merge ( $atributos, $atributosGlobales );
+// 			echo $this->miFormulario->cuadroMensaje ( $atributos );
+// 			// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+// 		}
 		
 		echo $this->miFormulario->agrupacion ( 'fin' );
 		
