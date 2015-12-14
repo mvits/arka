@@ -43,56 +43,19 @@ class registrarForm {
 		 * $atributos= array_merge($atributos,$atributosGlobales);
 		 */
 		
-		$atributosGlobales ['campoSeguro'] = 'true';
+		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionElementos/";
+		$rutaBloque .= $esteBloque ['nombre'];
+		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/asignarInventarioC/" . $esteBloque ['nombre'] . "/plantilla/archivo_contratista.xlsx";
 		
+		$atributosGlobales ['campoSeguro'] = 'true';
+		var_dump ( $_REQUEST );
 		// -------------------------------------------------------------------------------------------------
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$conexion = "sicapital";
-		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntrada', $arreglo );
 		
-		if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
-			$fechaInicio = $_REQUEST ['fecha_inicio'];
-		} else {
-			$fechaInicio = '';
-		}
-		
-		if (isset ( $_REQUEST ['fecha_final'] ) && $_REQUEST ['fecha_final'] != '') {
-			$fechaFinal = $_REQUEST ['fecha_final'];
-		} else {
-			$fechaFinal = '';
-		}
-		
-		if (isset ( $_REQUEST ['numero_entrada'] ) && $_REQUEST ['numero_entrada'] != '') {
-			$numeroEntrada = $_REQUEST ['numero_entrada'];
-		} else {
-			$numeroEntrada = '';
-		}
-		
-		if (isset ( $_REQUEST ['clase'] ) && $_REQUEST ['clase'] != '') {
-			$clase = $_REQUEST ['clase'];
-		} else {
-			$clase = '';
-		}
-		
-		if (isset ( $_REQUEST ['id_proveedor'] ) && $_REQUEST ['id_proveedor'] != '') {
-			$proveedor = $_REQUEST ['id_proveedor'];
-		} else {
-			$proveedor = '';
-		}
-		
-		$arreglo = array (
-				$numeroEntrada,
-				$fechaInicio,
-				$fechaFinal,
-				$clase,
-				$proveedor 
-		);
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntrada', $arreglo ); 
-		
-		$entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		// $entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -116,29 +79,156 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 		
-		$variable = "pagina=" . $miPaginaActual;
-		$variable .= "&usuario=".$_REQUEST['usuario'];
-		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+		if (isset ( $_REQUEST ['mensaje'] )) {
+			switch ($_REQUEST ['mensaje']) {
+				case 'registroPresupuestal' :
+					$atributos ['mensaje'] = "<center>SE RELACIONO CERTIFICADO DE REGISTRO PRESUPUESTAL</center>";
+					$atributos ["estilo"] = 'success';
+					
+					break;
+				
+				case 'noinsertoRegistro' :
+					$atributos ['mensaje'] = "<center>ERROR AL RELACIONAR CERTIFICADO DE REGISTRO PRESUPUESTAL<BR>Verifique los Datos</center>";
+					$atributos ["estilo"] = 'error';
+					break;
+				
+				case 'ErrorValorAsignar' :
+					$atributos ['mensaje'] = "<center>EL VALOR TOTAL SOLICITADO ES MAYOR AL VALOR DE LA ORDEN<br>Verifique los Datos</center>";
+					$atributos ["estilo"] = 'error';
+					break;
+				
+				case 'NoRelacionRegistro' :
+					$atributos ['mensaje'] = "<center>SE ELIMINO RELACIÓN CON CERTIFICADO DE REGISTRO PRESUPUESTAL</center>";
+					$atributos ["estilo"] = 'success';
+					break;
+				
+				case 'modifico' :
+					$atributos ['mensaje'] = "<center>SE MODIFICO CON EXITO LA DISPONIBILIDAD PRESUPUESTAL</center>";
+					$atributos ["estilo"] = 'success';
+					break;
+				
+				case 'ModificoDisponibilidadCompleta' :
+					$atributos ['mensaje'] = "<center>SE MODIFICO LA DISPONIBILIDAD PRESUPUESTAL <BR> Y SE REGISTRO EL TOTAL DEL VALOR DE LA ORDEN<BR>CON LAS DISPONIBILIDADES PRESUPUESTALES</center>";
+					$atributos ["estilo"] = 'success';
+					break;
+				
+				case 'NoModifico' :
+					$atributos ['mensaje'] = "<center>ERROR AL MODIFICAR DISPONIBILIDAD PRESUPUESTAL<BR>Verifique los Datos</center>";
+					$atributos ["estilo"] = 'error';
+					break;
+				
+				case 'noExtension' :
+					$atributos ['mensaje'] = "<center>ERROR EN LA EXTENSION DEL ACRHIVO A CARGAR<br>Verifique los Datos que se xls o xlsx.</center>";
+					$atributos ["estilo"] = 'error';
+					break;
+			}
+			
+			// -------------Control texto-----------------------
+			$esteCampo = 'divMensaje';
+			$atributos ['id'] = $esteCampo;
+			$atributos ["tamanno"] = '';
+			$atributos ["etiqueta"] = '';
+			$atributos ["columnas"] = ''; // El control ocupa 47% del tamaño del formulario
+			echo $this->miFormulario->campoMensaje ( $atributos );
+			unset ( $atributos );
+		}
 		
-		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-		$esteCampo = 'botonRegresar';
-		$atributos ['id'] = $esteCampo;
-		$atributos ['enlace'] = $variable;
-		$atributos ['tabIndex'] = 1;
-		$atributos ['estilo'] = 'textoSubtitulo';
-		$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['ancho'] = '10%';
-		$atributos ['alto'] = '10%';
-		$atributos ['redirLugar'] = true;
-		echo $this->miFormulario->enlace ( $atributos );
+		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=" . $_REQUEST ['usuario'];
+		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Contratistas";
+		$atributos ["leyenda"] = "Gestión Contratistas";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
+		echo "<button id=\"mostrar\">Registrar Contratistas</button>";
+		
+		// ------------------Division para los botones-------------------------
+		$atributos ["id"] = "VentanaA";
+		$atributos ["estilo"] = " ";
+		$atributos ["estiloEnLinea"] = "display:none";
+		echo $this->miFormulario->division ( "inicio", $atributos );
+		{
+			
+			$esteCampo = "AgrupacionInformacion";
+			$atributos ['id'] = $esteCampo;
+			$atributos ['leyenda'] = "Cargue Masivo de Contratistas";
+			echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+			{
+				
+				$mensaje = "- El Archivo Tiene que Ser Tipo Excel.
+								<br>- Solo Se Cargaran de forma Correcta de Acuerdo al Plantilla Preedeterminada.
+								<br>- Para Verificar El Cargue Masivo Consulte los Constratistas.
+								<br>- Enlace de Archivo Plantilla : <A HREF=" . $host . "> Archivo Plantilla </A>";
+				
+				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+				$esteCampo = 'mensajeRegistro';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['tipo'] = 'warning';
+				$atributos ['estilo'] = 'textoCentrar';
+				$atributos ['mensaje'] = $mensaje;
+				
+				$tab ++;
+				
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
+				unset ( $atributos );
+				
+				$esteCampo = "documentos_elementos";
+				$atributos ["id"] = $esteCampo; // No cambiar este nombre
+				$atributos ["nombre"] = $esteCampo;
+				$atributos ["tipo"] = "file";
+				$atributos ["obligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["tabIndex"] = $tab ++;
+				$atributos ["columnas"] = 2;
+				$atributos ["estilo"] = "textoIzquierda";
+				$atributos ["anchoEtiqueta"] = 190;
+				$atributos ["tamanno"] = 500000;
+				$atributos ["validar"] = "required";
+				$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
+				// $atributos ["valor"] = $valorCodificado;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroTexto ( $atributos );
+				unset ( $atributos );
+				
+				echo "<br>";
+				// ------------------Division para los botones-------------------------
+				$atributos ["id"] = "botones";
+				$atributos ["estilo"] = "marcoBotones";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				
+				// -----------------CONTROL: Botón ----------------------------------------------------------------
+				$esteCampo = 'botonAceptar';
+				$atributos ["id"] = $esteCampo;
+				$atributos ["tabIndex"] = $tab;
+				$atributos ["tipo"] = 'boton';
+				// submit: no se coloca si se desea un tipo button genérico
+				$atributos ['submit'] = 'true';
+				$atributos ["estiloMarco"] = '';
+				$atributos ["estiloBoton"] = 'jqueryui';
+				// verificar: true para verificar el formulario antes de pasarlo al servidor.
+				$atributos ["verificar"] = '';
+				$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+				$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+				$tab ++;
+				
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoBoton ( $atributos );
+				
+				echo $this->miFormulario->division ( "fin" );
+				
+				// -----------------FIN CONTROL: Botón -----------------------------------------------------------
+			}
+			echo $this->miFormulario->agrupacion ( 'fin' );
+		}
+		echo $this->miFormulario->division ( "fin" );
 		// ---------------------------------------------------------
 		
 		// ------------------Fin Division para los botones-------------------------
@@ -150,9 +240,9 @@ class registrarForm {
 		
 		// var_dump($entrada);exit;
 		
-// 		if ($entrada) {
-			
-			echo "<table id='tablaTitulos'>
+		// if ($entrada) {
+		
+		echo "<table id='tablaTitulos'>
 					<thead>
 		                <tr>
 		                   <th>Vigencia</th>
@@ -165,59 +255,58 @@ class registrarForm {
 		                </tr>
 		            </thead>
             	</table>";
-			
-			
-			// // ------------------Division para los botones-------------------------
-			// $atributos ["id"] = "botones";
-			// $atributos ["estilo"] = "marcoBotones";
-			// echo $this->miFormulario->division ( "inicio", $atributos );
-			
-			// // -----------------CONTROL: Botón ----------------------------------------------------------------
-			// $esteCampo = 'botonReporte';
-			// $atributos ["id"] = $esteCampo;
-			// $atributos ["tabIndex"] = $tab;
-			// $atributos ["tipo"] = 'boton';
-			// // submit: no se coloca si se desea un tipo button genérico
-			// $atributos ['submit'] = true;
-			// $atributos ["estiloMarco"] = '';
-			// $atributos ["estiloBoton"] = 'jqueryui';
-			// // verificar: true para verificar el formulario antes de pasarlo al servidor.
-			// $atributos ["verificar"] = '';
-			// $atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
-			// $atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
-			// $atributos ['nombreFormulario'] = $esteBloque ['nombre'];
-			// $tab ++;
-			
-			// // Aplica atributos globales al control
-			// $atributos = array_merge ( $atributos, $atributosGlobales );
-			// echo $this->miFormulario->campoBoton ( $atributos );
-			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
-			
-			// ---------------------------------------------------------
-			
-			// ------------------Fin Division para los botones-------------------------
-			// echo $this->miFormulario->division ( "fin" );
-			
-			// Fin de Conjunto de Controles
-			// echo $this->miFormulario->marcoAgrupacion("fin");
-// 		} else {
-			
-// 			$mensaje = "No Se Encontraron<br>Registros de Entradas";
-			
-// 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-// 			$esteCampo = 'mensajeRegistro';
-// 			$atributos ['id'] = $esteCampo;
-// 			$atributos ['tipo'] = 'error';
-// 			$atributos ['estilo'] = 'textoCentrar';
-// 			$atributos ['mensaje'] = $mensaje;
-			
-// 			$tab ++;
-			
-// 			// Aplica atributos globales al control
-// 			$atributos = array_merge ( $atributos, $atributosGlobales );
-// 			echo $this->miFormulario->cuadroMensaje ( $atributos );
-// 			// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
-// 		}
+		
+		// // ------------------Division para los botones-------------------------
+		// $atributos ["id"] = "botones";
+		// $atributos ["estilo"] = "marcoBotones";
+		// echo $this->miFormulario->division ( "inicio", $atributos );
+		
+		// // -----------------CONTROL: Botón ----------------------------------------------------------------
+		// $esteCampo = 'botonReporte';
+		// $atributos ["id"] = $esteCampo;
+		// $atributos ["tabIndex"] = $tab;
+		// $atributos ["tipo"] = 'boton';
+		// // submit: no se coloca si se desea un tipo button genérico
+		// $atributos ['submit'] = true;
+		// $atributos ["estiloMarco"] = '';
+		// $atributos ["estiloBoton"] = 'jqueryui';
+		// // verificar: true para verificar el formulario antes de pasarlo al servidor.
+		// $atributos ["verificar"] = '';
+		// $atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+		// $atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
+		// $atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+		// $tab ++;
+		
+		// // Aplica atributos globales al control
+		// $atributos = array_merge ( $atributos, $atributosGlobales );
+		// echo $this->miFormulario->campoBoton ( $atributos );
+		// -----------------FIN CONTROL: Botón -----------------------------------------------------------
+		
+		// ---------------------------------------------------------
+		
+		// ------------------Fin Division para los botones-------------------------
+		// echo $this->miFormulario->division ( "fin" );
+		
+		// Fin de Conjunto de Controles
+		// echo $this->miFormulario->marcoAgrupacion("fin");
+		// } else {
+		
+		// $mensaje = "No Se Encontraron<br>Registros de Entradas";
+		
+		// // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+		// $esteCampo = 'mensajeRegistro';
+		// $atributos ['id'] = $esteCampo;
+		// $atributos ['tipo'] = 'error';
+		// $atributos ['estilo'] = 'textoCentrar';
+		// $atributos ['mensaje'] = $mensaje;
+		
+		// $tab ++;
+		
+		// // Aplica atributos globales al control
+		// $atributos = array_merge ( $atributos, $atributosGlobales );
+		// echo $this->miFormulario->cuadroMensaje ( $atributos );
+		// // --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
+		// }
 		
 		echo $this->miFormulario->agrupacion ( 'fin' );
 		
@@ -244,8 +333,8 @@ class registrarForm {
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-		$valorCodificado .= "&opcion=regresar";
-		$valorCodificado .= "&redireccionar=regresar";
+		$valorCodificado .= "&opcion=registrar";
+		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 		
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.

@@ -43,12 +43,6 @@ class Registrador {
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		
-		
-		var_dump($_REQUEST);EXIT;
-		
-		
-		
-		
 		$fechaActual = date ( 'Y-m-d' );
 		
 		$_REQUEST ['bodega'] = 0;
@@ -58,20 +52,8 @@ class Registrador {
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/inventarios/gestionElementos/";
 		$rutaBloque .= $esteBloque ['nombre'];
 		
-		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/gestionEntradas/" . $esteBloque ['nombre'];
-		
-		$_REQUEST ['valor'] = round ( $_REQUEST ['valor'], 2 );
-		$_REQUEST ['subtotal_sin_iva'] = round ( $_REQUEST ['subtotal_sin_iva'], 2 );
-		$_REQUEST ['total_iva'] = round ( $_REQUEST ['total_iva'], 2 );
-		$_REQUEST ['total_iva_con'] = round ( $_REQUEST ['total_iva_con'], 2 );
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'idElementoMax' );
-		
-		$elemento_id_max = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		$elemento_id_max = $elemento_id_max [0] [0] + 1;
-		
-		$ingreso = 0;
+		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/asignarInventarioC/" . $esteBloque ['nombre'];
+		 
 		
 		$ruta_eliminar_xlsx = $rutaBloque . "/archivo/*.xlsx";
 		
@@ -92,6 +74,10 @@ class Registrador {
 		}
 		
 		$archivo = $archivo [0];
+		
+		var_dump($_REQUEST);
+		var_dump($archivo); 	
+		
 		
 		$trozos = explode ( ".", $archivo ['name'] );
 		$extension = end ( $trozos );

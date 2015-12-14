@@ -3,7 +3,7 @@
 ?>
 
 // Asociar el widget de validación al formulario
-              $("#registrarElemento").validationEngine({
+              $("#gestionContratistas").validationEngine({
             promptPosition : "centerRight", 
             scroll: false,
             autoHidePrompt: true,
@@ -12,8 +12,8 @@
 	
         
         $(function() {
-            $("#registrarElemento").submit(function() {
-                $resultado=$("#registrarElemento").validationEngine("validate");
+            $("#gestionContratistas").submit(function() {
+                $resultado=$("#gestionContratistas").validationEngine("validate");
                    
                 if ($resultado) {
                 
@@ -35,6 +35,25 @@ $("#tabs").tabs();
 }); 
 
 
+
+   $("#mostrar").click(function(event) {
+
+             event.preventDefault();
+
+             $("#VentanaA").slideToggle();
+
+         });
+
+         $("#VentanaA a").click(function(event) {
+
+             event.preventDefault();
+
+             $("#VentanaA").slideUp();
+
+         });
+
+
+
 $(function() {
 $( "input[type=submit], button" )
 .button()
@@ -43,7 +62,12 @@ event.preventDefault();
 });
 });
 
-              
+
+    setTimeout(function() {
+    		$('#divMensaje').hide( "drop", { direction: "up" }, "slow" );
+			}, 3000); // <-- time in milliseconds
+        
+
               
 $("#<?php echo $this->campoSeguro('clase')?>").select2();
 $("#<?php echo $this->campoSeguro('tipo_poliza')?>").select2();

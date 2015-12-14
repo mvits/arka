@@ -1,6 +1,6 @@
 <?php
 
-namespace inventarios\gestionElementos\registrarElemento\funcion;
+namespace inventarios\asignarInventarioC\gestionContratista\funcion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("index.php");
@@ -34,8 +34,8 @@ class redireccion {
 			case "noExtension" :
 				
 				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=noExtension";
+				$variable .= "&usuario=".$_REQUEST['usuario'];
 				break;
 			case "datosVacios" :
 				
