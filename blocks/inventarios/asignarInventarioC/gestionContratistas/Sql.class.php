@@ -376,36 +376,6 @@ class Sql extends \Sql {
 				
 				break;
 			
-			case "ingresar_elemento_masivo" :
-				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= " elemento(";
-				$cadenaSql .= "fecha_registro,nivel,tipo_bien, descripcion, cantidad, ";
-				$cadenaSql .= "unidad, valor, ajuste, bodega, subtotal_sin_iva, total_iva, ";
-				$cadenaSql .= "total_iva_con,tipo_poliza, fecha_inicio_pol, fecha_final_pol,marca,serie,id_entrada,cantidad_por_asignar) ";
-				$cadenaSql .= " VALUES (";
-				$cadenaSql .= "'" . $variable [0] . "',";
-				$cadenaSql .= "'" . $variable [1] . "',";
-				$cadenaSql .= "'" . $variable [2] . "',";
-				$cadenaSql .= "'" . $variable [3] . "',";
-				$cadenaSql .= "'" . $variable [4] . "',";
-				$cadenaSql .= "'" . $variable [5] . "',";
-				$cadenaSql .= "'" . $variable [6] . "',";
-				$cadenaSql .= "'" . $variable [7] . "',";
-				$cadenaSql .= "'" . $variable [8] . "',";
-				$cadenaSql .= "'" . $variable [9] . "',";
-				$cadenaSql .= "'" . $variable [10] . "',";
-				$cadenaSql .= "'" . $variable [11] . "',";
-				$cadenaSql .= "'" . $variable [12] . "',";
-				$cadenaSql .= "'" . $variable [13] . "',";
-				$cadenaSql .= "'" . $variable [14] . "',";
-				$cadenaSql .= "'" . $variable [15] . "',";
-				$cadenaSql .= "'" . $variable [16] . "',";
-				$cadenaSql .= "'" . $variable [17] . "',";
-				$cadenaSql .= "'" . $variable [4] . "') ";
-				$cadenaSql .= "RETURNING  id_elemento; ";
-				
-				break;
-			
 			case "buscar_entradas" :
 				$cadenaSql = " SELECT DISTINCT id_entrada valor, consecutivo||' - ('||entrada.vigencia||')' descripcion  ";
 				$cadenaSql .= " FROM entrada  ";
@@ -466,17 +436,38 @@ class Sql extends \Sql {
 				
 				break;
 			
-				
-// 				SELECT "CON_IDENTIFICADOR", "CON_IDENTIFICACION", "CON_NOMBRE", "CON_NUMERO_CONTRATO",
-// 				"CON_VIGENCIA_FISCAL", "CON_FECHA_INICIO", "CON_FECHA_FINAL"
-// 						FROM arka_parametros.arka_contratistas;
-				
-				
-				
+			// SELECT "CON_IDENTIFICADOR", "CON_IDENTIFICACION", "CON_NOMBRE", "CON_NUMERO_CONTRATO",
+			// "CON_VIGENCIA_FISCAL", "CON_FECHA_INICIO", "CON_FECHA_FINAL"
+			// FROM arka_parametros.arka_contratistas;
+			
 			case "Consultar_Contratistas" :
 				$cadenaSql = " SELECT *  ";
 				$cadenaSql .= " FROM arka_parametros.arka_contratistas  ";
 				$cadenaSql .= "WHERE \"CON_VIGENCIA_FISCAL\"= '" . $variable . "'; ";
+				
+				break;
+			
+			case "registrarContratista" :
+				$cadenaSql = " INSERT INTO ";
+				$cadenaSql .= " arka_parametros.arka_contratistas(";
+				$cadenaSql .= ' "CON_IDENTIFICACION", "CON_NOMBRE", "CON_NUMERO_CONTRATO",
+						"CON_VIGENCIA_FISCAL", "CON_FECHA_INICIO", "CON_FECHA_FINAL",fecha_registro,estado) ';
+				$cadenaSql .= " VALUES (";
+				$cadenaSql .= "'" . $variable ['identificacion'] . "',";
+				$cadenaSql .= "'" . $variable ['nombres'] . "',";
+				$cadenaSql .= "'" . $variable ['numero'] . "',";
+				$cadenaSql .= "'" . $variable ['vigencia'] . "',";
+				$cadenaSql .= "'" . $variable ['fecha_inicial'] . "',";
+				$cadenaSql .= "'" . $variable ['fecha_final'] . "',";
+				$cadenaSql .= "'" . date ( 'Y-m-d' ) . "',";
+				$cadenaSql .= " TRUE )";
+				
+				break;
+			
+			case "consultarContrato" :
+				$cadenaSql = " SELECT *  ";
+				$cadenaSql .= " FROM arka_parametros.arka_contratistas  ";
+				$cadenaSql .= "WHERE \"CON_IDENTIFICADOR\"= '" . $variable . "'; ";
 				
 				break;
 		}

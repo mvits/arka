@@ -15,21 +15,12 @@ class redireccion {
 			case "inserto" :
 				
 				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=cargarElemento";
 				$variable .= "&mensaje=registro";
-				$variable .= "&numero_orden=" . $valor [0];
-				$variable .= "&fecha_orden=" . $valor [1];
-				$variable .= "&numero_entrada=" . $valor [2];
-				$variable .= "&datosGenerales=" . $valor1;
+				$variable .= "&usuario=".$_REQUEST['usuario'];
+				$variable .= "&log_error=".$valor; 
 				
 				break;
-			
-			case "inserto_M" :
-				
-				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=mensaje";
-				$variable .= "&mensaje=confirmaMasivo";
-				break;
+		
 			
 			case "noExtension" :
 				
@@ -40,46 +31,17 @@ class redireccion {
 			case "datosVacios" :
 				
 				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=datosVacios";
+				$variable .= "&usuario=".$_REQUEST['usuario'];
 				break;
 			
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=error";
+				$variable .= "&usuario=".$_REQUEST['usuario'];
 				
 				break;
 			
-			case "noCargarElemento" :
-				
-				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=mensaje";
-				$variable .= "&mensaje=noElemento";
-				
-				break;
-			
-			case "notextos" :
-				$variable = "pagina=" . $miPaginaActual;
-				$variable .= "&opcion=mensaje";
-				$variable .= "&mensaje=otros";
-				$variable .= "&errores=notextos";
-				
-				break;
-			
-			case "Salir" :
-				
-				$variable = "pagina=indexAlmacen";
-				
-				break;
-			
-			case "SalidaElemento" :
-				
-				$variable = "pagina=registrarSalidas";
-				$variable .= "&opcion=Salida";
-				$variable .= "&numero_entrada=" . $valor;
-				$variable .= "&datosGenerales=" . $valor1;
-				break;
 		}
 		
 		foreach ( $_REQUEST as $clave => $valor ) {
