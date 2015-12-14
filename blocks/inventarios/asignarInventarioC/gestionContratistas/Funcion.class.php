@@ -2,7 +2,6 @@
 
 namespace inventarios\asignarInventarioC\gestionContratista;
 
-
 use inventarios\asignarInventarioC\gestionContratista\funcion\redireccion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
@@ -32,8 +31,6 @@ class Funcion {
 	var 
 
 	$crypto;
-
-
 	function funcionEjemplo() {
 		include_once ($this->ruta . "/funcion/funcionEjemplo.php");
 	}
@@ -42,6 +39,9 @@ class Funcion {
 	}
 	function regitrar() {
 		include_once ($this->ruta . "funcion/registrar.php");
+	}
+	function modificar() {
+		include_once ($this->ruta . "funcion/modificar.php");
 	}
 	function action() {
 		
@@ -64,23 +64,38 @@ class Funcion {
 			switch ($_REQUEST ['opcion']) {
 				
 				case "registrar" :
-					$this->regitrar ();
+					
+					if (isset ( $_REQUEST ['botonConsultar'] ) == true && $_REQUEST ['botonConsultar'] == 'true') {
+						
+						redireccion::redireccionar ( 'Consulta' );
+						exit ();
+						
+					} elseif ($_REQUEST ['botonAceptar'] == 'true') {
+						
+						$this->regitrar ();
+					}
+					
+					
+					
+					break;
+				
+				case "modificar" :
+					$this->modificar ();
 					break;
 				
 				case "redireccionar" :
-
-					if (isset ( $_REQUEST ["botonContinuar"] ) && $_REQUEST ['botonContinuar'] == 'true') {
 					
+					if (isset ( $_REQUEST ["botonContinuar"] ) && $_REQUEST ['botonContinuar'] == 'true') {
+						
 						redireccion::redireccionar ( 'Salir' );
-						exit;
+						exit ();
 					}
 					
 					if (isset ( $_REQUEST ["botonSalida"] ) && $_REQUEST ['botonSalida'] == 'true') {
 						
-						redireccion::redireccionar ( 'SalidaElemento', $_REQUEST ['numero_entrada'],$_REQUEST ['datosGenerales'] );
-						exit;
+						redireccion::redireccionar ( 'SalidaElemento', $_REQUEST ['numero_entrada'], $_REQUEST ['datosGenerales'] );
+						exit ();
 					}
-					
 					
 					break;
 			}

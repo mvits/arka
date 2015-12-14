@@ -259,7 +259,24 @@ $this->idioma ["desicion"] = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 $this->idioma ["tabContratistaConsultar"] = "Consultar Contratistas";
 $this->idioma ["tabContratistaCrear"] = "Registrar Contratistas";
 
-$this->idioma ["botonAceptar"] = "Guardar Entrada";
+
+
+
+$this->idioma ["numero"] = "Número de Contrato :";
+$this->idioma ["numeroTitulo"] = "Ingrese Número de Contrato";
+
+
+$this->idioma ["identificacion"] = "Identificación Contratista:";
+$this->idioma ["identificacionTitulo"] = "Ingrese Identificación Contratista";
+
+$this->idioma ["nombre"] = "Nombre Contratista:";
+$this->idioma ["nombreTitulo"] = "Ingrese Nombre Contratista";
+
+
+
+
+
+$this->idioma ["botonModificar"] = "Modificar";
 $this->idioma ["botonCancelar"] = "Cancelar";
 $this->idioma ["botonContinuar"] = "Salir";
 $this->idioma ["botonSalida"] = "Generar Salida";

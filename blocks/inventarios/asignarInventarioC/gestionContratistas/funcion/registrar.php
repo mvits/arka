@@ -73,7 +73,6 @@ class Registrador {
 		
 		$archivo = $archivo [0];
 		
-		
 		$trozos = explode ( ".", $archivo ['name'] );
 		$extension = end ( $trozos );
 		
@@ -214,37 +213,42 @@ class Registrador {
 					}
 				}
 				
-				foreach ( $datos as $valor ) {
-					$registrar = true;
-					$fechaInicio = date ( 'Y-m-d', mktime ( 0, 0, 0, $valor ['Fecha_Inicio__Mes'], $valor ['Fecha_Inicio__Dia'], $valor ['Fecha_Inicio__Anio'] ) );
-					
-					$fechaFinal = date ( 'Y-m-d', mktime ( 0, 0, 0, $valor ['Fecha_Final__Mes'], $valor ['Fecha_Final__Dia'], $valor ['Fecha_Final__Anio'] ) );
-					
-					$arreglo = array (
-							"identificacion" => $valor ['identificacion'],
-							"nombres" => $valor ['nombres'] . " " . $valor ['apellidos'],
-							"vigencia" => $valor ['vigencia'],
-							"numero" => $valor ['numero'],
-							"fecha_inicial" => $fechaInicio,
-							"fecha_final" => $fechaFinal 
-					);
-					
-					if ($fechaFinal <= $fechaInicio) {
+				if (isset($datos)==true&&$datos != false) {
+					foreach ( $datos as $valor ) {
+						$registrar = true;
+						$fechaInicio = date ( 'Y-m-d', mktime ( 0, 0, 0, $valor ['Fecha_Inicio__Mes'], $valor ['Fecha_Inicio__Dia'], $valor ['Fecha_Inicio__Anio'] ) );
 						
-						$registrar = false;
-						$log_error [] = $arreglo;
-					}
-					
-					$cadenaSql = $this->miSql->getCadenaSql ( 'registrarContratista', $arreglo );
-					
-					if ($registrar = true) {
-						$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+						$fechaFinal = date ( 'Y-m-d', mktime ( 0, 0, 0, $valor ['Fecha_Final__Mes'], $valor ['Fecha_Final__Dia'], $valor ['Fecha_Final__Anio'] ) );
 						
-						if ($resultado == false) {
+						$arreglo = array (
+								"identificacion" => $valor ['identificacion'],
+								"nombres" => $valor ['nombres'] . " " . $valor ['apellidos'],
+								"vigencia" => $valor ['vigencia'],
+								"numero" => $valor ['numero'],
+								"fecha_inicial" => $fechaInicio,
+								"fecha_final" => $fechaFinal 
+						);
+						
+						if ($fechaFinal <= $fechaInicio) {
 							
+							$registrar = false;
 							$log_error [] = $arreglo;
 						}
+						
+						$cadenaSql = $this->miSql->getCadenaSql ( 'registrarContratista', $arreglo );
+						
+						if ($registrar = true) {
+							$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							
+							if ($resultado == false) {
+								
+								$log_error [] = $arreglo;
+							}
+						}
 					}
+				} else {
+					
+					$datos = false;
 				}
 				
 				if (isset ( $log_error ) == true) {
@@ -255,7 +259,7 @@ class Registrador {
 					$log_error = false;
 				}
 				
-				if ($datos) {
+				if ($datos != false) {
 					$this->miConfigurador->setVariableConfiguracion ( "cache", true );
 					redireccion::redireccionar ( 'inserto', $log_error );
 					exit ();
@@ -268,6 +272,7 @@ class Registrador {
 		} else {
 			
 			redireccion::redireccionar ( 'noExtension' );
+			exit ();
 		}
 	}
 }

@@ -16,32 +16,52 @@ class redireccion {
 				
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&mensaje=registro";
-				$variable .= "&usuario=".$_REQUEST['usuario'];
-				$variable .= "&log_error=".$valor; 
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
+				$variable .= "&log_error=" . $valor;
 				
 				break;
-		
+			
+			case "Actualizo" :
+				
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&mensaje=actualizo";
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
+				
+				break;
 			
 			case "noExtension" :
 				
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&mensaje=noExtension";
-				$variable .= "&usuario=".$_REQUEST['usuario'];
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				break;
 			case "datosVacios" :
 				
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&mensaje=datosVacios";
-				$variable .= "&usuario=".$_REQUEST['usuario'];
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				break;
 			
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&mensaje=error";
-				$variable .= "&usuario=".$_REQUEST['usuario'];
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				
 				break;
 			
+			case "NoActualizo" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&mensaje=errorActualizacion";
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
+				
+				break;
+			
+			case "Consulta" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&vigencia=" . $_REQUEST ['vigencia'];
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
+				
+				break;
 		}
 		
 		foreach ( $_REQUEST as $clave => $valor ) {

@@ -470,6 +470,25 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE \"CON_IDENTIFICADOR\"= '" . $variable . "'; ";
 				
 				break;
+			
+			case "consultarvigencias" :
+				$cadenaSql = " SELECT DISTINCT  \"CON_VIGENCIA_FISCAL\" vigencia, \"CON_VIGENCIA_FISCAL\" descripcion  ";
+				$cadenaSql .= " FROM arka_parametros.arka_contratistas  ";
+				
+				break;
+			
+			case "modificarContrato" :
+				
+				$cadenaSql = "UPDATE arka_parametros.arka_contratistas ";
+				$cadenaSql .= "SET  \"CON_VIGENCIA_FISCAL\"='" . $variable ['vigencia'] . "', ";
+				$cadenaSql .= " \"CON_NUMERO_CONTRATO\" ='" . $variable ['numero'] . "', ";
+				$cadenaSql .= " \"CON_IDENTIFICACION\"='" . $variable ['identificacion'] . "', ";
+				$cadenaSql .= " \"CON_NOMBRE\"='" . $variable ['nombre'] . "', ";
+				$cadenaSql .= " \"CON_FECHA_INICIO\"='" . $variable ['fecha_inicio'] . "', ";
+				$cadenaSql .= " \"CON_FECHA_FINAL\"='" . $variable ['fecha_final'] . "'  ";
+				$cadenaSql .= " WHERE \"CON_IDENTIFICADOR\"='" . $variable ['identificador'] . "' ;";
+			
+				break;
 		}
 		return $cadenaSql;
 	}

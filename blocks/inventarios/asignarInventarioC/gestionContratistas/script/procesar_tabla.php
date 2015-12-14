@@ -16,10 +16,11 @@ $cadenaACodificar .= "&usuario=" . $_REQUEST ['usuario'];
 
 $cadenaACodificar .= "&tiempo=" . $_REQUEST ['tiempo'];
 
-if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+if (isset ( $_REQUEST ['vigencia'] )==true) {
 	
-	$_REQUEST ['funcionario'] = $_REQUEST ['usuario'];
-	$cadenaACodificar .= "&accesoCondor='true'";
+
+	$cadenaACodificar .= "&vigencia=" .$_REQUEST ['vigencia'] ;   
+	
 }
 
 

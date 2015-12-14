@@ -99,6 +99,12 @@ class registrarForm {
 					
 					break;
 				
+				case 'actualizo' :
+					$atributos ['mensaje'] = "<center>SE ACTUALIZO CONTRATO CON EXITO</center>";
+					$atributos ["estilo"] = 'success';
+					
+					break;
+				
 				case 'noinsertoRegistro' :
 					$atributos ['mensaje'] = "<center>ERROR AL REGISTRAR CONTRATISTAS<BR>Verifique los Datos</center>";
 					$atributos ["estilo"] = 'error';
@@ -115,14 +121,17 @@ class registrarForm {
 					break;
 			}
 			
-			// -------------Control texto-----------------------
-			$esteCampo = 'divMensaje';
-			$atributos ['id'] = $esteCampo;
-			$atributos ["tamanno"] = '';
-			$atributos ["etiqueta"] = '';
-			$atributos ["columnas"] = ''; // El control ocupa 47% del tamaño del formulario
-			echo $this->miFormulario->campoMensaje ( $atributos );
-			unset ( $atributos );
+			if ($resultado != false) {
+				
+				// -------------Control texto-----------------------
+				$esteCampo = 'divMensaje';
+				$atributos ['id'] = $esteCampo;
+				$atributos ["tamanno"] = '';
+				$atributos ["etiqueta"] = '';
+				$atributos ["columnas"] = ''; // El control ocupa 47% del tamaño del formulario
+				echo $this->miFormulario->campoMensaje ( $atributos );
+				unset ( $atributos );
+			}
 		}
 		
 		$variable = "pagina=" . $miPaginaActual;
@@ -137,8 +146,32 @@ class registrarForm {
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		{
 			
+			echo "<button id=\"mostrar\">Registrar Contratistas</button>";
+			
 			if ($resultado == false) {
-				unset ( $atributos );
+				
+				
+				$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center>";
+				switch ($_REQUEST ['mensaje']) {
+					
+					case 'noExtension' :
+						$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center><br>";
+						$atributos ['mensaje'] .= "<center>ERROR EN LA EXTENSION DEL ACRHIVO A CARGAR<br>Verifique los Datos que se xls o xlsx.</center>";
+						
+						break;
+					
+					case 'noinsertoRegistro' :
+						$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center><br>";
+						$atributos ['mensaje'].="<center>ERROR AL REGISTRAR CONTRATISTAS<BR>Verifique los Datos</center>";
+						
+						break;
+					
+					case 'error' :
+						$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center><br>";
+						$atributos ['mensaje'] .= "<center>ERROR EXISTEN CELDAS VACIAS EN EL ARCHIVO<BR>Todos los Campos son Obligatorios.Verifique los Datos</center>";
+						
+						break;
+				}
 				
 				// -------------Control texto-----------------------
 				$esteCampo = 'divMensajeNoDatos';
@@ -146,13 +179,10 @@ class registrarForm {
 				$atributos ["tamanno"] = '';
 				$atributos ["etiqueta"] = '';
 				$atributos ["columnas"] = ''; // El control ocupa 47% del tamaño del formulario
-				$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados</center>";
+				
 				$atributos ["estilo"] = 'warning';
 				echo $this->miFormulario->campoMensaje ( $atributos );
-				unset ( $atributos );
 			}
-			
-			echo "<button id=\"mostrar\">Registrar Contratistas</button>";
 			
 			// ------------------Division para los botones-------------------------
 			$atributos ["id"] = "VentanaA";
@@ -247,6 +277,77 @@ class registrarForm {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['leyenda'] = "Información Referente a Contratistas";
 				echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+				
+				// ------------------Division para los botones-------------------------
+				$atributos ["id"] = "botonesConsulta";
+				$atributos ["estilo"] = " ";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				
+				$esteCampo = "vigencia";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = false;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 100;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = '2015';
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['ajax_function'] = "";
+				$atributos ['ajax_control'] = $esteCampo;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "required";
+				$atributos ['limitar'] = 1;
+				$atributos ['anchoCaja'] = 27;
+				$atributos ['miEvento'] = '';
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarvigencias" );
+				$matrizItems = array (
+						array (
+								0,
+								'' 
+						) 
+				);
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				
+				$atributos ['matrizItems'] = $matrizItems;
+				// $atributos['miniRegistro']=;
+				$atributos ['baseDatos'] = "sicapital";
+				// $atributos ['baseDatos'] = "inventarios";
+				
+				// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
+				
+				// Aplica atributos globales al control
+				
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+				// -----------------CONTROL: Botón ----------------------------------------------------------------
+				$esteCampo = 'botonConsultar';
+				$atributos ["id"] = $esteCampo;
+				$atributos ["tabIndex"] = $tab;
+				$atributos ["tipo"] = 'boton';
+				// submit: no se coloca si se desea un tipo button genérico
+				$atributos ['submit'] = 'true';
+				$atributos ["estiloMarco"] = '';
+				$atributos ["estiloBoton"] = 'jqueryui';
+				// verificar: true para verificar el formulario antes de pasarlo al servidor.
+				$atributos ["verificar"] = '';
+				$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+				$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+				$tab ++;
+				
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoBoton ( $atributos );
+				
+				echo $this->miFormulario->division ( 'fin' );
 				
 				echo "<table id='tablaTitulos'>
 					<thead>
