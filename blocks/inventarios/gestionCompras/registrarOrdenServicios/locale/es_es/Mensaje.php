@@ -54,8 +54,8 @@ $this->idioma ["fecha_diponibilidadTitulo"] = "Ingrese Fecha Disponibilidad Pres
 $this->idioma ["vigencia_contratista"] = "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspVigencia Contratista: ";
 $this->idioma ["vigencia_contratistaTitulo"] = "Seleccione Vigencia Contratista";
 
-$this->idioma ["selec_proveedor"] = "Proveedor y/o Contratista:";
-$this->idioma ["selec_proveedorTitulo"] = "Seleccione Proveedor y/o Contratista";
+$this->idioma ["selec_proveedor"] = "Proveedor :";
+$this->idioma ["selec_proveedorTitulo"] = "Seleccione Proveedor";
 
 $this->idioma ["dependencia_solicitante"] = "Dependencia :";
 $this->idioma ["dependencia_solicitanteTitulo"] = "Seleccione Dependencia";
@@ -72,20 +72,33 @@ $this->idioma ["cargo_supervisorTitulo"] = "Ingrese Cargo del Supervisor";
 $this->idioma ["dependencia_supervisor"] = "Dependencia :";
 $this->idioma ["dependencia_supervisorTitulo"] = "Seleccione Dependencia";
 
-$this->idioma ["nombre_razon_contratista"] = "Nombre o Razón Social :";
-$this->idioma ["nnombre_razon_contratistaTitulo"] = "Ingrese Nombre o Razón Social";
+$this->idioma ["nombre_razon_proveedor"] = "Razón Social :";
+$this->idioma ["nombre_razon_proveedorTitulo"] = "Ingrese Razón Social";
 
-$this->idioma ["identifcacion_contratista"] = "Cedula o Nit :";
-$this->idioma ["identifcacion_contratistaTitulo"] = "Ingrese Cedula o Nit De Acuerdo con el Nombre o la Razón Social";
+$this->idioma ["identifcacion_proveedor"] = "Nit :";
+$this->idioma ["identifcacion_proveedorTitulo"] = "Ingrese Nit De Acuerdo con  la Razón Social";
 
-$this->idioma ["direccion_contratista"] = "Dirección :";
-$this->idioma ["direccion_contratistaTitulo"] = "Ingrese Dirección del Contratista";
+$this->idioma ["direccion_proveedor"] = "Dirección :";
+$this->idioma ["direccion_proveedorTitulo"] = "Ingrese Dirección del Proveedor";
 
-$this->idioma ["telefono_contratista"] = "Teléfono Fijo :";
-$this->idioma ["telefono_contratistaTitulo"] = "Ingrese Teléfono Fijo del Contratista";
+$this->idioma ["telefono_proveedor"] = "Teléfono Fijo :";
+$this->idioma ["telefono_proveedorTitulo"] = "Ingrese Teléfono Fijo del Proveedor";
+
+$this->idioma ["nombre_contratista"] = "Nombre Contratista :";
+$this->idioma ["nombre_contratistaTitulo"] = "Ingrese Nombre del Contratista";
+
+
+$this->idioma ["identifcacion_contratista"] = "Identificación Contratista:";
+$this->idioma ["identifcacion_contratistaTitulo"] = "Ingrese Identificación del Contratista";
+
 
 $this->idioma ["cargo_contratista"] = "Cargo :";
 $this->idioma ["cargo_contratistaTitulo"] = "Ingrese Cargo del Contratista";
+
+
+
+
+
 
 $this->idioma ["objeto_contrato"] = "";
 $this->idioma ["objeto_contratoTitulo"] = "Modifique o Ingrese Objeto General del Contrato";
@@ -99,7 +112,7 @@ $this->idioma ["fecha_inicio_pagoTitulo"] = "Seleccione Fecha de Inicio";
 $this->idioma ["fecha_final_pago"] = "Fecha de Final :";
 $this->idioma ["fecha_final_pagoTitulo"] = "Seleccione Fecha de Final";
 
-$this->idioma ["forma_pago"] = "Forma de Pago";
+$this->idioma ["forma_pago"] = "Información Referente al Pago";
 
 $this->idioma ["total_preliminar"] = "Total Preliminar ($):";
 $this->idioma ["total_preliminarTitulo"] = "Ingrese Total Preliminar";

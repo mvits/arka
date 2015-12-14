@@ -24,6 +24,8 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+		var_dump ( $_REQUEST );
+		 
 		$fechaActual = date ( 'Y-m-d' );
 		
 		$conexion = "inventarios";
@@ -45,50 +47,36 @@ class RegistradorOrden {
 				$_REQUEST ['nombre_supervisor'],
 				$_REQUEST ['cargo_supervisor'],
 				$_REQUEST ['dependencia_supervisor'],
-				$_REQUEST ['sede_super'],
-				
-				)
+				$_REQUEST ['sede_super'] 
+		)
 		;
-		
 		
 		// Registro Supervisor
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarSupervisor', $datosSupervisor );
-		$id_supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$datosSupervisor,'insertarSupervisor');
+		$id_supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosSupervisor, 'insertarSupervisor' );
 		
-		$datosContratistaC = array (
-				$_REQUEST ['nombre_razon_contratista'],
-				$_REQUEST ['identifcacion_contratista'],
-				$_REQUEST ['direccion_contratista'],
-				$_REQUEST ['telefono_contratista'],
-				$_REQUEST ['cargo_contratista'] 
+		$datosProveedor = array (
+				$_REQUEST ['nombre_razon_proveedor'],
+				$_REQUEST ['identifcacion_proveedor'],
+				$_REQUEST ['direccion_proveedor'],
+				$_REQUEST ['telefono_proveedor'] 
 		);
+		
+		// Registro Proveedor
+		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarProveedor', $datosProveedor );
+		
+		$id_Proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosContratistaC, 'insertarContratista' );
+		
+		$datosContratista = array (
+				$_REQUEST ['nombre_contratista'],
+				$_REQUEST ['identifcacion_contratista'],
+				$_REQUEST ['cargo_contratista'],
+				);
 		
 		// Registro Contratista
-		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarContratista', $datosContratistaC );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarContratista', $datosContratista );
 		
-		$id_ContratistaC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$datosContratistaC,'insertarContratista');
-		
-		// Registro Orden
-		/*
-		$arreglo = array (
-				$fechaActual,
-				$_REQUEST ['vigencia_disponibilidad'],
-				$_REQUEST ['diponibilidad'],
-				$_REQUEST ['valor_disponibilidad'],
-				$_REQUEST ['fecha_diponibilidad'],
-				$_REQUEST ['valorLetras_disponibilidad'],
-				$_REQUEST ['vigencia_disponibilidad'],
-				$_REQUEST ['registro'],
-				$_REQUEST ['valor_registro'],
-				$_REQUEST ['fecha_registro'],
-				$_REQUEST ['valorL_registro'],
-				$_REQUEST ['unidad_ejecutora'] 
-		);
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarInformacionPresupuestal', $arreglo );
-		
-		$info_presupuestal = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo,'insertarInformacionPresupuestal');
-		*/ 
+		$id_Proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosContratistaC, 'insertarContratista' );
 		
 		switch ($_REQUEST ['tipo_orden']) {
 			case '1' :
@@ -114,7 +102,7 @@ class RegistradorOrden {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consecutivo_servicios', date ( 'Y' ) );
 				
-				$consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda");
+				$consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				$consecutivo_compra = 'NULL';
 				if (is_null ( $consecutivo [0] [0] )) {
 					
@@ -153,24 +141,25 @@ class RegistradorOrden {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarOrden', $datosOrden );
 		
-		$consecutivos_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$datosOrden,'insertarOrden');
+		$consecutivos_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosOrden, 'insertarOrden' );
 		
 		$consecutivo_orden = $consecutivos_orden [0];
 		
 		if ($consecutivo_orden) {
 			
-			
-			for($i=0;$i<=1;$i++){
+			for($i = 0; $i <= 1; $i ++) {
 				
-				if (! is_null ( $consecutivo_orden[$i] )) {
-					$consecutivo = $consecutivo_orden[$i];
+				if (! is_null ( $consecutivo_orden [$i] )) {
+					$consecutivo = $consecutivo_orden [$i];
 				}
-				
 			}
 			
 			$datos = "NÚMERO DE " . $nombre . " # " . $consecutivo . "<br> Y VIGENCIA " . date ( 'Y' );
-			$this->miConfigurador->setVariableConfiguracion("cache",true);
-			redireccion::redireccionar ( 'inserto', array($datos,$consecutivo_orden[2]) );
+			$this->miConfigurador->setVariableConfiguracion ( "cache", true );
+			redireccion::redireccionar ( 'inserto', array (
+					$datos,
+					$consecutivo_orden [2] 
+			) );
 			exit ();
 		} else {
 			

@@ -373,16 +373,31 @@ class Sql extends \Sql {
 				$cadenaSql .= "RETURNING  id_supervisor; ";
 				break;
 			
-			case "insertarContratista" :
-				$cadenaSql = " INSERT INTO contratista_servicios(";
-				$cadenaSql .= " nombre_razon_social, identificacion,direccion, telefono,cargo) ";
+			case "insertarProveedor" :
+				$cadenaSql = " INSERT INTO proveedor_adquisiones(";
+				$cadenaSql .= " razon_social, identificacion,direccion, telefono,fecha_registro) ";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= "'" . $variable [1] . "',";
 				$cadenaSql .= "'" . $variable [2] . "',";
 				$cadenaSql .= "'" . $variable [3] . "',";
-				$cadenaSql .= "'" . $variable [4] . "') ";
-				$cadenaSql .= "RETURNING  id_contratista; ";
+				$cadenaSql .= "'" . date ( 'Y-m-d' ) . "') ";
+				$cadenaSql .= "RETURNING  id_proveedor_adq; ";
+				
+				
+				break;
+			
+			case "insertarContratista" :
+				$cadenaSql = " INSERT INTO contratistas_adquisiones(";
+				$cadenaSql .= " nombres, identificacion,cargo,fecha_registro) ";
+				$cadenaSql .= " VALUES (";
+				$cadenaSql .= "'" . $variable [0] . "',";
+				$cadenaSql .= "'" . $variable [1] . "',";
+				$cadenaSql .= "'" . $variable [2] . "',";
+				$cadenaSql .= "'" . date ( 'Y-m-d' ) . "') ";
+				$cadenaSql .= "RETURNING  id_contratista_adq; ";
+				echo $cadenaSql;
+				exit ();
 				break;
 			
 			case "insertarEncargado" :
