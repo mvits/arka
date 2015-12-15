@@ -396,8 +396,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [2] . "',";
 				$cadenaSql .= "'" . date ( 'Y-m-d' ) . "') ";
 				$cadenaSql .= "RETURNING  id_contratista_adq; ";
-				echo $cadenaSql;
-				exit ();
+				
 				break;
 			
 			case "insertarEncargado" :
@@ -429,9 +428,9 @@ class Sql extends \Sql {
 				$cadenaSql = " INSERT INTO ";
 				$cadenaSql .= " orden(";
 				$cadenaSql .= "tipo_orden, vigencia, consecutivo_servicio, consecutivo_compras, 
-								            fecha_registro, dependencia_solicitante, sede, 
+								            fecha_registro, dependencia_solicitante, sede_solicitante, 
 								            rubro, objeto_contrato, poliza1, poliza2, poliza3, poliza4, duracion_pago, 
-								            fecha_inicio_pago, fecha_final_pago, forma_pago,id_contratista,id_supervisor, id_ordenador_encargado, tipo_ordenador)";
+								            fecha_inicio_pago, fecha_final_pago, forma_pago,id_contratista,id_supervisor, id_ordenador_encargado, tipo_ordenador,id_proveedor)";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable [0] . "',";
 				$cadenaSql .= "'" . $variable [1] . "',";
@@ -442,6 +441,14 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable [6] . "',";
 				$cadenaSql .= "'" . $variable [7] . "',";
 				$cadenaSql .= "'" . $variable [8] . "',";
+				
+				
+				if ($variable [8] != '') {
+					$cadenaSql .= "'" . $variable [8] . "',";
+				} else {
+					$cadenaSql .= "'0',";
+				}
+				
 				
 				if ($variable [9] != '') {
 					$cadenaSql .= "'" . $variable [9] . "',";
@@ -459,11 +466,8 @@ class Sql extends \Sql {
 				} else {
 					$cadenaSql .= "'0',";
 				}
-				if ($variable [12] != '') {
-					$cadenaSql .= "'" . $variable [12] . "',";
-				} else {
-					$cadenaSql .= "'0',";
-				}
+				
+				$cadenaSql .= "'" . $variable [12] . "',";
 				$cadenaSql .= "'" . $variable [13] . "',";
 				$cadenaSql .= "'" . $variable [14] . "',";
 				$cadenaSql .= "'" . $variable [15] . "',";
