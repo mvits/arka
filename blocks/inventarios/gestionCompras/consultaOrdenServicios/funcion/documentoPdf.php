@@ -321,6 +321,27 @@ class RegistradorOrden {
 		
 		// var_dump ( $rubro );
 		
+		
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarInformaciónDisponibilidad',  $_REQUEST ['id_orden']);
+		
+		
+		$infDisponibilidad = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$infDisponibilidad = $infDisponibilidad [0];
+		
+		
+		
+		
+		
+
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarInformaciónRegistro',  $infDisponibilidad['id_disponibilidad']);
+		
+		
+		$inRegistro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$inRegistro = $inRegistro [0];
+		
+		
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarSupervisor', $orden ['id_supervisor'] );
 		$supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$supervisor = $supervisor [0];

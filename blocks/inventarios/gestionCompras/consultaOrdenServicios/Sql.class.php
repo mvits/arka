@@ -961,6 +961,24 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM arka_parametros.arka_disponibilidadpresupuestal; ";
 				
 				break;
+			
+			case "consultarInformaciónDisponibilidad" :
+				
+				$cadenaSql = "SELECT od.*  ";
+				$cadenaSql .= " FROM disponibilidad_orden od  ";
+// 				$cadenaSql .= " LEFT JOIN  registro_presupuestal_orden_orden ro ON  ro.id_disponibilidad=od.id_disponibilidad ";
+				$cadenaSql .= " WHERE od.id_orden='" . $variable . "'";
+				
+				break;
+			
+			case "consultarInformaciónRegistro" :
+				
+				$cadenaSql = "SELECT ro.* ";
+				$cadenaSql .= " FROM registro_presupuestal_orden_orden ro  ";
+				
+				$cadenaSql .= " WHERE ro.id_disponibilidad='" . $variable . "'";
+				
+				break;
 		}
 		return $cadenaSql;
 	}

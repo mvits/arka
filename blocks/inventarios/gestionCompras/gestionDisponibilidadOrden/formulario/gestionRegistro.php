@@ -52,8 +52,8 @@ class registrarForm {
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'ConsultarRegistrosPresupuestales', $datos );
-		$registro_presupuestales_exitentes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		$registro_presupuestales_exitentes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		// // $cadenaSql = $this->miSql->getCadenaSql ( 'clase_entrada_descrip', $entrada [0] [2] );
 		// // $Clase = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -228,17 +228,17 @@ class registrarForm {
 									   <td><center> " . $valor ['REP_FECHA_REGISTRO'] . "</center></td>
 									   <td><center> " . $valor ['REP_UNIDAD_EJECUTORA'] . "</center></td>
 									   <td><center>$ " . number_format ( $valor ['REP_VALOR'], 2, ",", "." ) . "</center></td>";
-				$mostrarHtml.=(is_null($valor['id_registro_presupuestal_orden'])==true)?"<td><center>
-							            <a href='".$variableAsignar."'>
+					$mostrarHtml .= (is_null ( $valor ['id_registro_presupuestal_orden'] ) == true) ? "<td><center>
+							            <a href='" . $variableAsignar . "'>
 							            <img src='" . $rutaBloque . "/css/images/validar.png' width='12px'>
 							            </a>
-						            	</center> </td>":"<td> </td>";
-					$mostrarHtml .=(is_null($valor['id_registro_presupuestal_orden'])==false)?"<td><center>
+						            	</center> </td>" : "<td> </td>";
+					$mostrarHtml .= (is_null ( $valor ['id_registro_presupuestal_orden'] ) == false) ? "<td><center>
 							            <a href='" . $variableDesAsignar . "'>
 							            <img src='" . $rutaBloque . "/css/images/eliminar.png' width='12px'>
 							            </a>
-							            </center> </td>":"<td> </td>";
-					$mostrarHtml .="</tr>";
+							            </center> </td>" : "<td> </td>";
+					$mostrarHtml .= "</tr>";
 					echo $mostrarHtml;
 					unset ( $mostrarHtml );
 					unset ( $variable );
@@ -256,6 +256,20 @@ class registrarForm {
 				// ---------------- FIN SECCION: Controles del Formulario -------------------------------------------
 				// ----------------FINALIZAR EL FORMULARIO ----------------------------------------------------------
 				// Se debe declarar el mismo atributo de marco con que se inició el formulario.
+			} else {
+				
+				
+				
+				// -------------Control texto-----------------------
+				$esteCampo = 'divMensajeNoRegistros';
+				$atributos ['id'] = $esteCampo;
+				$atributos ["tamanno"] = '';
+				$atributos ["etiqueta"] = '';
+				$atributos ["columnas"] = ''; // El control ocupa 47% del tamaño del formulario
+				$atributos ['mensaje'] = "<center>NO EXISTEN REGISTROS PRESUPUESTALES ASOCIADOS A<BR> LA DISPONIBILIDAD PRESUPUESTAL </center>";
+				$atributos ["estilo"] = 'error';
+				echo $this->miFormulario->campoMensaje ( $atributos );
+				unset ( $atributos );
 			}
 			
 			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
