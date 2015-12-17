@@ -53,7 +53,7 @@ class registrarForm {
 		
 		$Orden = $Orden [0];
 		
-		var_dump($Orden);
+		
 		
 		$arreglo = array (
 				'tipo_orden' => $Orden ['tipo_orden'],
@@ -1282,7 +1282,8 @@ class registrarForm {
 			$valorCodificado .= "&opcion=modificarOrden";
 			$valorCodificado .= "&id_orden=" . $_REQUEST ['id_orden'];
 			$valorCodificado .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
-			$valorCodificado .= "&contratista=" . $Orden ['id_contratista'];
+			$valorCodificado .= "&contratista=" . $Orden ['id_contratista_adq'];
+			$valorCodificado .= "&proveedor=" . $Orden ['id_proveedor_adq'];
 			$valorCodificado .= "&supervisor=" . $Orden ['id_supervisor'];
 			$valorCodificado .= "&arreglo=" . $_REQUEST ['arreglo'];
 			$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
