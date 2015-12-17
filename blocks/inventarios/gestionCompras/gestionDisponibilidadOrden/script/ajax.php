@@ -121,8 +121,6 @@ $cadenaACodificarLetrasNumeros = $this->miConfigurador->fabricaConexiones->crypt
 // URL definitiva
 $urlFinalLetrasNumeros = $url . $cadenaACodificarLetrasNumeros;
 
-
-
 // Variables
 $cadenaACodificarRubro = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificarRubro .= "&procesarAjax=true";
@@ -138,8 +136,6 @@ $cadenaRubro = $this->miConfigurador->fabricaConexiones->crypto->codificar_url (
 
 // URL definitiva
 $urlFinalRubro = $url . $cadenaRubro;
-
-
 
 ?>
 <script type='text/javascript'>
@@ -188,7 +184,11 @@ function disponibilidades(elem, request, response){
 		  $.ajax({
 		    url: "<?php echo $urlFinalRubro;  ?>",
 		    dataType: "json",
-		    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val()},
+		    data: { vigencia:$("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val(),
+		    		disponbilidad:$("#<?php echo $this->campoSeguro('diponibilidad')?>").val(),
+		    		unidad:$("#<?php echo $this->campoSeguro('unidad_ejecutora')?>").val()
+
+			    },
 		    success: function(data){ 
 		        if(data[0]!=" "){
 
@@ -399,13 +399,31 @@ $(function() {
 				if($("#<?php echo $this->campoSeguro('vigencia_disponibilidad')?>").val()!=''){
 
 					disponibilidades();	
-					rubro();
+					
 		
 				}else{}
 
 	
          });
 
+
+
+    $("#<?php echo $this->campoSeguro('diponibilidad')?>").change(function() {
+    	
+		if($("#<?php echo $this->campoSeguro('diponibilidad')?>").val()!=''){
+
+			rubro();	
+			
+
+		}else{}
+
+
+ });
+    
+
+    
+
+    
 
 
 

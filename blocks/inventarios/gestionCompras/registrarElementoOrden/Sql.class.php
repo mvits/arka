@@ -184,27 +184,26 @@ class Sql extends \Sql {
 			case "consultarOrden" :
 				$cadenaSql = "SELECT DISTINCT ";
 				$cadenaSql .= "ro.id_orden,se.\"ESF_SEDE\" as sede, dep.\"ESF_DEP_ENCARGADA\" as dependencia, ro.fecha_registro,
-								 cn.identificacion ||' - '|| cn.nombre_razon_social as  proveedor,
+								 cn.identificacion ||' - '|| cn.nombres as  contratista,
 						         tc.descripcion tipo_contrato,
 						         CASE ro.tipo_orden 
 										WHEN 1 THEN ro.vigencia || ' - ' ||ro.consecutivo_compras 
 										WHEN 9 THEn ro.vigencia || ' - ' ||ro.consecutivo_servicio
 								 END identificador ";
 				$cadenaSql .= "FROM orden ro ";
-				$cadenaSql .= "JOIN contratista_servicios cn ON cn.id_contratista =  ro.id_contratista  ";
+				$cadenaSql .= "JOIN contratistas_adquisiones cn ON cn.id_contratista_adq =  ro.id_contratista  ";
 				$cadenaSql .= "JOIN  tipo_contrato tc ON tc.id_tipo = ro.tipo_orden	 ";
 				$cadenaSql .= "JOIN  arka_parametros.arka_dependencia dep ON dep.\"ESF_CODIGO_DEP\" = ro.dependencia_solicitante	 ";
-				$cadenaSql .= "JOIN  arka_parametros.arka_sedes se ON se.\"ESF_ID_SEDE\" = ro.sede	 ";
+				$cadenaSql .= "JOIN  arka_parametros.arka_sedes se ON se.\"ESF_ID_SEDE\" = ro.sede_solicitante	 ";
 				$cadenaSql .= "WHERE 1 = 1 ";
 				$cadenaSql .= "AND ro.estado = 't' ";
 				if ($variable ['tipo_orden'] != '') {
 					$cadenaSql .= " AND ro.tipo_orden = '" . $variable ['tipo_orden'] . "' ";
 				}
-
+				
 				if ($variable ['numero_orden'] != '') {
 					$cadenaSql .= " AND ro.id_orden = '" . $variable ['numero_orden'] . "' ";
 				}
-				
 				
 				if ($variable ['nit'] != '') {
 					$cadenaSql .= " AND cn.identificacion = '" . $variable ['nit'] . "' ";
@@ -239,11 +238,11 @@ class Sql extends \Sql {
 			
 			case "ConsultaTipoBien" :
 				
-				$cadenaSql = "SELECT  ce.elemento_tipobien , tb.descripcion  ";
-				$cadenaSql .= "FROM grupo.catalogo_elemento ce ";
-				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
+				$cadenaSql = "SELECT ge.elemento_tipobien , tb.descripcion  ";
+				$cadenaSql .= "FROM  catalogo.catalogo_elemento ce ";
+				$cadenaSql .= "JOIN  grupo.catalogo_elemento ge  ON (ge.elemento_id)::text =ce .elemento_grupoc  ";
+				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ge.elemento_tipobien  ";
 				$cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
-				
 				break;
 			
 			case "buscar_placa_maxima" :
@@ -352,6 +351,13 @@ class Sql extends \Sql {
 				
 				break;
 			
+			case "consultar_tipo_iva" :
+				
+				$cadenaSql = "SELECT id_iva, descripcion ";
+				$cadenaSql .= "FROM arka_inventarios.aplicacion_iva;";
+				
+				break;
+			
 			case "consultar_nivel_inventario" :
 				
 				$cadenaSql = "SELECT ce.elemento_id, ce.elemento_codigo||' - '||ce.elemento_nombre ";
@@ -359,7 +365,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN catalogo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
 				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
 				$cadenaSql .= "AND  ce.elemento_id > 0  ";
-                $cadenaSql .= "AND  ce.elemento_padre > 0  ";
+				$cadenaSql .= "AND  ce.elemento_padre > 0  ";
 				$cadenaSql .= "ORDER BY ce.elemento_codigo ASC ;";
 				
 				break;
@@ -572,8 +578,7 @@ class Sql extends \Sql {
 										WHEN 9 THEn vigencia || ' - ' || consecutivo_servicio
 								 END  valor  ";
 				$cadenaSql .= " FROM orden ";
-				$cadenaSql .= " WHERE tipo_orden ='".$variable."';";
-				
+				$cadenaSql .= " WHERE tipo_orden ='" . $variable . "';";
 				
 				break;
 		}

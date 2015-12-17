@@ -423,7 +423,13 @@ class registrarForm {
 					$atributos ['limitar'] = 1;
 					$atributos ['anchoCaja'] = 80;
 					$atributos ['miEvento'] = '';
-					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarRubro", $_REQUEST ['vigencia_disponibilidad'] );
+					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarRubro", array (
+							$disponibilidad_modificar ['vigencia'],
+							$disponibilidad_modificar ['numero_diponibilidad'],
+							$disponibilidad_modificar ['unidad_ejecutora'],
+							
+							
+					) );
 					
 					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
