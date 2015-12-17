@@ -25,7 +25,18 @@ $this->idioma ["direccion_proveedorTitulo"] = "Ingrese Dirección del Proveedor"
 $this->idioma ["telefono_proveedor"] = "Teléfono Fijo :";
 $this->idioma ["telefono_proveedorTitulo"] = "Ingrese Teléfono Fijo del Proveedor";
 
+$this->idioma ["nombre_contratista"] = "Nombre Contratista :";
+$this->idioma ["nombre_contratistaTitulo"] = "Ingrese Nombre del Contratista";
 
+
+$this->idioma ["identifcacion_contratista"] = "Identificación Contratista:";
+$this->idioma ["identifcacion_contratistaTitulo"] = "Ingrese Identificación del Contratista";
+
+
+$this->idioma ["cargo_contratista"] = "Cargo :";
+$this->idioma ["cargo_contratistaTitulo"] = "Ingrese Cargo del Contratista";
+
+//--------------------
 
 
 $this->idioma ["botonAceptarElemento"] = "Actualizar Elemento ";
