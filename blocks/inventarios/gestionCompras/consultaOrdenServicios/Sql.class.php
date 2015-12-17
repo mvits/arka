@@ -964,9 +964,14 @@ class Sql extends \Sql {
 			
 			case "consultarInformaciónDisponibilidad" :
 				
-				$cadenaSql = "SELECT od.*  ";
+				$cadenaSql = "SELECT od.* , \"DIS_DESCRIPCION_RUBRO\" descr_rubro ";
 				$cadenaSql .= " FROM disponibilidad_orden od  ";
-// 				$cadenaSql .= " LEFT JOIN  registro_presupuestal_orden_orden ro ON  ro.id_disponibilidad=od.id_disponibilidad ";
+				$cadenaSql .= " JOIN   arka_parametros.arka_disponibilidadpresupuestal ru 
+								ON  ru.\"DIS_NUMERO_DISPONIBILIDAD\"=od.numero_diponibilidad
+						        AND  ru.\"DIS_VIGENCIA\"=od.vigencia
+								AND ru.\"DIS_UNIDAD_EJECUTORA\"=od.unidad_ejecutora
+								AND ru.\"DIS_CODIGO_RUBRO\"=od.id_rubro
+								";
 				$cadenaSql .= " WHERE od.id_orden='" . $variable . "'";
 				
 				break;
@@ -975,8 +980,8 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "SELECT ro.* ";
 				$cadenaSql .= " FROM registro_presupuestal_orden_orden ro  ";
-				
-				$cadenaSql .= " WHERE ro.id_disponibilidad='" . $variable . "'";
+				$cadenaSql .= " JOIN disponibilidad_orden od ON od.id_disponibilidad=ro.id_disponibilidad  ";
+				$cadenaSql .= " WHERE od.id_orden='" . $variable . "'";
 				
 				break;
 		}

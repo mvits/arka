@@ -321,26 +321,12 @@ class RegistradorOrden {
 		
 		// var_dump ( $rubro );
 		
-		
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarInformaciónDisponibilidad',  $_REQUEST ['id_orden']);
-		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarInformaciónDisponibilidad', $_REQUEST ['id_orden'] );
 		
 		$infDisponibilidad = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		$infDisponibilidad = $infDisponibilidad [0];
 		
-		
-		
-		
-		
-
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarInformaciónRegistro',  $infDisponibilidad['id_disponibilidad']);
-		
-		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarInformaciónRegistro', $_REQUEST ['id_orden'] );
 		$inRegistro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		$inRegistro = $inRegistro [0];
-		
-		
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarSupervisor', $orden ['id_supervisor'] );
 		$supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -352,19 +338,15 @@ class RegistradorOrden {
 		// $dependencia_supervisor = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		// $dependencia_supervisor = $dependencia_supervisor [0];
 		
-		
-		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarProveedor', $orden ['id_proveedor'] );
 		$datosProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$datosProveedor = $datosProveedor [0];
 		
-		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarContratistas', $orden ['id_contratista'] );
 		$datosContratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$datosContratista = $datosContratista [0];
-		
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'polizas' );
 		$polizas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -561,7 +543,8 @@ class RegistradorOrden {
 			</table>	
 			";
 		
-		$contenidoPagina .= "<table style='width:100%;'>
+		$contenidoPagina .= "
+			<table style='width:100%;'>
 			<tr> 
 			<td style='width:100%;'><b>Información Referente Pago</b></td>
 			</tr>
@@ -679,6 +662,90 @@ class RegistradorOrden {
 		</tr>		
 		
 		</table>";
+		
+		if ($infDisponibilidad) {
+			
+			$contenidoPagina .= "
+			<BR>
+			<BR>
+			<BR>		
+			<table style='width:100%;'>
+			<tr>
+			<td style='width:100%;'><b>INFORMACIÓN PRESUPUESTAL</b></td>
+			</tr>
+         	</table>";
+			
+			$contenidoPagina .= "
+			<table style='width:100%;'>
+			<tr>
+			<td style='width:100%;'><b>Disponibilidades Presupuestales</b></td>
+			</tr>
+         	</table>		
+				
+					
+					
+			<table style='width:100%;'>
+			<tr>
+			<td style='width:6.5%;text-align=center;'>Vigencia</td>
+			<td style='width:6.5%;text-align=center;'>Unidad Ejecutora</td>
+			<td style='width:10%;text-align=center;'>Número<br>Disponibilidad</td>
+			<td style='width:40%;text-align=center;'>Rubro</td>
+			<td style='width:15%;text-align=center;'>Valor<br>Solicitado($)</td>
+			<td style='width:22%;text-align=center;'>Valor Letras</td>
+			</tr>
+			</table>			
+			<table style='width:100%;'>		
+         ";
+			
+			foreach ( $infDisponibilidad as $valor ) {
+				
+				$contenidoPagina .= "<tr>";
+				$contenidoPagina .= "<td style='width:6.5%;text-align=center;'>" . $valor ['vigencia'] . "</td>";
+				$contenidoPagina .= "<td style='width:6.5%;text-align=center;'>" . $valor ['unidad_ejecutora'] . "</td>";
+				$contenidoPagina .= "<td style='width:10%;text-align=center;'>" . $valor ['numero_diponibilidad'] . "</td>";
+				$contenidoPagina .= "<td style='width:40%;text-align=justify;'>" . $valor ['id_rubro'] . " " . $valor ['descr_rubro'] . "</td>";
+				$contenidoPagina .= "<td style='width:15%;text-align=center;'>$ " . $valor ['valor_solicitado'] . "</td>";
+				$contenidoPagina .= "<td style='width:22%;text-align=center;'>" . $valor ['valor_letras_solicitud'] . "</td>";
+				$contenidoPagina .= "</tr>";
+			}
+			
+			$contenidoPagina .= "</table>";
+			
+			if ($inRegistro) {
+				
+				$contenidoPagina .= "<br>
+			<table style='width:100%;'>
+			<tr>
+			<td style='width:100%;'><b>Registros Presupuestales</b></td>
+			</tr>
+         	</table>
+				
+			
+			
+			<table style='width:100%;'>
+			<tr>
+			<td style='width:15%;text-align=center;'>Vigencia</td>
+			<td style='width:15%;text-align=center;'>Unidad Ejecutora</td>
+			<td style='width:40%;text-align=center;'>Número Registro</td>
+			<td style='width:30%;text-align=center;'>Valor<br>Solicitado($)</td>
+			</tr>
+			</table>
+			<table style='width:100%;'>
+         ";
+				
+				foreach ( $inRegistro as $valor ) {
+					
+					$contenidoPagina .= "<tr>";
+					$contenidoPagina .= "<td style='width:15%;text-align=center;'>" . $valor ['vigencia'] . "</td>";
+					$contenidoPagina .= "<td style='width:15%;text-align=center;'>" . $valor ['unidad_ejecutora'] . "</td>";
+					$contenidoPagina .= "<td style='width:40%;text-align=center;'>" . $valor ['numero_registro'] . "</td>";
+					$contenidoPagina .= "<td style='width:30%;text-align=center;'>$ " . $valor ['valor_registro'] . "</td>";
+					$contenidoPagina .= "</tr>";
+				}
+				
+				$contenidoPagina .= "</table>";
+			}
+		}
 		
 		$contenidoPagina .= "<page_footer  backleft='10mm' backright='10mm'>
 				
