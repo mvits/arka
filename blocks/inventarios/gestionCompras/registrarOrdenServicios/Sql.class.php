@@ -429,53 +429,53 @@ class Sql extends \Sql {
 				$cadenaSql .= " orden(";
 				$cadenaSql .= "tipo_orden, vigencia, consecutivo_servicio, consecutivo_compras, 
 								            fecha_registro, dependencia_solicitante, sede_solicitante, 
-								            rubro, objeto_contrato, poliza1, poliza2, poliza3, poliza4, duracion_pago, 
+								            objeto_contrato, poliza1, poliza2, poliza3, poliza4, duracion_pago, 
 								            fecha_inicio_pago, fecha_final_pago, forma_pago,id_contratista,id_supervisor, id_ordenador_encargado, tipo_ordenador,id_proveedor)";
 				$cadenaSql .= " VALUES (";
-				$cadenaSql .= "'" . $variable [0] . "',";
-				$cadenaSql .= "'" . $variable [1] . "',";
-				$cadenaSql .= "" . $variable [2] . ",";
-				$cadenaSql .= "" . $variable [3] . ",";
-				$cadenaSql .= "'" . $variable [4] . "',";
-				$cadenaSql .= "'" . $variable [5] . "',";
-				$cadenaSql .= "'" . $variable [6] . "',";
-				$cadenaSql .= "'" . $variable [7] . "',";
-				$cadenaSql .= "'" . $variable [8] . "',";
+				$cadenaSql .= "'" . $variable ['tipo_orden'] . "',";
+				$cadenaSql .= "'" . $variable ['vigencia'] . "',";
+				$cadenaSql .= "" . $variable ['consecutivo_servicio'] . ",";
+				$cadenaSql .= "" . $variable ['consecutivo_compras'] . ",";
+				$cadenaSql .= "'" . $variable ['fecha_registro'] . "',";
+				$cadenaSql .= "'" . $variable ['dependencia_solicitante'] . "',";
+				$cadenaSql .= "'" . $variable ['sede_solicitante'] . "',";
+				$cadenaSql .= "'" . $variable ['objeto_contrato'] . "',";
 				
 				
-				if ($variable [8] != '') {
-					$cadenaSql .= "'" . $variable [8] . "',";
+				
+				if ($variable ['poliza1'] != '') {
+					$cadenaSql .= "'" . $variable ['poliza1'] . "',";
 				} else {
 					$cadenaSql .= "'0',";
 				}
 				
 				
-				if ($variable [9] != '') {
-					$cadenaSql .= "'" . $variable [9] . "',";
+				if ($variable ['poliza2'] != '') {
+					$cadenaSql .= "'" . $variable ['poliza2'] . "',";
 				} else {
 					$cadenaSql .= "'0',";
 				}
-				if ($variable [10] != '') {
-					$cadenaSql .= "'" . $variable [10] . "',";
-				} else {
-					$cadenaSql .= "'0',";
-				}
-				
-				if ($variable [11] != '') {
-					$cadenaSql .= "'" . $variable [11] . "',";
+				if ($variable ['poliza3'] != '') {
+					$cadenaSql .= "'" . $variable ['poliza3'] . "',";
 				} else {
 					$cadenaSql .= "'0',";
 				}
 				
-				$cadenaSql .= "'" . $variable [12] . "',";
-				$cadenaSql .= "'" . $variable [13] . "',";
-				$cadenaSql .= "'" . $variable [14] . "',";
-				$cadenaSql .= "'" . $variable [15] . "',";
-				$cadenaSql .= "'" . $variable [16] . "',";
-				$cadenaSql .= "'" . $variable [17] . "',";
-				$cadenaSql .= "'" . $variable [18] . "',";
-				$cadenaSql .= "'" . $variable [19] . "',";
-				$cadenaSql .= "'" . $variable [20] . "') ";
+				if ($variable ['poliza4'] != '') {
+					$cadenaSql .= "'" . $variable ['poliza4'] . "',";
+				} else {
+					$cadenaSql .= "'0',";
+				}
+				
+				$cadenaSql .= "'" . $variable ['duracion_pago'] . "',";
+				$cadenaSql .= "'" . $variable ['fecha_inicio_pago'] . "',";
+				$cadenaSql .= "'" . $variable ['fecha_final_pago'] . "',";
+				$cadenaSql .= "'" . $variable ['forma_pago'] . "',";
+				$cadenaSql .= "'" . $variable ['id_contratista'] . "',";
+				$cadenaSql .= "'" . $variable ['id_supervisor'] . "',";
+				$cadenaSql .= "'" . $variable ['id_ordenador_encargado'] . "',";
+				$cadenaSql .= "'" . $variable ['tipo_ordenador'] . "',";
+				$cadenaSql .= "'" . $variable ['id_proveedor'] . "') ";
 				$cadenaSql .= "RETURNING  consecutivo_compras,consecutivo_servicio,id_orden  ; ";
 				
 				break;

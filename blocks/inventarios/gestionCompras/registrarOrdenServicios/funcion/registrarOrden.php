@@ -128,19 +128,19 @@ class RegistradorOrden {
 				"duracion_pago"=>$_REQUEST ['numero_dias'],
 				"fecha_inicio_pago"=>$_REQUEST ['fecha_inicio_pago'],
 				"fecha_final_pago"=>$_REQUEST ['fecha_final_pago'],
-				$_REQUEST ['forma_pago'],
-				$id_Contratista [0] [0],
-				$id_supervisor [0] [0],
-				$_REQUEST ['id_ordenador'],
-				$_REQUEST ['tipo_ordenador'],
-				$id_Proveedor [0] [0] 
+				"forma_pago"=>$_REQUEST ['forma_pago'],
+				"id_contratista"=>$id_Contratista [0] [0],
+				"id_supervisor"=>$id_supervisor [0] [0],
+				"id_ordenador_encargado"=>$_REQUEST ['id_ordenador'],
+				"tipo_ordenador"=>$_REQUEST ['tipo_ordenador'],
+				"id_proveedor"=>$id_Proveedor [0] [0] 
 		);
 		
-		var_dump ( $datosOrden );
+		
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarOrden', $datosOrden );
-		echo $cadenaSql;
-		exit ();
+		
+		
 		$consecutivos_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosOrden, 'insertarOrden' );
 		
 		$consecutivo_orden = $consecutivos_orden [0];
