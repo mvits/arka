@@ -328,6 +328,8 @@ class RegistradorOrden {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarInformaciónRegistro', $_REQUEST ['id_orden'] );
 		$inRegistro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		// var_dump($inRegistro);exit;
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarSupervisor', $orden ['id_supervisor'] );
 		$supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$supervisor = $supervisor [0];
@@ -704,7 +706,7 @@ class RegistradorOrden {
 				$contenidoPagina .= "<td style='width:6.5%;text-align=center;'>" . $valor ['unidad_ejecutora'] . "</td>";
 				$contenidoPagina .= "<td style='width:10%;text-align=center;'>" . $valor ['numero_diponibilidad'] . "</td>";
 				$contenidoPagina .= "<td style='width:40%;text-align=justify;'>" . $valor ['id_rubro'] . " " . $valor ['descr_rubro'] . "</td>";
-				$contenidoPagina .= "<td style='width:15%;text-align=center;'>$ " . $valor ['valor_solicitado'] . "</td>";
+				$contenidoPagina .= "<td style='width:15%;text-align=center;'>$ " . number_format ( $valor ['valor_solicitado'], 2, ",", "." ) . "</td>";
 				$contenidoPagina .= "<td style='width:22%;text-align=center;'>" . $valor ['valor_letras_solicitud'] . "</td>";
 				$contenidoPagina .= "</tr>";
 			}
@@ -725,9 +727,10 @@ class RegistradorOrden {
 			<table style='width:100%;'>
 			<tr>
 			<td style='width:15%;text-align=center;'>Vigencia</td>
+			<td style='width:30%;text-align=center;'>Rubro</td>
 			<td style='width:15%;text-align=center;'>Unidad Ejecutora</td>
-			<td style='width:40%;text-align=center;'>Número Registro</td>
-			<td style='width:30%;text-align=center;'>Valor<br>Solicitado($)</td>
+			<td style='width:20%;text-align=center;'>Número Registro</td>
+			<td style='width:20%;text-align=center;'>Valor<br>Solicitado($)</td>
 			</tr>
 			</table>
 			<table style='width:100%;'>
@@ -737,9 +740,10 @@ class RegistradorOrden {
 					
 					$contenidoPagina .= "<tr>";
 					$contenidoPagina .= "<td style='width:15%;text-align=center;'>" . $valor ['vigencia'] . "</td>";
+					$contenidoPagina .= "<td style='width:30%;text-align=center;'>" . $valor ['id_rubro'] . " " . $valor ['descr_rubro'] . "</td>";
 					$contenidoPagina .= "<td style='width:15%;text-align=center;'>" . $valor ['unidad_ejecutora'] . "</td>";
-					$contenidoPagina .= "<td style='width:40%;text-align=center;'>" . $valor ['numero_registro'] . "</td>";
-					$contenidoPagina .= "<td style='width:30%;text-align=center;'>$ " . $valor ['valor_registro'] . "</td>";
+					$contenidoPagina .= "<td style='width:20%;text-align=center;'>" . $valor ['numero_registro'] . "</td>";
+					$contenidoPagina .= "<td style='width:20%;text-align=center;'>$ " . number_format ( $valor ['valor_registro'], 2, ",", "." ) . "</td>";
 					$contenidoPagina .= "</tr>";
 				}
 				

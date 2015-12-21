@@ -183,6 +183,37 @@ class registrarForm {
 					unset ( $atributos );
 				}
 				
+				
+				
+				$variable_documento = "action=consultaOrdenServicios";
+				$variable_documento .= "&pagina=consultaOrdenServicios";
+				$variable_documento .= "&bloque=consultaOrdenServicios";
+				$variable_documento .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+				$variable_documento .= "&opcion=generarDocumento";
+				$variable_documento .= "&id_orden=" . $_REQUEST ['id_orden'];
+				$variable_documento .= "&usuario=".$_REQUEST['usuario'];
+				$variable_documento .= "&mensaje_titulo=" .$_REQUEST['mensaje_titulo'];
+				$variable_documento = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable_documento, $directorio );
+				
+				
+				
+				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+				$esteCampo = 'botonDocumentos';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['enlace'] = $variable_documento;
+				$atributos ['tabIndex'] = 1;
+				$atributos ['estilo'] = 'textoSubtitulo';
+				$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['ancho'] = '10%';
+				$atributos ['alto'] = '10%';
+				$atributos ['redirLugar'] = true;
+				echo $this->miFormulario->enlace ( $atributos );
+				
+				
+				
+				
+				
+				
 				$esteCampo = 'Valor_Orden';
 				$atributos ["id"] = $esteCampo;
 				$atributos ["estilo"] = $esteCampo;
