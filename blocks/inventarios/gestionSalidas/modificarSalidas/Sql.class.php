@@ -365,6 +365,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND en.estado_entrada = 1  ";
 				$cadenaSql .= "AND en.estado_registro='t' ";
 				$cadenaSql .= "AND elemento_individual.id_salida IS NOT NULL   ";
+				$cadenaSql .= "AND elemento_individual.estado_registro='t'  ";
 				$cadenaSql .= "ORDER BY elemento_individual.id_elemento_ind ASC;  ";
 				
 				/*
@@ -411,9 +412,10 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT DISTINCT  ef.\"ESF_ID_ESPACIO\" , ef.\"ESF_NOMBRE_ESPACIO\" ";
 				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ef  ";
 				$cadenaSql .= " JOIN arka_parametros.arka_dependencia ad ON ad.\"ESF_ID_ESPACIO\"=ef.\"ESF_ID_ESPACIO\" ";
-				$cadenaSql .= " WHERE ad.\"ESF_CODIGO_DEP\"='" . $variable . "' ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_CODIGO_DEP\"='" . $variable [0] . "' ";
+				$cadenaSql .= " AND  sa.\"ESF_ID_SEDE\"='" . $variable [1] . "' ";
 				$cadenaSql .= " AND  ef.\"ESF_ESTADO\"='A'";
-				
 				break;
 			
 			case "dependencias" :
@@ -681,15 +683,12 @@ class Sql extends \Sql {
 				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable . "' ;";
 				
 				break;
-				
-				
 			
 			case "Eliminar_Depreciacion" :
 				$cadenaSql = " DELETE FROM detalle_depreciacion ";
 				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable . "' ;";
 				
 				break;
-	
 		}
 		
 		return $cadenaSql;

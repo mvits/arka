@@ -89,7 +89,15 @@ class RegistradorOrden {
 					exit ();
 				}
 				
+				
+				
+				
+				
 				foreach ( $items as $valor ) {
+					
+					
+					
+					
 					
 					// --- Eliminando Depreciación--//
 					
@@ -97,9 +105,17 @@ class RegistradorOrden {
 					$depresiacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "LimpiarElementosIndividuales" );
 					
 					if ($valor ['tipo_bien'] != 1) {
+
+						$cadenaSql = $this->miSql->getCadenaSql ( 'ActualizarElementosIndividuales', array (
+								$valor ['identificacion_elemento'],
+								1 
+						) );
+						
+						$elementos_inds = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "ActualizarElementosIndividuales" );
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( 'LimpiarElementosIndividuales', $valor ['identificacion_elemento'] );
 						$elementos_inds = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "LimpiarElementosIndividuales" );
+
 					} else {
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( 'ActualizarElementosIndividuales', array (
@@ -114,6 +130,7 @@ class RegistradorOrden {
 						$elementos_inds = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "LimpiarElementosIndividuales" );
 					}
 					
+										
 					if ($elementos_inds == false) {
 						$semaforo = false;
 					} else {
