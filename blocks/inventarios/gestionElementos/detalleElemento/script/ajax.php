@@ -1,4 +1,5 @@
 <?php
+
 $conexion = "inventarios";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 /**
@@ -115,7 +116,7 @@ $cadenaACodificar16 .= "&procesarAjax=true";
 $cadenaACodificar16 .= "&action=index.php";
 $cadenaACodificar16 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar16 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-$cadenaACodificar16 .= $cadenaACodificar16 . "&funcion=consultarDependencia";
+$cadenaACodificar16 .= "&funcion=consultarDependencia";
 $cadenaACodificar16 .= "&usuario=" . $_REQUEST ['usuario'];
 $cadenaACodificar16 .= "&tiempo=" . $_REQUEST ['tiempo'];
 
@@ -132,10 +133,14 @@ $cadenaACodificar6 .= "&procesarAjax=true";
 $cadenaACodificar6 .= "&action=index.php";
 $cadenaACodificar6 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar6 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-$cadenaACodificar6 .= $cadenaACodificar6 . "&funcion=galeriaFoto";
+$cadenaACodificar6 .= "&funcion=galeriaFoto";
 $cadenaACodificar6 .= "&usuario=" . $_REQUEST ['usuario'];
 $cadenaACodificar6 .= "&tiempo=" . $_REQUEST ['tiempo'];
 $cadenaACodificar6 .= "&elemento=" . isset ( $_REQUEST ['elemento'] );
+if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+	
+	$cadenaACodificar6 .= "&accesoCondor=true";
+}
 
 // Codificar las variables
 $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
@@ -150,9 +155,13 @@ $cadenaACodificar4 .= "&procesarAjax=true";
 $cadenaACodificar4 .= "&action=index.php";
 $cadenaACodificar4 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar4 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-$cadenaACodificar4 .= $cadenaACodificar4 . "&funcion=consultarUbicacion";
+$cadenaACodificar4 .= "&funcion=consultarUbicacion";
 $cadenaACodificar4 .= "&usuario=" . $_REQUEST ['usuario'];
 $cadenaACodificar4 .= "&tiempo=" . $_REQUEST ['tiempo'];
+if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+	
+	$cadenaACodificar4 .= "&accesoCondor=true";
+}
 
 // Codificar las variables
 $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
@@ -167,10 +176,15 @@ $cadenaACodificar3 .= "&procesarAjax=true";
 $cadenaACodificar3 .= "&action=index.php";
 $cadenaACodificar3 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar3 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-$cadenaACodificar3 .= $cadenaACodificar3 . "&funcion=subeFoto";
+$cadenaACodificar3 .= "&funcion=subeFoto";
 $cadenaACodificar3 .= "&usuario=" . $_REQUEST ['usuario'];
 $cadenaACodificar3 .= "&tiempo=" . $_REQUEST ['tiempo'];
 $cadenaACodificar3 .= "&elemento=" . $elemento_id;
+
+if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+	
+	$cadenaACodificar3 .= "&accesoCondor=true";
+}
 
 // Codificar las variables
 $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
@@ -206,10 +220,14 @@ if (isset ( $_REQUEST ['elemento'] ) && empty ( $aItems ) == FALSE) {
 		$cadenaACodificar5 .= "&action=index.php";
 		$cadenaACodificar5 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 		$cadenaACodificar5 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-		$cadenaACodificar5 .= $cadenaACodificar5 . "&funcion=eliminaFoto";
+		$cadenaACodificar5 .= "&funcion=eliminaFoto";
 		$cadenaACodificar5 .= "&usuario=" . $_REQUEST ['usuario'];
 		$cadenaACodificar5 .= "&tiempo=" . $_REQUEST ['tiempo'];
 		$cadenaACodificar5 .= "&num_registro=" . $aItems [$i] ['num_registro'];
+		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+			
+			$cadenaACodificar5 .= "&accesoCondor=true";
+		}
 		
 		// Codificar las variables
 		$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );

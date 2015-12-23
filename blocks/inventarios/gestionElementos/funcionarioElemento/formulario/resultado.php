@@ -20,6 +20,7 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
+		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -74,28 +75,62 @@ class registrarForm {
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 		
 		$variable = "pagina=" . $miPaginaActual;
-		$variable .= "&usuario=".$_REQUEST['usuario'];
+		$variable .= "&usuario=" . $_REQUEST ['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
-		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-		$esteCampo = 'botonRegresar';
-		$atributos ['id'] = $esteCampo;
-		$atributos ['enlace'] = $variable;
-		$atributos ['tabIndex'] = 1;
-		$atributos ['estilo'] = 'textoSubtitulo';
-		$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['ancho'] = '10%';
-		$atributos ['alto'] = '10%';
-		$atributos ['redirLugar'] = true;
-		echo $this->miFormulario->enlace ( $atributos );
-		unset ( $atributos );
+		if (! isset ( $_REQUEST ['accesoCondor'] )) {
+			
+			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+			$esteCampo = 'botonRegresar';
+			$atributos ['id'] = $esteCampo;
+			$atributos ['enlace'] = $variable;
+			$atributos ['tabIndex'] = 1;
+			$atributos ['estilo'] = 'textoSubtitulo';
+			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos ['ancho'] = '10%';
+			$atributos ['alto'] = '10%';
+			$atributos ['redirLugar'] = true;
+			echo $this->miFormulario->enlace ( $atributos );
+			unset ( $atributos );
+		}
 		
-		$funcionario = $_REQUEST ['funcionario'];
+		if (isset ( $_REQUEST ['funcionario'] ) && $_REQUEST ['funcionario'] != '') {
+			$funcionario = $_REQUEST ['funcionario'];
+		}
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $funcionario );
+		if (isset ( $_REQUEST ['sede'] ) && $_REQUEST ['sede'] != '') {
+			$sede = $_REQUEST ['sede'];
+		} else {
+			$sede = '';
+		}
+		
+		if (isset ( $_REQUEST ['dependencia'] ) && $_REQUEST ['dependencia'] != '') {
+			$dependencia = $_REQUEST ['dependencia'];
+		} else {
+			$dependencia = '';
+		}
+		
+		if (isset ( $_REQUEST ['ubicacion'] ) && $_REQUEST ['ubicacion'] != '') {
+			$ubicacion = $_REQUEST ['ubicacion'];
+		} else {
+			$ubicacion = '';
+		}
+		
+		$arreglo = array (
+				'funcionario' => $funcionario,
+				'sede' => $sede,
+				'dependencia' => $dependencia,
+				'ubicacion' => $ubicacion 
+		);
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarFuncionario', $funcionario );
+		
+		$datosfuncionario = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$datosfuncionario = $datosfuncionario [0];
 		// ------------------Division para los botones-------------------------
 		$atributos ["id"] = "ventanaEmergente";
 		$atributos ["estilo"] = " ";
@@ -118,13 +153,19 @@ class registrarForm {
 		echo $this->miFormulario->division ( "fin" );
 		unset ( $atributos );
 		
-		echo "<button id=\"abrir\">Ver Instrucciones</button>";
+		$datosfuncionario ['identificacion'] = $_REQUEST ['usuario'];
+		
+		if (isset ( $datosfuncionario ['nombre'] )) {
+			$datosfuncionarioNombre = $datosfuncionario ['nombre'];
+		} else {
+			$datosfuncionarioNombre = '';
+		}
 		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Inventario Funcionario CC. " . $_REQUEST ['funcionario'] . "    -    " . $resultado [0] ['nombre_funcionario'];
+		$atributos ["leyenda"] = "Inventario  : CC. " . $_REQUEST ['funcionario'] . "    " . $datosfuncionarioNombre;
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		unset ( $atributos );
 		{
@@ -163,6 +204,14 @@ class registrarForm {
 				// echo $this->miFormulario->campoTexto ( $atributos );
 				unset ( $atributos );
 				
+				if (! isset ( $_REQUEST ['accesoCondor'] )) {
+					
+					echo "<button id=\"abrir\">Ver Instrucciones</button>";
+				} else {
+					
+					echo "<a id='abrir'><B><u>Instrucciones</u></B></a>";
+				}
+				
 				// ------------------Division para los botones-------------------------
 				$atributos ["id"] = "SeleccionRegistro";
 				echo $this->miFormulario->division ( "inicio", $atributos );
@@ -175,7 +224,7 @@ class registrarForm {
 					$atributos ["etiquetaObligatorio"] = false;
 					$atributos ['tab'] = $tab ++;
 					$atributos ['seleccion'] = 0;
-					$atributos ['anchoEtiqueta'] = 150;
+					$atributos ['anchoEtiqueta'] = 130;
 					$atributos ['evento'] = '';
 					if (isset ( $_REQUEST [$esteCampo] )) {
 						$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -183,14 +232,14 @@ class registrarForm {
 						$atributos ['valor'] = '';
 					}
 					$atributos ['deshabilitado'] = false;
-					$atributos ['columnas'] = 2;
+					$atributos ['columnas'] = 1;
 					$atributos ['tamanno'] = 1;
 					$atributos ['ajax_function'] = "";
 					$atributos ['ajax_control'] = $esteCampo;
 					$atributos ['estilo'] = "jqueryui";
 					$atributos ['validar'] = "required";
 					$atributos ['limitar'] = false;
-					$atributos ['anchoCaja'] = 24;
+					$atributos ['anchoCaja'] = 10;
 					$atributos ['miEvento'] = '';
 					// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "estado_entrada" );
 					$matrizItems = array (
@@ -220,90 +269,31 @@ class registrarForm {
 				$mostrarHtml = "<table id='tablaTitulos'>
 			<thead>
                 <tr>
-              	  <th>Tipo Bien</th>
+              	    <th>Tipo Bien</th>
 					<th>Placa</th>
 					<th>Descripción</th>
 					<th>Sede</th>
 					<th>Dependencia</th>
+					<th>Espacio Físico</th>
                 	<th>Estado Elemento</th>
+					<th>Contratista<br>A Cargo</th>
 					<th>Detalle Elemento</th> 
 					<th>Registrar<br>Observaciones</th> 
 					<th>Verificación</th> 
 					 </tr>
             </thead>
-			<tbody>
+			
+			</table>			
             ";
+				
+				echo $mostrarHtml;
 				
 				for($i = 0; $i < count ( $resultado ); $i ++) {
 					
-					$VariableDetalles = "pagina=detalleElemento"; // pendiente la pagina para modificar parametro
-					$VariableDetalles .= "&opcion=detalle";
-					$VariableDetalles .= "&elemento=" . $resultado [$i] ['identificador_elemento_individual'];
-					$VariableDetalles .= "&funcionario=" . $funcionario;
-					$VariableDetalles .= "&usuario=" . $_REQUEST ['usuario']; 
-					$VariableDetalles .= "&periodo=" .$resultado_periodo[0][0];
-					$VariableDetalles = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableDetalles, $directorio );
-					
-					$VariableObservaciones = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-					$VariableObservaciones .= "&opcion=observaciones";
-					$VariableObservaciones .= "&elemento_individual=" . $resultado [$i] ['identificador_elemento_individual'];
-					$VariableObservaciones .= "&funcionario=" . $funcionario;
-					$VariableObservaciones .= "&placa=" . $resultado [$i] ['placa'];
-					$VariableObservaciones .= "&usuario=" . $_REQUEST ['usuario'];
-					$VariableObservaciones .= "&periodo=" .$resultado_periodo[0][0];
-					$VariableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableObservaciones, $directorio );
-					
-					$identificaciones_elementos [] = $resultado [$i] ['identificador_elemento_individual'];
-					
-					// $elementos_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-					
-					// $validacion_elementos = " <td><center>
-					// <a href='" . $variable1 . "'>
-					// <img src='" . $rutaBloque . "/css/images/update.png' width='15px'>
-					// </a>
-					// </center> </td>";
-					
-					$mostrarHtml .= "<tr>
-                    <td><center>" . $resultado [$i] ['nombre_tipo_bienes'] . "</center></td>
-                    <td><center>" . $resultado [$i] ['placa'] . "</center></td>
-                    <td><center>" . $resultado [$i] ['descripcion_elemento'] . "</center></td>
-                    <td><center>" . $resultado [$i] ['sede'] . "</center></td>
-                    <td><center>" . $resultado [$i] ['dependencia'] . "</center></td>
-                    <td><center>" . $resultado [$i] ['estado_bien'] . "</center></td>
-                    <td><center><a href='" . $VariableDetalles . "'><u>Ver Detalles</u></a></center> </td>    
-					 <td><center><a href='" . $VariableObservaciones . "'><img src='" . $rutaBloque . "/css/images/edit.png' width='15px'></a></center>
-                     <td><center>		
-					";
-					
-					$nombre = 'item_' . $i;
-					$atributos ['id'] = $nombre;
-					$atributos ['nombre'] = $nombre;
-					$atributos ['marco'] = true;
-					$atributos ['estiloMarco'] = true;
-					$atributos ["etiquetaObligatorio"] = true;
-					$atributos ['columnas'] = 1;
-					$atributos ['dobleLinea'] = 1;
-					$atributos ['tabIndex'] = $tab;
-					$atributos ['etiqueta'] = '';
-					$atributos ['seleccionado'] = ($resultado [$i] ['confirmada_existencia'] == 't') ? true : false;
-					$atributos ['evento'] = 'onclick';
-					$atributos ['eventoFuncion'] = ' verificarElementos(this.form)';
-					$atributos ['valor'] = $resultado [$i] ['identificador_elemento_individual'];
-					$atributos ['deshabilitado'] = false;
-					$tab ++;
-					
-					// Aplica atributos globales al control
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					$mostrarHtml .= ($resultado [$i] ['tipo_confirmada'] == 1) ? '&#8730 ' : $this->miFormulario->campoCuadroSeleccion ( $atributos );
-					
 					$mostrar_botones = ($resultado [$i] ['tipo_confirmada'] != 1) ? 'block' : 'none';
-					
-					$mostrarHtml .= "</center> </td> </tr>";
+					$identificaciones_elementos [] = $resultado [$i] ['identificador_elemento_individual'];
 				}
 				
-				$mostrarHtml .= "</tbody>
-					 </table>";
-				echo $mostrarHtml;
 				unset ( $mostrarHtml );
 				unset ( $variable );
 			} else {
@@ -325,7 +315,7 @@ class registrarForm {
 			}
 		}
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
-		
+		unset ( $atributos );
 		if ($resultado) {
 			
 			if ($resultado_periodo) {
@@ -407,7 +397,7 @@ class registrarForm {
 			echo $this->miFormulario->campoBoton ( $atributos );
 			unset ( $atributos );
 			
-			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
+			// -----------------FIN CONTROL: Botón ----------------
 			
 			// ---------------------------------------------------------
 		}
@@ -439,7 +429,22 @@ class registrarForm {
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Accion";
 		$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
-		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
+		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
+		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+			
+			$valorCodificado .= "&accesoCondor=true";
+		}
+		
+		if (isset ( $_REQUEST ['sede'] )) {
+			
+			$valorCodificado .= "&sede=" . $_REQUEST ['sede'];
+		}
+		
+		if (isset ( $_REQUEST ['dependencia'] )) {
+			
+			$valorCodificado .= "&dependencia=" . $_REQUEST ['dependencia'];
+		}
+		
 		if ($resultado_periodo) {
 			if ($resultado) {
 				

@@ -24,8 +24,6 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		
-		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -33,6 +31,16 @@ class RegistradorOrden {
 			if (isset ( $_REQUEST ['item_' . $i] )) {
 				$elementos [] = $_REQUEST ['item_' . $i];
 			}
+		}
+		
+		if (isset ( $elementos ) == false) {
+			redireccion::redireccionar ( 'noSeleccion', array (
+					$_REQUEST ['funcionario'],
+					$_REQUEST ['usuario'] 
+			) );
+			
+			
+			exit;
 		}
 		
 		if (isset ( $_REQUEST ['botonAprobar'] ) && $_REQUEST ['botonAprobar'] == 'Aprobar') {
@@ -77,6 +85,7 @@ class RegistradorOrden {
 				$_REQUEST ['usuario'] 
 		);
 		$mensaje = array_merge ( $mensaje, $array );
+		
 		if ($estado == true) {
 			
 			redireccion::redireccionar ( 'Verificacion', $mensaje );
@@ -84,7 +93,7 @@ class RegistradorOrden {
 		} else {
 			
 			redireccion::redireccionar ( 'noVerificado', array (
-					$_REQUEST [funcionario],
+					$_REQUEST ['funcionario'],
 					$_REQUEST ['usuario'] 
 			) );
 			exit ();

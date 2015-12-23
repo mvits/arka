@@ -9,7 +9,6 @@ if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();
 }
-
 class RegistradorOrden {
 	var $miConfigurador;
 	var $lenguaje;
@@ -26,40 +25,34 @@ class RegistradorOrden {
 	}
 	function procesarFormulario() {
 		
-			
+		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
-		$arreglo=array(
-			$_REQUEST['id_elemento'],
-				$_REQUEST['observaciones']		
-				
-		);
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'estado_elemento', $_REQUEST['id_elemento'] );
+		$arreglo = array (
+				$_REQUEST ['id_elemento'],
+				$_REQUEST ['observaciones'] 
+		)
+		;
 		
-		$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" ,$_REQUEST['id_elemento'] ,"estado_elemento");
+		$cadenaSql = $this->miSql->getCadenaSql ( 'estado_elemento', $_REQUEST ['id_elemento'] );
 		
-
+		$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $_REQUEST ['id_elemento'], "estado_elemento" );
 		
-    
 		$cadenaSql = $this->miSql->getCadenaSql ( 'anular_elemento', $arreglo );
-		 
-		$anular = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso",$arreglo,"anular_elemento" );
+		
+		$anular = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $arreglo, "anular_elemento" );
 		
 		
-				
 		if ($anular) {
-				$this->miConfigurador->setVariableConfiguracion("cache",true);
-			redireccion::redireccionar ( 'anulado',$_REQUEST['usuario']);
-			exit();
+			$this->miConfigurador->setVariableConfiguracion ( "cache", true );
+			redireccion::redireccionar ( 'anulado', $_REQUEST ['usuario'] );
+			exit ();
 		} else {
-				
-			redireccion::redireccionar ( 'noAnulado' ,$_REQUEST['usuario']);
-			exit();
 			
+			redireccion::redireccionar ( 'noAnulado', $_REQUEST ['usuario'] );
+			exit ();
 		}
-		
 	}
 	function resetForm() {
 		foreach ( $_REQUEST as $clave => $valor ) {

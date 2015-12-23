@@ -1,8 +1,6 @@
 <?
 
-namespace inventarios\gestionElementos\funcionarioElemento\funcion;
-
-use inventarios\gestionElementos\funcionarioElemento\funcion\redireccion;
+namespace inventarios\gestionElementos\radicadoLevantamiento\funcion;
 
 $ruta = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" );
 
@@ -29,47 +27,32 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function documento() {
-		// echo "pdf";
-		// var_dump($_REQUEST);exit;
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$funcionario = $_REQUEST ['funcionario'];
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $funcionario );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarFuncionariosaCargoElementos', '' );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'ConsultarSedesRadicado' );
+		
+		$resultado_sedes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		
+		
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'jefe_recursos_fisicos' );
-// 		echo $cadenaSql;
+		// echo $cadenaSql;
 		$jefe = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$jefe = $jefe [0];
-		
-// 		var_dump($jefe);exit;
-// 		var_dump($resultado);exit;
-		
-		foreach ( $resultado as $valor ) {
-			
-			if ($valor ['tipo_bien'] == 2) {
-				
-				$elementos_consumo_controlado [] = $valor;
-			}
-			
-			if ($valor ['tipo_bien'] == 3) {
-				
-				$elementos_devolutivos [] = $valor;
-			}
-		}
-		
-		// var_dump($elementos_devolutivos);exit;
 		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( 'rutaUrlBloque' );
 		
 		$contenidoPagina = '';
 		
-		if (isset ( $elementos_consumo_controlado )) {
-			
-			$contenidoPagina .= "
+		$contenidoPagina .= "
 <style type=\"text/css\">
     table { 
         
@@ -102,7 +85,7 @@ class RegistradorOrden {
 </style>				
 				
 				
-<page backtop='5mm' backbottom='5mm' backleft='5mm' backright='5mm'>
+<page backtop='1mm' backbottom='1mm' backleft='5mm' backright='5mm' footer='page'>
 	
 
         <table align='left' style='width:100%;' >
@@ -118,270 +101,163 @@ class RegistradorOrden {
                       <br>
                      <font size='9px'><b>Almacén General e Inventarios</b></font>
                     <br>		
-                    <font size='7px'><b>Acta Inventario Individualizado</b></font>
+                    <font size='7px'><b>Inventario Radicado Funcionario</b></font>
                     <br>									
                     <font size='3px'>www.udistrital.edu.co</font>
                      <br>
+                	<br>
                     <font size='4px'>" . date ( "Y-m-d" ) . "</font>
+                    
                    			
                 </td>
             </tr>
-        </table>
-           	<table style='width:100%;border=none;'>
+        </table>";
+		
+		$num_radicados_global = 0;
+		$num_no_radicados_global = 0;
+		
+		foreach ( $resultado_sedes as $sede ) {
+			
+			$contenidoPagina .= "
+            
+            <table style='width:100%;border=none;'>
             <tr> 
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>NOMBRE FUNCIONARIO : " . $resultado [0] ['nombre_funcionario'] . "</td>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>CC : " . $_REQUEST ['funcionario'] . "</td> 			
+			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'><b>NOMBRE SEDE : " . $sede ['sede'] . "</b></td>
+			 			
  		 	</tr>
 			</table>
-			
-           	<table style='width:100%;'>
-            <tr> 
-			<td style='width:100%;border=none;text-align:left;'>TIPO DE BIEN CONSUMO CONTROLADO</td> 			
- 		 	</tr>
-			</table>  
-			 <br>		
+						
 			<table style='width:100%;'>
 			<tr> 
-			<td style='width:10%;text-align=center;'>Placa</td>
-			<td style='width:10%;text-align=center;'>Dependencia</td>
-			<td style='width:10%;text-align=center;'>Sede</td>
-			<td style='width:35%;text-align=center;'>Descripción</td>
-			<td style='width:10%;text-align=center;'>Marca</td>
-			<td style='width:10%;text-align=center;'>Serie</td>
-			<td style='width:5%;text-align=center;'>Estado</td>
-			<td style='width:10%;text-align=center;'>Verificación</td>
+			<td style='width:35%;text-align=center;'>Dependencia</td>
+			<td style='width:10%;text-align=center;'>Identificación</td>
+			<td style='width:35%;text-align=center;'>Funcionario</td>
+			<td style='width:10%;text-align=center;'>Cantidad Elementos</td>
+			<td style='width:10%;text-align=center;'>Radicación Invetarios Físico</td>
 			</tr>";
 			
-			foreach ( $elementos_consumo_controlado as $valor ) {
+			$num_radicados = 0;
+			$num_no_radicados = 0;
+			
+			foreach ( $resultado as $valor ) {
 				
-				$contenidoPagina .= "<tr>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['placa'] . "</td>
-                    			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['dependencia'] . "</font></td>
-                    			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['sede'] . "</font></td>
-                    			<td style='width:35%;text-align=center;'>" . $valor ['descripcion_elemento'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['marca'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['serie'] . "</td>
-                    			<td style='width:5%;text-align=center;'>" . $valor ['estado_bien'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['marca_existencia'] . "</td>
+				if ($sede ['codigo_sede'] == $valor ['codigo_sede']) {
+					
+					if (is_null($valor ['radicacion'])== true) {
+						$num_no_radicados = $num_no_radicados + 1;
+						$num_no_radicados_global = $num_no_radicados_global + 1;
+					} else {
+						
+						$num_radicados = $num_radicados + 1;
+						$num_radicados_global = $num_radicados_global + 1;
+					}
+					
+					$valor ['radicacion'] = (is_null($valor ['radicacion'])== true) ? 'No Radicado':'Radicado';
+					
+					$contenidoPagina .= " 
+								<tr>
+                    			<td style='width:35%;text-align=center;'>" . $valor ['dependencia'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['identificacion'] . "</td>
+                    			<td style='width:35%;text-align=center;'>" . $valor ['funcionario'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['num_ele'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['radicacion'] . "</td>
                     			</tr>";
+				}
 			}
 			
+			$contenidoPagina .= "";
 			
+			$total_inventario = $num_radicados + $num_no_radicados;
 			
-			
-			$contenidoPagina .= "</table>";
-			
-			$contenidoPagina .= "<table style='width:100%;'>
-											<tr>
-											<td style='width:100%;border=none;'><font size='5px'>Nota: Antes de firmar, verifique que los bienes que se encuentran en el presente listado corresponden a los que usted se hace responsable.</font></td>
-											</tr>
-											</table>";
-			
-			$contenidoPagina .= "	
-												<br>
-												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-												<tr>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>_______________________________________________________</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>_______________________________________________________</td>
-												</tr>
-												<tr>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $jefe ['nombre'] . "</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>".$resultado [0] ['nombre_funcionario']."</td>
-												</tr>
-												<tr>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Almacenista General</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>CC : " . $_REQUEST ['funcionario'] . "</td>
-												</tr>
-												</table>";
-			
-			$contenidoPagina .= "		<br>
-												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-												<tr>
-												<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Realizo y Verificó Existencia Fìsica:</td>
-												</tr>
-												</table>											
-				
-												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-												<tr>
-												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Nombre : </td>
-												<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>________________________________________</td>
-												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Actualizado a : </td>
-												<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . date ( 'Y - m - d    H:i:s' ) . "</td>
-												</tr>
-												</table>";
-			
-			$contenidoPagina .= "<page_footer>
-														<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-														<tr>
-														<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>
-									                    <font size='1px'>Para mayor información y solicitud de inventarios: almacen@udistrital.edu.co</font>
-									                    <br>
-									                    <font size='0.5px'>Ley 734 del 2002 :Delos deberes del Servidor Pùblico. Vigilar y salvaguardar los bienes y valores que le han sido encomendados y cuidar que sean utilizados debida y racionalmente, de conformidad con los fines a que han sido destinados.</font>
-														</td>
-														</tr>
-														</table>
-									    </page_footer> ";
-			
-			$contenidoPagina .= "</page>";
-		}
-		
-		if ( isset($elementos_devolutivos)) {
+			$porcentaje_avance =round(($num_radicados / $total_inventario) * 100,3);
 			
 			$contenidoPagina .= "
-<style type=\"text/css\">
-    table {
-		
-        font-family:Helvetica, Arial, sans-serif; /* Nicer font */
-		
-        border-collapse:collapse; border-spacing: 3px;
-    }
-		
-    td, th {
-        border: 1px solid #CCC;
-        height: 13px;
-    } /* Make cells a bit taller */
-		
-	col{
-	width=50%;
-		
-	}
-		
-    th {
-		
-        font-weight: bold; /* Make sure they're bold */
-        text-align: center;
-        font-size:10px
-    }
-		
-    td {
-		
-        text-align: left;
-        font-size:10px
-    }
-</style>
-		
-		
-<page backtop='10mm' backbottom='7mm' backleft='10mm' backright='10mm'>
-		
-		
-        <table align='left' style='width:100%;' >
-            <tr>
-                <td align='center' style='width:12%;border=none;' >
-                    <img src='" . $directorio . "/css/images/escudo.png'  width='80' height='100'>
-                </td>
-                <td align='center' style='width:88%;border=none;' >
-                    <font size='9px'><b>UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS </b></font>
-                     <br>
-                    <font size='7px'><b>NIT: 899.999.230-7</b></font>
-                     <br>
-                      <br>
-                     <font size='9px'><b>Almacén General e Inventarios</b></font>
-                    <br>
-                    <font size='7px'><b>Acta Inventario Individualizado</b></font>
-                    <br>
-                    <font size='3px'>www.udistrital.edu.co</font>
-                     <br>
-                    <font size='4px'>" . date ( "Y-m-d" ) . "</font>
-		
-                </td>
-            </tr>
-        </table>
-
-           	<table style='width:100%;'>
-            <tr>
-			<td style='width:50%;border=none;text-align:center;'>NOMBRE FUNCIONARIO : " . $resultado [0] ['nombre_funcionario'] . "</td>
-			<td style='width:50%;border=none;text-align:center;'>CC :    " . $_REQUEST ['funcionario'] . "</td>
- 		 	</tr>
-			</table>
 			
-           	<table style='width:100%;'>
+            
             <tr>
-			<td style='width:100%;border=none;text-align:left;'>TIPO DE BIEN DEVOLUTIVO</td>
- 		 	</tr>
-			</table>
-			 <br>
-			<table style='width:100%;'>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:10%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'>Total Radicados:</td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $num_radicados . "</td>
+			</tr>
+		    <tr>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>		
+			<td style='width:10%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'>Total No Radicado:</td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $num_no_radicados . "</td>
+			</tr>			
 			<tr>
-			<td style='width:10%;text-align=center;'>Placa</td>
-			<td style='width:10%;text-align=center;'>Dependencia</td>
-			<td style='width:10%;text-align=center;'>Sede</td>
-			<td style='width:35%;text-align=center;'>Descripción</td>
-			<td style='width:10%;text-align=center;'>Marca</td>
-			<td style='width:10%;text-align=center;'>Serie</td>
-			<td style='width:5%;text-align=center;'>Estado</td>
-			<td style='width:10%;text-align=center;'>Verificación</td>
-			</tr>";
-			
-			foreach ( $elementos_devolutivos as $valor ) {
-				
-				$contenidoPagina .= "<tr>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['placa'] . "</td>
-                    			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['dependencia'] . "</font></td>
-                    			<td style='width:10%;text-align=center;'><font size='0.5px'>" . $valor ['sede'] . "</font></td>
-                    			<td style='width:35%;text-align=center;'>" . $valor ['descripcion_elemento'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['marca'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['serie'] . "</td>
-                    			<td style='width:5%;text-align=center;'>" . $valor ['estado_bien'] . "</td>
-                    			<td style='width:10%;text-align=center;'>" . $valor ['marca_existencia'] . "</td>
-                    			</tr>";
-			}
-			
-			$contenidoPagina .= "</table>";
-			
-			$contenidoPagina .= "<table style='width:100%;'>
-											<tr>
-											<td style='width:100%;border=none;'><font size='5px'>Nota: Antes de firmar, verifique que los bienes que se encuentran en el presente listado corresponden a los que usted se hace responsable.</font></td>
-											</tr>
-											</table>";
-			
-			$contenidoPagina .= "
-												<br>
-												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-												<tr>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>_______________________________________________________</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>_______________________________________________________</td>
-												</tr>
-												<tr>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $jefe ['nombre'] . "</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>".$resultado [0] ['nombre_funcionario']."</td>
-												</tr>
-												<tr>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Almacenista General</td>
-												<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>CC : " . $_REQUEST ['funcionario'] . "</td>
-												</tr>
-												</table>";
-			
-			$contenidoPagina .= "		<br>
-												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-												<tr>
-												<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Realizo y Verificó Existencia Fìsica:</td>
-												</tr>
-												</table>
-		
-												<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-												<tr>
-												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Nombre : </td>
-												<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>________________________________________</td>
-												<td style='width:20%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>Actualizado a : </td>
-												<td style='width:30%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . date ( 'Y - m - d    H:i:s' ) . "</td>
-												</tr>
-												</table>";
-			
-			$contenidoPagina .= "<page_footer>
-														<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
-														<tr>
-														<td style='width:100%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>
-									                    <font size='1px'>Para mayor información y solicitud de inventarios: almacen@udistrital.edu.co</font>
-									                    <br>
-									                    <font size='0.5px'>Ley 734 del 2002 :Delos deberes del Servidor Pùblico. Vigilar y salvaguardar los bienes y valores que le han sido encomendados y cuidar que sean utilizados debida y racionalmente, de conformidad con los fines a que han sido destinados.</font>
-														</td>
-														</tr>
-														</table>
-									    </page_footer> ";
-			
-			$contenidoPagina .= "</page>";
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>		
+			<td style='width:10%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'>Total Inventarios:</td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $total_inventario . "</td>
+			</tr>		
+			<tr>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>
+			<td style='width:35%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'></td>		
+			<td style='width:10%;text-align:right;background:#FFFFFF ; border: 0px  #FFFFFF;'><b>% Avance:</b></td>
+			<td style='width:10%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'><b>" . $porcentaje_avance . " %</b></td>
+			</tr>		
+			</table>
+			";
 		}
-// 		echo $contenidoPagina;exit;
+		
+		$total_inventario_global = count($resultado);
+		
+		$porcentaje_avance_global = round(($num_radicados_global / $total_inventario_global) * 100,3);
+			
+
+
+
+
+		$contenidoPagina .= "
+		
+			<page_footer  backbottom='10mm'>
+			
+				
+			<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
+			<tr>
+			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>_______________________________________________________</td>
+			</tr>
+			<tr>
+			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $jefe ['nombre'] . "</td>
+			</tr>
+			<tr>
+			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Jefe Sección Almacén General e Inventarios</td>
+			</tr>
+			</table>				
+				
+				
+				
+				
+				
+			<table style='width:100%;border=none;'>
+            <tr>
+			<td style='width:50%;text-align:center;'><b>TOTAL RADICADO GLOBAL:</b></td>
+			<td style='width:50%;text-align:center;'><b>".$num_radicados_global."</b></td>
+ 		 	</tr>
+			<tr>
+			<td style='width:50%;text-align:center;'><b>TOTAL NO RADICADOS GLOBAL:</b></td>
+			<td style='width:50%;text-align:center;'><b>".$num_no_radicados_global."</b></td>
+ 		 	</tr>
+			<tr>
+			<td style='width:50%;text-align:center;'><b>TOTAL INVENTARIOS:</b></td>
+			<td style='width:50%;text-align:center;'><b>".$total_inventario_global."</b></td>
+ 		 	</tr>
+			<tr>
+			<td style='width:50%;text-align:center;'><b>% AVANCE:</b></td>
+			<td style='width:50%;text-align:center;'><b>".$porcentaje_avance_global." %</b></td>
+ 		 	</tr>
+			</table>
+			</page_footer>
+					";
+		
+		$contenidoPagina .= "</page>";
+		
 		return $contenidoPagina;
 	}
 }
@@ -391,11 +267,16 @@ $miRegistrador = new RegistradorOrden ( $this->lenguaje, $this->sql, $this->func
 $textos = $miRegistrador->documento ();
 
 ob_start ();
-$html2pdf = new \HTML2PDF ( 'L', 'LETTER', 'es', true, 'UTF-8', array (1,	1,	1,	1) );
+$html2pdf = new \HTML2PDF ( 'L', 'LETTER', 'es', true, 'UTF-8', array (
+		1,
+		2,
+		2,
+		10
+) );
 $html2pdf->pdf->SetDisplayMode ( 'fullpage' );
 $html2pdf->WriteHTML ( $textos );
 
-$html2pdf->Output ( 'Certificado  	' . date ( 'Y-m-d' ) . '.pdf', 'D' );
+$html2pdf->Output ( 'Radicado Funcionario  	' . date ( 'Y-m-d' ) . '.pdf', 'D' );
 
 ?>
 

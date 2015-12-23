@@ -57,7 +57,19 @@ class registrarForm {
 		
 		$elementos_supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+<<<<<<< HEAD
+		
+		
+		
 		$cadenaSql2 = $this->miSql->getCadenaSql ( 'nombreContratista', $_REQUEST ['documentoContratista'] );
+		
+		
+		
+		
+		
+=======
+		$cadenaSql2 = $this->miSql->getCadenaSql ( 'nombreContratista', $_REQUEST ['documentoContratista'] );
+>>>>>>> master
 		$nombreContratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql2, "busqueda" );
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -86,9 +98,24 @@ class registrarForm {
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+<<<<<<< HEAD
+		$_REQUEST['funcionario']= $_REQUEST ['usuario'];
+		$variable = "pagina=" . $miPaginaActual;
+		$variable .= "&usuario=" . $_REQUEST ['usuario'];
+		$variable .= "&funcionario=" . $_REQUEST ['funcionario'];
+		
+		
+		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+				
+			$variable	 .= "&accesoCondor=true";
+		}
+		
+		
+=======
 		
 		$variable = "pagina=" . $miPaginaActual;
 		$variable .= "&usuario=" . $_REQUEST ['usuario'];
+>>>>>>> master
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -118,16 +145,23 @@ class registrarForm {
 			
 			echo "<thead>
                 <tr>
-                <th>ID Elemento</th>
-                <th>Nivel de Inventario</th>
-                <th>Marca Elementos</th>
                 <th>Placa Elementos</th>
+<<<<<<< HEAD
+                <th>Descripción</th>
+				<th>Marca</th>
+                <th>Serie</th>
+				<th>Dependencia</th>
+			    <th>Sede</th>
+				<th>Ubicación<br>Especifica</th>
+                <th>Seleccionar</th>
+=======
                 <th>Serie Elemento</th>
                 <th>Valor Unitario</th>
                 <th>Subtotal</th>
                 <th>Total IVA</th>
                 <th>Total Ajustado</th>
 				<th>Seleccionar</th>
+>>>>>>> master
                 </tr>
             </thead>
            </table>	

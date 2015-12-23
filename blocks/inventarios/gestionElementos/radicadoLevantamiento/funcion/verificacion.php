@@ -24,14 +24,18 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		for($i = 0; $i <= 10000; $i ++) {
 			if (isset ( $_REQUEST ['item_' . $i] )) {
-				$funcionarios [] = $_REQUEST ['item_' . $i];
+				$funcionarios [] = unserialize($_REQUEST ['item_' . $i]);
 			}
 		}
+		
+		
+		
 		
 		if (! isset ( $funcionarios )) {
 			
@@ -41,9 +45,13 @@ class RegistradorOrden {
 		
 		foreach ( $funcionarios as $valor ) {
 			
+			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'Registrar_Radicacion', $valor );
 			
 			$estado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $valor, "Registrar_Radicacion" );
+			
+			
+			
 		}
 		
 		// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarFuncionariosaCargoElementos', $valor );

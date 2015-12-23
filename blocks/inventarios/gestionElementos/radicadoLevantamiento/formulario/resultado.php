@@ -108,7 +108,7 @@ class registrarForm {
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = "Funcionarios Con Invetario Físico a Cargo";
+			$atributos ["leyenda"] = "Funcionarios Con Inventario Físico a Cargo";
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			unset ( $atributos );
 			{
@@ -174,6 +174,9 @@ class registrarForm {
                 <tr>
               	  <th>Identificación</th>
 					<th>Nombre Funcionario </th>
+					<th>Sede</th>
+					<th>Dependencia</th>
+					<th>Número Elementos</th>
 					<th>Radicación <br>Inventario Físico</th> 
 					 </tr>
             </thead>
@@ -185,6 +188,9 @@ class registrarForm {
 						$mostrarHtml .= "<tr>
                     <td><center>" . $resultado [$i] ['identificacion'] . "</center></td>
                     <td><center>" . $resultado [$i] ['funcionario'] . "</center></td>
+                    <td><center>" . $resultado [$i] ['sede'] . "</center></td>
+                    <td><center>" . $resultado [$i] ['dependencia'] . "</center></td>
+                    <td><center>" . $resultado [$i] ['num_ele'] . "</center></td>
                     <td><center>		
 					";
 						
@@ -201,13 +207,18 @@ class registrarForm {
 						$atributos ['seleccionado'] = ($resultado [$i] ['radicacion'] == 'TRUE') ? true : false;
 						$atributos ['evento'] = '';
 						$atributos ['eventoFuncion'] = '';
-						$atributos ['valor'] = $resultado [$i] ['identificacion'];
+						$atributos ['valor'] = serialize ( array (
+								"identificacion" => $resultado [$i] ['identificacion'],
+								"cod_sede" => $resultado [$i] ['codigo_sede'],
+								"cod_dependencia" => $resultado [$i] ['codigo_dependencia'],
+								"num_ele" => $resultado [$i] ['num_ele']
+						) );
 						$atributos ['deshabilitado'] = false;
 						$tab ++;
 						
 						// Aplica atributos globales al control
 						$atributos = array_merge ( $atributos, $atributosGlobales );
-						$mostrarHtml .= ($resultado [$i] ['radicacion'] == 'TRUE') ? '&#8730 ' : $this->miFormulario->campoCuadroSeleccion ( $atributos );
+						$mostrarHtml .= (is_null($resultado [$i] ['radicacion']) == true) ? $this->miFormulario->campoCuadroSeleccion ( $atributos ):'&#8730';
 						
 						$mostrarHtml .= "</center> </td> </tr>";
 					}
@@ -265,14 +276,38 @@ class registrarForm {
 				echo $this->miFormulario->campoBoton ( $atributos );
 				unset ( $atributos );
 				
+				
+				
+				
+				// -----------------CONTROL: Botón ----------------------------------------------------------------
+				$esteCampo = 'botonGenerarPdf';
+				$atributos ["id"] = $esteCampo;
+				$atributos ["tabIndex"] = $tab;
+				$atributos ["tipo"] = 'boton';
+				// submit: no se coloca si se desea un tipo button genérico
+				$atributos ['submit'] = true;
+				$atributos ["estiloMarco"] = '';
+				$atributos ["estiloBoton"] = 'jqueryui';
+				// verificar: true para verificar el formulario antes de pasarlo al servidor.
+				$atributos ["verificar"] = '';
+				$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+				$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+				$tab ++;
+					
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoBoton ( $atributos );
+				unset ( $atributos );
+					
 				// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 				
-				// ---------------------------------------------------------
+
+				// ------------------Fin Division para los botones-------------------------
+				echo $this->miFormulario->division ( "fin" );
+				unset ( $atributos );
 			}
-			
-			// ------------------Fin Division para los botones-------------------------
-			echo $this->miFormulario->division ( "fin" );
-			unset ( $atributos );
+	
 		}
 		
 		if ($resultado_periodo == false) {
@@ -315,7 +350,10 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Accion";
-		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
+		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
+		$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
+		
+		
 		// $valorCodificado .= "&opcion=mensaje";
 		// $valorCodificado .= "&mensaje=mantenimiento";
 		

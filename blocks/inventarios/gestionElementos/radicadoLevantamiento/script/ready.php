@@ -2,6 +2,31 @@
 
 ?>
 
+
+     $("#radicadoLevantamiento").validationEngine({
+            promptPosition : "centerRight", 
+            scroll: false,
+            autoHidePrompt: true,
+            autoHideDelay: 2000
+	         });
+	
+
+        $(function() {
+            $("#radicadoLevantamiento").submit(function() {
+                $resultado=$("#radicadoLevantamiento").validationEngine("validate");
+                   
+                if ($resultado) {
+                
+                    return true;
+                }
+                return false;
+            });
+        });
+
+
+
+
+
 // Asociar el widget de validación al formulario
 
 
@@ -22,7 +47,14 @@ $('#<?php echo $this->campoSeguro('funcionario')?>').width(500);
               	 });
               	 
               	 
-              	            	            	 
+              	    $("#radicadoLevantamiento").mousemove(function() {
+              	    
+              	    
+              	    $("#<?php echo $this->campoSeguro('botonGenerarPdf')?>").val('false');
+              	    $("#<?php echo $this->campoSeguro('botonGuadar')?>").val('false');
+              	    
+              	    
+              	    });        	            	 
               	               	 
              	
 

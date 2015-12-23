@@ -10,9 +10,12 @@ $this->idioma ["numero_entradaTitulo"] ="Seleccione Vigencia y/o Número Entrada
 
 
 
+$this->idioma ["selec_placa"] ="Placa : ";
+$this->idioma ["selec_placaTitulo"] ="Ingrese Placa del Elemento";
 
-$this->idioma ["registro_salidas"] ="Estado:<br>Salidas";
-$this->idioma ["registro_salidasTitulo"] ="Seleccione Estado Salidas";
+
+$this->idioma ["registro_tipo"] ="Tipo de Bien:";
+$this->idioma ["registro_tipoTitulo"] ="Seleccione Estado Salidas";
 
 
 $this->idioma ["sede"] ="Sede : ";
@@ -37,8 +40,7 @@ $this->idioma ["fecha_inicioTitulo"] ="Seleccione Fecha Inicial";
 $this->idioma ["fecha_final"] ="Fecha Final : ";
 $this->idioma ["fecha_finalTitulo"] ="Seleccione Fecha Final";
 
-$this->idioma ["placa"] ="Placa : ";
-$this->idioma ["placaTitulo"] ="Ingrese Placa del Elemento";
+
 
 $this->idioma ["serie"] ="Serie : ";
 $this->idioma ["serieTitulo"] ="Ingrese Serie del Elemento";

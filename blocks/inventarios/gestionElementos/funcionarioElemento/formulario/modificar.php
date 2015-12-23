@@ -20,6 +20,7 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
+		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -82,20 +83,22 @@ class registrarForm {
 			$variable .= "&funcionario=" . $_REQUEST ['funcionario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
-			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-			$esteCampo = 'botonRegresar';
-			$atributos ['id'] = $esteCampo;
-			$atributos ['enlace'] = $variable;
-			$atributos ['tabIndex'] = 1;
-			$atributos ['estilo'] = 'textoSubtitulo';
-			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['ancho'] = '10%';
-			$atributos ['alto'] = '10%';
-			$atributos ['redirLugar'] = true;
-			echo $this->miFormulario->enlace ( $atributos );
-			
-			unset ( $atributos );
-			
+			if (! isset ( $_REQUEST ['accesoCondor'] )) {
+				
+				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+				$esteCampo = 'botonRegresar';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['enlace'] = $variable;
+				$atributos ['tabIndex'] = 1;
+				$atributos ['estilo'] = 'textoSubtitulo';
+				$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['ancho'] = '10%';
+				$atributos ['alto'] = '10%';
+				$atributos ['redirLugar'] = true;
+				echo $this->miFormulario->enlace ( $atributos );
+				
+				unset ( $atributos );
+			}
 			$esteCampo = "marcoDatosBasicos";
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
@@ -114,7 +117,14 @@ class registrarForm {
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = true;
-				$atributos ['columnas'] = 105;
+				$atributos ['columnas'] = 85;
+				
+				if (! isset ( $_REQUEST ['accesoCondor'] )) {
+					$atributos ['columnas'] = 120;
+				} else {
+					$atributos ['columnas'] = 85;
+				}
+				
 				$atributos ['filas'] = 5;
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
@@ -203,6 +213,11 @@ class registrarForm {
 			$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
 			$valorCodificado .= "&placa=" . $_REQUEST ['placa'];
 			$valorCodificado .= "&periodo=" . $_REQUEST ['periodo'];
+			$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
+			if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+				
+				$valorCodificado .= "&accesoCondor=true";
+			}
 			
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.

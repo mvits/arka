@@ -158,10 +158,19 @@ class registrarForm {
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=consultarContratista";
 		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
+<<<<<<< HEAD
+		$valorCodificado .= "&funcionario=" . $_REQUEST ['usuario'];
+		
+		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+			
+			$valorCodificado .= "&accesoCondor=true";
+		
+=======
 		$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
 		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
 			
 			$valorCodificado .= "&accesoCondor=true";
+>>>>>>> master
 		}
 		
 		/**

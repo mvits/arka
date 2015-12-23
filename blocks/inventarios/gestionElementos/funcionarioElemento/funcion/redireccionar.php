@@ -13,20 +13,42 @@ class redireccion {
 		
 		switch ($opcion) {
 			
+			
+			
+			case "noSeleccion" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=noSelecciono";
+				$variable .= "&funcionario=" . $_REQUEST['funcionario'];
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
+				if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+						
+					$variable .= "&accesoCondor=true";
+				}
+			
+				break;
+			
+			
+			
 			case "Verificacion" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
-				$variable .= "&mensaje=" . $valor[0];
-				$variable .= "&funcionario=" . $valor[1];
-				$variable .= "&usuario=".$valor[2];
+				$variable .= "&mensaje=" . $valor [0];
+				$variable .= "&funcionario=" . $_REQUEST['funcionario'];
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
+				if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+					
+					$variable .= "&accesoCondor=true";
+				}
+				
 				break;
 			
 			case "noVerificado" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=noVerificado";
-				$variable .= "&funcionario=".$valor[0];
-				$variable .= "&usuario=".$valor[1];
+				$variable .= "&funcionario=" . $valor [0];
+				$variable .= "&usuario=" . $valor [1];
 				
 				break;
 			
@@ -37,6 +59,11 @@ class redireccion {
 				$variable .= "&placa=" . $valor [0];
 				$variable .= "&funcionario=" . $valor [1];
 				$variable .= "&elemento_individual=" . $valor [2];
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
+				if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+					
+					$variable .= "&accesoCondor=true";
+				}
 				
 				break;
 			

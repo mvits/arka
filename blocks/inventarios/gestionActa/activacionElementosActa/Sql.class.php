@@ -232,7 +232,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " elemento(";
                 $cadenaSql .= "fecha_registro,nivel,tipo_bien, descripcion, cantidad, ";
                 $cadenaSql .= "unidad, valor, iva, ajuste, bodega, subtotal_sin_iva, total_iva, ";
-                $cadenaSql .= "total_iva_con,tipo_poliza, fecha_inicio_pol, fecha_final_pol,marca,serie,id_entrada,id_elemento) ";
+                $cadenaSql .= "total_iva_con,tipo_poliza, fecha_inicio_pol, fecha_final_pol,marca,serie,id_entrada,id_elemento,cantidad_por_asignar) ";
                 $cadenaSql .= " VALUES (";
                 $cadenaSql .= "'" . $variable [0] . "',";
                 $cadenaSql .= "'" . $variable [1] . "',";
@@ -253,7 +253,8 @@ class Sql extends \Sql {
                 $cadenaSql .= (is_null($variable [16]) == true) ? ' NULL , ' : "'" . $variable [16] . "',";
                 $cadenaSql .= (is_null($variable [17]) == true) ? ' NULL , ' : "'" . $variable [17] . "',";
                 $cadenaSql .= "'" . $variable [18] . "',";
-                $cadenaSql .= "'" . $variable [19] . "') ";
+                $cadenaSql .= "'" . $variable [19] . "',";
+                $cadenaSql .= "'" . $variable [20] . "') ";
                 $cadenaSql .= "RETURNING  id_elemento; ";
 
                 break;
@@ -552,7 +553,7 @@ class Sql extends \Sql {
             case "consultarElementosActa" :
                 $cadenaSql = "SELECT  ela.*, ct.elemento_nombre nivel_nombre, tb.descripcion nombre_tipo, iv.descripcion nombre_iva ";
                 $cadenaSql .= "FROM elemento_acta_recibido ela ";
-                $cadenaSql .= "JOIN  grupo.catalogo_elemento ct ON ct.elemento_id=ela.nivel ";
+                $cadenaSql .= "JOIN  catalogo.catalogo_elemento ct ON ct.elemento_id=ela.nivel ";
                 $cadenaSql .= "JOIN  tipo_bienes tb ON tb.id_tipo_bienes=ela.tipo_bien ";
                 $cadenaSql .= "JOIN  aplicacion_iva iv ON iv.id_iva=ela.iva  ";
                 $cadenaSql .= "WHERE id_acta ='" . $variable . "'  ";

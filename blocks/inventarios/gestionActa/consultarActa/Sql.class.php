@@ -195,8 +195,8 @@ class Sql extends \Sql {
 			case "consultar_nivel_inventario" :
 				
 				$cadenaSql = "SELECT ce.elemento_id, ce.elemento_codigo||' - '||ce.elemento_nombre ";
-				$cadenaSql .= "FROM grupo.catalogo_elemento  ce ";
-				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
+				$cadenaSql .= "FROM catalogo.catalogo_elemento  ce ";
+				$cadenaSql .= "JOIN catalogo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
 				$cadenaSql .= "WHERE cl.lista_activo = 1  ";
 				$cadenaSql .= "AND  ce.elemento_id > 0  ";
 				$cadenaSql .= "AND  ce.elemento_padre > 0  ";
@@ -213,9 +213,10 @@ class Sql extends \Sql {
 			
 			case "ConsultaTipoBien" :
 				
-				$cadenaSql = "SELECT  ce.elemento_tipobien , tb.descripcion  ";
-				$cadenaSql .= "FROM grupo.catalogo_elemento ce ";
-				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
+				$cadenaSql = "SELECT ge.elemento_tipobien , tb.descripcion  ";
+				$cadenaSql .= "FROM  catalogo.catalogo_elemento ce ";
+				$cadenaSql .= "JOIN  grupo.catalogo_elemento ge  ON (ge.elemento_id)::text =ce .elemento_grupoc  ";
+				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ge.elemento_tipobien  ";
 				$cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
 				
 				break;
@@ -233,7 +234,7 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "SELECT DISTINCT ra.*, \"PRO_NIT\"||' - ('||\"PRO_RAZON_SOCIAL\"||')' AS  nom_razon ";
 				$cadenaSql .= " FROM registro_actarecibido ra  ";
-				$cadenaSql .= " JOIN  arka_parametros.arka_proveedor ap ON ap.\"PRO_NIT\" =CAST(ra.proveedor AS CHAR (50))  ";
+				$cadenaSql .= " LEFT JOIN  arka_parametros.arka_proveedor ap ON ap.\"PRO_NIT\" =CAST(ra.proveedor AS CHAR (50))  ";
 				$cadenaSql .= " WHERE 1 = 1 ";
 				$cadenaSql .= " AND estado_registro = 1 ";
 				$cadenaSql .= " AND id_actarecibido = '" . $variable . "' ";
@@ -397,7 +398,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "dependencia='" . $variable ['dependencia'] . "',";
 				$cadenaSql .= "fecha_recibido='" . $variable ['fecha_registro'] . "',";
 				$cadenaSql .= "tipo_bien='" . $variable ['tipo_bien'] . "',";
-				$cadenaSql .= "proveedor='" . $variable ['nit_proveedor'] . "',";
+				$cadenaSql .= "proveedor=" . $variable ['nit_proveedor'] . ",";
 				$cadenaSql .= "ordenador_gasto='" . $variable ['ordenador'] . "',";
 				$cadenaSql .= "fecha_revision='" . $variable ['fecha_revision'] . "',";
 				$cadenaSql .= "revisor=NULL,";
@@ -420,7 +421,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "dependencia='" . $variable ['dependencia'] . "',";
 				$cadenaSql .= "fecha_recibido='" . $variable ['fecha_registro'] . "',";
 				$cadenaSql .= "tipo_bien='" . $variable ['tipo_bien'] . "',";
-				$cadenaSql .= "proveedor='" . $variable ['nit_proveedor'] . "',";
+				$cadenaSql .= "proveedor=" . $variable ['nit_proveedor'] . ",";
 				$cadenaSql .= "ordenador_gasto='" . $variable ['ordenador'] . "',";
 				$cadenaSql .= "fecha_revision='" . $variable ['fecha_revision'] . "',";
 				$cadenaSql .= "revisor=NULL,";
@@ -436,13 +437,14 @@ class Sql extends \Sql {
 			case "consultarActa" :
 				$cadenaSql = "SELECT DISTINCT ";
 				$cadenaSql .= "id_actarecibido,se.\"ESF_SEDE\" as sede, dep.\"ESF_DEP_ENCARGADA\" as dependencia, fecha_recibido, apr.\"PRO_NIT\" ||' - '|| apr.\"PRO_RAZON_SOCIAL\" as  proveedor,";
-				$cadenaSql .= "fecha_revision,revisor,observacionesacta ";
+				$cadenaSql .= "fecha_revision,revisor,observacionesacta, enlace_soporte enlace, nombre_soporte nombre_archivo,en.id_entrada ";
 				$cadenaSql .= "FROM registro_actarecibido ar ";
 				$cadenaSql .= "LEFT JOIN  arka_parametros.arka_proveedor apr ON apr.\"PRO_NIT\" = ar.proveedor::text  ";
 				$cadenaSql .= "JOIN  arka_parametros.arka_dependencia dep ON dep.\"ESF_CODIGO_DEP\" = ar.dependencia	 ";
 				$cadenaSql .= "JOIN  arka_parametros.arka_sedes se ON se.\"ESF_ID_SEDE\" = ar.sede	 ";
-				$cadenaSql .= "WHERE 1 = 1 ";
-				$cadenaSql .= "AND estado_registro = 1 ";
+				$cadenaSql .= "LEFT JOIN  entrada en ON en.acta_recibido = ar.id_actarecibido	 ";
+				$cadenaSql .= "WHERE ar.estado_registro = 1 ";
+
 				if ($variable ['numero_acta'] != '') {
 					$cadenaSql .= " AND id_actarecibido = '" . $variable ['numero_acta'] . "' ";
 				}
@@ -456,7 +458,7 @@ class Sql extends \Sql {
 				if ($variable ['sede'] != '') {
 					$cadenaSql .= " AND ar.sede = '" . $variable ['sede'] . "' ";
 				}
-		
+				
 				if ($variable ['dependencia'] != '') {
 					$cadenaSql .= " AND ar.dependencia = '" . $variable ['dependencia'] . "' ";
 				}
@@ -465,7 +467,6 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND ar.fecha_registro BETWEEN CAST ( '" . $variable ['fecha_inicial'] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable ['fecha_final'] . "' AS DATE)  ";
 				}
-				
 				
 				$cadenaSql .= " ; ";
 				
@@ -488,7 +489,7 @@ class Sql extends \Sql {
 			case "consultarElementosActa" :
 				$cadenaSql = "SELECT  ela.*, ct.elemento_nombre nivel_nombre, tb.descripcion nombre_tipo, iv.descripcion nombre_iva ";
 				$cadenaSql .= "FROM elemento_acta_recibido ela ";
-				$cadenaSql .= "JOIN  grupo.catalogo_elemento ct ON ct.elemento_id=ela.nivel ";
+				$cadenaSql .= "JOIN  catalogo.catalogo_elemento ct ON ct.elemento_id=ela.nivel ";
 				$cadenaSql .= "JOIN  tipo_bienes tb ON tb.id_tipo_bienes=ela.tipo_bien ";
 				$cadenaSql .= "JOIN  aplicacion_iva iv ON iv.id_iva=ela.iva  ";
 				$cadenaSql .= "WHERE id_acta ='" . $variable . "'  ";
@@ -592,7 +593,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "fecha_registro='" . date ( 'Y-m-d' ) . "' ";
 				$cadenaSql .= " WHERE id_actarecibido = '" . $variable . "' ";
 				$cadenaSql .= "RETURNING id_actarecibido";
-				 
+				
 				break;
 			
 			case "tipoOrden" :

@@ -161,6 +161,20 @@ class Sql extends \Sql {
 				
 			case "consultarElementosSupervisor" :
 				$cadenaSql = "SELECT id_elemento_ind,elemento_nombre as nivel, marca, ei.placa,ei.serie, valor, subtotal_sin_iva, ";
+<<<<<<< HEAD
+				$cadenaSql .= " total_iva, total_iva_con, elemento.descripcion,
+						    sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia,espacios.\"ESF_NOMBRE_ESPACIO\" espacio_fisico ";
+				$cadenaSql .= " FROM elemento ";
+				$cadenaSql .= " JOIN elemento_individual ei ON elemento.id_elemento=ei.id_elemento_gen  ";
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=ei.ubicacion_elemento ';
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=ei.ubicacion_elemento ';
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
+				$cadenaSql .= " JOIN catalogo.catalogo_elemento ON catalogo.catalogo_elemento.elemento_id=nivel ";
+				$cadenaSql .= " WHERE  ";
+				$cadenaSql .= " ei.estado_registro=TRUE  ";
+				$cadenaSql .= " AND ei.estado_asignacion=FALSE  ";
+				$cadenaSql .= " AND ei.placa IS NOT NULL   ";
+=======
 				$cadenaSql .= " total_iva, total_iva_con ";
 				$cadenaSql .= " FROM elemento ";
 				$cadenaSql .= " JOIN elemento_individual ei ON elemento.id_elemento=ei.id_elemento_gen  ";
@@ -168,6 +182,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE  ";
 				$cadenaSql .= " ei.estado_registro=TRUE  ";
 				$cadenaSql .= " AND ei.estado_asignacion IS NULL  ";
+>>>>>>> master
 				$cadenaSql.= " AND funcionario='" . $variable . "' ORDER BY nivel ASC ";
 				break;
 			

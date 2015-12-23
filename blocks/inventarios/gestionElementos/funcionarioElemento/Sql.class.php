@@ -163,10 +163,14 @@ class Sql extends \Sql {
 			
 			case "jefe_recursos_fisicos" :
 				
-				$cadenaSql = "	SELECT \"FUN_IDENTIFICACION\" 	identificacion, \"FUN_NOMBRE\" nombre, \"FUN_CARGO\" cargo ";
-				$cadenaSql .= "	FROM arka_parametros.arka_funcionarios  ";
-				$cadenaSql .= "WHERE \"FUN_IDENTIFICACION\"='14231658' ";
-				$cadenaSql .= "			AND \"FUN_ESTADO\"='A';";
+				$cadenaSql = 'SELECT "FUN_IDENTIFICACION" identificacion, "FUN_NOMBRE" nombre ';
+				$cadenaSql .= " FROM arka_parametros.arka_funcionarios ";
+				$cadenaSql .= " WHERE 1=1 ";
+				$cadenaSql .= ' AND "FUN_ESTADO"=';
+				$cadenaSql .= "'A'  ";
+				$cadenaSql .= ' AND "FUN_CARGO" ';
+				$cadenaSql .= " ='JEFE DE SECCION' ";
+				$cadenaSql .= ' AND "FUN_DEP_COD_ACADEMICA"=60 ; ';
 				
 				break;
 			
@@ -220,6 +224,7 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT DISTINCT  \"ESF_ID_SEDE\", \"ESF_SEDE\" ";
 				$cadenaSql .= " FROM arka_parametros.arka_sedes ";
 				$cadenaSql .= " WHERE   \"ESF_ESTADO\"='A'";
+				$cadenaSql .= " AND \"ESF_ID_SEDE\"<>'PAS' ";
 				
 				break;
 			
@@ -245,7 +250,7 @@ class Sql extends \Sql {
 				
 				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\", \"FUN_IDENTIFICACION\" ||' - '||  \"FUN_NOMBRE\" ";
 				$cadenaSql .= "FROM  arka_parametros.arka_funcionarios ";
-				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
+				// $cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
 				
 				break;
 			
@@ -289,11 +294,12 @@ class Sql extends \Sql {
 											ELSE  ' '
 											END  marca_existencia,
 										\"FUN_NOMBRE\" nombre_funcionario, 					
-                						sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia, 
+                						sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia,espacios.\"ESF_NOMBRE_ESPACIO\" espacio_fisico, 
                 						CASE
                 						WHEN  tfs.descripcion IS  NULL THEN 'Activo'
 										ELSE  tfs.descripcion  
-                						END   as estado_bien, ele.descripcion descripcion_elemento, eli.confirmada_existencia , eli.tipo_confirmada  	";
+                						END   as estado_bien, ele.descripcion descripcion_elemento, eli.confirmada_existencia , eli.tipo_confirmada, espacios.\"ESF_NOMBRE_ESPACIO\" espaciofisico,
+										crn.\"CON_IDENTIFICACION\"||'-'||crn.\"CON_NOMBRE\" contratista " ;
 				$cadenaSql .= "FROM elemento_individual  eli ";
 				$cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
 				$cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes = ele.tipo_bien ";
@@ -303,10 +309,27 @@ class Sql extends \Sql {
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
-				$cadenaSql .= "WHERE 1=1 ";
-				$cadenaSql .= " AND 	tb.id_tipo_bienes <> 1 ";
-				$cadenaSql .= " AND 	eli.estado_registro = 'TRUE'  ";
-				$cadenaSql .= " AND eli.funcionario= '" . $variable . "' ";
+				$cadenaSql .= ' LEFT JOIN  asignar_elementos asl ON asl.id_elemento=eli.id_elemento_ind ';
+				$cadenaSql .= ' LEFT JOIN  arka_parametros.arka_contratistas crn ON crn."CON_IDENTIFICACION"=asl.contratista  ';	
+				$cadenaSql .= "WHERE tb.id_tipo_bienes <> 1 ";
+				$cadenaSql .= " AND eli.estado_registro = 'TRUE'  ";
+				
+				$cadenaSql .= " AND eli.funcionario= '" . $variable ['funcionario'] . "' ";
+				
+				if ($variable ['sede'] != '') {
+					$cadenaSql .= ' AND sas."ESF_ID_SEDE" = ';
+					$cadenaSql .= " '" . $variable ['sede'] . "' ";
+				}
+				
+				if ($variable ['dependencia'] != '') {
+					$cadenaSql .= ' AND ad ."ESF_CODIGO_DEP" = ';
+					$cadenaSql .= " '" . $variable ['dependencia'] . "' ";
+				}
+				if ($variable ['ubicacion'] != '') {
+					$cadenaSql .= ' AND espacios."ESF_ID_ESPACIO" = ';
+					$cadenaSql .= " '" . $variable ['ubicacion'] . "' ";
+				}
+				$cadenaSql .= " OR asl.estado = 1  ";
 				$cadenaSql .= " ORDER BY dependencia DESC   ;  ";
 				
 				break;
@@ -610,6 +633,25 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM grupo.catalogo_elemento ce ";
 				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
 				$cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
+				
+				break;
+			
+			case "ubicacionesConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  ef.\"ESF_ID_ESPACIO\" , ef.\"ESF_NOMBRE_ESPACIO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ef  ";
+				$cadenaSql .= " JOIN arka_parametros.arka_dependencia ad ON ad.\"ESF_ID_ESPACIO\"=ef.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_CODIGO_DEP\"='" . $variable [0] . "' ";
+				$cadenaSql .= " AND  sa.\"ESF_ID_SEDE\"='" . $variable [1] . "' ";
+				$cadenaSql .= " AND  ef.\"ESF_ESTADO\"='A'";
+				
+				break;
+			
+			case "consultarFuncionario" :
+				
+				$cadenaSql = "SELECT \"FUN_IDENTIFICACION\" identificacion , \"FUN_NOMBRE\" nombre ";
+				$cadenaSql .= "FROM  arka_parametros.arka_funcionarios ";
+				$cadenaSql .= "WHERE \"FUN_IDENTIFICACION\"='" . $variable . "'";
 				
 				break;
 		}

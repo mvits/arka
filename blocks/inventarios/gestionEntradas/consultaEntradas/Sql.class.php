@@ -162,12 +162,13 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM entrada  ";
 				$cadenaSql .= "WHERE entrada.cierre_contable='f' ";
 				$cadenaSql .= "ORDER BY id_entrada DESC ;";
+				
 				break;
 			
 			case "proveedor_informacion" :
-				$cadenaSql = " SELECT PRO_NIT,PRO_RAZON_SOCIAL  ";
-				$cadenaSql .= " FROM PROVEEDORES ";
-				$cadenaSql .= " WHERE PRO_NIT='" . $variable . "'";
+				$cadenaSql = " SELECT \"PRO_NIT\", \"PRO_RAZON_SOCIAL\"  ";
+				$cadenaSql .= " FROM arka_parametros.arka_proveedor ";
+				$cadenaSql .= " WHERE \"PRO_NIT\"='" . $variable . "'";
 				
 				break;
 			

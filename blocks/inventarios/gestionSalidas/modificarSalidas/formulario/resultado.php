@@ -49,8 +49,6 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$conexion = "sicapital";
-		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		if (isset ( $_REQUEST ['anio'] ) && $_REQUEST ['anio'] != '') {
 			$anio = $_REQUEST ['anio'];
@@ -176,8 +174,8 @@ class registrarForm {
 				$variable .= "&opcion=modificar";
 				$variable .= "&usuario=".$_REQUEST['usuario'];
 				// $variable .= "&usuario=" . $miSesion->getSesionUsuarioId ();
-				$variable .= "&numero_salida=" . $salidas [$i] [1];
-				$variable .= "&numero_entrada=" . $salidas [$i] [2];
+				$variable .= "&numero_salida=" . $salidas [$i] ['id_salida'];
+				$variable .= "&numero_entrada=" . $salidas [$i] ['id_entrada'];
 				
 				$arreglo = array (
 						$salidas [$i] [0],
@@ -193,10 +191,10 @@ class registrarForm {
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$mostrarHtml = "<tr>
-                    <td><center>" . $salidas [$i] [0] . "</center></td>
-                    <td><center>" . $salidas [$i] [5] . "</center></td>
-                    <td><center>" . $salidas [$i] [6] . "</center></td>
-                    <td><center>" . $salidas [$i] [3] . "</center></td>
+                    <td><center>" . $salidas [$i] ['vigencia'] . "</center></td>
+                    <td><center>" . $salidas [$i] ['salidas'] . "</center></td>
+                    <td><center>" . $salidas [$i] ['entradas'] . "</center></td>
+                    <td><center>" . $salidas [$i] ['fecha_registro'] . "</center></td>
                     <td><center>" . $salidas[$i]['identificacion'] . "</center></td>
                     <td><center>" . $salidas[$i] ['nombre_fun'] . "</center></td>";
 				
