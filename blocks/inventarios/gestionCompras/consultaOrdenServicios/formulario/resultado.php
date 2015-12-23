@@ -216,7 +216,7 @@ class registrarForm {
 				$mostrarHtml = "<tr>
                     <td><center>" . $Orden [$i] ['tipo_contrato'] . "</center></td>
                     <td><center>" . $Orden [$i] ['identificador'] . "</center></td>		
-                    <td><center>" . $Orden [$i] ['proveedor'] . "</center></td>
+                    <td><center>" . $Orden [$i] ['contratista'] . "</center></td>
                     <td><center>" . $Orden [$i] ['sede'] . "</center></td>
                     <td><center>" . $Orden [$i] ['dependencia'] . "</center></td>
                     <td><center>

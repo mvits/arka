@@ -49,11 +49,16 @@ class RegistradorOrden {
 				if ($archivoImagen ['error'] == 0) {
 					
 					if ($archivoImagen ['type'] != 'image/jpeg') {
-// 						redireccion::redireccionar ( 'noFormatoImagen' );
-						\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'noFormatoImagen', $_REQUEST['usuario'] );
+						// redireccion::redireccionar ( 'noFormatoImagen' );
+						\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'noFormatoImagen', $_REQUEST ['usuario'] );
 						exit ();
 					}
 				}
+				
+				$_REQUEST ['valor'] = round ( $_REQUEST ['valor'], 2 );
+				$_REQUEST ['subtotal_sin_iva'] = round ( $_REQUEST ['subtotal_sin_iva'], 2 );
+				$_REQUEST ['total_iva'] = round ( $_REQUEST ['total_iva'], 2 );
+				$_REQUEST ['total_iva_con'] = round ( $_REQUEST ['total_iva_con'], 2 );
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_iva', $_REQUEST ['iva'] );
 				
@@ -74,9 +79,9 @@ class RegistradorOrden {
 							$_REQUEST ['unidad'],
 							$_REQUEST ['valor'],
 							$_REQUEST ['iva'],
-							$_REQUEST ['cantidad'] * $_REQUEST ['valor'],
-							$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva,
-							round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva ),
+							$_REQUEST ['subtotal_sin_iva'],
+							$_REQUEST ['total_iva'],
+							$_REQUEST ['total_iva_con'],
 							($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : null,
 							($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
 							$_REQUEST ['id_orden'] 
@@ -84,7 +89,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 					
-					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,'ingresar_elemento_tipo_1'); 
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, 'ingresar_elemento_tipo_1' );
 				} else if ($_REQUEST ['id_tipo_bien'] == 2) {
 					
 					$arreglo = array (
@@ -96,9 +101,10 @@ class RegistradorOrden {
 							$_REQUEST ['unidad'],
 							$_REQUEST ['valor'],
 							$_REQUEST ['iva'],
-							$_REQUEST ['cantidad'] * $_REQUEST ['valor'],
-							$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva,
-							round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva ),
+							$_REQUEST ['iva'],
+							$_REQUEST ['subtotal_sin_iva'],
+							$_REQUEST ['total_iva'],
+							$_REQUEST ['total_iva_con'],
 							($_REQUEST ['marca'] != '') ? $_REQUEST ['marca'] : null,
 							($_REQUEST ['serie'] != '') ? $_REQUEST ['serie'] : null,
 							$_REQUEST ['id_orden'] 
@@ -106,7 +112,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 					
-					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo,'ingresar_elemento_tipo_1');
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, 'ingresar_elemento_tipo_1' );
 				} else if ($_REQUEST ['id_tipo_bien'] == 3) {
 					
 					if ($_REQUEST ['tipo_poliza'] == 0) {
@@ -119,9 +125,9 @@ class RegistradorOrden {
 								$_REQUEST ['unidad'],
 								$_REQUEST ['valor'],
 								$_REQUEST ['iva'],
-								$_REQUEST ['cantidad'] * $_REQUEST ['valor'],
-								$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva,
-								round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva ),
+								$_REQUEST ['subtotal_sin_iva'],
+								$_REQUEST ['total_iva'],
+								$_REQUEST ['total_iva_con'],
 								$_REQUEST ['tipo_poliza'],
 								NULL,
 								NULL,
@@ -139,9 +145,9 @@ class RegistradorOrden {
 								$_REQUEST ['unidad'],
 								$_REQUEST ['valor'],
 								$_REQUEST ['iva'],
-								$_REQUEST ['cantidad'] * $_REQUEST ['valor'],
-								$_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva,
-								round ( $_REQUEST ['cantidad'] * $_REQUEST ['valor'] + $_REQUEST ['cantidad'] * $_REQUEST ['valor'] * $valor_iva ),
+								$_REQUEST ['subtotal_sin_iva'],
+								$_REQUEST ['total_iva'],
+								$_REQUEST ['total_iva_con'],
 								$_REQUEST ['tipo_poliza'],
 								$_REQUEST ['fecha_inicio'],
 								$_REQUEST ['fecha_final'],
@@ -153,7 +159,7 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
 					
-					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo,'ingresar_elemento_tipo_2');
+					$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, 'ingresar_elemento_tipo_2' );
 				}
 				
 				$datos = array (
@@ -161,7 +167,7 @@ class RegistradorOrden {
 						$_REQUEST ['id_orden'],
 						$fechaActual,
 						(! isset ( $_REQUEST ['registroOrden'] )) ? $_REQUEST ['arreglo'] : $_REQUEST ['registroOrden'],
-						$_REQUEST['usuario'],
+						$_REQUEST ['usuario'] 
 				);
 				
 				//
@@ -183,11 +189,11 @@ class RegistradorOrden {
 					
 					$cadenaSql = $this->miSql->getCadenaSql ( 'ElementoImagen', $arreglo );
 					
-					$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo,'ElementoImagen');
+					$imagen = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, 'ElementoImagen' );
 				}
 				
 				if ($elemento) {
-					$this->miConfigurador->setVariableConfiguracion("cache",true);
+					$this->miConfigurador->setVariableConfiguracion ( "cache", true );
 					\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'inserto', $datos );
 					
 					exit ();
@@ -415,7 +421,7 @@ class RegistradorOrden {
 									);
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 									
-									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$arreglo,'ingresar_elemento_tipo_1'); 
+									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, 'ingresar_elemento_tipo_1' );
 								} else if ($datos [$i] ['Tipo_Bien'] == 2) {
 									
 									$arreglo = array (
@@ -437,7 +443,7 @@ class RegistradorOrden {
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_1', $arreglo );
 									
-									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,'ingresar_elemento_tipo_1'); 
+									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, 'ingresar_elemento_tipo_1' );
 								} else if ($datos [$i] ['Tipo_Bien'] == 3) {
 									
 									if ($datos [$i] ['Tipo_poliza'] == 0) {
@@ -486,7 +492,7 @@ class RegistradorOrden {
 									
 									$cadenaSql = $this->miSql->getCadenaSql ( 'ingresar_elemento_tipo_2', $arreglo );
 									
-									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$arreglo,'ingresar_elemento_tipo_2');
+									$elemento_id = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, 'ingresar_elemento_tipo_2' );
 								}
 							}
 							
@@ -495,12 +501,12 @@ class RegistradorOrden {
 									$_REQUEST ['id_orden'],
 									date ( 'Y-m-d' ),
 									(! isset ( $_REQUEST ['registroOrden'] )) ? $_REQUEST ['arreglo'] : $_REQUEST ['registroOrden'],
-									$_REQUEST['usuario'] 
-									
-							);
+									$_REQUEST ['usuario'] 
+							)
+							;
 							
 							if ($elemento_id && $_REQUEST ['id_orden']) {
-								$this->miConfigurador->setVariableConfiguracion("cache",true);
+								$this->miConfigurador->setVariableConfiguracion ( "cache", true );
 								\inventarios\gestionActa\registrarElementoOrden\funcion\redireccion::redireccionar ( 'inserto_cargue_masivo', $datos );
 								exit ();
 							} else {

@@ -10,6 +10,35 @@ $this->idioma ["unidad_ejecutoraTitulo"] ="Seleccione Unidad Ejecutoria ";
 
 
 // -- Modificar Elementos
+
+
+
+$this->idioma ["nombre_razon_proveedor"] = "Razón Social :";
+$this->idioma ["nombre_razon_proveedorTitulo"] = "Ingrese Razón Social";
+
+$this->idioma ["identifcacion_proveedor"] = "Nit :";
+$this->idioma ["identifcacion_proveedorTitulo"] = "Ingrese Nit De Acuerdo con  la Razón Social";
+
+$this->idioma ["direccion_proveedor"] = "Dirección :";
+$this->idioma ["direccion_proveedorTitulo"] = "Ingrese Dirección del Proveedor";
+
+$this->idioma ["telefono_proveedor"] = "Teléfono Fijo :";
+$this->idioma ["telefono_proveedorTitulo"] = "Ingrese Teléfono Fijo del Proveedor";
+
+$this->idioma ["nombre_contratista"] = "Nombre Contratista :";
+$this->idioma ["nombre_contratistaTitulo"] = "Ingrese Nombre del Contratista";
+
+
+$this->idioma ["identifcacion_contratista"] = "Identificación Contratista:";
+$this->idioma ["identifcacion_contratistaTitulo"] = "Ingrese Identificación del Contratista";
+
+
+$this->idioma ["cargo_contratista"] = "Cargo :";
+$this->idioma ["cargo_contratistaTitulo"] = "Ingrese Cargo del Contratista";
+
+//--------------------
+
+
 $this->idioma ["botonAceptarElemento"] = "Actualizar Elemento ";
 
 $this->idioma ["marca"] = "Marca : ";

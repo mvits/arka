@@ -1014,8 +1014,7 @@ class registrarForm {
 			$atributos ['marco'] = false;
 			$tab = 1;
 			// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
-			
-			// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
+						// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
 			$atributos ['tipoEtiqueta'] = 'inicio';
 			echo $this->miFormulario->formulario ( $atributos );
 			{
@@ -1110,15 +1109,27 @@ class registrarForm {
 					
 					$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 					
-					$variable = "action=consultaOrdenServicios";
-					$variable .= "&pagina=consultaOrdenServicios";
-					$variable .= "&bloque=consultaOrdenServicios";
-					$variable .= "&bloqueGrupo=inventarios/gestionCompras/";
-					$variable .= "&opcion=generarDocumento";
-					$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
-					$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 					
+					
+					$variable = "pagina=gestionDisponibilidadOrden";
+					$variable .= "&opcion=cargarDisponibilidad";
+					$variable .= "&id_orden=" . $_REQUEST ['id_orden'];;
+					$variable .= "&arreglo=" . "";
+					$variable .= "&usuario=" . $_REQUEST['usuario'];
+					$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
 					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+						
+					
+					
+// 					$variable = "action=consultaOrdenServicios";
+// 					$variable .= "&pagina=consultaOrdenServicios";
+// 					$variable .= "&bloque=consultaOrdenServicios";
+// 					$variable .= "&bloqueGrupo=inventarios/gestionCompras/";
+// 					$variable .= "&opcion=generarDocumento";
+// 					$variable .= "&id_orden=" . $_REQUEST ['id_orden'];
+// 					$variable .= "&mensaje_titulo=" . $_REQUEST ['mensaje_titulo'];
+					
+// 					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 					
 					echo "&nbsp&nbsp&nbsp&nbsp&nbsp";
 					// -----------------CONTROL: Botón ----------------------------------------------------------------
@@ -1127,7 +1138,7 @@ class registrarForm {
 					$atributos ['enlace'] = $variable;
 					$atributos ['tabIndex'] = 1;
 					$atributos ['estilo'] = 'textoSubtitulo';
-					$atributos ['enlaceTexto'] = "<< Generar PDF Documento Orden >>";
+					$atributos ['enlaceTexto'] = "<< Registrar Información Presupuestal >>";
 					$atributos ['ancho'] = '10%';
 					$atributos ['alto'] = '10%';
 					$atributos ['redirLugar'] = true;

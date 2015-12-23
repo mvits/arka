@@ -45,50 +45,35 @@ class RegistradorOrden {
 				$_REQUEST ['nombre_supervisor'],
 				$_REQUEST ['cargo_supervisor'],
 				$_REQUEST ['dependencia_supervisor'],
-				$_REQUEST ['sede_super'],
-				
-				)
-		;
-		
+				$_REQUEST ['sede_super'] 
+		);
 		
 		// Registro Supervisor
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarSupervisor', $datosSupervisor );
-		$id_supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$datosSupervisor,'insertarSupervisor');
+		$id_supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosSupervisor, 'insertarSupervisor' );
 		
-		$datosContratistaC = array (
-				$_REQUEST ['nombre_razon_contratista'],
+		$datosProveedor = array (
+				$_REQUEST ['nombre_razon_proveedor'],
+				$_REQUEST ['identifcacion_proveedor'],
+				$_REQUEST ['direccion_proveedor'],
+				$_REQUEST ['telefono_proveedor'] 
+		);
+		
+		// Registro Proveedor
+		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarProveedor', $datosProveedor );
+		
+		$id_Proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosProveedor, 'insertarProveedor' );
+		
+		$datosContratista = array (
+				$_REQUEST ['nombre_contratista'],
 				$_REQUEST ['identifcacion_contratista'],
-				$_REQUEST ['direccion_contratista'],
-				$_REQUEST ['telefono_contratista'],
 				$_REQUEST ['cargo_contratista'] 
 		);
 		
 		// Registro Contratista
-		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarContratista', $datosContratistaC );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarContratista', $datosContratista );
 		
-		$id_ContratistaC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$datosContratistaC,'insertarContratista');
-		
-		// Registro Orden
-		
-		$arreglo = array (
-				$fechaActual,
-				$_REQUEST ['vigencia_disponibilidad'],
-				$_REQUEST ['diponibilidad'],
-				$_REQUEST ['valor_disponibilidad'],
-				$_REQUEST ['fecha_diponibilidad'],
-				$_REQUEST ['valorLetras_disponibilidad'],
-				$_REQUEST ['vigencia_disponibilidad'],
-				$_REQUEST ['registro'],
-				$_REQUEST ['valor_registro'],
-				$_REQUEST ['fecha_registro'],
-				$_REQUEST ['valorL_registro'],
-				$_REQUEST ['unidad_ejecutora'] 
-		);
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarInformacionPresupuestal', $arreglo );
-		
-		$info_presupuestal = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo,'insertarInformacionPresupuestal');
-		// var_dump ( $_REQUEST );
+		$id_Contratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosContratista, 'insertarContratista' );
 		
 		switch ($_REQUEST ['tipo_orden']) {
 			case '1' :
@@ -114,7 +99,7 @@ class RegistradorOrden {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consecutivo_servicios', date ( 'Y' ) );
 				
-				$consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda");
+				$consecutivo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				$consecutivo_compra = 'NULL';
 				if (is_null ( $consecutivo [0] [0] )) {
 					
@@ -128,50 +113,53 @@ class RegistradorOrden {
 		}
 		
 		$datosOrden = array (
-				$_REQUEST ['tipo_orden'],
-				date ( 'Y' ),
-				$consecutivo_servicio,
-				$consecutivo_compra,
-				date ( 'Y-m-d' ),
-				$info_presupuestal [0] [0],
-				$_REQUEST ['dependencia_solicitante'],
-				$_REQUEST ['sede'],
-				$_REQUEST ['rubro'],
-				$_REQUEST ['objeto_contrato'],
-				isset ( $_REQUEST ['polizaA'] ),
-				isset ( $_REQUEST ['polizaB'] ),
-				isset ( $_REQUEST ['polizaC'] ),
-				isset ( $_REQUEST ['polizaD'] ),
-				$_REQUEST ['numero_dias'],
-				$_REQUEST ['fecha_inicio_pago'],
-				$_REQUEST ['fecha_final_pago'],
-				$_REQUEST ['forma_pago'],
-				$id_ContratistaC [0] [0],
-				$id_supervisor [0] [0],
-				$_REQUEST ['id_ordenador'],
-				$_REQUEST ['tipo_ordenador'] 
+				"tipo_orden" => $_REQUEST ['tipo_orden'],
+				"vigencia" => date ( 'Y' ),
+				"consecutivo_servicio" => $consecutivo_servicio,
+				"consecutivo_compras" => $consecutivo_compra,
+				"fecha_registro" => date ( 'Y-m-d' ),
+				"dependencia_solicitante" => $_REQUEST ['dependencia_solicitante'],
+				"sede_solicitante" => $_REQUEST ['sede'],
+				"objeto_contrato"=>$_REQUEST ['objeto_contrato'],
+				"poliza1"=>isset ( $_REQUEST ['polizaA'] ),
+				"poliza2"=>isset ( $_REQUEST ['polizaB'] ),
+				"poliza3"=>isset ( $_REQUEST ['polizaC'] ),
+				"poliza4"=>isset ( $_REQUEST ['polizaD'] ),
+				"duracion_pago"=>$_REQUEST ['numero_dias'],
+				"fecha_inicio_pago"=>$_REQUEST ['fecha_inicio_pago'],
+				"fecha_final_pago"=>$_REQUEST ['fecha_final_pago'],
+				"forma_pago"=>$_REQUEST ['forma_pago'],
+				"id_contratista"=>$id_Contratista [0] [0],
+				"id_supervisor"=>$id_supervisor [0] [0],
+				"id_ordenador_encargado"=>$_REQUEST ['id_ordenador'],
+				"tipo_ordenador"=>$_REQUEST ['tipo_ordenador'],
+				"id_proveedor"=>$id_Proveedor [0] [0] 
 		);
+		
+		
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarOrden', $datosOrden );
 		
-		$consecutivos_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ,$datosOrden,'insertarOrden');
+		
+		$consecutivos_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosOrden, 'insertarOrden' );
 		
 		$consecutivo_orden = $consecutivos_orden [0];
 		
 		if ($consecutivo_orden) {
 			
-			
-			for($i=0;$i<=1;$i++){
+			for($i = 0; $i <= 1; $i ++) {
 				
-				if (! is_null ( $consecutivo_orden[$i] )) {
-					$consecutivo = $consecutivo_orden[$i];
+				if (! is_null ( $consecutivo_orden [$i] )) {
+					$consecutivo = $consecutivo_orden [$i];
 				}
-				
 			}
 			
 			$datos = "NÚMERO DE " . $nombre . " # " . $consecutivo . "<br> Y VIGENCIA " . date ( 'Y' );
-			$this->miConfigurador->setVariableConfiguracion("cache",true);
-			redireccion::redireccionar ( 'inserto', array($datos,$consecutivo_orden[2]) );
+			$this->miConfigurador->setVariableConfiguracion ( "cache", true );
+			redireccion::redireccionar ( 'inserto', array (
+					$datos,
+					$consecutivo_orden [2] 
+			) );
 			exit ();
 		} else {
 			

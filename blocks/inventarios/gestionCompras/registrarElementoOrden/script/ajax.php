@@ -76,8 +76,66 @@ $cadenaNumeroOrden = $this->miConfigurador->fabricaConexiones->crypto->codificar
 $urlFinalNumeroOrden = $url . $cadenaNumeroOrden;
 
 
+
+// Variables
+$cadenaACodificariva = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificariva .= "&procesarAjax=true";
+$cadenaACodificariva .= "&action=index.php";
+$cadenaACodificariva .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificariva .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificariva .= "&funcion=consultarIva";
+$cadenaACodificariva .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadenaiva = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificariva, $enlace );
+
+// URL definitiva
+$urlFinaliva = $url . $cadenaiva;
+
+
+
 ?>
 <script type='text/javascript'>
+
+
+
+
+
+
+function resetIva(elem, request, response){
+	  $.ajax({
+	    url: "<?php echo $urlFinaliva?>",
+	    dataType: "json",
+	    success: function(data){ 
+
+
+
+
+	        if(data[0]!=" "){
+
+	            $("#<?php echo $this->campoSeguro('iva')?>").html('');
+	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('iva')?>");
+	            $.each(data , function(indice,valor){
+
+	            	$("<option value='"+data[ indice ].id_iva+"'>"+data[ indice ].descripcion+"</option>").appendTo("#<?php echo $this->campoSeguro('iva')?>");
+	            	
+	            });
+	            
+	            
+	            $('#<?php echo $this->campoSeguro('iva')?>').width(150);
+	            $("#<?php echo $this->campoSeguro('iva')?>").select2();
+	            
+	          
+	            
+		        }
+	    			
+
+	    }
+		                    
+	   });
+	};
+
 
 
 

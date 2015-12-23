@@ -296,7 +296,6 @@ class RegistradorOrden {
 		return $tipo_orden;
 	}
 	function documento() {
-		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -310,17 +309,26 @@ class RegistradorOrden {
 		
 		$tipo_orden = ($orden ['tipo_orden'] == '1') ? "ORDEN DE COMPRA" : (($orden ['tipo_orden']) ? "ORDEN DE SERVICIOS" : " ");
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'informacionPresupuestal', $orden ['info_presupuestal'] );
-		$info_presupuestal = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		$info_presupuestal = $info_presupuestal [0];
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'informacionPresupuestal', $orden ['info_presupuestal'] );
+		// $info_presupuestal = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		// $info_presupuestal = $info_presupuestal [0];
 		
 		// var_dump ( $info_presupuestal );
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarRubro', $orden ['rubro'] );
-		$rubro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		$rubro = $rubro [0];
+		// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarRubro', $orden ['rubro'] );
+		// $rubro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		// $rubro = $rubro [0];
 		
 		// var_dump ( $rubro );
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarInformaciónDisponibilidad', $_REQUEST ['id_orden'] );
+		
+		$infDisponibilidad = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarInformaciónRegistro', $_REQUEST ['id_orden'] );
+		$inRegistro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		// var_dump($inRegistro);exit;
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarSupervisor', $orden ['id_supervisor'] );
 		$supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -332,12 +340,15 @@ class RegistradorOrden {
 		// $dependencia_supervisor = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		// $dependencia_supervisor = $dependencia_supervisor [0];
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarCosntraistaServicios', $orden ['id_contratista'] );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarProveedor', $orden ['id_proveedor'] );
+		$datosProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$datosProveedor = $datosProveedor [0];
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarContratistas', $orden ['id_contratista'] );
 		$datosContratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$datosContratista = $datosContratista [0];
-		
-		// var_dump ( $datosContratista );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'polizas' );
 		$polizas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -445,7 +456,7 @@ class RegistradorOrden {
 		    <table style='width:100%;'>
 			<tr> 
 			<td style='width:50%;'>Dependencia : " . $orden ['nombre_dependencia'] . " </td>
-			<td style='width:50%;'>Rubro: " . $rubro [0] . "</td>		
+			<td style='width:50%;'>Sede : " . $orden ['nombre_sede'] . " </td>
 			</tr>
 			</table>	
 
@@ -480,15 +491,22 @@ class RegistradorOrden {
 
             <table style='width:100%;'>
 			<tr> 
-			<td style='width:50%;'>Nombre o Razón Social : " . $datosContratista ['nombre_razon_social'] . " </td>
-			<td style='width:50%;'>Cedula o Nit : " . $datosContratista ['identificacion'] . " </td>
+			<td style='width:50%;'>Razón Social : " . $datosProveedor ['razon_social'] . " </td>
+			<td style='width:50%;'>Nit : " . $datosProveedor ['identificacion'] . " </td>
 			</tr>
 			<tr> 
-			<td style='width:50%;'>Dirección : " . $datosContratista ['direccion'] . " </td>
-			<td style='width:50%;'>Telefono : " . $datosContratista ['telefono'] . " </td>
+			<td style='width:50%;'>Dirección : " . $datosProveedor ['direccion'] . " </td>
+			<td style='width:50%;'>Telefono : " . $datosProveedor ['telefono'] . " </td>
 			</tr>		
-			</table>	
-
+			</table>
+					
+  			 <table style='width:100%;'>
+			<tr> 
+			<td style='width:50%;'>Nombre Contratista : " . $datosContratista ['nombres'] . " </td>
+			<td style='width:50%;'>Identificación : " . $datosContratista ['identificacion'] . " </td>
+			</tr>
+			</table>
+					
 			<table style='width:100%;'>
 			<tr> 
 			<td style='width:100%;'>Cargo : " . $datosContratista ['cargo'] . "</td>
@@ -527,7 +545,8 @@ class RegistradorOrden {
 			</table>	
 			";
 		
-		$contenidoPagina .= "<table style='width:100%;'>
+		$contenidoPagina .= "
+			<table style='width:100%;'>
 			<tr> 
 			<td style='width:100%;'><b>Información Referente Pago</b></td>
 			</tr>
@@ -548,49 +567,7 @@ class RegistradorOrden {
          	</table>
 
 
-			
-			<table style='width:100%;'>
-			<tr> 
-			<td style='width:100%;'><b>Información Respaldo Presupuestal</b></td>
-			</tr>
-         	</table>
-
-			<table style='width:100%;'>
-			<tr> 
-			<td style='width:50%;'>Vigencia (Disponibilidad) :   " . $info_presupuestal ['vigencia_dispo'] . "</td>
-			<td style='width:50%;'>Número (Disponibilidad) :   " . $info_presupuestal ['numero_dispo'] . "</td>
-			</tr>
-			<tr> 
-			<td style='width:50%;'>Valor (Disponibilidad) :   $  " . $info_presupuestal ['valor_disp'] . "</td>
-			<td style='width:50%;'>Fecha (Disponibilidad) :   " . $info_presupuestal ['fecha_dip'] . "</td>
-			</tr>		
-         	</table>		
-					
-    		<table style='width:100%;'>
-			<tr> 
-			<td style='width:100%;'>Valor en Letras (Disponibilidad) :  " . $info_presupuestal ['letras_dispo'] . "</td>
-			</tr>
-         	</table>		
-
-			<table style='width:100%;'>
-			<tr> 
-			<td style='width:50%;'>Vigencia (Registro) :   " . $info_presupuestal ['vigencia_regis'] . "</td>
-			<td style='width:50%;'>Número (Registro) :   " . $info_presupuestal ['numero_regis'] . "</td>
-			</tr>
-			<tr> 
-			<td style='width:50%;'>Valor (Registro) :  $  " . $info_presupuestal ['valor_regis'] . "</td>
-			<td style='width:50%;'>Fecha (Registro) :   " . $info_presupuestal ['fecha_regis'] . "</td>
-			</tr>		
-         	</table>		
-					
-    		<table style='width:100%;'>
-			<tr> 
-			<td style='width:100%;'>Valor en Letras (Registro) :  " . $info_presupuestal ['letras_regis'] . "</td>
-			</tr>
-         	</table>		
-
-			<br>
-			<br>		
+		
 			
 					
 <page_footer  backleft='10mm' backright='10mm'>
@@ -688,6 +665,92 @@ class RegistradorOrden {
 		
 		</table>";
 		
+		if ($infDisponibilidad) {
+			
+			$contenidoPagina .= "
+			<BR>
+			<BR>
+			<BR>		
+			<table style='width:100%;'>
+			<tr>
+			<td style='width:100%;'><b>INFORMACIÓN PRESUPUESTAL</b></td>
+			</tr>
+         	</table>";
+			
+			$contenidoPagina .= "
+			<table style='width:100%;'>
+			<tr>
+			<td style='width:100%;'><b>Disponibilidades Presupuestales</b></td>
+			</tr>
+         	</table>		
+				
+					
+					
+			<table style='width:100%;'>
+			<tr>
+			<td style='width:6.5%;text-align=center;'>Vigencia</td>
+			<td style='width:6.5%;text-align=center;'>Unidad Ejecutora</td>
+			<td style='width:10%;text-align=center;'>Número<br>Disponibilidad</td>
+			<td style='width:40%;text-align=center;'>Rubro</td>
+			<td style='width:15%;text-align=center;'>Valor<br>Solicitado($)</td>
+			<td style='width:22%;text-align=center;'>Valor Letras</td>
+			</tr>
+			</table>			
+			<table style='width:100%;'>		
+         ";
+			
+			foreach ( $infDisponibilidad as $valor ) {
+				
+				$contenidoPagina .= "<tr>";
+				$contenidoPagina .= "<td style='width:6.5%;text-align=center;'>" . $valor ['vigencia'] . "</td>";
+				$contenidoPagina .= "<td style='width:6.5%;text-align=center;'>" . $valor ['unidad_ejecutora'] . "</td>";
+				$contenidoPagina .= "<td style='width:10%;text-align=center;'>" . $valor ['numero_diponibilidad'] . "</td>";
+				$contenidoPagina .= "<td style='width:40%;text-align=justify;'>" . $valor ['id_rubro'] . " " . $valor ['descr_rubro'] . "</td>";
+				$contenidoPagina .= "<td style='width:15%;text-align=center;'>$ " . number_format ( $valor ['valor_solicitado'], 2, ",", "." ) . "</td>";
+				$contenidoPagina .= "<td style='width:22%;text-align=center;'>" . $valor ['valor_letras_solicitud'] . "</td>";
+				$contenidoPagina .= "</tr>";
+			}
+			
+			$contenidoPagina .= "</table>";
+			
+			if ($inRegistro) {
+				
+				$contenidoPagina .= "<br>
+			<table style='width:100%;'>
+			<tr>
+			<td style='width:100%;'><b>Registros Presupuestales</b></td>
+			</tr>
+         	</table>
+				
+			
+			
+			<table style='width:100%;'>
+			<tr>
+			<td style='width:15%;text-align=center;'>Vigencia</td>
+			<td style='width:30%;text-align=center;'>Rubro</td>
+			<td style='width:15%;text-align=center;'>Unidad Ejecutora</td>
+			<td style='width:20%;text-align=center;'>Número Registro</td>
+			<td style='width:20%;text-align=center;'>Valor<br>Solicitado($)</td>
+			</tr>
+			</table>
+			<table style='width:100%;'>
+         ";
+				
+				foreach ( $inRegistro as $valor ) {
+					
+					$contenidoPagina .= "<tr>";
+					$contenidoPagina .= "<td style='width:15%;text-align=center;'>" . $valor ['vigencia'] . "</td>";
+					$contenidoPagina .= "<td style='width:30%;text-align=center;'>" . $valor ['id_rubro'] . " " . $valor ['descr_rubro'] . "</td>";
+					$contenidoPagina .= "<td style='width:15%;text-align=center;'>" . $valor ['unidad_ejecutora'] . "</td>";
+					$contenidoPagina .= "<td style='width:20%;text-align=center;'>" . $valor ['numero_registro'] . "</td>";
+					$contenidoPagina .= "<td style='width:20%;text-align=center;'>$ " . number_format ( $valor ['valor_registro'], 2, ",", "." ) . "</td>";
+					$contenidoPagina .= "</tr>";
+				}
+				
+				$contenidoPagina .= "</table>";
+			}
+		}
+		
 		$contenidoPagina .= "<page_footer  backleft='10mm' backright='10mm'>
 				
 				
@@ -701,7 +764,7 @@ class RegistradorOrden {
 			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>" . $ordenador [1] . "</td>
 			</tr>
 			<tr>
-			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>NOMBRE: " . $datosContratista ['nombre_razon_social'] . "</td>
+			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>NOMBRE: " . $datosContratista ['nombres'] . "</td>
 			<td style='width:50%;text-align:left;background:#FFFFFF ; border: 0px  #FFFFFF;'>ORDENADOR GASTO</td>
 			</tr>
 			<tr>

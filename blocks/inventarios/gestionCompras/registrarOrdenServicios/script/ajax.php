@@ -271,10 +271,10 @@ function datosInfo(elem, request, response){
 
 	    		if(data[0]!='null'){
 
-	    			$("#<?php echo $this->campoSeguro('nombre_razon_contratista')?>").val(data[0]);
-					$("#<?php echo $this->campoSeguro('identifcacion_contratista')?>").val(data[1]);
-					$("#<?php echo $this->campoSeguro('direccion_contratista')?>").val(data[2]);
-					$("#<?php echo $this->campoSeguro('telefono_contratista')?>").val(data[3]);
+	    			$("#<?php echo $this->campoSeguro('nombre_razon_proveedor')?>").val(data[0]);
+					$("#<?php echo $this->campoSeguro('identifcacion_proveedor')?>").val(data[1]);
+					$("#<?php echo $this->campoSeguro('direccion_proveedor')?>").val(data[2]);
+					$("#<?php echo $this->campoSeguro('telefono_proveedor')?>").val(data[3]);
 
 	    			
 		    		}else{
