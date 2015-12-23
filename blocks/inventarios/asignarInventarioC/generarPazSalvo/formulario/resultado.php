@@ -28,8 +28,6 @@ class registrarForm {
 
     function miForm() {
 
-// 		var_dump ( $_REQUEST );
-// 		exit ();
 // Rescatar los datos de este bloque
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
         $miPaginaActual = $this->miConfigurador->getVariableConfiguracion('pagina');
@@ -43,6 +41,8 @@ class registrarForm {
         $rutaBloque = $this->miConfigurador->getVariableConfiguracion("host");
         $rutaBloque .= $this->miConfigurador->getVariableConfiguracion("site") . "/blocks/";
         $rutaBloque .= $esteBloque ['grupo'] . "/" . $esteBloque ['nombre'];
+        
+       
 
 // ---------------- SECCION: Parámetros Globales del Formulario ----------------------------------
         /**
@@ -99,6 +99,41 @@ class registrarForm {
         echo $this->miFormulario->formulario($atributos);
 // ---------------- SECCION: Controles del Formulario -----------------------------------------------
 
+        
+        $miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+        
+        $directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
+        $directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
+        $directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+        $_REQUEST['funcionario']= $_REQUEST ['usuario'];
+        $variable = "pagina=" . $miPaginaActual;
+        $variable .= "&usuario=" . $_REQUEST ['usuario'];
+        $variable .= "&funcionario=" . $_REQUEST ['funcionario'];
+        
+        
+        if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+        
+        	$variable	 .= "&accesoCondor=true";
+        }
+        
+        
+        $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+        
+        // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+        $esteCampo = 'botonRegresar';
+        $atributos ['id'] = $esteCampo;
+        $atributos ['enlace'] = $variable;
+        $atributos ['tabIndex'] = 1;
+        $atributos ['estilo'] = 'textoSubtitulo';
+        $atributos ['enlaceTexto'] = "<< Regresar";
+        $atributos ['ancho'] = '10%';
+        $atributos ['alto'] = '10%';
+        $atributos ['redirLugar'] = true;
+        echo $this->miFormulario->enlace ( $atributos );
+        
+        unset ( $atributos );
+        
+        
         $esteCampo = "marcoDatosBasicos";
         $atributos ['id'] = $esteCampo;
         $atributos ["estilo"] = "jqueryui";
@@ -112,15 +147,13 @@ class registrarForm {
 
                 echo "<thead>
                 <tr>
-                <th>ID Elemento</th>
-                <th>Nivel de Inventario</th>
-                <th>Marca Elementos</th>
-                <th>Placa Elementos</th>
-                <th>Serie Elemento</th>
-                <th>Valor Unitario</th>
-                <th>Subtotal</th>
-                <th>Total IVA</th>
-                <th>Total Ajustado</th>
+                <th>Placa</th>
+                <th>Descripición</th>
+                <th>Marca</th>
+                <th>Serie</th>
+               	<th>Sede</th>
+				<th>Dependencia</th>
+				<th>Ubicación<br>Especifica</th> 		
                 </tr>
             </thead>
             <tbody>";
@@ -131,15 +164,13 @@ class registrarForm {
 
                         $mostrarHtml = "
                     <tr>
-                    <td><center>" . $elementos_contratista [$i]['id_elemento_ind'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i]['nivel'] . "</center></td>
+                    <td><center>" . $elementos_contratista [$i]['placa'] . "</center></td>  		
+                    <td><center>" . $elementos_contratista [$i]['descripcion'] . "</center></td>
                     <td><center>" . $elementos_contratista [$i]['marca'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i]['placa'] . "</center></td>
                     <td><center>" . $elementos_contratista [$i]['serie'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i]['valor'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i]['subtotal_sin_iva'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i]['total_iva'] . "</center></td>
-                    <td><center>" . $elementos_contratista [$i]['total_iva_con'] . "</center></td>
+                    <td><center>" . $elementos_contratista [$i] ['sede'] . "</center></td>
+                    <td><center>" . $elementos_contratista [$i] ['dependencia'] . "</center></td>
+                    <td><center>" . $elementos_contratista [$i] ['espacio_fisico'] . "</center></td>
                     </tr>";
                         echo $mostrarHtml;
                         unset($mostrarHtml);
@@ -192,23 +223,23 @@ class registrarForm {
 
 // -----------------CONTROL: Botón ----------------------------------------------------------------
                 $esteCampo = 'botonAceptar';
-                $atributos ["id"] = $esteCampo;
-                $atributos ["tabIndex"] = $tab;
-                $atributos ["tipo"] = '';
-// submit: no se coloca si se desea un tipo button genérico
-                $atributos ['submit'] = 'true';
-                $atributos ["estiloMarco"] = '';
-                $atributos ["estiloBoton"] = 'jqueryui';
-// verificar: true para verificar el formulario antes de pasarlo al servidor.
-                $atributos ["verificar"] = '';
-                $atributos ["tipoSubmit"] = ''; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
-                $atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
-                $atributos ['nombreFormulario'] = $esteBloque ['nombre'];
-                $tab ++;
+              $atributos ["id"] = $esteCampo;
+            $atributos ["tabIndex"] = $tab;
+            $atributos ["tipo"] = 'boton';
+            // submit: no se coloca si se desea un tipo button genérico
+            $atributos ['submit'] = 'true';
+            $atributos ["estiloMarco"] = '';
+            $atributos ["estiloBoton"] = 'jqueryui';
+            // verificar: true para verificar el formulario antes de pasarlo al servidor.
+            $atributos ["verificar"] = '';
+            $atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+            $atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
+            $atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+            $tab ++;
 
-// Aplica atributos globales al control
-                $atributos = array_merge($atributos, $atributosGlobales);
-                echo $this->miFormulario->campoBoton($atributos);
+            // Aplica atributos globales al control
+            $atributos = array_merge($atributos, $atributosGlobales);
+            echo $this->miFormulario->campoBoton($atributos);
 // -----------------FIN CONTROL: Botón -----------------------------------------------------------
             }
   
@@ -221,6 +252,15 @@ class registrarForm {
         $valorCodificado .= "&redireccionar=regresar";
         $valorCodificado .= "&documentoContratista=" . $docContratista;
         $valorCodificado .= "&directorio=" . $rutaBloque;
+        $valorCodificado .= "&usuario=" . $_REQUEST['usuario'];
+        $valorCodificado .= "&funcionario=" . $_REQUEST['usuario'];
+        $valorCodificado .= "&documentoContratista=" . $_REQUEST['documentoContratista'];
+        if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+        
+        	$valorCodificado .= "&accesoCondor=true";
+        }
+         
+        
         /**
          * SARA permite que los nombres de los campos sean dinámicos.
          * Para ello utiliza la hora en que es creado el formulario para

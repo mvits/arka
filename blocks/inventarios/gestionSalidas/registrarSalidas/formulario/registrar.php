@@ -46,31 +46,50 @@ class registrarForm {
 			$contadorNombre ++;
 		}
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		for($i = 0; $i <= $_REQUEST ['cantidadItems']; $i ++) {
 			
 			if (isset ( $_REQUEST ['item' . $i] )) {
 				
-				$items [$i] = $_REQUEST ['item' . $i];
+				$items [$i]['id_elemento'] = $_REQUEST ['item' . $i];
+				
+				if (isset ( $_REQUEST ['cantidadAsignar' . $i] )) {
+						
+					$items [$i]['cantidad'] = $_REQUEST ['cantidadAsignar' . $i];
+				}else{
+					$items [$i]['cantidad'] = 1;
+				
+				}
+				
+				if (isset ( $items [$i] ['cantidad']) && isset ( $cantidad [$i] )) {
+						
+					($items [$i]['cantidad'] != '') ? '' : redireccion::redireccionar ( "noCantidad" );
+				}
+					
+				
 			}
+			
+			
+			
+		
+			
+			
+			
 		}
 
 		
-		
-		for($i = 0; $i <= $_REQUEST ['cantidadItems']; $i ++) {
 			
-			if (isset ( $_REQUEST ['cantidadAsignar' . $i] )) {
-				
-				$cantidad [$i] = $_REQUEST ['cantidadAsignar' . $i];
-			} else {
-				
-				$cantidad [0] = 1;
-			}
-			
-			if (isset ( $items [$i] ) && isset ( $cantidad [$i] )) {
-				
-				($cantidad [$i] != '') ? '' : redireccion::redireccionar ( "noCantidad" );
-			}
-		}
 		
 		if (! isset ( $items )) {
 			
@@ -664,7 +683,6 @@ class registrarForm {
 			$valorCodificado .= "&usuario=" . $_REQUEST['usuario'];
 			$valorCodificado .= "&numero_entrada=" . $_REQUEST ['numero_entrada'];
 			$valorCodificado .= "&items=" . serialize ( $items );
-			$valorCodificado .= "&cantidad=" . serialize ( $cantidad );
 			$valorCodificado .= "&vigencia=" . $datos [3];
 			
 			/**

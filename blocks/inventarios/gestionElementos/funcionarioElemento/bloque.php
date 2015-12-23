@@ -70,11 +70,28 @@ class Bloque implements \Bloque {
 		$this->miLenguaje = new Lenguaje ();
 	}
 	public function bloque() {
+		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor']=='true' ) {
+					
+			$_REQUEST ['funcionario'] = $_REQUEST ['usuario'];
+			
+// 			$miSesion = \Sesion::singleton ();
+// 			// verifica los roles del usuario en el sistema
+// 			$roles = $miSesion->RolesSesion ();
+// 			$roles_unicos = $miSesion->RolesSesion_unico ();
+			
+// 			// consulta datos del usuario
+// 			$id_usuario = $miSesion->getSesionUsuarioId ();
+			
+			
+			
+			
+		}
+		
 		if (isset ( $_REQUEST ['botonCancelar'] ) && $_REQUEST ['botonCancelar'] == "true") {
 			redireccion::redireccionar ( "paginaPrincipal" );
 		} else if (isset ( $_REQUEST ['botonContinuar'] ) && $_REQUEST ['botonContinuar'] == "true") {
 			redireccion::redireccionar ( "paginaPrincipal" );
-		}  else {
+		} else {
 			
 			$this->miFrontera->setSql ( $this->miSql );
 			$this->miFrontera->setFuncion ( $this->miFuncion );

@@ -92,7 +92,7 @@ if ($_REQUEST ['funcion'] == 'galeriaFoto') {
 
 
 if ($_REQUEST ['funcion'] == 'eliminaFoto') {
-    //var_dump($_REQUEST);
+
 
     $foto = $_REQUEST['num_registro'];
     

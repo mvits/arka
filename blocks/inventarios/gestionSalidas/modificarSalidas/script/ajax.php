@@ -151,7 +151,8 @@ function consultarDependencia(elem, request, response){
 		  $.ajax({
 		    url: "<?php echo $urlFinal4?>",
 		    dataType: "json",
-		    data: { valor:$("#<?php echo $this->campoSeguro('dependencia')?>").val()},
+		    data: { valorD:$("#<?php echo $this->campoSeguro('dependencia')?>").val(),
+	    		valorS:$("#<?php echo $this->campoSeguro('sede')?>").val(),},
 		    success: function(data){ 
 
 

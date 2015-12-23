@@ -24,50 +24,44 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_Perido_final' );
 		
 		$periodo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		$periodo=$periodo[0]['max'];
-		
-		
+		$periodo = $periodo [0] ['max'];
 		
 		$arreglo = array (
 				"funcionario" => $_REQUEST ['funcionario'],
 				"id_elemento_individual" => $_REQUEST ['elemento_individual'],
-				'observacion' => $_REQUEST ['descripcion'], 
-				"periodo"=>$periodo
+				'observacion' => $_REQUEST ['descripcion'],
+				"periodo" => $periodo 
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'Registrar_Observaciones_Elemento', $arreglo );
 		
-		$observacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
+		$observacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, "Registrar_Observaciones_Elemento" );
+
 		$arreglo = array (
 				$observacion [0] [0],
 				$_REQUEST ['elemento_individual'] 
 		);
-		
 		
 		$arreglo = array (
 				
 				$_REQUEST ['placa'],
 				$_REQUEST ['funcionario'],
 				$_REQUEST ['elemento_individual'] 
-		)
-		;
-
+		);
+		
 		if ($observacion) {
 			
-			redireccion::redireccionar('insertoObservacion',$arreglo);
+			redireccion::redireccionar ( 'insertoObservacion', $arreglo );
 			exit ();
 		} else {
 			
-			redireccion::redireccionar('noInsertoObservacion',$_REQUEST['funcionario']);
+			redireccion::redireccionar ( 'noInsertoObservacion', $_REQUEST ['funcionario'] );
 			
 			exit ();
 		}

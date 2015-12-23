@@ -22,8 +22,10 @@ $cadenaACodificar .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar .= $cadenaACodificar . "&funcion=Consulta";
 $cadenaACodificar .= "&tiempo=" . $_REQUEST ['tiempo'];
-$cadenaACodificar .= "&usuario=" . $_REQUEST ['usuario'];
 
+if ($_REQUEST ['usuario']) {
+	$cadenaACodificar .= "&usuario=" . $_REQUEST ['usuario'];
+}
 if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
 	$fechaInicio = $_REQUEST ['fecha_inicio'];
 } else {
@@ -71,11 +73,10 @@ if (isset ( $_REQUEST ['numero_entrada'] ) && $_REQUEST ['numero_entrada'] != ''
 } else {
 	$entrada = '';
 }
-
-if (isset ( $_REQUEST ['registro_salidas'] ) && $_REQUEST ['registro_salidas'] != '') {
-	$registroSalidas = $_REQUEST ['registro_salidas'];
+if (isset ( $_REQUEST ['registro_tipo'] ) && $_REQUEST ['registro_tipo'] != '') {
+	$registroTipo = $_REQUEST ['registro_tipo'];
 } else {
-	$registroSalidas = '';
+	$registroTipo = '';
 }
 
 $arreglo = array (
@@ -83,11 +84,8 @@ $arreglo = array (
 		$fechaFinal,
 		$placa,
 		$serie,
-		$sede,
-		$dependencia,
-		$funcionario,
 		$entrada,
-		$registroSalidas 
+		$registroTipo 
 );
 
 $arreglo = serialize ( $arreglo );
@@ -134,7 +132,6 @@ $cadena2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $ca
 // URL definitiva
 $urlFinal2 = $url . $cadena2;
 
-
 // Variables
 $cadenaACodificariva = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificariva .= "&procesarAjax=true";
@@ -149,9 +146,23 @@ $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 $cadenaiva = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificariva, $enlace );
 
 // URL definitiva
-$urlFinaliva = $url . $cadenaiva;  
+$urlFinaliva = $url . $cadenaiva;
 
+// Variables
+$cadenaACodificarPlaca = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificarPlaca .= "&procesarAjax=true";
+$cadenaACodificarPlaca .= "&action=index.php";
+$cadenaACodificarPlaca .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarPlaca .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarPlaca .= "&funcion=consultaPlaca";
+$cadenaACodificarPlaca .= "&tiempo=" . $_REQUEST ['tiempo'];
 
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarPlaca, $enlace );
+
+// URL definitiva
+$urlFinalPlaca = $url . $cadena;
 
 ?>
 <script type='text/javascript'>
@@ -194,6 +205,32 @@ function resetIva(elem, request, response){
 
 
 $(function() {
+
+	$( "#<?php echo $this->campoSeguro('selec_placa')?>" ).keyup(function() {
+
+    	
+    	$('#<?php echo $this->campoSeguro('selec_placa') ?>').val($('#<?php echo $this->campoSeguro('selec_placa') ?>').val().toUpperCase());
+
+    	
+            });
+
+    $("#<?php echo $this->campoSeguro('selec_placa') ?>").autocomplete({
+    	minChars: 3,
+    	serviceUrl: '<?php echo $urlFinalPlaca; ?>',
+    	onSelect: function (suggestion) {
+        	
+    	        $("#<?php echo $this->campoSeguro('placa') ?>").val(suggestion.data);
+
+       	        
+    	    }
+                
+    });
+
+
+
+});
+
+$(function() {
          	$('#tablaTitulos').ready(function() {
 
              $('#tablaTitulos').dataTable( {
@@ -222,8 +259,6 @@ $(function() {
                   { data :"entrada" },
                   { data :"descripcion" },
                   { data :"placa" },
-                  { data :"funcionario" },
-                  { data :"dependencia" },
                   { data :"modificar" },
                   { data :"anular" }
                             ]

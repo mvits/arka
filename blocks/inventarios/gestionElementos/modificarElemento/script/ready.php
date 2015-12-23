@@ -37,20 +37,15 @@
  $('#<?php echo $this->campoSeguro('numero_factura')?>').attr('disabled','');
  $('#<?php echo $this->campoSeguro('fecha_factura')?>').attr('disabled','');
  
- $('#<?php echo $this->campoSeguro('placa')?>').width(380);   
- $("#<?php echo $this->campoSeguro('placa')?>").select2({
-             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
-              	 minimumInputLength: 3,
-              	 });
-              	 
+
  $('#<?php echo $this->campoSeguro('serie1')?>').width(261);              	 
  $("#<?php echo $this->campoSeguro('serie1')?>").select2({
              	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
               	 minimumInputLength: 3,
               	 });
 
- $('#<?php echo $this->campoSeguro('registro_salidas')?>').width(390);  
-  $("#<?php echo $this->campoSeguro('registro_salidas')?>").select2();
+ $('#<?php echo $this->campoSeguro('registro_tipo')?>').width(390);  
+  $("#<?php echo $this->campoSeguro('registro_tipo')?>").select2();
  
               	 
  $("#<?php echo $this->campoSeguro('funcionario')?>").select2({

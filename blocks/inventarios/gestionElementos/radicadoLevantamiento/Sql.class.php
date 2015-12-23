@@ -32,20 +32,17 @@ class Sql extends \Sql {
 			 * Clausulas específicas
 			 */
 			
-		
-			
 			case "Registrar_Radicacion" :
 				$cadenaSql = " INSERT INTO arka_movil.radicado_levantamiento(  ";
-				$cadenaSql .= "funcionario, estado_radicacion, fecha_registro)  ";
-				$cadenaSql .= "VALUES ('".$variable."',";
+				$cadenaSql .= "funcionario,sede,dependencia,numero_elementos,estado_radicacion, fecha_registro)  ";
+				$cadenaSql .= "VALUES ('" . $variable ['identificacion'] . "',";
+				$cadenaSql .= "'" . $variable ['cod_sede'] . "',";
+				$cadenaSql .= "'" . $variable ['cod_dependencia'] . "',";
+				$cadenaSql .= "'" . $variable ['num_ele'] . "',";
 				$cadenaSql .= " 'TRUE',  ";
-				$cadenaSql .= "'".date('Y-m-d')."');";
+				$cadenaSql .= "'" . date ( 'Y-m-d' ) . "');";
 				
-			
 				break;
-					
-			
-			
 			
 			case "Verificar_Periodo" :
 				$cadenaSql = " SELECT *   ";
@@ -265,25 +262,37 @@ class Sql extends \Sql {
 				
 				break;
 			
+			case "ConsultarSedesRadicado" :
+				
+				$cadenaSql = "SELECT  DISTINCT  sede, codigo_sede ";
+				$cadenaSql .= "FROM  arka_movil.radicados_actuales ";
+				$cadenaSql .= "ORDER BY  sede ASC ;";
+				
+				break;
+			
 			case "consultarFuncionariosaCargoElementos" :
 				
-				$cadenaSql = "SELECT  DISTINCT fun.\"FUN_IDENTIFICACION\" identificacion, 
-						                 fun.\"FUN_NOMBRE\"   funcionario,
-										CASE rl.estado_radicacion WHEN 'TRUE' THEN 'TRUE' ELSE 'FALSE' END radicacion  ";
-				$cadenaSql .= "FROM  arka_parametros.arka_funcionarios fun ";
-				$cadenaSql .= "INNER JOIN  elemento_individual eli ON  eli.funcionario= fun.\"FUN_IDENTIFICACION\" ";
-				$cadenaSql .= "LEFT JOIN  arka_movil.radicado_levantamiento rl ON rl.funcionario =  eli.funcionario ";
-				$cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
-				$cadenaSql .= "JOIN tipo_bienes tb ON tb.id_tipo_bienes = ele.tipo_bien ";
-				$cadenaSql .= "WHERE \"FUN_ESTADO\"='A' ";
-				$cadenaSql .= " AND  eli.estado_registro = 'TRUE'  ";
-				$cadenaSql .= " AND tb.id_tipo_bienes <> 1  ";
-				$cadenaSql .= " AND eli.funcionario <> 0  ";
-				
+				$cadenaSql = 'SELECT eli_cla.*,rc.id_radicado radicacion ';
+				$cadenaSql .= 'FROM (SELECT eli.funcionario identificacion,fun."FUN_NOMBRE" funcionario,sas."ESF_SEDE" sede,sas."ESF_ID_SEDE" codigo_sede,ad."ESF_CODIGO_DEP" codigo_dependencia,ad."ESF_DEP_ENCARGADA" dependencia,count(placa) num_ele ';
+				$cadenaSql .= 'FROM elemento_individual eli ';
+				$cadenaSql .= 'JOIN arka_parametros.arka_funcionarios fun ON fun."FUN_IDENTIFICACION"=eli.funcionario ';
+				$cadenaSql .= 'JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
+				$cadenaSql .= 'JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
+				$cadenaSql .= 'JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
+				$cadenaSql .= 'JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ';
+				$cadenaSql .= 'JOIN tipo_bienes tb ON tb.id_tipo_bienes = ele.tipo_bien ';
+				$cadenaSql .= 'AND tb.id_tipo_bienes <> 1 ';
+				$cadenaSql .= ' AND  eli.estado_registro = \'TRUE\' ';
+				$cadenaSql .= ' AND tb.id_tipo_bienes <> 1  ';
+				$cadenaSql .= ' AND eli.funcionario <> 0  ';
 				if ($variable != '') {
-					
-					$cadenaSql .= "AND eli.funcionario='" . $variable . "'; ";
+					$cadenaSql .= "AND eli.funcionario='" . $variable . "' ";
 				}
+				$cadenaSql .= '	GROUP BY  eli.funcionario,sas."ESF_SEDE" ,sas."ESF_ID_SEDE" ,ad."ESF_CODIGO_DEP" ,ad."ESF_DEP_ENCARGADA",fun."FUN_NOMBRE")  eli_cla  ';
+				$cadenaSql .= ' LEFT JOIN arka_movil.radicado_levantamiento rc ON rc.funcionario=eli_cla.identificacion ';
+				$cadenaSql .= 'AND rc.sede=eli_cla.codigo_sede ';
+				$cadenaSql .= 'AND rc.dependencia=eli_cla.codigo_dependencia ';
+				$cadenaSql .= 'ORDER BY codigo_dependencia ; ';
 				
 				break;
 			
@@ -647,6 +656,19 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM grupo.catalogo_elemento ce ";
 				$cadenaSql .= "JOIN  arka_inventarios.tipo_bienes tb ON tb.id_tipo_bienes = ce.elemento_tipobien  ";
 				$cadenaSql .= "WHERE ce.elemento_id = '" . $variable . "';";
+				
+				break;
+			
+			case "jefe_recursos_fisicos" :
+				
+				$cadenaSql = 'SELECT "FUN_IDENTIFICACION" identificacion, "FUN_NOMBRE" nombre ';
+				$cadenaSql .= " FROM arka_parametros.arka_funcionarios ";
+				$cadenaSql .= " WHERE 1=1 ";
+				$cadenaSql .= ' AND "FUN_ESTADO"=';
+				$cadenaSql .= "'A'  ";
+				$cadenaSql .= ' AND "FUN_CARGO" ';
+				$cadenaSql .= " ='JEFE DE SECCION' ";
+				$cadenaSql .= ' AND "FUN_DEP_COD_ACADEMICA"=60 ; ';
 				
 				break;
 		}

@@ -48,9 +48,6 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$conexion = "sicapital";
-		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-		
 		if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
 			$fechaInicio = $_REQUEST ['fecha_inicio'];
 		} else {
@@ -204,11 +201,7 @@ class registrarForm {
 			echo $this->miFormulario->campoCuadroLista ( $atributos );
 			unset ( $atributos );
 			
-			
-			
-		
-			
-			
+						
 			
 			echo "<table id='tablaTitulos'>";
 			
@@ -249,7 +242,7 @@ class registrarForm {
 					);
 				} else {
 					$cadenaSql = $this->miSql->getCadenaSql ( 'proveedor_informacion', $entrada [$i] [3] );
-					$proveedor = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
 					$arreglo = array (
 							0 => $entrada [$i] [4],

@@ -24,6 +24,9 @@ class RegistradorActa {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+		
+		
+		
 		$fechaActual = date ( 'Y-m-d' );
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );

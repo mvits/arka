@@ -209,8 +209,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN entrada ON entrada.id_entrada = salida.id_entrada ";
 				$cadenaSql .= "JOIN elemento_individual ON elemento_individual.id_salida = salida.id_salida ";
 				$cadenaSql .= "JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\" = salida.funcionario ";
-				$cadenaSql .= "WHERE 1=1";
-				$cadenaSql .= "AND   entrada.cierre_contable ='f' ";
+				$cadenaSql .= "WHERE entrada.cierre_contable ='f' ";
 				$cadenaSql .= "AND   entrada.estado_entrada = 1  ";
 				$cadenaSql .= "AND   entrada.estado_registro='t' ";
 				
@@ -352,11 +351,11 @@ class Sql extends \Sql {
 			case "consulta_elementos" :
 				
 				$cadenaSql = "SELECT id_elemento,elemento_padre||''||elemento_codigo||' - '||elemento_nombre AS item, 
-						  descripcion ,elemento_individual.id_elemento_ind ";
+						  descripcion ,elemento_individual.id_elemento_ind, cantidad_asignada,cantidad_por_asignar,  elemento.tipo_bien, placa , elemento_individual.id_salida ";
 				$cadenaSql .= "FROM elemento_individual ";
 				$cadenaSql .= "JOIN elemento  ON elemento.id_elemento = elemento_individual.id_elemento_gen ";
-				$cadenaSql .= "JOIN grupo.catalogo_elemento ce ON ce.elemento_id = elemento.nivel ";
-				$cadenaSql .= "JOIN grupo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
+				$cadenaSql .= "JOIN catalogo.catalogo_elemento ce ON ce.elemento_id = elemento.nivel ";
+				$cadenaSql .= "JOIN catalogo.catalogo_lista cl ON cl.lista_id = ce.elemento_catalogo  ";
 				$cadenaSql .= "JOIN  entrada en ON en.id_entrada = elemento.id_entrada  ";
 				$cadenaSql .= "JOIN  salida sal ON sal.id_salida = elemento_individual.id_salida  ";
 				$cadenaSql .= "WHERE elemento.id_entrada='" . $variable [0] . "' ";
@@ -364,7 +363,9 @@ class Sql extends \Sql {
 				$cadenaSql .= "AND cl.lista_activo = 1  ";
 				$cadenaSql .= "AND en.cierre_contable ='f' ";
 				$cadenaSql .= "AND en.estado_entrada = 1  ";
+				$cadenaSql .= "AND en.estado_registro='t' ";
 				$cadenaSql .= "AND elemento_individual.id_salida IS NOT NULL   ";
+				$cadenaSql .= "AND elemento_individual.estado_registro='t'  ";
 				$cadenaSql .= "ORDER BY elemento_individual.id_elemento_ind ASC;  ";
 				
 				/*
@@ -411,9 +412,10 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT DISTINCT  ef.\"ESF_ID_ESPACIO\" , ef.\"ESF_NOMBRE_ESPACIO\" ";
 				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ef  ";
 				$cadenaSql .= " JOIN arka_parametros.arka_dependencia ad ON ad.\"ESF_ID_ESPACIO\"=ef.\"ESF_ID_ESPACIO\" ";
-				$cadenaSql .= " WHERE ad.\"ESF_CODIGO_DEP\"='" . $variable . "' ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_CODIGO_DEP\"='" . $variable [0] . "' ";
+				$cadenaSql .= " AND  sa.\"ESF_ID_SEDE\"='" . $variable [1] . "' ";
 				$cadenaSql .= " AND  ef.\"ESF_ESTADO\"='A'";
-				
 				break;
 			
 			case "dependencias" :
@@ -659,6 +661,32 @@ class Sql extends \Sql {
 				$cadenaSql .= "  funcionario=NULL  ";
 				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable . "' ;";
 				
+				break;
+			
+			case "ActualizarElementosIndividuales" :
+				$cadenaSql = " UPDATE elemento ";
+				$cadenaSql .= " SET  cantidad_por_asignar='" . $variable [1] . "'  ";
+				$cadenaSql .= "  WHERE id_elemento='" . $variable [0] . "' ;";
+				
+				break;
+			
+			case "actualizar_elementos" :
+				$cadenaSql = " UPDATE elemento_individual ";
+				$cadenaSql .= " SET  funcionario='" . $variable ['funcionario'] . "',  ";
+				$cadenaSql .= "  ubicacion_elemento='" . $variable ['ubicacion'] . "'   ";
+				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable ['identificacion_elemento'] . "' ;";
+				
+				break;
+			
+			case "EliminarElementosIndividuales" :
+				$cadenaSql = " DELETE FROM elemento_individual ";
+				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable . "' ;";
+				
+				break;
+			
+			case "Eliminar_Depreciacion" :
+				$cadenaSql = " DELETE FROM detalle_depreciacion ";
+				$cadenaSql .= "  WHERE id_elemento_ind='" . $variable . "' ;";
 				
 				break;
 		}
