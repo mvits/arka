@@ -54,7 +54,7 @@ event.preventDefault();
 
     setTimeout(function() {
     		$('#divMensaje').hide( "drop", { direction: "up" }, "slow" );
-			}, 10000); // <-- time in milliseconds
+			}, 100000); // <-- time in milliseconds
         
         
         

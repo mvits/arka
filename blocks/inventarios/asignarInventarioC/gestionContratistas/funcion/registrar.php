@@ -234,17 +234,44 @@ class Registrador {
 						if ($fechaFinal <= $fechaInicio) {
 							
 							$registrar = false;
-							$log_error [] = $arreglo;
+							$log_error ['errorFechas'] [] = $arreglo;
+						}
+						
+						if ($valor ['tipo_contrato'] == 1 && $registrar != false) {
+							
+							$cadenaSql = $this->miSql->getCadenaSql ( 'Consultar_Tipo_Contrato_Particular', $valor ['identificacion'] );
+							
+							$contratos_tipo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							
+							if ($contratos_tipo) {
+								foreach ( $contratos_tipo as $valores ) {
+									
+									if ($valores ['tipo_contrato'] == '1') {
+										
+										$registrar = false;
+										$log_error ['Error_Tipo_Contratos(Duplicidad_de_OPS)'] [] = $arreglo;
+									}
+								}
+							} else {
+								
+								$registrar = true;
+							}
 						}
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( 'registrarContratista', $arreglo );
 						
-						if ($registrar = true) {
-							$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, "registrarContratista" );
+						if ($registrar == true) {
+							
+							$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $arreglo, "registrarContratista" );
 							
 							if ($resultado == false) {
-								
-								$log_error [] = $arreglo;
+								$registrado = false;
+								$registrar = false;
+								$log_error ['Error_Registro'] [] = $arreglo;
+							} else {
+								if (isset ( $registrado_unico ) != true) {
+									$registrado_unico = true;
+								}
 							}
 						}
 					}
@@ -261,7 +288,7 @@ class Registrador {
 					$log_error = false;
 				}
 				
-				if ($datos != false) {
+				if (isset($registrado_unico)==true) {
 					$this->miConfigurador->setVariableConfiguracion ( "cache", true );
 					redireccion::redireccionar ( 'inserto', $log_error );
 					exit ();
