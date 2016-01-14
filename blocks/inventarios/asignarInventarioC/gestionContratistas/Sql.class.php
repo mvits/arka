@@ -451,7 +451,7 @@ class Sql extends \Sql {
 				$cadenaSql = " INSERT INTO ";
 				$cadenaSql .= " arka_parametros.arka_contratistas(";
 				$cadenaSql .= ' "CON_IDENTIFICACION", "CON_NOMBRE", "CON_NUMERO_CONTRATO",
-						"CON_VIGENCIA_FISCAL", "CON_FECHA_INICIO", "CON_FECHA_FINAL",fecha_registro,estado) ';
+						        "CON_VIGENCIA_FISCAL", "CON_FECHA_INICIO", "CON_FECHA_FINAL",fecha_registro,estado) ';
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable ['identificacion'] . "',";
 				$cadenaSql .= "'" . $variable ['nombres'] . "',";

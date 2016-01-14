@@ -57,7 +57,6 @@ class registrarForm {
 		
 		$elementos_supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-<<<<<<< HEAD
 		
 		
 		
@@ -67,9 +66,6 @@ class registrarForm {
 		
 		
 		
-=======
-		$cadenaSql2 = $this->miSql->getCadenaSql ( 'nombreContratista', $_REQUEST ['documentoContratista'] );
->>>>>>> master
 		$nombreContratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql2, "busqueda" );
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -98,7 +94,6 @@ class registrarForm {
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-<<<<<<< HEAD
 		$_REQUEST['funcionario']= $_REQUEST ['usuario'];
 		$variable = "pagina=" . $miPaginaActual;
 		$variable .= "&usuario=" . $_REQUEST ['usuario'];
@@ -111,11 +106,6 @@ class registrarForm {
 		}
 		
 		
-=======
-		
-		$variable = "pagina=" . $miPaginaActual;
-		$variable .= "&usuario=" . $_REQUEST ['usuario'];
->>>>>>> master
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -141,30 +131,20 @@ class registrarForm {
 		
 		if ($elementos_supervisor !== false) {
 			
-			echo "<table id='tablaTitulos'>";
-			
-			echo "<thead>
-                <tr>
-                <th>Placa Elementos</th>
-<<<<<<< HEAD
-                <th>Descripción</th>
-				<th>Marca</th>
-                <th>Serie</th>
-				<th>Dependencia</th>
-			    <th>Sede</th>
-				<th>Ubicación<br>Especifica</th>
-                <th>Seleccionar</th>
-=======
-                <th>Serie Elemento</th>
-                <th>Valor Unitario</th>
-                <th>Subtotal</th>
-                <th>Total IVA</th>
-                <th>Total Ajustado</th>
-				<th>Seleccionar</th>
->>>>>>> master
-                </tr>
-            </thead>
-           </table>	
+			echo "<table id='tablaTitulos'>
+					<thead>
+		                <tr>
+		                <th>Placa Elementos</th>
+		                <th>Descripción</th>
+						<th>Marca</th>
+		                <th>Serie</th>
+						<th>Dependencia</th>
+					    <th>Sede</th>
+						<th>Ubicación<br>Especifica</th>
+		                <th>Seleccionar</th>
+		                </tr>
+		            </thead>
+		         </table>	
            ";
 			
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );

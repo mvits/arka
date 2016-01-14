@@ -72,7 +72,6 @@ $(function() {
                       dataSrc:"data"                                                                  
                   },
                   columns: [
-<<<<<<< HEAD
 				  { data :"placa" },
 				  { data :"descripcion" },
 	              { data :"marca" },
@@ -80,17 +79,6 @@ $(function() {
                   { data :"sede" },
                   { data :"dependencia" },
                   { data :"ubicacion" },
-=======
-                  { data :"id_elemento" },
-                  { data :"nivel" },
-                  { data :"marca" },
-                  { data :"placa" },
-                  { data :"serie" },
-                  { data :"valor_unitario" },
-                  { data :"sub_total" },
-                  { data :"total_iva" },
-                  { data :"total_ajustado" },
->>>>>>> master
                   { data :"seleccion" },
                             ]
              });

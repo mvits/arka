@@ -150,29 +150,29 @@ class registrarForm {
 			
 			if ($resultado == false) {
 				
-				
 				$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center>";
-				switch ($_REQUEST ['mensaje']) {
-					
-					case 'noExtension' :
-						$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center><br>";
-						$atributos ['mensaje'] .= "<center>ERROR EN LA EXTENSION DEL ACRHIVO A CARGAR<br>Verifique los Datos que se xls o xlsx.</center>";
+				if (isset ( $_REQUEST ['mensaje'] ) == true) { 
+					switch ($_REQUEST ['mensaje']) {
 						
-						break;
-					
-					case 'noinsertoRegistro' :
-						$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center><br>";
-						$atributos ['mensaje'].="<center>ERROR AL REGISTRAR CONTRATISTAS<BR>Verifique los Datos</center>";
+						case 'noExtension' :
+							$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center><br>";
+							$atributos ['mensaje'] .= "<center>ERROR EN LA EXTENSION DEL ACRHIVO A CARGAR<br>Verifique los Datos que se xls o xlsx.</center>";
+							
+							break;
 						
-						break;
-					
-					case 'error' :
-						$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center><br>";
-						$atributos ['mensaje'] .= "<center>ERROR EXISTEN CELDAS VACIAS EN EL ARCHIVO<BR>Todos los Campos son Obligatorios.Verifique los Datos</center>";
+						case 'noinsertoRegistro' :
+							$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center><br>";
+							$atributos ['mensaje'] .= "<center>ERROR AL REGISTRAR CONTRATISTAS<BR>Verifique los Datos</center>";
+							
+							break;
 						
-						break;
+						case 'error' :
+							$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center><br>";
+							$atributos ['mensaje'] .= "<center>ERROR EXISTEN CELDAS VACIAS EN EL ARCHIVO<BR>Todos los Campos son Obligatorios.Verifique los Datos</center>";
+					 			
+							break;
+					}
 				}
-				
 				// -------------Control texto-----------------------
 				$esteCampo = 'divMensajeNoDatos';
 				$atributos ['id'] = $esteCampo;
@@ -200,7 +200,7 @@ class registrarForm {
 					$mensaje = "- El Archivo Tiene que Ser Tipo Excel.
 								<br>- Solo Se Cargaran de forma Correcta de Acuerdo al Plantilla Preedeterminada.
 								<br>- Para Verificar El Cargue Masivo Consulte los Constratistas.
-								<br>- Enlace de Archivo Plantilla : <A HREF=" . $host . "> Archivo Plantilla </A>";
+								<br>- Enlace de Archivo Plantilla : <A id='salida'  target=\"_blank\"HREF=" . $host . "  > Archivo Plantilla</A>";
 					
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$esteCampo = 'mensajeRegistro';

@@ -39,13 +39,7 @@ $("#tabs").tabs();
 
          });
 
-         $("#VentanaA a").click(function(event) {
 
-             event.preventDefault();
-
-             $("#VentanaA").slideUp();
-
-         });
 
 
 
