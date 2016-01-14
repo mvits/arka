@@ -56,6 +56,13 @@ class redireccion {
 				
 				break;
 			
+			case "ErrorTipoContrato" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&mensaje=errorTipoContrato";
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
+				
+				break;
+			
 			case "Consulta" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&vigencia=" . $_REQUEST ['vigencia'];

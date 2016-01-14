@@ -441,9 +441,10 @@ class Sql extends \Sql {
 			// FROM arka_parametros.arka_contratistas;
 			
 			case "Consultar_Contratistas" :
-				$cadenaSql = " SELECT *  ";
-				$cadenaSql .= " FROM arka_parametros.arka_contratistas  ";
-				$cadenaSql .= "WHERE \"CON_VIGENCIA_FISCAL\"= '" . $variable . "'; ";
+				$cadenaSql = " SELECT cns.*,tp.tc_descripcion ";
+				$cadenaSql .= " FROM arka_parametros.arka_contratistas cns ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_tipo_contrato tp ON tp.tc_identificador= cns.\"CON_TIPO_CONTRATO\"  ";
+				$cadenaSql .= " WHERE \"CON_VIGENCIA_FISCAL\"= '" . $variable . "'; ";
 				
 				break;
 			
@@ -486,9 +487,27 @@ class Sql extends \Sql {
 				$cadenaSql .= " \"CON_IDENTIFICACION\"='" . $variable ['identificacion'] . "', ";
 				$cadenaSql .= " \"CON_NOMBRE\"='" . $variable ['nombre'] . "', ";
 				$cadenaSql .= " \"CON_FECHA_INICIO\"='" . $variable ['fecha_inicio'] . "', ";
-				$cadenaSql .= " \"CON_FECHA_FINAL\"='" . $variable ['fecha_final'] . "'  ";
+				$cadenaSql .= " \"CON_FECHA_FINAL\"='" . $variable ['fecha_final'] . "' , ";
+				$cadenaSql .= " \"CON_TIPO_CONTRATO\"='" . $variable ['tipo_contrato'] . "'  ";
 				$cadenaSql .= " WHERE \"CON_IDENTIFICADOR\"='" . $variable ['identificador'] . "' ;";
+				
+				break;
 			
+			case 'consultarTiposContrato' :
+				
+				$cadenaSql = "SELECT tc_identificador, tc_descripcion  ";
+				$cadenaSql .= "FROM arka_parametros.arka_tipo_contrato  ";
+				$cadenaSql .= "WHERE  estado=TRUE ; ";
+				
+				break;
+			
+			case 'Consultar_Tipo_Contrato_Particular' :
+				$cadenaSql = "SELECT \"CON_TIPO_CONTRATO\" tipo_contrato  ";
+				$cadenaSql .= "FROM arka_parametros.arka_contratistas   ";
+				$cadenaSql .= "WHERE \"CON_IDENTIFICACION\"='" . $variable . "' ";
+				$cadenaSql .= "AND \"CON_FECHA_INICIO\" <= '" . date ( 'Y-m-d' ) . "' ";
+				$cadenaSql .= "AND \"CON_FECHA_FINAL\" >= '" . date ( 'Y-m-d' ) . "' ; ";
+				
 				break;
 		}
 		return $cadenaSql;

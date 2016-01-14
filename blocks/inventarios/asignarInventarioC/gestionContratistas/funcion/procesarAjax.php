@@ -76,6 +76,7 @@ if ($_REQUEST ['funcion'] == 'ConsultarContratistas') {
 		
 		$resultadoFinal [] = array (
 				'vigencia' => "<center>" . $valor ['CON_VIGENCIA_FISCAL'] . "</center>",
+				'tipo_contrato' => "<center>" . $valor ['tc_descripcion'] . "</center>",
 				'numero' => "<center>" . $valor ['CON_NUMERO_CONTRATO'] . "</center>",
 				'identificacion' => "<center>" . $valor ['CON_IDENTIFICACION'] . "</center>",
 				'nombre' => "<center>" . $valor ['CON_NOMBRE'] . "</center>",

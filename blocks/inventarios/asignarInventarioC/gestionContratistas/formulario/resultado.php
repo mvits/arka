@@ -119,6 +119,11 @@ class registrarForm {
 					$atributos ['mensaje'] = "<center>ERROR EN LA EXTENSION DEL ACRHIVO A CARGAR<br>Verifique los Datos que se xls o xlsx.</center>";
 					$atributos ["estilo"] = 'error';
 					break;
+				
+				case 'errorTipoContrato' :
+					$atributos ['mensaje'] = "<center>ERROR AL ACTUALIZAR EL TIPO DE CONTRATO.<BR>YA EXISTE UN CONTRATO VIGENTE DE ORDEN DE PRESTACIÓN DE SERVICIOS (OPS) CON EL CONTRATISTA.</center>";
+					$atributos ["estilo"] = 'error';
+					break;
 			}
 			
 			if ($resultado != false) {
@@ -151,7 +156,7 @@ class registrarForm {
 			if ($resultado == false) {
 				
 				$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center>";
-				if (isset ( $_REQUEST ['mensaje'] ) == true) { 
+				if (isset ( $_REQUEST ['mensaje'] ) == true) {
 					switch ($_REQUEST ['mensaje']) {
 						
 						case 'noExtension' :
@@ -169,7 +174,7 @@ class registrarForm {
 						case 'error' :
 							$atributos ['mensaje'] = "<center>No Existen Contratistas Registrados<br><br>Seleccione la Opcion Registrar Contratistas</center><br>";
 							$atributos ['mensaje'] .= "<center>ERROR EXISTEN CELDAS VACIAS EN EL ARCHIVO<BR>Todos los Campos son Obligatorios.Verifique los Datos</center>";
-					 			
+							
 							break;
 					}
 				}
@@ -353,7 +358,8 @@ class registrarForm {
 					<thead>
 		                <tr>
 		                   <th>Vigencia</th>
-		                    <th>Número de Contrato</th>
+		                    <th>Tipo de Contrato</th>
+							<th>Número de Contrato</th>
 		                    <th>Identificación<br>Contratista</th>
 							<th>Nombre y Apellidos<br>Contratistas</th>
 							<th>Fecha de Inicio<br>Contrato</th>

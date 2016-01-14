@@ -25,9 +25,26 @@ class RegistradorOrden {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		if ($_REQUEST ['tipo_contrato'] == 1) {
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'Consultar_Tipo_Contrato_Particular', $_REQUEST ['identificacion'] );
+			
+			$contratos_tipo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+			foreach ( $contratos_tipo as $valor ) {
+				
+				if ($valor ['tipo_contrato'] == '1') {
+					redireccion::redireccionar ( "ErrorTipoContrato" );
+					exit ();
+					
+				}
+			}
+		}
+		
 		$datos = array (
 				"vigencia" => $_REQUEST ['vigencia'],
 				"numero" => $_REQUEST ['numero'],
+				"tipo_contrato" => $_REQUEST ['tipo_contrato'],
 				"identificacion" => $_REQUEST ['identificacion'],
 				"nombre" => $_REQUEST ['nombre'],
 				"fecha_inicio" => $_REQUEST ['fecha_inicio'],
@@ -37,9 +54,7 @@ class RegistradorOrden {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'modificarContrato', $datos );
 		
-		$Actualizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
-		
-		 
+		$Actualizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $datos, 'modificarContrato' );
 		
 		if ($Actualizacion != false) {
 			$this->miConfigurador->setVariableConfiguracion ( "cache", true );

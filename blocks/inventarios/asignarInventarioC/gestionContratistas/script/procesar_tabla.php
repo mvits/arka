@@ -71,6 +71,7 @@ $(function() {
                   },
                   columns: [
 				  { data :"vigencia" },
+				  { data :"tipo_contrato"},
 				  { data :"numero"},
 	              { data :"identificacion" },
                   { data :"nombre" },

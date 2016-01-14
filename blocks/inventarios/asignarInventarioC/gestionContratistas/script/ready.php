@@ -54,7 +54,7 @@ event.preventDefault();
 
     setTimeout(function() {
     		$('#divMensaje').hide( "drop", { direction: "up" }, "slow" );
-			}, 1000); // <-- time in milliseconds
+			}, 10000); // <-- time in milliseconds
         
         
         
@@ -72,6 +72,8 @@ event.preventDefault();
 
 $('#<?php echo $this->campoSeguro('vigencia')?>').width(100);                
 $("#<?php echo $this->campoSeguro('vigencia')?>").select2();
+$('#<?php echo $this->campoSeguro('tipo_contrato')?>').width(100);
+$("#<?php echo $this->campoSeguro('tipo_contrato')?>").select2();
 
 
         

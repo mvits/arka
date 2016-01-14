@@ -240,7 +240,7 @@ class Registrador {
 						$cadenaSql = $this->miSql->getCadenaSql ( 'registrarContratista', $arreglo );
 						
 						if ($registrar = true) {
-							$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+							$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $arreglo, "registrarContratista" );
 							
 							if ($resultado == false) {
 								
