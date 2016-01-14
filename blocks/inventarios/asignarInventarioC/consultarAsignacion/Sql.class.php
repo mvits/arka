@@ -241,7 +241,7 @@ class Sql extends \Sql {
 				$cadenaSql = "UPDATE asignar_elementos ";
 				$cadenaSql .= " SET ";
 				$cadenaSql .= " estado='" . $variable [1] . "' ,";
-				$cadenaSql.= " fecha_registro='" . $variable[2] . "' ";
+				$cadenaSql .= " fecha_registro='" . $variable [2] . "' ";
 				$cadenaSql .= " WHERE id_elemento= '" . $variable [0] . "'; ";
 				break;
 			
@@ -265,20 +265,21 @@ class Sql extends \Sql {
 				break;
 			
 			case "contratistas" :
-				$cadenaSql = "SELECT DISTINCT \"CON_IDENTIFICACION\", \"CON_IDENTIFICACION\" ||'-'|| \"CON_NOMBRE\"||': Contrato N#' ||\"CON_NUMERO_CONTRATO\"||' - Vigencia '||\"CON_VIGENCIA_FISCAL\" ";
+				
+				$cadenaSql = "SELECT DISTINCT \"CON_IDENTIFICACION\", \"CON_IDENTIFICACION\" ||'-'|| \"CON_NOMBRE\"||': Contrato '|| tc_descripcion ||' N#' ||\"CON_NUMERO_CONTRATO\"||' - Vigencia '||\"CON_VIGENCIA_FISCAL\" ";
 				$cadenaSql .= "FROM arka_parametros.arka_contratistas ";
+				$cadenaSql .= "JOIN arka_parametros.arka_tipo_contrato tp ON tp.tc_identificador=\"CON_TIPO_CONTRATO\"";
 				$cadenaSql .= "WHERE \"CON_FECHA_INICIO\" <= '" . date ( 'Y-m-d' ) . "' ";
 				$cadenaSql .= "AND \"CON_FECHA_FINAL\" >= '" . date ( 'Y-m-d' ) . "' ";
 				
 				break;
-			
 			case "nombreContratista" :
 				$cadenaSql = " SELECT * ";
 				$cadenaSql .= "FROM arka_parametros.arka_contratistas ";
 				$cadenaSql .= " WHERE \"CON_IDENTIFICACION\"='" . $variable . "' ";
-				$cadenaSql .= " AND  \"CON_FECHA_INICIO\" <= '" . date('Y-m-d') . "' ";
-				$cadenaSql .= " AND \"CON_FECHA_FINAL\"  >='" . date('Y-m-d') . "' ";
-				break; 
+				$cadenaSql .= " AND  \"CON_FECHA_INICIO\" <= '" . date ( 'Y-m-d' ) . "' ";
+				$cadenaSql .= " AND \"CON_FECHA_FINAL\"  >='" . date ( 'Y-m-d' ) . "' ";
+				break;
 			
 			case "datosFuncionario" :
 				$cadenaSql = " SELECT * ";
@@ -296,7 +297,7 @@ class Sql extends \Sql {
 				$cadenaSql .= ' AND "FUN_CARGO" ';
 				$cadenaSql .= " ='JEFE DE SECCION' ";
 				$cadenaSql .= ' AND "FUN_DEP_COD_ACADEMICA"=60 ; ';
-				 
+				
 				break;
 		}
 		return $cadenaSql;

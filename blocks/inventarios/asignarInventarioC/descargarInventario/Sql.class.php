@@ -191,7 +191,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND elemento_individual.estado_asignacion=TRUE  ";
 				
 				$cadenaSql .= " AND asignar_elementos.estado=1  ";
-// 				$cadenaSql .= " AND salida.id_salida=elemento_individual.id_salida ";
+				// $cadenaSql .= " AND salida.id_salida=elemento_individual.id_salida ";
 				// $cadenaSql.= " AND supervisor='" . $variable[0] . "' ";
 				$cadenaSql .= " AND contratista='" . $variable . "' ORDER BY nivel ASC ";
 				break;
@@ -221,7 +221,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE id_elemento = '" . $variable [0] . "'; ";
 				break;
 			
-			/* * ***************** */
+			/* ***************** */
 			
 			// Consultas de Oracle para rescate de información de Sicapital
 			case "dependencias" :
@@ -243,8 +243,10 @@ class Sql extends \Sql {
 				break;
 			
 			case "contratistas" :
-				$cadenaSql = "SELECT DISTINCT \"CON_IDENTIFICACION\", \"CON_IDENTIFICACION\" ||'-'|| \"CON_NOMBRE\"||': Contrato N#' ||\"CON_NUMERO_CONTRATO\"||' - Vigencia '||\"CON_VIGENCIA_FISCAL\" ";
+				
+				$cadenaSql = "SELECT DISTINCT \"CON_IDENTIFICACION\", \"CON_IDENTIFICACION\" ||'-'|| \"CON_NOMBRE\"||': Contrato '|| tc_descripcion ||' N#' ||\"CON_NUMERO_CONTRATO\"||' - Vigencia '||\"CON_VIGENCIA_FISCAL\" ";
 				$cadenaSql .= "FROM arka_parametros.arka_contratistas ";
+				$cadenaSql .= "JOIN arka_parametros.arka_tipo_contrato tp ON tp.tc_identificador=\"CON_TIPO_CONTRATO\"";
 				$cadenaSql .= "WHERE \"CON_FECHA_INICIO\" <= '" . date ( 'Y-m-d' ) . "' ";
 				$cadenaSql .= "AND \"CON_FECHA_FINAL\" >= '" . date ( 'Y-m-d' ) . "' ";
 				
