@@ -41,6 +41,20 @@ $("#tabs").tabs();
 
 
 
+   
+   
+   
+      $("#divMensaje").click(function(event) {
+
+             event.preventDefault();
+
+             $("#divMensaje").slideToggle();
+
+         });
+
+   
+   
+   
 
 
 $(function() {
@@ -50,11 +64,11 @@ $( "input[type=submit], button" )
 event.preventDefault();
 });
 });
-
+ 
 
     setTimeout(function() {
     		$('#divMensaje').hide( "drop", { direction: "up" }, "slow" );
-			}, 100000); // <-- time in milliseconds
+			}, 50000); // <-- time in milliseconds
         
         
         

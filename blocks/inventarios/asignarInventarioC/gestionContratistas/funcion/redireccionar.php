@@ -18,6 +18,7 @@ class redireccion {
 				$variable .= "&mensaje=registro";
 				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				$variable .= "&log_error=" . $valor;
+				$variable .= "&num_exito=" . $valor1;
 				
 				break;
 			

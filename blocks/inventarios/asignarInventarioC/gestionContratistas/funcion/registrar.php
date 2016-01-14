@@ -32,6 +32,7 @@ class Registrador {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
+		$k = 0;
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -234,7 +235,7 @@ class Registrador {
 						if ($fechaFinal <= $fechaInicio) {
 							
 							$registrar = false;
-							$log_error ['errorFechas'] [] = $arreglo;
+							$log_error ['Error_Fechas'] [] = $arreglo;
 						}
 						
 						if ($valor ['tipo_contrato'] == 1 && $registrar != false) {
@@ -269,13 +270,16 @@ class Registrador {
 								$registrar = false;
 								$log_error ['Error_Registro'] [] = $arreglo;
 							} else {
+								
+								$k = $k + 1;
+								
 								if (isset ( $registrado_unico ) != true) {
 									$registrado_unico = true;
 								}
 							}
 						}
 					}
-				} else {
+				} else { 
 					
 					$datos = false;
 				}
@@ -288,9 +292,9 @@ class Registrador {
 					$log_error = false;
 				}
 				
-				if (isset($registrado_unico)==true) {
+				if (isset ( $registrado_unico ) == true) {
 					$this->miConfigurador->setVariableConfiguracion ( "cache", true );
-					redireccion::redireccionar ( 'inserto', $log_error );
+					redireccion::redireccionar ( 'inserto', $log_error,$k );
 					exit ();
 				} else {
 					

@@ -94,7 +94,7 @@ class registrarForm {
 		if (isset ( $_REQUEST ['mensaje'] )) {
 			switch ($_REQUEST ['mensaje']) {
 				case 'registro' :
-					$atributos ['mensaje'] = "<center>SE REGISTRO CON EXITO LOS CONTRATISTAS VALIDOS</center>";
+					$atributos ['mensaje'] = "<center>SE REGISTRO N#".$_REQUEST['num_exito']." CON EXITO LOS CONTRATISTAS VALIDOS </center>";
 					$atributos ["estilo"] = 'success';
 					
 					break;
