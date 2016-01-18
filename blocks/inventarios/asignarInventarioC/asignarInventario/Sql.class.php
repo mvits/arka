@@ -151,44 +151,54 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE identificacion='" . $variable . "';";
 				break;
 			
-				
-// 				SELECT id_elemento_ind,elemento_nombre as nivel, marca, ei.placa,ei.serie, valor, subtotal_sin_iva, total_iva, total_iva_con
-// 				FROM elemento
-// 				JOIN elemento_individual ei ON elemento.id_elemento=ei.id_elemento_gen
-// 				JOIN catalogo.catalogo_elemento ON catalogo.catalogo_elemento.elemento_id=nivel WHERE ei.estado_registro=TRUE and
-// 				ei.estado_asignacion=FALSE AND funcionario='1026276984' ORDER BY nivel ASC;
-				
-				
 			case "consultarElementosSupervisor" :
-				$cadenaSql = "SELECT id_elemento_ind,elemento_nombre as nivel, marca, ei.placa,ei.serie, valor, subtotal_sin_iva, ";
-				$cadenaSql .= " total_iva, total_iva_con, elemento.descripcion,
-						    sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia,espacios.\"ESF_NOMBRE_ESPACIO\" espacio_fisico ";
-				$cadenaSql .= " FROM elemento ";
-				$cadenaSql .= " JOIN elemento_individual ei ON elemento.id_elemento=ei.id_elemento_gen  ";
-				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=ei.ubicacion_elemento ';
-				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=ei.ubicacion_elemento ';
+				
+				$cadenaSql = "SELECT DISTINCT ";
+				$cadenaSql .= "  eli.id_elemento_ind  , eli.placa ,
+											ele.marca marca,
+											ele.serie serie,
+										sas.\"ESF_SEDE\" sede,
+						       ad.\"ESF_DEP_ENCARGADA\" dependencia,
+						   espacios.\"ESF_NOMBRE_ESPACIO\" espacio_fisico, 
+						ele.descripcion,
+						
+						
+						
+							CASE eli.confirmada_existencia
+											WHEN  't'  THEN 'X' 
+											ELSE  ' '
+											END  marca_existencia,
+										\"FUN_NOMBRE\" nombre_funcionario, 					
+                						 
+                						CASE
+                						WHEN  tfs.descripcion IS  NULL THEN 'Activo'
+										ELSE  tfs.descripcion  
+                						END   as estado_bien, 
+						               ele.descripcion descripcion_elemento,
+						              eli.confirmada_existencia , 
+						               eli.tipo_confirmada, espacios.\"ESF_NOMBRE_ESPACIO\" espaciofisico,
+										crn.\"CON_IDENTIFICACION\"||'-'||crn.\"CON_NOMBRE\" contratista 
+						
+						
+						
+						               ";
+				$cadenaSql .= "FROM elemento_individual  eli ";
+				$cadenaSql .= "JOIN elemento ele ON ele.id_elemento =eli .id_elemento_gen ";
+				$cadenaSql .= "JOIN tipo_bienes  tb ON tb.id_tipo_bienes = ele.tipo_bien ";
+				$cadenaSql .= "LEFT JOIN estado_elemento  est ON est.id_elemento_ind = eli.id_elemento_ind ";
+				$cadenaSql .= "LEFT JOIN tipo_falt_sobr  tfs ON tfs.id_tipo_falt_sobr = est.tipo_faltsobr   ";
+				$cadenaSql .= "LEFT JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= eli.funcionario ";
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
+				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=eli.ubicacion_elemento ';
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_sedes as sas ON sas."ESF_COD_SEDE"=espacios."ESF_COD_SEDE" ';
-				$cadenaSql .= " JOIN catalogo.catalogo_elemento ON catalogo.catalogo_elemento.elemento_id=nivel ";
-				$cadenaSql .= " WHERE  ";
-				$cadenaSql .= " ei.estado_registro=TRUE  ";
-				$cadenaSql .= " AND ei.estado_asignacion=FALSE  ";
-				$cadenaSql .= " AND ei.placa IS NOT NULL   ";
-				$cadenaSql.= " AND funcionario='" . $variable . "' ORDER BY nivel ASC ";
+				$cadenaSql .= ' LEFT JOIN  asignar_elementos asl ON asl.id_elemento=eli.id_elemento_ind ';
+				$cadenaSql .= ' LEFT JOIN  arka_parametros.arka_contratistas crn ON crn."CON_IDENTIFICACION"=asl.contratista  ';
+				$cadenaSql .= "WHERE tb.id_tipo_bienes <> 1 ";
+				$cadenaSql .= " AND eli.estado_registro = 'TRUE'  ";
+				$cadenaSql .= " AND eli.estado_asignacion=FALSE  ";
+				$cadenaSql .= " AND eli.funcionario= '" . $variable . "' ";
+				
 				break;
-			
-			// case "consultarElementosSupervisor" :
-			// $cadenaSql = "SELECT id_elemento_ind, nivel, marca, elemento_individual.placa,elemento_individual.serie, valor, subtotal_sin_iva, ";
-			// $cadenaSql.= " total_iva, total_iva_con ";
-			// $cadenaSql.= " FROM salida , elemento ";
-			// $cadenaSql.= " JOIN elemento_individual ON elemento.id_elemento=elemento_individual.id_elemento_gen ";
-			// $cadenaSql.= " WHERE ";
-			// $cadenaSql.= " elemento_individual.estado_registro=TRUE ";
-			// $cadenaSql.= " AND salida.id_salida=elemento_individual.id_salida ";
-			// $cadenaSql.= " AND salida.id_entrada=elemento.id_entrada ";
-			// $cadenaSql.= " AND elemento_individual.estado_asignacion=FALSE ";
-			// $cadenaSql.= " AND funcionario='" . $variable[0] . "' ORDER BY nivel ASC ";
-			//
-			// break;
 			
 			case "consultarID" :
 				$cadenaSql = " SELECT id_contratista ";
@@ -222,7 +232,7 @@ class Sql extends \Sql {
 ";
 				break;
 			
-			/* * ***************** */
+			/* ***************** */
 			
 			// Consultas de Oracle para rescate de información de Sicapital
 			case "dependencias" :

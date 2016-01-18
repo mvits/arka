@@ -72,6 +72,7 @@ class RegistradorActa {
 			$asignar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $datosAsignacion, "asignarElemento" );
 			
 			$cadenaSql2 = $this->miSql->getCadenaSql ( 'inactivarElemento', $datosInactivar );
+			
 			$inactivar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql2, "acceso", $datosInactivar, "inactivarElemento" );
 		}
 		// inactivar item para asignar

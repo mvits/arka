@@ -71,6 +71,7 @@ if ($_REQUEST ['funcion'] == 'ConsultarContratistas') {
 		$VariableModificar = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 		$VariableModificar .= "&opcion=modificarContratista";
 		$VariableModificar .= "&identificador_contratista=" . $valor ['CON_IDENTIFICADOR'];
+		$VariableModificar .= "&tipo_contrato=" . $valor ['CON_TIPO_CONTRATO'];
 		$VariableModificar .= "&usuario=" . $_REQUEST ['usuario'];
 		$VariableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableModificar, $directorio );
 		

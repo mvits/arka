@@ -426,8 +426,7 @@ class registrarForm {
 			
 			// ------------------Fin Division para los botones-------------------------
 			echo $this->miFormulario->division ( "fin" );
-			
-			// ------------------- SECCION: Paso de variables ------------------------------------------------
+	// ------------------- SECCION: Paso de variables ------------------------------------------------
 			
 			/**
 			 * En algunas ocasiones es útil pasar variables entre las diferentes páginas.
@@ -449,6 +448,7 @@ class registrarForm {
 			$valorCodificado .= "&opcion=modificar";
 			$valorCodificado .= "&identificador_contratista=" . $_REQUEST ['identificador_contratista'];
 			$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
+			$valorCodificado .= "&tipo_contrato_actual=" . $_REQUEST ['tipo_contrato'];
 			
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.

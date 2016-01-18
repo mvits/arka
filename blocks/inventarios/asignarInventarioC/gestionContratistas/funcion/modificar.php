@@ -25,33 +25,29 @@ class RegistradorOrden {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		
-		
 		/*
 		 * Validar que el Contratista no tenga mas de un contrato de orden de prestacion de servicios(OPS)
-		 * */
+		 */
 		
-		
-		if ($_REQUEST ['tipo_contrato'] == 1) {
+	
+		if ($_REQUEST ['tipo_contrato'] == 1 && $_REQUEST ['tipo_contrato_actual'] != '1') {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'Consultar_Tipo_Contrato_Particular', $_REQUEST ['identificacion'] );
 			
 			$contratos_tipo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
+			
 			foreach ( $contratos_tipo as $valor ) {
 				
 				if ($valor ['tipo_contrato'] == '1') {
 					redireccion::redireccionar ( "ErrorTipoContrato" );
 					exit ();
-					
 				}
 			}
 		}
 		
-		
 		/*
 		 * Registrar Contratista.
-		* */
+		 */
 		
 		$datos = array (
 				"vigencia" => $_REQUEST ['vigencia'],
