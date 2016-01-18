@@ -152,13 +152,15 @@ class Sql extends \Sql {
 			// _________________________________________________
 			
 			case "consultar_id_acta" :
-				$cadenaSql = " SELECT DISTINCT id_actarecibido, id_actarecibido as acta_serial";
-				$cadenaSql .= " FROM registro_actarecibido ";
-				$cadenaSql .= " JOIN    elemento_acta_recibido  ela ON ela.id_acta=registro_actarecibido. id_actarecibido ";
-				$cadenaSql .= " LEFT JOIN  entrada  en ON en.acta_recibido=registro_actarecibido. id_actarecibido ";
-				$cadenaSql .= " WHERE ela.estado='true'   ";
+				$cadenaSql = " SELECT DISTINCT ar.id_actarecibido, ar.id_actarecibido as acta_serial";
+				$cadenaSql .= " FROM registro_actarecibido ar";
+				$cadenaSql .= " JOIN    elemento_acta_recibido  ela ON ela.id_acta=ar.id_actarecibido ";
+				$cadenaSql .= " LEFT JOIN  entrada  en ON en.acta_recibido=ar.id_actarecibido ";
+				$cadenaSql .= " WHERE ela.estado ='TRUE'   ";
+				$cadenaSql .= " AND ar.estado_registro = 1   ";
 				$cadenaSql .= " AND  en.acta_recibido IS NULL   ";
 				$cadenaSql .= " ORDER BY  id_actarecibido DESC ;  ";
+				
 				
 				break;
 			
@@ -206,7 +208,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "ra. proveedor nit_proveedor , pr.\"PRO_RAZON_SOCIAL\" nombre_proveedor  ";
 				
 				$cadenaSql .= "FROM registro_actarecibido ra   ";
-				$cadenaSql .= " JOIN    elemento_acta_recibido  ela ON ela.id_acta=ra. id_actarecibido ";
+				$cadenaSql .= " JOIN elemento_acta_recibido  ela ON ela.id_acta=ra. id_actarecibido ";
 				$cadenaSql .= " LEFT JOIN  entrada  en ON en.acta_recibido=ra. id_actarecibido ";
 				$cadenaSql .= " LEFT  JOIN arka_parametros.arka_proveedor  pr ON pr.\"PRO_NIT\"=ra.proveedor::text  ";
 				$cadenaSql .= "WHERE ra.estado_registro= 1 ";
@@ -615,7 +617,7 @@ class Sql extends \Sql {
 			case 'consultaConsecutivo' :
 				$cadenaSql = "SELECT consecutivo ";
 				$cadenaSql .= "FROM entrada  ";
-				$cadenaSql .= "WHERE  fecha_registro='" . $variable . "';";
+				$cadenaSql .= "WHERE  vigencia='" . $variable . "';";
 				
 				break;
 			
