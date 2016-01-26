@@ -64,11 +64,7 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'Consultar_Contratistas', $vigencia );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarEntrada', $arreglo );
-		
-		// $entrada = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
+
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
 		$atributos ['id'] = $esteCampo;
@@ -142,17 +138,17 @@ class registrarForm {
 						
 						$atributos ['mensaje'] .= "<br>" . $valor . " en los Siguientes Datos en el Archivo: ";
 						$atributos ['mensaje'] .= "<center><table>
-								<thead>
-					                <tr>
-					                   <th>Vigencia</th>
-					                    <th>Tipo de Contrato</th>
-										<th>Número de Contrato</th>
-					                    <th>Identificación<br>Contratista</th>
-										<th>Nombre y Apellidos<br>Contratistas</th>
-										<th>Fecha de Inicio<br>Contrato</th>
-								        <th>Fecha de Final<br>Contrato</th>
-									</tr>
-					            </thead>";
+															<thead>
+												                <tr>
+												                   <th>Vigencia</th>
+												                    <th>Tipo de Contrato</th>
+																	<th>Número de Contrato</th>
+												                    <th>Identificación<br>Contratista</th>
+																	<th>Nombre y Apellidos<br>Contratistas</th>
+																	<th>Fecha de Inicio<br>Contrato</th>
+															        <th>Fecha de Final<br>Contrato</th>
+																</tr>
+												            </thead>";
 						
 						foreach ( $key as $val ) {
 							

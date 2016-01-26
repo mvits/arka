@@ -177,15 +177,25 @@ class Registrador {
 						$fechaInicio = date ( 'Y/m/d', strtotime ( $valor ['Fecha_Inicio'] ) );
 						$fechaFinal = date ( 'Y/m/d', strtotime ( $valor ['Fecha_Final'] ) );
 						
+						$anio_inicio = date ( 'Y', strtotime ( $fechaInicio ) );
+						
+						$anio_actual = date ( 'Y' );
+						
 						$arreglo = array (
 								"identificacion" => $valor ['identificacion'],
-								"nombres" => $valor ['nombres'],
-								"vigencia" => date ( 'Y' ),
+								"nombres" => strtoupper ( $valor ['nombres'] ),
+								"vigencia" => $anio_actual,
 								"tipo_contrato" => $valor ['tipo_contrato'],
 								"numero" => $valor ['numero'],
 								"fecha_inicial" => $fechaInicio,
 								"fecha_final" => $fechaFinal 
 						);
+						
+						if ($anio_inicio != $anio_actual) {
+							$registrar = false;
+							$log_error ['Error_Fecha_Inicio'] [] = $arreglo;
+						}
+						
 						
 						if ($fechaFinal <= $fechaInicio) {
 							
@@ -260,6 +270,9 @@ class Registrador {
 					unlink ( $filename );
 				}
 				
+				
+				
+				
 				// /__________________________________________________
 				
 				if (isset ( $registrado_unico ) == true) {
@@ -283,5 +296,4 @@ class Registrador {
 $miRegistrador = new Registrador ( $this->lenguaje, $this->sql, $this->funcion );
 
 $resultado = $miRegistrador->procesarFormulario ();
-?>rmulario ();
 ?>
