@@ -126,53 +126,7 @@ class registrarForm {
 			echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 			{
 				
-				$esteCampo = "vigencia";
-				$atributos ['nombre'] = $esteCampo;
-				$atributos ['id'] = $esteCampo;
-				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ["etiquetaObligatorio"] = true;
-				$atributos ['tab'] = $tab ++;
-				$atributos ['anchoEtiqueta'] = 180;
-				$atributos ['evento'] = '';
-				if (isset ( $_REQUEST [$esteCampo] )) {
-					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
-				} else {
-					$atributos ['seleccion'] = - 1;
-				}
-				$atributos ['deshabilitado'] = false;
-				$atributos ['columnas'] = 2;
-				$atributos ['tamanno'] = 1;
-				$atributos ['ajax_function'] = "";
-				$atributos ['ajax_control'] = $esteCampo;
-				$atributos ['estilo'] = "jqueryui";
-				$atributos ['validar'] = "required";
-				$atributos ['limitar'] = 1;
-				$atributos ['anchoCaja'] = 27;
-				$atributos ['miEvento'] = '';
-				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarvigencias" );
-				$matrizItems = array (
-						array (
-								0,
-								'' 
-						) 
-				);
-				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-				
-				$atributos ['matrizItems'] = $matrizItems;
-				// $atributos['miniRegistro']=;
-				$atributos ['baseDatos'] = "sicapital";
-				// $atributos ['baseDatos'] = "inventarios";
-				
-				// $atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "clase_entrada" );
-				
-				// Aplica atributos globales al control
-				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoCuadroLista ( $atributos );
-				unset ( $atributos );
-				
-				
-				
-				
+						
 				
 				$esteCampo = "tipo_contrato";
 				$atributos ['nombre'] = $esteCampo;
@@ -188,7 +142,7 @@ class registrarForm {
 					$atributos ['seleccion'] = - 1;
 				}
 				$atributos ['deshabilitado'] = false;
-				$atributos ['columnas'] = 2;
+				$atributos ['columnas'] = 1;
 				$atributos ['tamanno'] = 1;
 				$atributos ['ajax_function'] = "";
 				$atributos ['ajax_control'] = $esteCampo;

@@ -283,4 +283,5 @@ class Registrador {
 $miRegistrador = new Registrador ( $this->lenguaje, $this->sql, $this->funcion );
 
 $resultado = $miRegistrador->procesarFormulario ();
+?>rmulario ();
 ?>

@@ -50,11 +50,10 @@ class RegistradorOrden {
 		 */
 		
 		$datos = array (
-				"vigencia" => $_REQUEST ['vigencia'],
 				"numero" => $_REQUEST ['numero'],
 				"tipo_contrato" => $_REQUEST ['tipo_contrato'],
 				"identificacion" => $_REQUEST ['identificacion'],
-				"nombre" => $_REQUEST ['nombre'],
+				"nombre" =>  strtoupper ($_REQUEST ['nombre']),
 				"fecha_inicio" => $_REQUEST ['fecha_inicio'],
 				"fecha_final" => $_REQUEST ['fecha_final'],
 				"identificador" => $_REQUEST ['identificador_contratista'] 

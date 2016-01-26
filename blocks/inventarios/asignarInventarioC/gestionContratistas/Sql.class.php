@@ -483,7 +483,7 @@ class Sql extends \Sql {
 			case "modificarContrato" :
 				
 				$cadenaSql = "UPDATE arka_parametros.arka_contratistas ";
-				$cadenaSql .= "SET  \"CON_VIGENCIA_FISCAL\"='" . $variable ['vigencia'] . "', ";
+				$cadenaSql .= "SET  ";
 				$cadenaSql .= " \"CON_NUMERO_CONTRATO\" ='" . $variable ['numero'] . "', ";
 				$cadenaSql .= " \"CON_IDENTIFICACION\"='" . $variable ['identificacion'] . "', ";
 				$cadenaSql .= " \"CON_NOMBRE\"='" . $variable ['nombre'] . "', ";
