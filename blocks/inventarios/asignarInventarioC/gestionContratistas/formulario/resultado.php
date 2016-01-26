@@ -64,7 +64,7 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'Consultar_Contratistas', $vigencia );
 		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
+		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
 		$atributos ['id'] = $esteCampo;
@@ -90,7 +90,7 @@ class registrarForm {
 		if (isset ( $_REQUEST ['mensaje'] )) {
 			switch ($_REQUEST ['mensaje']) {
 				case 'registro' :
-					$atributos ['mensaje'] = "<center>SE REGISTRO N#".$_REQUEST['num_exito']." CON EXITO LOS CONTRATISTAS VALIDOS </center>";
+					$atributos ['mensaje'] = "<center>SE REGISTRO N#" . $_REQUEST ['num_exito'] . " CON EXITO LOS CONTRATISTAS VALIDOS </center>";
 					$atributos ["estilo"] = 'success';
 					
 					break;
@@ -124,6 +124,11 @@ class registrarForm {
 				
 				case 'errorTipoContrato' :
 					$atributos ['mensaje'] = "<center>ERROR AL ACTUALIZAR EL TIPO DE CONTRATO.<BR>YA EXISTE UN CONTRATO VIGENTE DE ORDEN DE PRESTACIÓN DE SERVICIOS (OPS) CON EL CONTRATISTA.</center>";
+					$atributos ["estilo"] = 'error';
+					break;
+				
+				case 'errorActualizacion' :
+					$atributos ['mensaje'] = "<center>ERROR AL ACTUALIZAR EL CONTRATO.<BR>VERIFIQUE LOS DATOS</center>";
 					$atributos ["estilo"] = 'error';
 					break;
 			}

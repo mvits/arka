@@ -29,7 +29,6 @@ class RegistradorOrden {
 		 * Validar que el Contratista no tenga mas de un contrato de orden de prestacion de servicios(OPS)
 		 */
 		
-	
 		if ($_REQUEST ['tipo_contrato'] == 1 && $_REQUEST ['tipo_contrato_actual'] != '1') {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'Consultar_Tipo_Contrato_Particular', $_REQUEST ['identificacion'] );
@@ -53,15 +52,28 @@ class RegistradorOrden {
 				"numero" => $_REQUEST ['numero'],
 				"tipo_contrato" => $_REQUEST ['tipo_contrato'],
 				"identificacion" => $_REQUEST ['identificacion'],
-				"nombre" =>  strtoupper ($_REQUEST ['nombre']),
+				"nombre" => strtoupper ( $_REQUEST ['nombre'] ),
 				"fecha_inicio" => $_REQUEST ['fecha_inicio'],
 				"fecha_final" => $_REQUEST ['fecha_final'],
 				"identificador" => $_REQUEST ['identificador_contratista'] 
 		);
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'modificarContrato', $datos );
+		$anio_inicio = date ( 'Y', strtotime ( $_REQUEST ['fecha_inicio'] ) );
 		
-		$Actualizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $datos, 'modificarContrato' );
+		$anio_actual = date ( 'Y' );
+		
+		if ($anio_inicio != $anio_actual) {
+			$registrar = false;
+		} else {
+			$registrar = true;
+		}
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'modificarContrato', $datos );
+		if ($registrar == true) {
+			$Actualizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $datos, 'modificarContrato' );
+		} else {
+			$Actualizacion = false;
+		}
 		
 		if ($Actualizacion != false) {
 			$this->miConfigurador->setVariableConfiguracion ( "cache", true );

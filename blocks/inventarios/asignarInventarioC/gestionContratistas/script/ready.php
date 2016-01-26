@@ -97,7 +97,7 @@ $("#<?php echo $this->campoSeguro('tipo_contrato')?>").select2();
                         
         $('#<?php echo $this->campoSeguro('fecha_inicio')?>').datepicker({
 		dateFormat: 'yy-mm-dd',
-		
+		minDate: 0,
 		changeYear: true,
 		changeMonth: true,
 		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
@@ -123,7 +123,7 @@ $("#<?php echo $this->campoSeguro('tipo_contrato')?>").select2();
 		});
               $('#<?php echo $this->campoSeguro('fecha_final')?>').datepicker({
 		dateFormat: 'yy-mm-dd',
-		
+		minDate: 0,
 		changeYear: true,
 		changeMonth: true,
 		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
