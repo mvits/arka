@@ -26,7 +26,6 @@ class RegistradorActa {
 	function procesarFormulario() {
 		
 		
-		
 		$fechaActual = date ( 'Y-m-d' );
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
@@ -59,8 +58,12 @@ class RegistradorActa {
 					$_REQUEST ['supervisor'],
 					$items [$key],
 					1,
-					$fechaActual 
-			);
+					$fechaActual,
+					$_REQUEST ['tipo_contrato'],
+					$_REQUEST ['numero_contrato'],
+					$_REQUEST ['vigencia'] 
+			)
+			;
 			
 			$datosInactivar = array (
 					$items [$key],
@@ -78,10 +81,10 @@ class RegistradorActa {
 		// inactivar item para asignar
 		if ($inactivar == true && $asignar == true) {
 			redireccion::redireccionar ( 'inserto', $datos );
-			exit;
+			exit ();
 		} else {
 			redireccion::redireccionar ( 'noInserto', $_REQUEST ['usuario'] );
-			exit;
+			exit ();
 		}
 	}
 	function resetForm() {

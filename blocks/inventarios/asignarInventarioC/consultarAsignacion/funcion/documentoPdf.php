@@ -38,9 +38,11 @@ class RegistradorOrden {
 		$funcionario = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosContratista', array (
-				
-				$_REQUEST ['funcionario'],
-				$_REQUEST ['contratista'] 
+				"funcionario" => $_REQUEST ['supervisor'],
+				"contratista" => $_REQUEST ['contratista'],
+				"tipo_contrato" => $_REQUEST ['tipo_contrato'],
+				"numero_contrato" => $_REQUEST ['numero_contrato'],
+				"vigencia" => $_REQUEST ['vigencia']
 		) );
 		$elementos_contratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		// var_dump($elementos_contratista);
@@ -115,7 +117,7 @@ class RegistradorOrden {
             </tr>
         </table>
                 <br> <br>  <br>
-          Yo , " . $contratista [0] ['CON_NOMBRE'] . " con identificación número " . $contratista [0] ['CON_IDENTIFICACION'] . ", recibo de conformidad con el Contrato Número " . $contratista [0] ['CON_NUMERO_CONTRATO'] . "  y Vigencia " . $contratista [0] ['CON_VIGENCIA_FISCAL'] . " por parte del supervisor y/o funcionario " . $funcionario [0] ['FUN_NOMBRE'] . " los siguientes Elementos: <br><br> ";
+          Yo , " . $contratista [0] ['CON_NOMBRE'] . " con identificación número " . $contratista [0] ['CON_IDENTIFICACION'] . ", recibo de conformidad con el Contrato ".$_REQUEST['tipo_contrato']." Número " . $_REQUEST['numero_contrato'] . "  y Vigencia " . $_REQUEST['vigencia'] . " por parte del supervisor y/o funcionario " . $funcionario [0] ['FUN_NOMBRE'] . " los siguientes Elementos: <br><br> ";
 		
 		$contenidoPagina .= "<br>
 						

@@ -75,7 +75,7 @@ class registrarForm {
             $atributos ['id'] = $esteCampo;
             $atributos ["estilo"] = "jqueryui";
             $atributos ['tipoEtiqueta'] = 'inicio';
-            $atributos ["leyenda"] = "Consultar Contratista para Modificar Asignación de Elementos";
+            $atributos ["leyenda"] = "Consultar Contratista para Modificar Préstamo de Elementos";
             echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
 
 

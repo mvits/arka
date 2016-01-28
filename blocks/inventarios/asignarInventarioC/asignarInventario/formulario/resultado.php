@@ -49,6 +49,9 @@ class registrarForm {
 		$_REQUEST ['tiempo'] = time ();
 		$tiempo = $_REQUEST ['tiempo'];
 		
+		
+		$arregloDatos = explode ( "@", $_REQUEST ['documentoContratista'] );
+		
 		// -------------------------------------------------------------------------------------------------
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -57,14 +60,7 @@ class registrarForm {
 		
 		$elementos_supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		
-		
-		
-		$cadenaSql2 = $this->miSql->getCadenaSql ( 'nombreContratista', $_REQUEST ['documentoContratista'] );
-		
-		
-		
-		
+		$cadenaSql2 = $this->miSql->getCadenaSql ( 'nombreContratista',$arregloDatos[0] );
 		
 		$nombreContratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql2, "busqueda" );
 		
@@ -94,17 +90,15 @@ class registrarForm {
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-		$_REQUEST['funcionario']= $_REQUEST ['usuario'];
+		$_REQUEST ['funcionario'] = $_REQUEST ['usuario'];
 		$variable = "pagina=" . $miPaginaActual;
 		$variable .= "&usuario=" . $_REQUEST ['usuario'];
 		$variable .= "&funcionario=" . $_REQUEST ['funcionario'];
 		
-		
 		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
-				
-			$variable	 .= "&accesoCondor=true";
+			
+			$variable .= "&accesoCondor=true";
 		}
-		
 		
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
@@ -122,11 +116,13 @@ class registrarForm {
 		
 		unset ( $atributos );
 		
+
+		
 		$esteCampo = "marcoDatosBasicos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Asignación de Elementos: " . $_REQUEST ['documentoContratista'] . " - " . $nombreContratista [0] [1];
+		$atributos ["leyenda"] = "Préstamo de Elementos: " . $arregloDatos[0]  . " - " . $nombreContratista [0] [1];
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
 		if ($elementos_supervisor !== false) {
@@ -202,14 +198,16 @@ class registrarForm {
 			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=asignar";
-			$valorCodificado .= "&contratista=" . $_REQUEST ['documentoContratista'];
+			$valorCodificado .= "&contratista=" .  $arregloDatos[0];
+			$valorCodificado .= "&tipo_contrato=" . $arregloDatos[1];
+			$valorCodificado .= "&numero_contrato=" . $arregloDatos[2];
+			$valorCodificado .= "&vigencia=" . $arregloDatos[3];
 			$valorCodificado .= "&supervisor=" . $_REQUEST ['funcionario'];
 			$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 			if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
-					
+				
 				$valorCodificado .= "&accesoCondor=true";
 			}
-			
 			
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.

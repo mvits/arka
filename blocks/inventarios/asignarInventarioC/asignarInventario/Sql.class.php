@@ -212,15 +212,18 @@ class Sql extends \Sql {
 				$cadenaSql .= " supervisor, ";
 				$cadenaSql .= " id_elemento, ";
 				$cadenaSql .= " estado, ";
-				$cadenaSql .= " fecha_registro) ";
+				$cadenaSql .= " fecha_registro,tipo_contrato,numero_contrato,vigencia) ";
 				$cadenaSql .= " VALUES ( ";
 				$cadenaSql .= " '" . $variable [0] . "', ";
 				$cadenaSql .= " '" . $variable [1] . "', ";
 				$cadenaSql .= " '" . $variable [2] . "', ";
 				$cadenaSql .= " '" . $variable [3] . "', ";
-				$cadenaSql .= " '" . $variable [4] . "'";
-				$cadenaSql .= " );
-";
+				$cadenaSql .= " '" . $variable [4] . "', ";
+				$cadenaSql .= " '" . $variable [5] . "', ";
+				$cadenaSql .= " '" . $variable [6] . "', ";
+				$cadenaSql .= " '" . $variable [7] . "'";
+				$cadenaSql .= " );";
+				
 				break;
 			
 			case "inactivarElemento" :
@@ -228,11 +231,10 @@ class Sql extends \Sql {
 				$cadenaSql .= " SET ";
 				$cadenaSql .= " estado_asignacion = '" . $variable [1] . "', ";
 				$cadenaSql .= " fecha_asignacion = '" . $variable [2] . "'";
-				$cadenaSql .= " WHERE id_elemento_ind = '" . $variable [0] . "';
-";
+				$cadenaSql .= " WHERE id_elemento_ind = '" . $variable [0] . "';";
 				break;
 			
-			/* ***************** */
+			/* **************** */
 			
 			// Consultas de Oracle para rescate de información de Sicapital
 			case "dependencias" :
@@ -255,7 +257,8 @@ class Sql extends \Sql {
 			
 			case "contratistas" :
 				
-				$cadenaSql = "SELECT DISTINCT \"CON_IDENTIFICACION\", \"CON_IDENTIFICACION\" ||'-'|| \"CON_NOMBRE\"||': Contrato '|| tc_descripcion ||' N#' ||\"CON_NUMERO_CONTRATO\"||' - Vigencia '||\"CON_VIGENCIA_FISCAL\" ";
+				$cadenaSql = "SELECT DISTINCT \"CON_IDENTIFICACION\"||'@'||tc_descripcion||'@'||\"CON_NUMERO_CONTRATO\"||'@'||\"CON_VIGENCIA_FISCAL\" valor
+						, \"CON_IDENTIFICACION\" ||'-'|| \"CON_NOMBRE\"||': Contrato '|| tc_descripcion ||' N#' ||\"CON_NUMERO_CONTRATO\"||' - Vigencia '||\"CON_VIGENCIA_FISCAL\" ";
 				$cadenaSql .= "FROM arka_parametros.arka_contratistas ";
 				$cadenaSql .= "JOIN arka_parametros.arka_tipo_contrato tp ON tp.tc_identificador=\"CON_TIPO_CONTRATO\"";
 				$cadenaSql .= "WHERE \"CON_FECHA_INICIO\" <= '" . date ( 'Y-m-d' ) . "' ";

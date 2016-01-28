@@ -31,12 +31,8 @@ class RegistradorOrden {
 		
 		$funcionario = $_REQUEST ['funcionario'];
 		
-		
-
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosContratista', $_REQUEST ['contratista'] );
 		$elementos_contratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		
 		
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'nombreContratista', $_REQUEST ['contratista'] );
@@ -49,12 +45,12 @@ class RegistradorOrden {
 		$funcionario = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 
-// 		var_dump($elementos_contratista);
+
 		$cadenaSql = $this->miSql->getCadenaSql ( 'jefe_recursos_fisicos' );
-		// echo $cadenaSql;
+
 		$jefe = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$jefe = $jefe [0];
-// 		var_dump($jefe);
+
 		
 		$directorio = $this->miConfigurador->getVariableConfiguracion ( 'rutaUrlBloque' );
 		
@@ -122,8 +118,7 @@ class RegistradorOrden {
         </table>
                 <br> <br>  <br>
            Yo , ".$contratista[0]['CON_NOMBRE']." con identificación número ".$contratista[0]['CON_IDENTIFICACION'].",
-           		certifico de conformidad con el Contrato Número ".$contratista[0]['CON_NUMERO_CONTRATO']."  y Vigencia ".$contratista[0]['CON_VIGENCIA_FISCAL']." la entrega por parte del supervisor
-           		y/o funcionario ".$funcionario[0]['FUN_NOMBRE']." los siguientes Elementos: <br><br> ";
+           		certifico de conformidad  la entrega por parte de los supervisor(es) los siguientes Elementos: <br><br> ";
          
 		
 		
@@ -133,12 +128,13 @@ class RegistradorOrden {
 			<table style='width:100%;'>
 			<tr> 
 			<td style='width:10%;text-align=center;'>Placa</td>
-			<td style='width:20%;text-align=center;'>Descripción</td>
+			<td style='width:10%;text-align=center;'>Descripción</td>
 			<td style='width:10%;text-align=center;'>Marca Serie</td>
 			<td style='width:10%;text-align=center;'>Sede</td>
 			<td style='width:20%;text-align=center;'>Dependencia</td>
-			<td style='width:20%;text-align=center;'>Ubicación<br>Especifica</td> 
-			<td style='width:10%;text-align=center;'>Verificación Existencia</td>
+			<td style='width:20%;text-align=center;'>Ubicación<br>Especifica</td>
+		    <td style='width:15%;text-align=center;'>Supervisor<br>Funcionario</td> 
+			<td style='width:5%;text-align=center;'>Verificación Existencia</td>
 			</tr>";
 			
 		
@@ -152,12 +148,13 @@ class RegistradorOrden {
 					$contenidoPagina .= " 
 								<tr>
                     			<td style='width:10%;text-align=center;'>" . $valor ['placa'] . "</td>
-                    			<td style='width:20%;text-align=center;'>" . $valor ['descripcion'] . "</td>
+                    			<td style='width:10%;text-align=center;'>" . $valor ['descripcion'] . "</td>
                     			<td style='width:10%;text-align=center;'>" . $valor ['marca']." ".$valor['serie'] . "</td>
                     			<td style='width:10%;text-align=center;'>" . $valor ['sede'] . "</td>
                     			<td style='width:20%;text-align=center;'>" . $valor ['dependencia'] . "</td>
                     		    <td style='width:20%;text-align=center;'>" . $valor ['espacio_fisico'] . "</td>
-                    		    <td style='width:10%;text-align=center;'>" . $existencia . "</td>		
+                    		    <td style='width:15%;text-align=center;'>" . $valor ['supervisor_funcionario'] . "</td>
+                    		    <td style='width:5%;text-align=center;'>" . $existencia . "</td>		
                     			</tr>";
 				
 			}
@@ -173,17 +170,13 @@ class RegistradorOrden {
 				
 			<table style='width:100%; background:#FFFFFF ; border: 0px  #FFFFFF;'>
 			<tr>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>    ____________________________________</td>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>  ____________________________________</td>
+			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>    ____________________________________</td>
 			</tr>
 			<tr>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $contratista [0]['CON_NOMBRE'] . "</td>		
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $funcionario [0]['FUN_NOMBRE'] . "</td>
-			
+			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF;'>" . $contratista [0]['CON_NOMBRE'] . "</td>		
 			</tr>
 			<tr>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Contratista</td>
-			<td style='width:50%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Funcionario y/o Supervisor</td>
+			<td style='width:100%;text-align:center;background:#FFFFFF ; border: 0px  #FFFFFF; text-transform:capitalize;'>Contratista</td>
 			</tr>
 			</table>
 			<br><br><br><br>
@@ -206,7 +199,7 @@ $miRegistrador = new RegistradorOrden ( $this->lenguaje, $this->sql, $this->func
 $textos = $miRegistrador->documento ();
  
 ob_start ();
-$html2pdf = new \HTML2PDF ( 'P', 'LETTER', 'es', true, 'UTF-8', array (
+$html2pdf = new \HTML2PDF ( 'L', 'LETTER', 'es', true, 'UTF-8', array (
 		1,
 		2,
 		2,

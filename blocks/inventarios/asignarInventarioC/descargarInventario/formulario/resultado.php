@@ -51,16 +51,24 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		$arregloDatos = explode ( "@", $_REQUEST ['documentoContratista'] );
 		
 		if (isset ( $_REQUEST ['documentoContratista'] ) && $_REQUEST ['documentoContratista'] != '') {
-			$docContratista = $_REQUEST ['documentoContratista'];
+			$docContratista = $arregloDatos [0];
 		} else {
 			$docContratista = '';
 		}
 		
 		$supervisor = $_REQUEST ['usuario'];
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosContratista', $docContratista );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosContratista', array (
+				
+				"contratista" => $arregloDatos [0],
+				"tipo_contrato" => $arregloDatos [1],
+				"numero_contrato" => $arregloDatos [2],
+				"vigencia" => $arregloDatos [3] 
+		)
+		 );
 		
 		$elementos_contratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		$total_elementos = count ( $elementos_contratista );
@@ -244,7 +252,10 @@ class registrarForm {
 			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=descargar";
-			$valorCodificado .= "&contratista=" . $_REQUEST ['documentoContratista'];
+			$valorCodificado .= "&contratista=" . $arregloDatos[0];
+			$valorCodificado .= "&tipo_contrato=" .$arregloDatos[1];
+			$valorCodificado .= "&numero_contrato=" . $arregloDatos[2];
+			$valorCodificado .= "&vigencia=" . $arregloDatos[3];
 			$valorCodificado .= "&num_elementos=" . $total_elementos;
 			$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
 			$valorCodificado .= "&supervisor=" . $_REQUEST ['funcionario'];

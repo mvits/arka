@@ -184,9 +184,12 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND elemento_individual.id_elemento_ind=asignar_elementos.id_elemento  ";
 				$cadenaSql .= " AND elemento_individual.estado_asignacion=TRUE  ";
 				$cadenaSql .= " AND asignar_elementos.estado=1  ";
-				$cadenaSql .= " AND supervisor='" . $variable [0] . "' ";
-				$cadenaSql .= " AND contratista='" . $variable [1] . "' ORDER BY nivel ASC ";
-				
+				$cadenaSql .= " AND supervisor='" . $variable ['funcionario'] . "' ";
+				$cadenaSql .= " AND asignar_elementos.contratista='" . $variable ['contratista'] . "' ";
+				$cadenaSql .= " AND asignar_elementos.tipo_contrato='" . $variable ['tipo_contrato'] . "' ";
+				$cadenaSql .= " AND asignar_elementos.numero_contrato='" . $variable ['numero_contrato'] . "' ";
+				$cadenaSql .= " AND asignar_elementos.vigencia='" . $variable ['vigencia'] . "' ORDER BY nivel ASC ";
+			 
 				break;
 			
 			case "asignarElemento" :
@@ -266,7 +269,8 @@ class Sql extends \Sql {
 			
 			case "contratistas" :
 				
-				$cadenaSql = "SELECT DISTINCT \"CON_IDENTIFICACION\", \"CON_IDENTIFICACION\" ||'-'|| \"CON_NOMBRE\"||': Contrato '|| tc_descripcion ||' N#' ||\"CON_NUMERO_CONTRATO\"||' - Vigencia '||\"CON_VIGENCIA_FISCAL\" ";
+				$cadenaSql = "SELECT DISTINCT \"CON_IDENTIFICACION\"||'@'||tc_descripcion||'@'||\"CON_NUMERO_CONTRATO\"||'@'||\"CON_VIGENCIA_FISCAL\" valor
+						, \"CON_IDENTIFICACION\" ||'-'|| \"CON_NOMBRE\"||': Contrato '|| tc_descripcion ||' N#' ||\"CON_NUMERO_CONTRATO\"||' - Vigencia '||\"CON_VIGENCIA_FISCAL\" ";
 				$cadenaSql .= "FROM arka_parametros.arka_contratistas ";
 				$cadenaSql .= "JOIN arka_parametros.arka_tipo_contrato tp ON tp.tc_identificador=\"CON_TIPO_CONTRATO\"";
 				$cadenaSql .= "WHERE \"CON_FECHA_INICIO\" <= '" . date ( 'Y-m-d' ) . "' ";

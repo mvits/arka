@@ -53,19 +53,27 @@ class registrarForm {
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		$arregloDatos=explode("@",$_REQUEST['documentoContratista']);
+		
 		if (isset ( $_REQUEST ['documentoContratista'] ) && $_REQUEST ['documentoContratista'] != '') {
-			$docContratista = $_REQUEST ['documentoContratista'];
+			$docContratista = $arregloDatos[0];
 		} else {
 			$docContratista = '';
 		}
+		
+		
+		$arregloDatos=explode("@",$_REQUEST['documentoContratista']);
 		
 		// COnsultar Elementos Activos del supervisor para asignarlos al contratista
 		// $cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosSupervisor', $_REQUEST ['funcionario'] );
 		// $elementos_supervisor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		// Consultar Elementos Asignados al contratista
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElementosContratista', array (
-				$_REQUEST ['funcionario'],
-				$_REQUEST ['documentoContratista'],
+				"funcionario"=>$_REQUEST ['funcionario'],
+				"contratista"=>$arregloDatos[0],
+				"tipo_contrato"=>$arregloDatos[1],
+				"numero_contrato"=>$arregloDatos[2],
+				"vigencia"=>$arregloDatos[3],
 				 
 		) );
 		$elementos_contratista = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -130,7 +138,7 @@ class registrarForm {
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = "Modificar Asignación de Elementos: " . $nombreContratista[0]['CON_IDENTIFICACION']. " - " . $nombreContratista [0] ['CON_NOMBRE'];
+		$atributos ["leyenda"] = "Modificar Préstamo de Elementos: " . $nombreContratista[0]['CON_IDENTIFICACION']. " - " . $nombreContratista [0] ['CON_NOMBRE'];
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
 		if ($elementos_contratista !== false) {
@@ -329,7 +337,10 @@ class registrarForm {
 			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=asignar";
-			$valorCodificado .= "&contratista=" . $_REQUEST ['documentoContratista'];
+			$valorCodificado .= "&contratista=" . $arregloDatos[0];
+			$valorCodificado .= "&tipo_contrato=" .$arregloDatos[1];
+			$valorCodificado .= "&numero_contrato=" . $arregloDatos[2];
+			$valorCodificado .= "&vigencia=" . $arregloDatos[3];
 			$valorCodificado .= "&funcionario=" . $_REQUEST ['funcionario'];
 			$valorCodificado .= "&supervisor=" . $_REQUEST ['funcionario'];
 			$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];

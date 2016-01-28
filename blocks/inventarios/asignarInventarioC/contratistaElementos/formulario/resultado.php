@@ -151,56 +151,13 @@ class registrarForm {
 				<th>Sede</th>
 				<th>Dependencia</th>
 				<th>Ubicación<br>Especifica</th>
+				<th>Supervisor<br>Funcionario a Cargo</th>
 				<th>Verificar</th>
                 </tr>
             </thead>
             <tbody>";
 			
-			// if ($elementos_supervisor !== false) {
-			// for($i = 0; $i < count ( $elementos_supervisor ); $i ++) {
-			
-			// $mostrarHtml = "<tr>
-			// <td><center>" . $elementos_supervisor [$i] ['id_elemento_ind'] . "</center></td>
-			// <td><center>" . $elementos_supervisor [$i] ['nivel'] . "</center></td>
-			// <td><center>" . $elementos_supervisor [$i] ['marca'] . "</center></td>
-			// <td><center>" . $elementos_supervisor [$i] ['placa'] . "</center></td>
-			// <td><center>" . $elementos_supervisor [$i] ['serie'] . "</center></td>
-			// <td><center>" . $elementos_supervisor [$i] ['valor'] . "</center></td>
-			// <td><center>" . $elementos_supervisor [$i] ['subtotal_sin_iva'] . "</center></td>
-			// <td><center>" . $elementos_supervisor [$i] ['total_iva'] . "</center></td>
-			// <td><center>" . $elementos_supervisor [$i] ['total_iva_con'] . "</center></td>
-			// <td><center>";
-			// // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-			// $nombre = 'item_sup' . $i;
-			// $atributos ['id'] = $nombre;
-			// $atributos ['nombre'] = $nombre;
-			// $atributos ['marco'] = true;
-			// $atributos ['estiloMarco'] = true;
-			// $atributos ["etiquetaObligatorio"] = true;
-			// $atributos ['columnas'] = 1;
-			// $atributos ['dobleLinea'] = 1;
-			// $atributos ['tabIndex'] = $tab;
-			// $atributos ['etiqueta'] = '';
-			// if (isset ( $_REQUEST [$esteCampo] )) {
-			// $atributos ['valor'] = $_REQUEST [$esteCampo];
-			// } else {
-			// $atributos ['valor'] = $elementos_supervisor [$i] ['id_elemento_ind'];
-			// }
-			
-			// $atributos ['deshabilitado'] = false;
-			// $tab ++;
-			
-			// // Aplica atributos globales al control
-			// $atributos = array_merge ( $atributos, $atributosGlobales );
-			// $mostrarHtml .= $this->miFormulario->campoCuadroSeleccion ( $atributos );
-			
-			// $mostrarHtml .= "</center></td>
-			// </tr>";
-			// echo $mostrarHtml;	
-			// unset ( $mostrarHtml );
-			// unset ( $variable );
-			// }
-			// }
+		
 			if ($elementos_contratista !== false) {
 				
 				for($i = 0; $i < count ( $elementos_contratista ); $i ++) {
@@ -214,6 +171,7 @@ class registrarForm {
                     <td><center>" . $elementos_contratista [$i] ['sede'] . "</center></td>
                     <td><center>" . $elementos_contratista [$i] ['dependencia'] . "</center></td>
                     <td><center>" . $elementos_contratista [$i] ['espacio_fisico'] . "</center></td>
+                    <td><center>" . $elementos_contratista [$i] ['supervisor_funcionario'] . "</center></td>
                     <td><center>";
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 					$nombre = 'item_cont' . $i;

@@ -90,7 +90,7 @@ class registrarForm {
             $atributos ['tab'] = $tab;
             $atributos ['tamanno'] = 1;
             $atributos ['estilo'] = 'jqueryui';
-            $atributos ['validar'] = 'required, minSize[1],maxSize[15],custom[onlyNumberSp]';
+            $atributos ['validar'] = 'required';
             $atributos ['limitar'] = false;
             $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
             $atributos ['anchoEtiqueta'] = 185;

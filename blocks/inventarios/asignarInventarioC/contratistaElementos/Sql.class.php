@@ -173,9 +173,10 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT id_elemento_ind,elemento_nombre as nivel, marca, ";
 				$cadenaSql .= " elemento_individual.placa,elemento_individual.serie, valor, subtotal_sin_iva, ";
 				$cadenaSql .= " total_iva, total_iva_con, asignar_elementos.verificar_existencia,supervisor, elemento.descripcion ,
-						       sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia,espacios.\"ESF_NOMBRE_ESPACIO\" espacio_fisico ";
+						       sas.\"ESF_SEDE\" sede, ad.\"ESF_DEP_ENCARGADA\" dependencia,espacios.\"ESF_NOMBRE_ESPACIO\" espacio_fisico, \"FUN_IDENTIFICACION\"||'-'||\"FUN_NOMBRE\" supervisor_funcionario ";
 				$cadenaSql .= " FROM asignar_elementos ";
 				$cadenaSql .= " JOIN elemento_individual ON elemento_individual.id_elemento_ind=asignar_elementos.id_elemento ";
+				$cadenaSql .= " JOIN arka_parametros.arka_funcionarios fn ON fn.\"FUN_IDENTIFICACION\"= asignar_elementos.supervisor::numeric ";
 				$cadenaSql .= " JOIN elemento ON elemento.id_elemento=elemento_individual.id_elemento_gen ";
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_espaciosfisicos as espacios ON espacios."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
 				$cadenaSql .= ' LEFT JOIN arka_parametros.arka_dependencia as ad ON ad."ESF_ID_ESPACIO"=elemento_individual.ubicacion_elemento ';
@@ -185,7 +186,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND elemento_individual.id_elemento_ind=asignar_elementos.id_elemento  ";
 				$cadenaSql .= " AND elemento_individual.estado_asignacion=TRUE  ";
 				$cadenaSql .= " AND asignar_elementos.estado=1  ";
-				
 				$cadenaSql .= " AND contratista='" . $variable . "' ORDER BY nivel ASC ";
 				
 				break;

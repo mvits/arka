@@ -68,7 +68,7 @@ class registrarForm {
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = "Consultar Contratista para Asignación de Elementos";
+			$atributos ["leyenda"] = "Consultar Contratista para Préstamo de Elementos"; 
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -83,7 +83,7 @@ class registrarForm {
 			$atributos ['tab'] = $tab;
 			$atributos ['tamanno'] = 1;
 			$atributos ['estilo'] = 'jqueryui';
-			$atributos ['validar'] = 'required, minSize[1],maxSize[15],custom[onlyNumberSp]';
+			$atributos ['validar'] = 'required';
 			$atributos ['limitar'] = false;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 			$atributos ['anchoEtiqueta'] = 185;
