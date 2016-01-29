@@ -10,8 +10,8 @@ class redireccion {
 	public static function redireccionar($opcion, $valor = "", $valor1 = "") {
 		$miConfigurador = \Configurador::singleton ();
 		$miPaginaActual = $miConfigurador->getVariableConfiguracion ( "pagina" );
-		
-		switch ($opcion) {
+	
+                switch ($opcion) {
 			case "inserto" :
 				
 				$variable = "pagina=" . $miPaginaActual;
@@ -46,6 +46,7 @@ class redireccion {
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&mensaje=error";
+                          	$variable .= "&log_error=" . $valor;
 				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				
 				break;
