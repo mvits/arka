@@ -275,9 +275,10 @@ class Sql extends \Sql {
 				break;
 			
 			case "indentificacion_contratista" :
-				$cadenaSql = " SELECT  *, identificacion||' - ('||nombre_razon_social||')' AS nom_razon  ";
-				$cadenaSql .= " FROM contratista_servicios";
-				$cadenaSql .= " WHERE id_contratista ='" . $variable . "';";
+				$cadenaSql = " SELECT  *, identificacion||' - ('||upper(nombres)||')' AS nom_razon  ";
+				$cadenaSql .= " FROM contratistas_adquisiones  "; 
+				$cadenaSql .= " WHERE id_contratista_adq ='" . $variable . "';";
+				
 				break;
 			
 			case "buscar_Proveedores" :
@@ -320,15 +321,16 @@ class Sql extends \Sql {
 			case "OrdenConsultada" :
 				$cadenaSql = "SELECT DISTINCT ";
 				$cadenaSql .= "orden.id_orden, orden.fecha_registro,  ";
-				$cadenaSql .= "identificacion, dependencia_solicitante , orden.sede,
+				$cadenaSql .= "identificacion, dependencia_solicitante  ,sede_solicitante, 
 								CASE orden.tipo_orden
-										WHEN 1 THEN orden.vigencia || ' - ' ||orden.consecutivo_compras
-										WHEN 9 THEn orden.vigencia || ' - ' ||orden.consecutivo_servicio
+										WHEN 1 THEN orden.vigencia || ' - ' ||orden.consecutivo_compras ||' Unidad Ejecutora : '|| orden.unidad_ejecutora
+										WHEN 9 THEn orden.vigencia || ' - ' ||orden.consecutivo_servicio ||' Unidad Ejecutora : '|| orden.unidad_ejecutora 
 								 END identificador, 
 								id_actarecibido ";
 				$cadenaSql .= "FROM orden ";
+				$cadenaSql .= " JOIN elemento_acta_recibido eac ON eac.id_orden = orden.id_orden ";
 				$cadenaSql .= "LEFT JOIN registro_actarecibido ar ON ar.numero_orden = orden.id_orden ";
-				$cadenaSql .= "JOIN contratista_servicios ON contratista_servicios.id_contratista = orden.id_contratista ";
+				$cadenaSql .= "JOIN contratistas_adquisiones ON contratistas_adquisiones.id_contratista_adq = orden.id_contratista ";
 				$cadenaSql .= "WHERE 1=1";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND orden.fecha_registro BETWEEN CAST ( '" . $variable [0] . "' AS DATE) ";

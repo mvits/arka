@@ -99,7 +99,7 @@ class registrarForm {
 				);
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'OrdenConsultada', $arreglo );
-				$cadenaSql;
+				 
 				$resultado_orden = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$titulo = "Orden de Compra";
@@ -186,7 +186,7 @@ class registrarForm {
 			echo "<thead>
                 <tr>
                 <th>Fecha Orden</th>
-                <th>Número Orden <br> Vigencia </th>
+                <th>Número Orden <br> Vigencia<br> Unidad Ejecutora </th>
 				<th>Seleccionar</th>
                 </tr>
             </thead>

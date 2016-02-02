@@ -59,7 +59,7 @@ class registrarForm {
 					"asignacionOrdenador" => $resultado_servicios [0] ['id_ordenador_encargado'],
 					"nombreOrdenador" => $ordenador [0] [0],
 					"id_ordenador" => $ordenador [0] [1],
-					"sede" => $resultado_servicios [0] ['sede'],
+					"sede" => $resultado_servicios [0] ['sede_solicitante'],
 					"dependencia" => $resultado_servicios [0] ['dependencia_solicitante'],
 					"nitproveedor" => $id_contratista [0] ['nom_razon'],
 					"id_proveedor" => $id_contratista [0] ['identificacion'] 
