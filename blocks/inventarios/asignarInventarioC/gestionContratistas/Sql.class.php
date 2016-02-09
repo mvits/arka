@@ -516,7 +516,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND tipo_contrato='" . $variable ['tipo_contrato'] . "'";
 				$cadenaSql .= " AND numero_contrato='" . $variable ['numeroContrato'] . "'";
 				$cadenaSql .= " AND vigencia='" . $variable ['vigencia'] . "'";
-				$cadenaSql .= " AND estado='1';";
+				$cadenaSql .= " AND estado='1';12";
 				
 				break;
 		}

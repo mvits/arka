@@ -101,8 +101,6 @@ class registrarForm {
 			
 			if ($resultadoContratistas == false) {
 				
-				echo "entre mensaje eliminar";
-				
 				$mensaje = "¿ Esta Seguro de Eliminar el Contrato " . $arregloContratista ['tipo_contrato'] . " N# " . $arregloContratista ['numeroContrato'] . " y vigencia " . $arregloContratista ['vigencia'] . " asociado al Contratista " . $arregloContratista ['nombreContratista'] . "<br> con identificación " . $arregloContratista ['identificacion'] . "?";
 				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 				$esteCampo = 'mensajeRegistro';
@@ -124,7 +122,7 @@ class registrarForm {
 				echo $this->miFormulario->division ( "inicio", $atributos );
 				
 				// -----------------CONTROL: Botón ----------------------------------------------------------------
-				$esteCampo = 'botonContinuar';
+				$esteCampo = 'botonEliminar';
 				$atributos ["id"] = $esteCampo;
 				$atributos ["tabIndex"] = $tab;
 				$atributos ["tipo"] = 'boton';
@@ -150,8 +148,6 @@ class registrarForm {
 				unset ( $atributos );
 			} else if ($resultadoContratistas != false) {
 				
-				echo "entre mensaje no eliminar";
-				
 				$mensaje = "El Contrato con el Contratistas que desea Eliminar tiene Elementos a Cargo";
 				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 				$esteCampo = 'mensajeRegistro';
@@ -166,7 +162,11 @@ class registrarForm {
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->cuadroMensaje ( $atributos );
 				unset ( $atributos );
-				
+				// ------------------Division para los botones-------------------------
+				$atributos ["id"] = "botones";
+				$atributos ["estilo"] = "marcoBotones";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				unset ( $atributos );
 				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 				$esteCampo = 'botonSalir';
 				$atributos ['id'] = $esteCampo;
@@ -179,143 +179,11 @@ class registrarForm {
 				$atributos ['redirLugar'] = true;
 				echo $this->miFormulario->enlace ( $atributos );
 				unset ( $atributos );
-			}
-			
-			{
 				
-				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'confirma') {
-					
-					$mensaje = "Se Cargo Elemento <br> Número ID Elemento: " . $_REQUEST ['numero_orden'] . "  
-							<br>Fecha : " . $_REQUEST ['fecha_orden'];
-					
-					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-					$esteCampo = 'mensajeRegistro';
-					$atributos ['id'] = $esteCampo;
-					$atributos ['tipo'] = 'success';
-					$atributos ['estilo'] = 'textoCentrar';
-					$atributos ['mensaje'] = $mensaje;
-					
-					$tab ++;
-					
-					// Aplica atributos globales al control
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->cuadroMensaje ( $atributos );
-					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
-				}
+				// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 				
-				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'confirmaMasivo') {
-					
-					$mensaje = "Se Cargo con Exito los  Elementos  del Archivo<br>
-							<br>Fecha  Registro : " . date ( 'Y-m-d' );
-					
-					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-					$esteCampo = 'mensajeRegistro';
-					$atributos ['id'] = $esteCampo;
-					$atributos ['tipo'] = 'success';
-					$atributos ['estilo'] = 'textoCentrar';
-					$atributos ['mensaje'] = $mensaje;
-					
-					$tab ++;
-					
-					// Aplica atributos globales al control
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->cuadroMensaje ( $atributos );
-					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
-				}
-				
-				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'error') {
-					
-					$mensaje = "No Se Pudo Hacer la  Carga del Elemento";
-					
-					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-					$esteCampo = 'mensajeRegistro';
-					$atributos ['id'] = $esteCampo;
-					$atributos ['tipo'] = 'error';
-					$atributos ['estilo'] = 'textoCentrar';
-					$atributos ['mensaje'] = $mensaje;
-					
-					$tab ++;
-					
-					// Aplica atributos globales al control
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->cuadroMensaje ( $atributos );
-					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
-				}
-				
-				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'noElemento') {
-					
-					$mensaje = "No Se Pudo Hacer la  Carga del Elemento<br>Numeró maximo de elementos Registrados con Acta de Recibido ";
-					
-					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-					$esteCampo = 'mensajeRegistro';
-					$atributos ['id'] = $esteCampo;
-					$atributos ['tipo'] = 'error';
-					$atributos ['estilo'] = 'textoCentrar';
-					$atributos ['mensaje'] = $mensaje;
-					
-					$tab ++;
-					
-					// Aplica atributos globales al control
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->cuadroMensaje ( $atributos );
-					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
-				}
-				
-				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'datosVacios') {
-					
-					$mensaje = "Verifique el Archivo .xlsx. <br>Existen Datos Vacios";
-					
-					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-					$esteCampo = 'mensajeRegistro';
-					$atributos ['id'] = $esteCampo;
-					$atributos ['tipo'] = 'error';
-					$atributos ['estilo'] = 'textoCentrar';
-					$atributos ['mensaje'] = $mensaje;
-					
-					$tab ++;
-					
-					// Aplica atributos globales al control
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->cuadroMensaje ( $atributos );
-					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
-				}
-				
-				if (isset ( $_REQUEST ['mensaje'] ) && $_REQUEST ['mensaje'] == 'noExtension') {
-					
-					$mensaje = "Extension Incorrecta del Archivo a Cargar";
-					
-					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-					$esteCampo = 'mensajeRegistro';
-					$atributos ['id'] = $esteCampo;
-					$atributos ['tipo'] = 'error';
-					$atributos ['estilo'] = 'textoCentrar';
-					$atributos ['mensaje'] = $mensaje;
-					
-					$tab ++;
-					
-					// Aplica atributos globales al control
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->cuadroMensaje ( $atributos );
-					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
-				}
-				if (isset ( $_REQUEST ['errores'] ) && $_REQUEST ['errores'] == 'notextos') {
-					
-					$mensaje = "No se Creo Orden de Servicios, No se Colocaron Objeto de Contrato Y/O Forma de Pago";
-					
-					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-					$esteCampo = 'mensajeRegistro';
-					$atributos ['id'] = $esteCampo;
-					$atributos ['tipo'] = 'error';
-					$atributos ['estilo'] = 'textoCentrar';
-					$atributos ['mensaje'] = $mensaje;
-					
-					$tab ++;
-					
-					// Aplica atributos globales al control
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->cuadroMensaje ( $atributos );
-					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
-				}
+				echo $this->miFormulario->division ( 'fin' );
+				unset ( $atributos );
 			}
 			
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
@@ -349,7 +217,10 @@ class registrarForm {
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-		$valorCodificado .= "&opcion=paginaPrincipal";
+		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
+		if ($resultadoContratistas == false) {
+			$valorCodificado .= "&opcion=EliminarContrato";
+		}
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
 		 * Para ello utiliza la hora en que es creado el formulario para
