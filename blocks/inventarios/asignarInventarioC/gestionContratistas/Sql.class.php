@@ -436,9 +436,7 @@ class Sql extends \Sql {
 				
 				break;
 			
-			// SELECT "CON_IDENTIFICADOR", "CON_IDENTIFICACION", "CON_NOMBRE", "CON_NUMERO_CONTRATO",
-			// "CON_VIGENCIA_FISCAL", "CON_FECHA_INICIO", "CON_FECHA_FINAL"
-			// FROM arka_parametros.arka_contratistas;
+
 			
 			case "Consultar_Contratistas" :
 				$cadenaSql = " SELECT cns.*,tp.tc_descripcion ";
@@ -446,7 +444,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " JOIN  arka_parametros.arka_tipo_contrato tp ON tp.tc_identificador= cns.\"CON_TIPO_CONTRATO\"  ";
 				$cadenaSql .= " WHERE \"CON_VIGENCIA_FISCAL\"= '" . $variable . "' ";
 				$cadenaSql .= " AND cns.estado=TRUE ; ";
-				  
 				
 				break;
 			

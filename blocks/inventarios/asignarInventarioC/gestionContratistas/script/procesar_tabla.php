@@ -78,6 +78,7 @@ $(function() {
                   { data :"fecha_inicio" },
                   { data :"fecha_final" },
                   { data :"modificar" },
+                  { data :"eliminar" },
                             ]
              });
                   

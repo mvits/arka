@@ -391,6 +391,7 @@ class registrarForm {
 							<th>Fecha de Inicio<br>Contrato</th>
 					        <th>Fecha de Final<br>Contrato</th>
 							<th>Modificar</th>
+						    <th>Eliminar</th>
 		                </tr>
 		            </thead>
             	</table>";
