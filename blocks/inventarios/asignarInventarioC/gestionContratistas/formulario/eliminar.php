@@ -63,7 +63,7 @@ class registrarForm {
 		{
 			
 			$arregloContratista = unserialize ( $_REQUEST ['datos'] );
-			
+			  
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_elementos_contratistas', $arregloContratista );
 			$resultadoContratistas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -220,6 +220,9 @@ class registrarForm {
 		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 		if ($resultadoContratistas == false) {
 			$valorCodificado .= "&opcion=EliminarContrato";
+			$valorCodificado .= "&datos=".$_REQUEST['datos'];
+			$valorCodificado .= "&identificador_contratista=".$_REQUEST['identificador_contratista'];
+			
 		}
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.

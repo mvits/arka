@@ -80,8 +80,10 @@ if ($_REQUEST ['funcion'] == 'ConsultarContratistas') {
 				"nombreContratista"=>$valor ['CON_NOMBRE'],
 				"vigencia"=>$valor ['CON_VIGENCIA_FISCAL'],
 				"identificacion"=>$valor ['CON_IDENTIFICACION'],
-				"tipo_contrato"=>$valor ['tc_descripcion']
-		
+				"tipo_contrato"=>$valor ['tc_descripcion'],
+				"fecha_inicio"=>$valor['CON_FECHA_INICIO'],
+				"fecha_final"=>$valor['CON_FECHA_FINAL'],
+		        "parametro_tipo_contrato"=>$valor['CON_TIPO_CONTRATO']
 		) );
 		
 		$VariableEliminar = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
