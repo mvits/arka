@@ -436,8 +436,6 @@ class Sql extends \Sql {
 				
 				break;
 			
-
-			
 			case "Consultar_Contratistas" :
 				$cadenaSql = " SELECT cns.*,tp.tc_descripcion ";
 				$cadenaSql .= " FROM arka_parametros.arka_contratistas cns ";
@@ -506,6 +504,19 @@ class Sql extends \Sql {
 				$cadenaSql .= "WHERE \"CON_IDENTIFICACION\"='" . $variable . "' ";
 				$cadenaSql .= "AND \"CON_FECHA_INICIO\" <= '" . date ( 'Y-m-d' ) . "' ";
 				$cadenaSql .= "AND \"CON_FECHA_FINAL\" >= '" . date ( 'Y-m-d' ) . "' ; ";
+				
+				break;
+			
+			case "consultar_elementos_contratistas" :
+				
+				$cadenaSql = " SELECT id_asignacion, supervisor, contratista, tipo_contrato, numero_contrato, ";
+				$cadenaSql .= " vigencia, id_elemento, verificar_existencia, estado, fecha_registro";
+				$cadenaSql .= " FROM asignar_elementos";
+				$cadenaSql .= " WHERE contratista='" . $variable ['identificacion'] . "'";
+				$cadenaSql .= " AND tipo_contrato='" . $variable ['tipo_contrato'] . "'";
+				$cadenaSql .= " AND numero_contrato='" . $variable ['numeroContrato'] . "'";
+				$cadenaSql .= " AND vigencia='" . $variable ['vigencia'] . "'";
+				$cadenaSql .= " AND estado='1';";
 				
 				break;
 		}
