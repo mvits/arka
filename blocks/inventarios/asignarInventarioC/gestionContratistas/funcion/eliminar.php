@@ -22,8 +22,6 @@ class RegistradorOrden {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		var_dump ( $_REQUEST );
-		
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -31,32 +29,41 @@ class RegistradorOrden {
 		 * Datos Contrato
 		 */
 		$datosContratista = unserialize ( $_REQUEST ['datos'] );
-		var_dump($datosContratista);exit;
+		
+		$datosContratista = array_merge ( $datosContratista, array (
+				"identificador_contratista" => $_REQUEST ['identificador_contratista'] 
+		) );
 		
 		/*
-		 * Registrar Contratista.
+		 * Registrar Contrato Eliminado
 		 */
-		if ($anio_inicio != $anio_actual) {
-			$registrar = false;
-		} else {
-			$registrar = true;
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'insertar_contratistas_eliminado', $datosContratista );
+		
+		$registro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $datosContratista, 'insertar_contratistas_eliminado' );
+		
+		/*
+		 * Eliminar Contratista
+		 */
+		
+		if ($registro != false) {
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'eliminar_contratista', $_REQUEST ['identificador_contratista'] );
+			$elimino = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $_REQUEST ['identificador_contratista'], 'eliminar_contratista' );
+		} elseif ($registro == false) {
+			
+			redireccion::redireccionar ( "NoElimino" );
+			exit ();
 		}
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'modificarContrato', $datos );
-		if ($registrar == true) {
-			$Actualizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $datos, 'modificarContrato' );
-		} else {
-			$Actualizacion = false;
-		}
-		
-		if ($Actualizacion != false) {
+		if ($elimino != false) {
 			$this->miConfigurador->setVariableConfiguracion ( "cache", true );
 			
-			redireccion::redireccionar ( "Actualizo" );
+			redireccion::redireccionar ( "Elimino" );
 			exit ();
 		} else {
 			
-			redireccion::redireccionar ( "NoActualizo" );
+			redireccion::redireccionar ( "NoElimino" );
 			exit ();
 		}
 	}

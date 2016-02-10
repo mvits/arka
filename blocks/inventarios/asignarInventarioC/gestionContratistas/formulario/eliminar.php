@@ -66,6 +66,7 @@ class registrarForm {
 			  
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_elementos_contratistas', $arregloContratista );
+			
 			$resultadoContratistas = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );

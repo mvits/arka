@@ -516,7 +516,30 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND tipo_contrato='" . $variable ['tipo_contrato'] . "'";
 				$cadenaSql .= " AND numero_contrato='" . $variable ['numeroContrato'] . "'";
 				$cadenaSql .= " AND vigencia='" . $variable ['vigencia'] . "'";
-				$cadenaSql .= " AND estado='1';12";
+				$cadenaSql .= " AND estado='1';";
+				
+				break;
+			
+			case "insertar_contratistas_eliminado" :
+				$cadenaSql = " INSERT INTO arka_parametros.arka_contratistas_eliminados(";
+				$cadenaSql .= ' "CON_IDENTIFICADOR", "CON_IDENTIFICACION", "CON_NOMBRE", "CON_NUMERO_CONTRATO", ';
+				$cadenaSql .= ' "CON_VIGENCIA_FISCAL", "CON_FECHA_INICIO", "CON_FECHA_FINAL", ';
+				$cadenaSql .= ' "CON_TIPO_CONTRATO", fecha_registro)';
+				$cadenaSql .= " VALUES ('" . $variable ['identificador_contratista'] . "',";
+				$cadenaSql .= " '" . $variable ['identificacion'] . "',";
+				$cadenaSql .= " '" . $variable ['nombreContratista'] . "',";
+				$cadenaSql .= " '" . $variable ['numeroContrato'] . "', ";
+				$cadenaSql .= " '" . $variable ['vigencia'] . "',";
+				$cadenaSql .= " '" . $variable ['fecha_inicio'] . "',";
+				$cadenaSql .= " '" . $variable ['fecha_final'] . "', ";
+				$cadenaSql .= " '" . $variable ['parametro_tipo_contrato'] . "', ";
+				$cadenaSql .= " '" . date ( 'Y-m-d' ) . "');";
+				
+				break;
+			
+			case "eliminar_contratista" :
+				$cadenaSql = " DELETE FROM arka_parametros.arka_contratistas";
+				$cadenaSql .= " WHERE \"CON_IDENTIFICADOR\"='" . $variable . "';";
 				
 				break;
 		}

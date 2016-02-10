@@ -107,6 +107,11 @@ class registrarForm {
 					$atributos ["estilo"] = 'success';
 					
 					break;
+				case 'elimino' :
+					$atributos ['mensaje'] = "<center>SE HA ELIMINADO CON EXITO EL CONTRATISTA</center>";
+					$atributos ["estilo"] = 'success';
+					
+					break;
 				
 				case 'noinsertoRegistro' :
 					$atributos ['mensaje'] = "<center>ERROR AL REGISTRAR CONTRATISTAS<BR>Verifique los Datos</center>";
@@ -130,6 +135,11 @@ class registrarForm {
 				
 				case 'errorActualizacion' :
 					$atributos ['mensaje'] = "<center>ERROR AL ACTUALIZAR EL CONTRATO.<BR>VERIFIQUE LOS DATOS</center>";
+					$atributos ["estilo"] = 'error';
+					break;
+				
+				case 'errorEliminar' :
+					$atributos ['mensaje'] = "<center>ERROR AL INTENTAR ELIMINAR CONTRATO CON EL CONTRATISTA<BR>Comuniquese con el Administrador</center>";
 					$atributos ["estilo"] = 'error';
 					break;
 			}
