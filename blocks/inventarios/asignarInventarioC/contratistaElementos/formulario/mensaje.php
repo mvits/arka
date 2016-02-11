@@ -68,7 +68,25 @@ class registrarForm {
 		{
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 			
-
+			if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
+				$atributos ["id"] = "logos";
+				$atributos ["estilo"] = " ";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				unset ( $atributos );
+				{
+						
+					$esteCampo = 'logo';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['tabIndex'] = $tab;
+					$atributos ['estilo'] = '';
+					$atributos ['enlaceImagen'] = $this->miConfigurador->getVariableConfiguracion ( 'rutaUrlBloque' ) . 'css/images/banner_arka.png';
+					$atributos ['ancho'] = '100%';
+					$atributos ['alto'] = '150px';
+					$tab ++;
+					echo $this->miFormulario->enlace ( $atributos );
+					unset ( $atributos );
+				}
+			}
 
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 				
