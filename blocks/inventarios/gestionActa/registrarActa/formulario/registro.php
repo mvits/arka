@@ -38,7 +38,6 @@ class registrarForm {
 		$_REQUEST ['tiempo'] = time ();
 		$tiempo = $_REQUEST ['tiempo'];
 		
-		
 		// -------------------------------------------------------------------------------------------------
 		$conexion = "inventarios";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -185,7 +184,7 @@ class registrarForm {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
 			$variable = "pagina=" . $miPaginaActual;
-			$variable .= "&usuario=" . $_REQUEST['usuario']; 
+			$variable .= "&usuario=" . $_REQUEST ['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -272,7 +271,7 @@ class registrarForm {
 					
 					// Aplica atributos globales al control
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-// 					echo $this->miFormulario->campoTexto ( $atributos );
+					// echo $this->miFormulario->campoTexto ( $atributos );
 					unset ( $atributos );
 				}
 				
@@ -427,6 +426,45 @@ class registrarForm {
 					unset ( $atributos );
 					
 					echo $dependeciaOrdenes;
+					unset ( $atributos );
+					
+					$esteCampo = "ubicacion";
+					$atributos ['columnas'] = 1;
+					$atributos ['nombre'] = $esteCampo;
+					$atributos ['id'] = $esteCampo;
+					$atributos ['evento'] = '';
+					$atributos ['deshabilitado'] = true;
+					$atributos ["etiquetaObligatorio"] = true;
+					$atributos ['tab'] = $tab;
+					$atributos ['tamanno'] = 1;
+					$atributos ['estilo'] = 'jqueryui';
+					$atributos ['validar'] = 'required';
+					$atributos ['limitar'] = true;
+					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos ['anchoEtiqueta'] = 180;
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['seleccion'] = - 1;
+					}
+					$atributos ['cadena_sql'] = " ";
+					
+					$matrizItems = array (
+							
+							array (
+									'',
+									'Seleccione ...' 
+							) 
+					);
+					$atributos ['matrizItems'] = $matrizItems;
+					
+					// Utilizar lo siguiente cuando no se pase un arreglo:
+					// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
+					// $atributos ['cadena_sql']='ponerLaCadenaSqlAEjecutar';
+					$tab ++;
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					unset ( $atributos );
 					
 					// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
 					// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -912,7 +950,7 @@ class registrarForm {
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=registrarActa";
 			$valorCodificado .= "&seccion=" . $tiempo;
-			$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
+			$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 			if (isset ( $_REQUEST ['numero_orden'] )) {
 				$valorCodificado .= "&tipoOrden=" . $_REQUEST ['tipo_orden'];
 				$valorCodificado .= "&numero_orden=" . $_REQUEST ['numero_orden'];

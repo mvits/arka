@@ -75,6 +75,9 @@ $this->idioma ["fecha_inicioTitulo"] ="Seleccione Fecha Inicial";
 $this->idioma ["sede"] ="Sede : ";
 $this->idioma ["sedeTitulo"] ="Seleccione Sede";
 
+$this->idioma ["ubicacion"] ="Ubicación Especifica:";
+$this->idioma ["ubicacionTitulo"] ="Seleccione Ubicación Especifica";
+
 $this->idioma ["fecha_final"] ="Fecha Final : ";
 $this->idioma ["fecha_finalTitulo"] ="Seleccione Fecha Final";
 
