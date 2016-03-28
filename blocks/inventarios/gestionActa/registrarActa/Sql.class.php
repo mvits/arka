@@ -276,7 +276,7 @@ class Sql extends \Sql {
 			
 			case "indentificacion_contratista" :
 				$cadenaSql = " SELECT  *, identificacion||' - ('||upper(nombres)||')' AS nom_razon  ";
-				$cadenaSql .= " FROM contratistas_adquisiones  "; 
+				$cadenaSql .= " FROM contratistas_adquisiones  ";
 				$cadenaSql .= " WHERE id_contratista_adq ='" . $variable . "';";
 				
 				break;
@@ -606,7 +606,18 @@ class Sql extends \Sql {
 				$cadenaSql = "UPDATE elemento_acta_recibido ";
 				$cadenaSql .= "SET id_acta='" . $variable [1] . "' ";
 				$cadenaSql .= "WHERE id_elemento_ac='" . $variable [0] . "'; ";
+				
+				break;
 			
+			case "ubicacionesConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  ef.\"ESF_ID_ESPACIO\" , ef.\"ESF_NOMBRE_ESPACIO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ef  ";
+				$cadenaSql .= " JOIN arka_parametros.arka_dependencia ad ON ad.\"ESF_ID_ESPACIO\"=ef.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_CODIGO_DEP\"='" . $variable ['dependencia'] . "' ";
+				$cadenaSql .= " AND  sa.\"ESF_ID_SEDE\"='" . $variable ['sede'] . "' ";
+				$cadenaSql .= " AND  ef.\"ESF_ESTADO\"='A'";
+				
 				break;
 		}
 		return $cadenaSql;

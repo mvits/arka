@@ -4,18 +4,14 @@ use inventarios\gestionActa\registrarActa\Sql;
 $conexion = "inventarios";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
-
-
 if ($_REQUEST ['funcion'] == 'SeleccionTipoBien') {
-
-
-	$cadenaSql = $this->sql->getCadenaSql ( 'ConsultaTipoBien', $_REQUEST['valor'] );
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'ConsultaTipoBien', $_REQUEST ['valor'] );
 	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	$resultadoItems=$resultadoItems[0];
-
-	echo json_encode($resultadoItems);
+	$resultadoItems = $resultadoItems [0];
+	
+	echo json_encode ( $resultadoItems );
 }
-
 
 if ($_REQUEST ['funcion'] == 'tablaItems') {
 	$tabla = new stdClass ();
@@ -140,20 +136,10 @@ if ($_REQUEST ['funcion'] == 'EliminarItem') {
 	echo $resultadoItems;
 }
 
-
-
-if ($_REQUEST ['funcion'] == 'proveedor') {
-	$cadenaSql = $this->sql->getCadenaSql ( 'select_proveedor', $_REQUEST ['proveedor'] );
-	$resultadoItems = $esteRecursoDB2->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	$resultado = json_encode ( $resultadoItems [0] );
-	echo $resultado;
-}
-
 if ($_REQUEST ['funcion'] == 'consultarDependencia') {
 	
-	
 	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciasConsultadas', $_REQUEST ['valor'] );
-		
+	
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	$resultado = json_encode ( $resultado );
@@ -175,36 +161,40 @@ if ($_REQUEST ['funcion'] == 'consultarInfoContrato') {
 	
 	$cadenaSql = $this->sql->getCadenaSql ( 'informacionContrato', $_REQUEST ['valor'] );
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-	$resultado=$resultado[0];
+	$resultado = $resultado [0];
 	$resultado = json_encode ( $resultado );
 	
 	echo $resultado;
 }
 
-
-
 if ($_REQUEST ['funcion'] == 'consultaProveedor') {
 	
-	
-	
-
 	$cadenaSql = $this->sql->getCadenaSql ( 'buscar_Proveedores', $_GET ['query'] );
-
+	
 	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
+	
 	foreach ( $resultadoItems as $key => $values ) {
 		$keys = array (
 				'value',
-				'data'
+				'data' 
 		);
 		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
 	}
-
+	
 	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
 }
-
-
-
-
-
+if ($_REQUEST ['funcion'] == 'consultarUbicacion') {
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'ubicacionesConsultadas', array (
+			"dependencia" => $_REQUEST ['dependencia'],
+			"sede" => $_REQUEST ['sede'] 
+	) );
+	
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	$resultado = json_encode ( $resultado );
+	
+	echo $resultado;
+}
+exit ();
 ?>

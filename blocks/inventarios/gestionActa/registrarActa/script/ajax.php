@@ -173,9 +173,10 @@ $urlConsultaUbicacion = $url . $cadena;
 
 function consultarEspacio(elem, request, response){
 	  $.ajax({
-	    url: "<?php echo $urlFinal4?>",
+	    url: "<?php echo $urlConsultaUbicacion?>",
 	    dataType: "json",
-	    data: { valor:$("#<?php echo $this->campoSeguro('dependencia')?>").val()},
+	    data: { dependencia:$("#<?php echo $this->campoSeguro('dependencia')?>").val(),
+	            sede:$("#<?php echo $this->campoSeguro('sede')?>").val()},
 	    success: function(data){ 
 
 
@@ -192,7 +193,7 @@ function consultarEspacio(elem, request, response){
 	            
 	            $("#<?php echo $this->campoSeguro('ubicacion')?>").removeAttr('disabled');
 	            
-	            $('#<?php echo $this->campoSeguro('ubicacion')?>').width(210);
+	            $('#<?php echo $this->campoSeguro('ubicacion')?>').width(815);
 	            $("#<?php echo $this->campoSeguro('ubicacion')?>").select2();
 	            
 	          
