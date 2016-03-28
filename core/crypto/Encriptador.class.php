@@ -14,7 +14,7 @@ class Encriptador {
 	private static $instance;
 	private $llave;
 	private $iv;
-	const SEMILLA = '0xel0t1l';
+	const SEMILLA = '0xel0t1lwvXl1FO7';
 	
 	// Constructor
 	function __construct($llave = '') {
