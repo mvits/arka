@@ -4,76 +4,73 @@
  * Los datos del bloque se encuentran en el arreglo $esteBloque.
  */
 // URL base
-$url = $this->miConfigurador->getVariableConfiguracion("host");
-$url .= $this->miConfigurador->getVariableConfiguracion("site");
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
 $url .= "/index.php?";
 
 // Variables
-$cadenaACodificar = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificar = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificar .= "&procesarAjax=true";
 $cadenaACodificar .= "&action=index.php";
 $cadenaACodificar .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar .= $cadenaACodificar . "&funcion=tablaItems";
-$cadenaACodificar .="&tiempo=" . $_REQUEST['tiempo'];
+$cadenaACodificar .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 // Codificar las variables
-$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
-$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificar, $enlace);
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar, $enlace );
 
 // URL definitiva
 $urlFinal = $url . $cadena;
 
 // Variables
-$cadenaACodificar2 = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificar2 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificar2 .= "&procesarAjax=true";
 $cadenaACodificar2 .= "&action=index.php";
 $cadenaACodificar2 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar2 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar2 .= $cadenaACodificar . "&funcion=AgregarItem";
-$cadenaACodificar2.="&tiempo=" . $_REQUEST['tiempo'];
+$cadenaACodificar2 .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 // Codificar las variables
-$enlace2 = $this->miConfigurador->getVariableConfiguracion("enlace");
-$cadena2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificar2, $enlace2);
+$enlace2 = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar2, $enlace2 );
 
 // URL definitiva
 $urlFinal2 = $url . $cadena2;
 
 // Variables
-$cadenaACodificar3 = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificar3 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificar3 .= "&procesarAjax=true";
 $cadenaACodificar3 .= "&action=index.php";
 $cadenaACodificar3 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar3 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar3 .= $cadenaACodificar . "&funcion=EliminarItem";
-$cadenaACodificar3 .="&tiempo=" . $_REQUEST['tiempo'];
+$cadenaACodificar3 .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 // Codificar las variables
-$enlace3 = $this->miConfigurador->getVariableConfiguracion("enlace");
-$cadena3 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificar3, $enlace3);
+$enlace3 = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena3 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar3, $enlace3 );
 
 // URL definitiva
 $urlFinal3 = $url . $cadena3;
 
 // Variables
-$cadenaACodificar4 = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
-$cadenaACodificar4 .= "&procesarAjax=true";
-$cadenaACodificar4 .= "&action=index.php";
-$cadenaACodificar4 .= "&bloqueNombre=" . $esteBloque ["nombre"];
-$cadenaACodificar4 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-$cadenaACodificar4 .= $cadenaACodificar . "&funcion=proveedor";
-$cadenaACodificar4 .="&tiempo=" . $_REQUEST['tiempo'];
+$cadenaACodificar = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar .= "&procesarAjax=true";
+$cadenaACodificar .= "&action=index.php";
+$cadenaACodificar .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar .= $cadenaACodificar . "&funcion=proveedor";
+$cadenaACodificar .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 // Codificar las variables
-$enlace4 = $this->miConfigurador->getVariableConfiguracion("enlace");
-$cadena4 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificar4, $enlace4);
+$enlace4 = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena4 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar, $enlace4 );
 
 // URL definitiva
 $urlFinal4 = $url . $cadena4;
-
-
-
 
 // Variables
 $cadenaACodificar6 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -91,7 +88,6 @@ $cadena6 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $ca
 // URL definitiva
 $urlFinal6 = $url . $cadena6;
 
-
 // Variables
 $cadenaACodificar16 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificar16 .= "&procesarAjax=true";
@@ -107,11 +103,6 @@ $cadena16 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 
 // URL definitiva
 $urlFinal16 = $url . $cadena16;
-
-
-
-
-
 
 // Variables
 $cadenaACodificar17 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -129,7 +120,6 @@ $cadena17 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 // URL definitiva
 $urlFinal17 = $url . $cadena17;
 
-
 // Variables
 $cadenaACodificarProveedor = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificarProveedor .= "&procesarAjax=true";
@@ -139,16 +129,12 @@ $cadenaACodificarProveedor .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificarProveedor .= "&funcion=consultaProveedor";
 $cadenaACodificarProveedor .= "&tiempo=" . $_REQUEST ['tiempo'];
 
-
-
 // Codificar las variables
 $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarProveedor, $enlace );
 
 // URL definitiva
 $urlFinalProveedor = $url . $cadena;
-
-
 
 // Variables
 $cadenaACodificarTipoBien = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -157,8 +143,7 @@ $cadenaACodificarTipoBien .= "&action=index.php";
 $cadenaACodificarTipoBien .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificarTipoBien .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificarTipoBien .= "&funcion=SeleccionTipoBien";
-$cadenaACodificarTipoBien .="&tiempo=".$_REQUEST['tiempo'];
-
+$cadenaACodificarTipoBien .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 // Codificar las variables
 $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
@@ -167,14 +152,60 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 // URL definitiva
 $urlFinalTipoBien = $url . $cadena;
 
+// Variables
+$cadenaACodificar = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar .= "&procesarAjax=true";
+$cadenaACodificar .= "&action=index.php";
+$cadenaACodificar .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar .= "&funcion=consultarUbicacion";
+$cadenaACodificar .= "&tiempo=" . $_REQUEST ['tiempo'];
 
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar, $enlace );
 
-
-// echo $urlFinal;exit;
-// echo $urlFinal2;
-// echo $urlFinal3;
+// URL definitiva
+$urlConsultaUbicacion = $url . $cadena;
 ?>
 <script type='text/javascript'>
+
+
+function consultarEspacio(elem, request, response){
+	  $.ajax({
+	    url: "<?php echo $urlFinal4?>",
+	    dataType: "json",
+	    data: { valor:$("#<?php echo $this->campoSeguro('dependencia')?>").val()},
+	    success: function(data){ 
+
+
+
+	        if(data[0]!=" "){
+
+	            $("#<?php echo $this->campoSeguro('ubicacion')?>").html('');
+	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('ubicacion')?>");
+	            $.each(data , function(indice,valor){
+
+	            	$("<option value='"+data[ indice ].ESF_ID_ESPACIO+"'>"+data[ indice ].ESF_NOMBRE_ESPACIO+"</option>").appendTo("#<?php echo $this->campoSeguro('ubicacion')?>");
+	            	
+	            });
+	            
+	            $("#<?php echo $this->campoSeguro('ubicacion')?>").removeAttr('disabled');
+	            
+	            $('#<?php echo $this->campoSeguro('ubicacion')?>').width(210);
+	            $("#<?php echo $this->campoSeguro('ubicacion')?>").select2();
+	            
+	          
+	            
+		        }
+	    			
+
+	    }
+		                    
+	   });
+	};
+
+
 
 
 
@@ -589,7 +620,15 @@ function datosOrdenador(elem, request, response){
      });
         
         
-        
+        $("#<?php echo $this->campoSeguro('dependencia')?>").change(function(){
+        	if($("#<?php echo $this->campoSeguro('dependencia')?>").val()!=''){
+        		consultarEspacio();
+    		}else{
+    			$("#<?php echo $this->campoSeguro('ubicacion')?>").attr('disabled','');
+    			}
+
+    	      });
+    
         
 	      
 
