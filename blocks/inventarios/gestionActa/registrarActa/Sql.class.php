@@ -481,13 +481,14 @@ class Sql extends \Sql {
 			
 			case "insertarActa" :
 				$cadenaSql = " INSERT INTO registro_actarecibido( ";
-				$cadenaSql .= " sede, dependencia, fecha_recibido, tipo_bien,
+				$cadenaSql .= " sede, dependencia,ubicacion, fecha_recibido, tipo_bien,
 						proveedor, ordenador_gasto, tipo_orden,
 						fecha_revision, revisor, observacionesacta, enlace_soporte, nombre_soporte,numero_orden,
-						estado_registro, fecha_registro, id_contrato,ubicacion )";
+						estado_registro, fecha_registro, id_contrato)";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable ['sede'] . "',";
 				$cadenaSql .= "'" . $variable ['dependencia'] . "',";
+				$cadenaSql .= "'" . $variable ['ubicacion'] . "',";
 				$cadenaSql .= "'" . $variable ['fecha_registro'] . "',";
 				$cadenaSql .= "'" . $variable ['tipo_bien'] . "',";
 				$cadenaSql .= (is_null ( $variable ['nitproveedor'] ) == true) ? ' NULL , ' : "'" . $variable ['nitproveedor'] . "',";
@@ -501,8 +502,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "" . $variable ['numero_orden'] . ", ";
 				$cadenaSql .= "'" . $variable ['estado'] . "',";
 				$cadenaSql .= "'" . $variable ['fecha_registro'] . "',";
-				$cadenaSql .= (is_null ( $variable ['identificador_contrato'] ) == true) ? "NULL, " : "'" . $variable ['identificador_contrato'] . "', ";
-				$cadenaSql .= "'" . $variable ['ubicacion'] . "') ";
+				$cadenaSql .= (is_null ( $variable ['identificador_contrato'] ) == true) ? "NULL) " : "'" . $variable ['identificador_contrato'] . "') ";
 				$cadenaSql .= "RETURNING  id_actarecibido; ";
 				break;
 			
