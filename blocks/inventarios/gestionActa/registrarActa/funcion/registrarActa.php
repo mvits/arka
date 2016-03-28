@@ -128,15 +128,16 @@ class RegistradorActa {
 				'observacion' => $_REQUEST ['observacionesActa'],
 				'estado' => 1,
 				'tipo_orden' => $tipoOrden,
-				'numero_orden' => (isset ( $_REQUEST ['numero_orden'] )) ? "'".$_REQUEST ['numero_orden']."'" : "NULL",
+				'numero_orden' => (isset ( $_REQUEST ['numero_orden'] )) ? "'" . $_REQUEST ['numero_orden'] . "'" : "NULL",
 				'enlace_soporte' => $destino1,
 				'nombre_soporte' => $archivo1,
-				'identificador_contrato' => ($_REQUEST ['numeroContrato'] != '') ? $_REQUEST ['numeroContrato'] : NULL 
+				'identificador_contrato' => ($_REQUEST ['numeroContrato'] != '') ? $_REQUEST ['numeroContrato'] : NULL,
+				'ubicacion' => $_REQUEST ['ubicacion'] 
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'insertarActa', $datosActa );
 		
-		$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda",$datosActa,'insertarActa' );
+		$id_acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosActa, 'insertarActa' );
 		
 		if (isset ( $_REQUEST ['numero_orden'] )) {
 			
@@ -150,19 +151,14 @@ class RegistradorActa {
 			
 			foreach ( $elementos as $valor ) {
 				
-				
-				$arreglo=array (
+				$arreglo = array (
 						$valor [0],
 						$id_acta [0] [0] 
 				);
 				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'RegistrarActaElementos', $arreglo );
 				
-				
-				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'RegistrarActaElementos', $arreglo);
-				
-				$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso",$arreglo,'RegistrarActaElementos');
-				
+				$elementos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso", $arreglo, 'RegistrarActaElementos' );
 			}
 		}
 		
@@ -170,16 +166,16 @@ class RegistradorActa {
 				$id_acta [0] [0],
 				$fechaActual,
 				$tipoOrden,
-				$_REQUEST['usuario']
+				$_REQUEST ['usuario'] 
 		);
 		
 		if ($id_acta) {
-			$this->miConfigurador->setVariableConfiguracion("cache",true);
+			$this->miConfigurador->setVariableConfiguracion ( "cache", true );
 			redireccion::redireccionar ( 'insertoActa', $datos );
 			exit ();
 		} else {
 			
-			redireccion::redireccionar ( 'noInserto', $_REQUEST['usuario'] );
+			redireccion::redireccionar ( 'noInserto', $_REQUEST ['usuario'] );
 			
 			exit ();
 		}

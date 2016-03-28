@@ -484,7 +484,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " sede, dependencia, fecha_recibido, tipo_bien,
 						proveedor, ordenador_gasto, tipo_orden,
 						fecha_revision, revisor, observacionesacta, enlace_soporte, nombre_soporte,numero_orden,
-						estado_registro, fecha_registro, id_contrato )";
+						estado_registro, fecha_registro, id_contrato,ubicacion )";
 				$cadenaSql .= " VALUES (";
 				$cadenaSql .= "'" . $variable ['sede'] . "',";
 				$cadenaSql .= "'" . $variable ['dependencia'] . "',";
@@ -501,9 +501,9 @@ class Sql extends \Sql {
 				$cadenaSql .= "" . $variable ['numero_orden'] . ", ";
 				$cadenaSql .= "'" . $variable ['estado'] . "',";
 				$cadenaSql .= "'" . $variable ['fecha_registro'] . "',";
-				$cadenaSql .= (is_null ( $variable ['identificador_contrato'] ) == true) ? "NULL ) " : "'" . $variable ['identificador_contrato'] . "') ";
+				$cadenaSql .= (is_null ( $variable ['identificador_contrato'] ) == true) ? "NULL, " : "'" . $variable ['identificador_contrato'] . "', ";
+				$cadenaSql .= "'" . $variable ['ubicacion'] . "') ";
 				$cadenaSql .= "RETURNING  id_actarecibido; ";
-				
 				break;
 			
 			case "insertarItems" :
