@@ -33,7 +33,7 @@ class registrarForm {
 		
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/";
-		$rutaBloque .= $esteBloque ['grupo'] . "/".$esteBloque ['nombre'];
+		$rutaBloque .= $esteBloque ['grupo'] . "/" . $esteBloque ['nombre'];
 		
 		// ---------------- SECCION: Parámetros Globales del Formulario ----------------------------------
 		/**
@@ -45,7 +45,7 @@ class registrarForm {
 		 * $atributos= array_merge($atributos,$atributosGlobales);
 		 */
 		$atributosGlobales ['campoSeguro'] = 'true';
-		 
+		
 		// -------------------------------------------------------------------------------------------------
 		
 		$conexion = "inventarios";
@@ -81,6 +81,12 @@ class registrarForm {
 			$dependencia = '';
 		}
 		
+		if (isset ( $_REQUEST ['ubicacionConsulta'] ) && $_REQUEST ['ubicacionConsulta'] != '') {
+			$ubicacion = $_REQUEST ['ubicacionConsulta'];
+		} else {
+			$ubicacion = '';
+		}
+		
 		if (isset ( $_REQUEST ['fecha_inicio'] ) && $_REQUEST ['fecha_inicio'] != '') {
 			$fecha_inicio = $_REQUEST ['fecha_inicio'];
 		} else {
@@ -98,6 +104,7 @@ class registrarForm {
 				'fecha' => $fechaRecibido,
 				'nit' => $nit,
 				'sede' => $sede,
+				'ubicacion'=>$ubicacion,
 				'dependencia' => $dependencia,
 				'fecha_inicial' => $fecha_inicio,
 				'fecha_final' => $fecha_final 
@@ -106,7 +113,7 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActa', $arreglo );
 		
 		$Acta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		$arreglo=serialize($arreglo);
+		$arreglo = serialize ( $arreglo );
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
 		$atributos ['id'] = $esteCampo;
@@ -182,22 +189,22 @@ class registrarForm {
 				$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable .= "&opcion=modificar";
 				$variable .= "&numero_acta=" . $Acta [$i] [0];
-				$variable .= "&arreglo=" .$arreglo;
-				$variable .= "&usuario=".$_REQUEST['usuario'];
+				$variable .= "&arreglo=" . $arreglo;
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 				
 				$variable2 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable2 .= "&opcion=eliminarActa";
 				$variable2 .= "&numero_acta=" . $Acta [$i] [0];
-				$variable2 .= "&arreglo=" .$arreglo;
-				$variable2 .= "&usuario=".$_REQUEST['usuario'];
+				$variable2 .= "&arreglo=" . $arreglo;
+				$variable2 .= "&usuario=" . $_REQUEST ['usuario'];
 				$variable2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable2, $directorio );
 				
 				$variable1 = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variable1 .= "&opcion=consultarElementosActa";
 				$variable1 .= "&numero_acta=" . $Acta [$i] [0];
-				$variable1 .= "&arreglo=" .$arreglo;
-				$variable1 .= "&usuario=".$_REQUEST['usuario'];
+				$variable1 .= "&arreglo=" . $arreglo;
+				$variable1 .= "&usuario=" . $_REQUEST ['usuario'];
 				$variable1 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable1, $directorio );
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActaElementos', $Acta [$i] [0] );

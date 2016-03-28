@@ -238,6 +238,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE 1 = 1 ";
 				$cadenaSql .= " AND estado_registro = 1 ";
 				$cadenaSql .= " AND id_actarecibido = '" . $variable . "' ";
+				
 				break;
 			
 			case "buscar_Proveedores" :
@@ -396,6 +397,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " SET ";
 				$cadenaSql .= "sede='" . $variable ['sede'] . "',";
 				$cadenaSql .= "dependencia='" . $variable ['dependencia'] . "',";
+				$cadenaSql .= "ubicacion='" . $variable ['ubicacion'] . "',";
 				$cadenaSql .= "fecha_recibido='" . $variable ['fecha_registro'] . "',";
 				$cadenaSql .= "tipo_bien='" . $variable ['tipo_bien'] . "',";
 				$cadenaSql .= "proveedor=" . $variable ['nit_proveedor'] . ",";
@@ -419,6 +421,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " SET ";
 				$cadenaSql .= "sede='" . $variable ['sede'] . "',";
 				$cadenaSql .= "dependencia='" . $variable ['dependencia'] . "',";
+				$cadenaSql .= "ubicacion='" . $variable ['ubicacion'] . "',";
 				$cadenaSql .= "fecha_recibido='" . $variable ['fecha_registro'] . "',";
 				$cadenaSql .= "tipo_bien='" . $variable ['tipo_bien'] . "',";
 				$cadenaSql .= "proveedor=" . $variable ['nit_proveedor'] . ",";
@@ -461,6 +464,10 @@ class Sql extends \Sql {
 				
 				if ($variable ['dependencia'] != '') {
 					$cadenaSql .= " AND ar.dependencia = '" . $variable ['dependencia'] . "' ";
+				}
+				
+				if ($variable ['ubicacion'] != '') {
+					$cadenaSql .= " AND ar.ubicacion = '" . $variable ['ubicacion'] . "' ";
 				}
 				
 				if ($variable ['fecha_inicial'] != '') {

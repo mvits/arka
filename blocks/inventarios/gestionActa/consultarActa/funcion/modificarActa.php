@@ -71,6 +71,7 @@ class RegistradorOrden {
 			$datosActa = array (
 					'sede' => $_REQUEST ['sede'],
 					'dependencia' => $_REQUEST ['dependencia'],
+					'ubicacion' => $_REQUEST ['ubicacion'],
 					'fecha_registro' => $fechaActual,
 					'tipo_bien' => 0,
 					'nit_proveedor' => ($_REQUEST ['id_proveedor']=='')?'NULL':"'".$_REQUEST ['id_proveedor']."'",
@@ -95,6 +96,7 @@ class RegistradorOrden {
 			$datosActa = array (
 					'sede' => $_REQUEST ['sede'],
 					'dependencia' => $_REQUEST ['dependencia'],
+					'ubicacion' => $_REQUEST ['ubicacion'],
 					'fecha_registro' => $fechaActual,
 					'tipo_bien' => 0,
 					'nit_proveedor' => ($_REQUEST ['id_proveedor']=='')?'NULL':"'".$_REQUEST ['id_proveedor']."'",

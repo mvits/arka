@@ -18,6 +18,8 @@ $this->idioma ["ubicacionConsulta"] = "Ubicación Especifica :";
 $this->idioma ["ubicacionConsultaTitulo"] = "Seleccione Ubicación Especifica";
 
 
+$this->idioma ["ubicacion"] = "Ubicación Especifica :";
+$this->idioma ["ubicacionTitulo"] = "Seleccione Ubicación Especifica";
 
 
 $this->idioma ["dependencia"] = "  :";

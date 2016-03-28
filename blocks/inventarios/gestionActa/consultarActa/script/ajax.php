@@ -637,6 +637,17 @@ function datosOrdenador(elem, request, response){
         );
 
 
+
+        $("#<?php echo $this->campoSeguro('dependencia')?>").change(function(){
+        	if($("#<?php echo $this->campoSeguro('dependencia')?>").val()!=''){
+        		consultarEspacio();
+    		}else{
+    			$("#<?php echo $this->campoSeguro('ubicacion')?>").attr('disabled','');
+    			}
+
+    	      });
+        
+
         $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").change(function(){
         	if($("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").val()!=''){
         		consultarEspacioConsulta();
