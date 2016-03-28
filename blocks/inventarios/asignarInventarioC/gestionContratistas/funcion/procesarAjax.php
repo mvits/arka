@@ -75,6 +75,25 @@ if ($_REQUEST ['funcion'] == 'ConsultarContratistas') {
 		$VariableModificar .= "&usuario=" . $_REQUEST ['usuario'];
 		$VariableModificar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableModificar, $directorio );
 		
+		$arrayContratistas = serialize ( array (
+				"numeroContrato" =>$valor['CON_NUMERO_CONTRATO'],
+				"nombreContratista"=>$valor ['CON_NOMBRE'],
+				"vigencia"=>$valor ['CON_VIGENCIA_FISCAL'],
+				"identificacion"=>$valor ['CON_IDENTIFICACION'],
+				"tipo_contrato"=>$valor ['tc_descripcion'],
+				"fecha_inicio"=>$valor['CON_FECHA_INICIO'],
+				"fecha_final"=>$valor['CON_FECHA_FINAL'],
+		        "parametro_tipo_contrato"=>$valor['CON_TIPO_CONTRATO']
+		) );
+		
+		$VariableEliminar = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+		$VariableEliminar .= "&opcion=EliminarContratista";
+		$VariableEliminar .= "&identificador_contratista=" . $valor ['CON_IDENTIFICADOR'];
+		$VariableEliminar .= "&tipo_contrato=" . $valor ['CON_TIPO_CONTRATO'];
+		$VariableEliminar .= "&usuario=" . $_REQUEST ['usuario'];
+		$VariableEliminar .= "&datos=" . $arrayContratistas;
+		$VariableEliminar = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $VariableEliminar, $directorio );
+		
 		$resultadoFinal [] = array (
 				'vigencia' => "<center>" . $valor ['CON_VIGENCIA_FISCAL'] . "</center>",
 				'tipo_contrato' => "<center>" . $valor ['tc_descripcion'] . "</center>",
@@ -83,7 +102,8 @@ if ($_REQUEST ['funcion'] == 'ConsultarContratistas') {
 				'nombre' => "<center>" . $valor ['CON_NOMBRE'] . "</center>",
 				'fecha_inicio' => "<center>" . $valor ['CON_FECHA_INICIO'] . "</center>",
 				'fecha_final' => "<center>" . $valor ['CON_FECHA_FINAL'] . "</center>",
-				'modificar' => "<center><a href='" . $VariableModificar . "'>&#9658; &blk34;</a></center>" 
+				'modificar' => "<center><a href='" . $VariableModificar . "'>&#9658; &blk34;</a></center>",
+				'eliminar' => "<center><a href='" . $VariableEliminar . "'>&#091; &#088; &#093;</a></center>" 
 		);
 	}
 	

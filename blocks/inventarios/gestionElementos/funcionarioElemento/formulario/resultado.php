@@ -139,7 +139,7 @@ class registrarForm {
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'encabezado';
 		$atributos ['id'] = $esteCampo;
-		$atributos ['tipo'] = 'information';
+		$atributos ['tipo'] = 'warning';
 		$atributos ['estilo'] = 'textoNotasFormulario';
 		$atributos ['mensaje'] = $this->lenguaje->getCadena ( $esteCampo );
 		
@@ -171,6 +171,24 @@ class registrarForm {
 		{
 			
 			if ($resultado) {
+				
+				
+				
+				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+				$esteCampo = 'responsabilidad';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['tipo'] = 'information';
+				$atributos ['estilo'] = 'textoNotasFormulario';
+				$atributos ['mensaje'] = $this->lenguaje->getCadena ( $esteCampo );
+				
+				$tab ++;
+				
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
+				unset ( $atributos );
+				
+				
 				
 				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 				$esteCampo = 'encabezado';

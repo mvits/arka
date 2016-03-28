@@ -43,6 +43,12 @@ class Funcion {
 	function modificar() {
 		include_once ($this->ruta . "funcion/modificar.php");
 	}
+	
+	function Eliminar() {
+		include_once ($this->ruta . "funcion/eliminar.php");
+	}
+	
+	
 	function action() {
 		
 		//
@@ -69,13 +75,10 @@ class Funcion {
 						
 						redireccion::redireccionar ( 'Consulta' );
 						exit ();
-						
 					} elseif ($_REQUEST ['botonAceptar'] == 'true') {
 						
 						$this->regitrar ();
 					}
-					
-					
 					
 					break;
 				
@@ -91,12 +94,10 @@ class Funcion {
 						exit ();
 					}
 					
-					if (isset ( $_REQUEST ["botonSalida"] ) && $_REQUEST ['botonSalida'] == 'true') {
-						
-						redireccion::redireccionar ( 'SalidaElemento', $_REQUEST ['numero_entrada'], $_REQUEST ['datosGenerales'] );
-						exit ();
-					}
-					
+					break;
+				
+				case "EliminarContrato" :
+					$this->Eliminar ();
 					break;
 			}
 		}

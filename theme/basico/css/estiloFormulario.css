@@ -461,7 +461,7 @@ div.marcoCentrado {
 }
 
 div.marcoCentralInterno {
-    width: 90%;
+    width: 100%;
     border-collapse: collapse;
     border-width: 0px;
     border-style: solid;

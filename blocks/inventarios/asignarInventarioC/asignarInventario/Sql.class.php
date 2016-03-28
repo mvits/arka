@@ -271,6 +271,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "FROM arka_parametros.arka_contratistas ";
 				$cadenaSql .= " WHERE \"CON_IDENTIFICACION\"='" . $variable . "' ";
 				break;
+			
+			
 		}
 		return $cadenaSql;
 	}

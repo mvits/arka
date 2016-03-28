@@ -10,8 +10,8 @@ class redireccion {
 	public static function redireccionar($opcion, $valor = "", $valor1 = "") {
 		$miConfigurador = \Configurador::singleton ();
 		$miPaginaActual = $miConfigurador->getVariableConfiguracion ( "pagina" );
-	
-                switch ($opcion) {
+		
+		switch ($opcion) {
 			case "inserto" :
 				
 				$variable = "pagina=" . $miPaginaActual;
@@ -26,6 +26,14 @@ class redireccion {
 				
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&mensaje=actualizo";
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
+				
+				break;
+			
+			case "Elimino" :
+				
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&mensaje=elimino";
 				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				
 				break;
@@ -46,7 +54,7 @@ class redireccion {
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&mensaje=error";
-                          	$variable .= "&log_error=" . $valor;
+				$variable .= "&log_error=" . $valor;
 				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				
 				break;
@@ -54,6 +62,13 @@ class redireccion {
 			case "NoActualizo" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&mensaje=errorActualizacion";
+				$variable .= "&usuario=" . $_REQUEST ['usuario'];
+				
+				break;
+			
+			case "NoElimino" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&mensaje=errorEliminar";
 				$variable .= "&usuario=" . $_REQUEST ['usuario'];
 				
 				break;
@@ -85,14 +100,6 @@ class redireccion {
 		
 		echo "<script>location.replace('" . $redireccion . "')</script>";
 		
-		// $enlace =$miConfigurador->getVariableConfiguracion("enlace");
-		// $variable = $miConfigurador->fabricaConexiones->crypto->codificar($variable);
-		// // echo $enlace;
-		// // // echo $variable;
-		// // exit;
-		// $_REQUEST[$enlace] = $variable;
-		// $_REQUEST["recargar"] = true;
-		// return true;
 	}
 }
 

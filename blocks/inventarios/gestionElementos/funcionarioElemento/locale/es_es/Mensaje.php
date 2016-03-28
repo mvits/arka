@@ -20,6 +20,12 @@ Apreciado Funcionario lo invitamos a que consulte y verifique su Inventario, por
 
 
 
+$this->idioma ["responsabilidad"] ="<center>La información visualizada es suministrada por la Sección Almacén General e Inventarios.
+		                            <br>Cualquier inquietud por favor comuniquese con esta dependencia responsable al teléfono 3239300 ext: 1621,1623,1624  .</center>";
+
+
+
+
 
 $this->idioma ["numero_entrada"] ="Vigencia y/o Número Entrada : ";
 $this->idioma ["numero_entradaTitulo"] ="Seleccione Vigencia y/o Número Entrada ";
