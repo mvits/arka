@@ -7,9 +7,15 @@ $this->idioma ["dependenciaConsulta"] ="Dependencia";
 $this->idioma ["dependenciaConsultaTitulo"] = "Ingrese Nombre Dependencia";
 
 
+
+
+
 $this->idioma ["sedeConsulta"] = "Sede : ";
 $this->idioma ["sedeConsultaTitulo"] = "Seleccione Sede";
 
+
+$this->idioma ["ubicacionConsulta"] = "Ubicación Especifica :";
+$this->idioma ["ubicacionConsultaTitulo"] = "Seleccione Ubicación Especifica";
 
 
 

@@ -444,7 +444,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "JOIN  arka_parametros.arka_sedes se ON se.\"ESF_ID_SEDE\" = ar.sede	 ";
 				$cadenaSql .= "LEFT JOIN  entrada en ON en.acta_recibido = ar.id_actarecibido	 ";
 				$cadenaSql .= "WHERE ar.estado_registro = 1 ";
-
+				
 				if ($variable ['numero_acta'] != '') {
 					$cadenaSql .= " AND id_actarecibido = '" . $variable ['numero_acta'] . "' ";
 				}
@@ -717,6 +717,17 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM contratos ";
 				$cadenaSql .= "JOIN registro_documento  rd  ON rd.documento_id = contratos.id_documento_soporte ";
 				$cadenaSql .= " WHERE id_contrato='" . $variable . "'; ";
+				break;
+			
+			case "ubicacionesConsultadas" :
+				$cadenaSql = "SELECT DISTINCT  ef.\"ESF_ID_ESPACIO\" , ef.\"ESF_NOMBRE_ESPACIO\" ";
+				$cadenaSql .= " FROM arka_parametros.arka_espaciosfisicos ef  ";
+				$cadenaSql .= " JOIN arka_parametros.arka_dependencia ad ON ad.\"ESF_ID_ESPACIO\"=ef.\"ESF_ID_ESPACIO\" ";
+				$cadenaSql .= " JOIN  arka_parametros.arka_sedes sa ON sa.\"ESF_COD_SEDE\"=ef.\"ESF_COD_SEDE\" ";
+				$cadenaSql .= " WHERE ad.\"ESF_CODIGO_DEP\"='" . $variable ['dependencia'] . "' ";
+				$cadenaSql .= " AND  sa.\"ESF_ID_SEDE\"='" . $variable ['sede'] . "' ";
+				$cadenaSql .= " AND  ef.\"ESF_ESTADO\"='A'";
+				
 				break;
 		}
 		

@@ -44,15 +44,9 @@
         
         
   $('#<?php echo $this->campoSeguro('sedeConsulta')?>').width(290);              	 
- $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2({
-             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
-              	 minimumInputLength: 3,
-              	 });  
+ $("#<?php echo $this->campoSeguro('sedeConsulta')?>").select2();  
  
- $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2({
-             	 placeholder: "Ingrese Mínimo 3 Caracteres de Búsqueda",
-              	 minimumInputLength: 3,
-              	 });              	            
+ $("#<?php echo $this->campoSeguro('dependenciaConsulta')?>").select2();              	            
               	 
         
         
@@ -67,6 +61,15 @@
 		
 		$('#<?php echo $this->campoSeguro('dependencia')?>').width(815);          
         $("#<?php echo $this->campoSeguro('dependencia') ?>").select2();
+        
+        
+        $("#<?php echo $this->campoSeguro('ubicacionConsulta') ?>").width(730);
+        $("#<?php echo $this->campoSeguro('ubicacionConsulta')?>").select2();  
+        
+        $("#<?php echo $this->campoSeguro('ubicacion') ?>").width(815);
+        $("#<?php echo $this->campoSeguro('ubicacion') ?>").select2();
+        
+        
         $("#<?php echo $this->campoSeguro('numero_acta') ?>").select2();
         $("#<?php echo $this->campoSeguro('numeroContrato') ?>").select2();
         $("#<?php echo $this->campoSeguro('tipocomprador') ?>").select2();
