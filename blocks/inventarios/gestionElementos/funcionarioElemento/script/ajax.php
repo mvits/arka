@@ -8,11 +8,27 @@
 $url = $this->miConfigurador->getVariableConfiguracion ( "host" );
 $url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
 
-$urlDirectorio=$url;
+$urlDirectorio = $url;
 
-$urlDirectorio =$urlDirectorio."/plugin/scripts/javascript/dataTable/Spanish.json";
+$urlDirectorio = $urlDirectorio . "/plugin/scripts/javascript/dataTable/Spanish.json";
 
 $url .= "/index.php?";
+
+// WEB Services
+$cadenaACodificar16 = "pagina=webServices";
+$cadenaACodificar16 .= "&procesarAjax=true";
+$cadenaACodificar16 .= "&action=index.php";
+$cadenaACodificar16 .= "&bloqueNombre=webServices";
+$cadenaACodificar16 .= "&bloqueGrupo=/";
+$cadenaACodificar16 .= "&funcion=consultarDependencia";
+$cadenaACodificar16 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+$cadena16 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar16, $enlace );
+
+// URL definitiva
+$urlWS = $url . $cadena16;
 
 
 
@@ -33,9 +49,6 @@ $cadena16 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 $urlFinal16 = $url . $cadena16;
 // echo $urlFinal;
 
-
-
-
 // Variables
 $cadenaACodificar2 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 $cadenaACodificar2 .= "&procesarAjax=true";
@@ -43,16 +56,14 @@ $cadenaACodificar2 .= "&action=index.php";
 $cadenaACodificar2 .= "&bloqueNombre=" . $esteBloque ["nombre"];
 $cadenaACodificar2 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $cadenaACodificar2 .= "&funcion=SeleccionTipoBien";
-$cadenaACodificar2 .="&tiempo=".$_REQUEST['tiempo'];
-
+$cadenaACodificar2 .= "&tiempo=" . $_REQUEST ['tiempo'];
 
 // Codificar las variables
 $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-$cadena2= $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar2, $enlace );
+$cadena2 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar2, $enlace );
 
 // URL definitiva
 $urlFinal2 = $url . $cadena2;
-
 
 // Variables
 $cadenaACodificar4 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
@@ -69,8 +80,6 @@ $cadena4 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $ca
 
 // URL definitiva
 $urlFinal4 = $url . $cadena4;
-
-
 
 ?>
 <script type='text/javascript'>

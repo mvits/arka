@@ -20,6 +20,47 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
+		$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+		$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+		
+		$urlDirectorio = $url;
+		
+		$urlDirectorio = $urlDirectorio . "/plugin/scripts/javascript/dataTable/Spanish.json";
+		
+		$url .= "/index.php?";
+		
+		// WEB Services
+		$cadenaACodificar16 = "pagina=webServices";
+		$cadenaACodificar16 .= "&procesarAjax=true";
+		$cadenaACodificar16 .= "&action=index.php";
+		$cadenaACodificar16 .= "&bloqueNombre=webServices";
+		$cadenaACodificar16 .= "&bloqueGrupo=/";
+		$cadenaACodificar16 .= "&funcion=consultarDependencia";
+		$cadenaACodificar16 .= "&tiempo=" . $_REQUEST ['tiempo'];
+		
+		// Codificar las variables
+		$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+		$cadena16 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar16, $enlace );
+		
+		// URL definitiva
+		$urlWS = $url . $cadena16;
+		
+		// echo $urlWS;exit;
+		
+		$response = file_get_contents ( $urlWS );
+		$response = json_decode ( $response );
+		
+		$response = $response [0];
+		echo count ( $response );
+		
+		foreach ( $response as $value ) {
+			
+			echo get_object_vars ( $value );
+		}
+		
+		echo $response->placa;
+		// var_dump(($response));
+		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -71,8 +112,6 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		$atributos ["leyenda"] = "Consulta de Inventario Funcionario";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-		
-
 		
 		$esteCampo = "funcionario";
 		$atributos ['nombre'] = $esteCampo;
@@ -204,13 +243,12 @@ class registrarForm {
 		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "dependencias" );
 		
 		$matrizItems = array (
-		
+				
 				array (
 						'',
-						'Seleccione ...'
-				)
-		)
-		;
+						'Seleccione ...' 
+				) 
+		);
 		$atributos ['matrizItems'] = $matrizItems;
 		
 		// Utilizar lo siguiente cuando no se pase un arreglo:
@@ -220,7 +258,6 @@ class registrarForm {
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
-		
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'fecha_inicio';
@@ -283,7 +320,7 @@ class registrarForm {
 		
 		// Aplica atributos globales al control
 		$atributos = array_merge ( $atributos, $atributosGlobales );
-// 		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		// echo $this->miFormulario->campoCuadroTexto ( $atributos );
 		unset ( $atributos );
 		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
@@ -342,7 +379,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=Consultar";
-		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
+		$valorCodificado .= "&usuario=" . $_REQUEST ['usuario'];
 		
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
@@ -364,7 +401,7 @@ class registrarForm {
 		$atributos ["etiqueta"] = "";
 		$atributos ["valor"] = $valorCodificado;
 		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos ); 
+		unset ( $atributos );
 		
 		$atributos ['marco'] = true;
 		$atributos ['tipoEtiqueta'] = 'fin';
