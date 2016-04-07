@@ -13,7 +13,7 @@ include_once ("core/manager/Configurador.class.php");
 include_once ("core/builder/InspectorHTML.class.php");
 include_once ("core/builder/Mensaje.class.php");
 include_once ("core/crypto/Encriptador.class.php");
-include_once ("funcion/redireccionar.php");
+
 
 // Esta clase contiene la logica de negocio del bloque y extiende a la clase funcion general la cual encapsula los
 // metodos mas utilizados en la aplicacion

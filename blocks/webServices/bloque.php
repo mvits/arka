@@ -27,13 +27,6 @@ include_once ("Sql.class.php");
 // Mensajes
 include_once ("Lenguaje.class.php");
 
-// ------Tratar de Corregir
-
-include_once ('funcion/redireccionar.php');
-
-use inventarios\gestionCompras\consultaOrdenServicios\funcion\redireccion;
-// ------------------
-
 // Esta clase actua como control del bloque en un patron FCE
 
 // Para evitar redefiniciones de clases el nombre de la clase del archivo bloque debe corresponder al nombre del bloque
@@ -70,41 +63,23 @@ class Bloque implements \Bloque {
 		$this->miLenguaje = new Lenguaje ();
 	}
 	public function bloque() {
-		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] == 'true') {
-			
-			$_REQUEST ['funcionario'] = $_REQUEST ['usuario'];
-		}
+		$this->miFrontera->setSql ( $this->miSql );
+		$this->miFrontera->setFuncion ( $this->miFuncion );
+		$this->miFrontera->setLenguaje ( $this->miLenguaje );
 		
-		if (isset ( $_REQUEST ['botonCancelar'] ) && $_REQUEST ['botonCancelar'] == "true") {
-			redireccion::redireccionar ( "paginaPrincipal" );
-		} else if (isset ( $_REQUEST ['botonContinuar'] ) && $_REQUEST ['botonContinuar'] == "true") {
-			redireccion::redireccionar ( "paginaPrincipal" );
-		} else {
+		$this->miFuncion->setSql ( $this->miSql );
+		$this->miFuncion->setFuncion ( $this->miFuncion );
+		$this->miFuncion->setLenguaje ( $this->miLenguaje );
+		
+		if (isset ( $_REQUEST ['action'] )) {
 			
-			$this->miFrontera->setSql ( $this->miSql );
-			$this->miFrontera->setFuncion ( $this->miFuncion );
-			$this->miFrontera->setLenguaje ( $this->miLenguaje );
+			$respuesta = $this->miFuncion->action ();
 			
-			$this->miFuncion->setSql ( $this->miSql );
-			$this->miFuncion->setFuncion ( $this->miFuncion );
-			$this->miFuncion->setLenguaje ( $this->miLenguaje );
-			
-			if (! isset ( $_REQUEST ['action'] )) {
+			// Si $respuesta==false, entonces se debe recargar el formulario y mostrar un mensaje de error.
+			if (! $respuesta) {
 				
-				$this->miFrontera->frontera ();
-			} else {
-				
-				$respuesta = $this->miFuncion->action ();
-				
-				// Si $respuesta==false, entonces se debe recargar el formulario y mostrar un mensaje de error.
-				if (! $respuesta) {
-					
-					$miBloque = $this->miConfigurador->getVariableConfiguracion ( 'esteBloque' );
-					$this->miConfigurador->setVariableConfiguracion ( 'errorFormulario', $miBloque ['nombre'] );
-				}
-				if (! isset ( $_REQUEST ['procesarAjax'] )) {
-					$this->miFrontera->frontera ();
-				}
+				$miBloque = $this->miConfigurador->getVariableConfiguracion ( 'esteBloque' );
+				$this->miConfigurador->setVariableConfiguracion ( 'errorFormulario', $miBloque ['nombre'] );
 			}
 		}
 	}
