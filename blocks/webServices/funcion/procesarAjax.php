@@ -22,7 +22,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 
 $conexion = "sicapital";
 $esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-var_dump ( $esteRecursoDBO );
+
 
 switch ($_REQUEST ['funcion']) {
 	
@@ -31,6 +31,31 @@ switch ($_REQUEST ['funcion']) {
 		switch ($_REQUEST ['tipo_parametro']) {
 			
 			case 'proveedores' :
+				
+				$cadenaSql = $this->sql->getCadenaSql ( 'Consulta_Proveedores_Sicapital' );
+				
+				$datos_proveedores_sic = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				foreach ( $datos_proveedores_sic as $valor ) {
+					
+					$cadenaSql = $this->sql->getCadenaSql ( 'validacion_proveedores', $valor ['PRO_IDENTIFICADOR'] );
+					
+					$consulta_proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					
+					if ($consulta_proveedor == false) {
+						
+						$arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedores', $valor );
+						
+						$registrarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso" ,$valor, "registro_proveedores");
+					}
+				}
+				
+				$resultadoFinal [] = array (
+						'status' => "Exito",
+						'Proceso' => "Actualizar Proveedores",
+						'fecha' => date ( 'Y-m-d' )
+				);
+
 				
 				break;
 		}
@@ -45,6 +70,7 @@ switch ($_REQUEST ['funcion']) {
 		
 		$resultadoFinal [] = array (
 				'status' => "Error",
+				'Proceso' => "Error Proceso",
 				'fecha' => date ( 'Y-m-d' ) 
 		);
 		break;

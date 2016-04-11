@@ -16,7 +16,7 @@ include_once ("core/manager/Configurador.class.php");
 // Elementos que constituyen un bloque típico CRUD.
 
 // Interfaz gráfica
-include_once ("Frontera.class.php");
+
 
 // Funciones de procesamiento de datos
 include_once ("Funcion.class.php");
@@ -25,7 +25,7 @@ include_once ("Funcion.class.php");
 include_once ("Sql.class.php");
 
 // Mensajes
-include_once ("Lenguaje.class.php");
+
 
 // Esta clase actua como control del bloque en un patron FCE
 
@@ -59,17 +59,13 @@ class Bloque implements \Bloque {
 		
 		$this->miFuncion = new Funcion ();
 		$this->miSql = new Sql ();
-		$this->miFrontera = new Frontera ();
-		$this->miLenguaje = new Lenguaje ();
+		
 	}
 	public function bloque() {
-		$this->miFrontera->setSql ( $this->miSql );
-		$this->miFrontera->setFuncion ( $this->miFuncion );
-		$this->miFrontera->setLenguaje ( $this->miLenguaje );
 		
 		$this->miFuncion->setSql ( $this->miSql );
 		$this->miFuncion->setFuncion ( $this->miFuncion );
-		$this->miFuncion->setLenguaje ( $this->miLenguaje );
+		
 		
 		if (isset ( $_REQUEST ['action'] )) {
 			
