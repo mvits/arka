@@ -17,37 +17,35 @@ $rutaBloque .= $esteBloque ['grupo'] . '/' . $esteBloque ['nombre'];
 
 $miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 
+$conexion = "inventarios";
+$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+
+$conexion = "sicapital";
+$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+var_dump ( $esteRecursoDBO );
+
 switch ($_REQUEST ['funcion']) {
 	
-	case 'consultarDependencia' :
+	case 'actualizarParametros' :
 		
-		$resultadoFinal [] = array (
-				'status' => "En Linea",
-				'placa' => "QQQQ",
-				'descripcion' => "STVFAT",
-				'sede' => "JJJ",
-				'dependencia' => "6WGQW",
-				'espaciofisico' => "HDHDH",
-				'estadoelemento' => "AGSVGTVA",
-				'contratista' => "SGHBV",
-				'detalle' => "515@",
-				'observaciones' => "AHGSDFF",
-				'verificacion' => "123ASE" 
-		);
+		switch ($_REQUEST ['tipo_parametro']) {
+			
+			case 'proveedores' :
+				
+				break;
+		}
 		
 		break;
 	
 	default :
 		for($i = 0; $i < 1000000; $i ++) {
 			
-			
-			$i=$i+$i;
-			
+			$i = $i + $i;
 		}
 		
 		$resultadoFinal [] = array (
 				'status' => "Error",
-				'fecha' => date ( 'Y-m-d' )
+				'fecha' => date ( 'Y-m-d' ) 
 		);
 		break;
 }
