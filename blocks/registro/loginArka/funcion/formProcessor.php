@@ -88,6 +88,41 @@ class FormProcessor {
                             $_COOKIE["aplicativo"]=$estaSesion;
                             $this->miLogger->log_usuario($log);
                             //Si estado dif Activo redirecciona a pagina decambio contraseña
+                            
+                            
+                            
+                            
+                            
+                            $url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+                            $url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+                            
+                            
+                            $url .= "/index.php?";
+                            
+                            // WEB Services
+                            $cadenaACodificar16 = "pagina=webServices";
+                            $cadenaACodificar16 .= "&procesarAjax=true";
+                            $cadenaACodificar16 .= "&action=index.php";
+                            $cadenaACodificar16 .= "&bloqueNombre=webServices";
+                            $cadenaACodificar16 .= "&bloqueGrupo=/";
+                            $cadenaACodificar16 .= "&funcion=actualizarParametros";
+                            $cadenaACodificar16 .= "&tipo_parametro=proveedores";
+                            $cadenaACodificar16 .= "&tiempo=" . $_REQUEST ['tiempo'];
+                            $cadenaACodificar16 .= "&usuario=" . $_REQUEST ['usuario'];
+                            
+                            // Codificar las variables
+                            $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+                            $cadena16 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar16, $enlace );
+                            
+                            // URL definitiva
+                            $urlWS = $url . $cadena16;
+                            
+                            
+                            $response = file_get_contents ( $urlWS );
+                            
+                            
+                            
+                            
                             if($registro [0] ['estado']==2)
                                 {Redireccionador::redireccionar('claves', $registro);}
                             else
