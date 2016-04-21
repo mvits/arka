@@ -34,7 +34,7 @@ class Sql extends \Sql {
 			
 			case 'Consulta_Proveedores_Sicapital' :
 				
-				$cadenaSql = 'SELECT * FROM "PROVEEDORES" ';
+				$cadenaSql = 'SELECT *asd FROM "PROVEEDORES" ';
 				
 				break;
 			

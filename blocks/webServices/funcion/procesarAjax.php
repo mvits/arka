@@ -23,7 +23,6 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 $conexion = "sicapital";
 $esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
-
 switch ($_REQUEST ['funcion']) {
 	
 	case 'actualizarParametros' :
@@ -36,26 +35,57 @@ switch ($_REQUEST ['funcion']) {
 				
 				$datos_proveedores_sic = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
-				foreach ( $datos_proveedores_sic as $valor ) {
-					
-					$cadenaSql = $this->sql->getCadenaSql ( 'validacion_proveedores', $valor ['PRO_IDENTIFICADOR'] );
-					
-					$consulta_proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-					
-					if ($consulta_proveedor == false) {
+				if ($datos_proveedores_sic != false) {
+					foreach ( $datos_proveedores_sic as $valor ) {
 						
-						$arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedores', $valor );
+						$cadenaSql = $this->sql->getCadenaSql ( 'validacion_proveedores', $valor ['PRO_IDENTIFICADOR'] );
 						
-						$registrarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso" ,$valor, "registro_proveedores");
+						$consulta_proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+						
+						if ($consulta_proveedor == false) {
+							
+							$arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedores', $valor );
+							
+							$registrarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso", $valor, "registro_proveedores" );
+						}
 					}
+					
+					$arregloProcesos [] = array (
+							'status' => "Exito",
+							'Proceso' => "Registrar Proveedores" 
+					);
+				} else {
+					$arregloProcesos [] = array (
+							'status' => "Error",
+							'Proceso' => "Registrar Proveedores" 
+					);
 				}
 				
-				$resultadoFinal [] = array (
-						'status' => "Exito",
-						'Proceso' => "Actualizar Proveedores",
-						'fecha' => date ( 'Y-m-d' )
-				);
-
+				if ($datos_proveedores_sic != false) {
+					foreach ( $datos_proveedores_sic as $valor ) {
+						
+						$cadenaSql = $this->sql->getCadenaSql ( 'validacion_proveedores', $valor ['PRO_IDENTIFICADOR'] );
+						
+						$consulta_proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+						
+						if ($consulta_proveedor == false) {
+							
+							$arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedores', $valor );
+							
+							$registrarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso", $valor, "registro_proveedores" );
+						}
+					}
+					
+					$arregloProcesos [] = array (
+							'status' => "Exito",
+							'Proceso' => "Actualizar Información  Proveedores" 
+					);
+				} else {
+					$arregloProcesos [] = array (
+							'status' => "Error",
+							'Proceso' => "Actualizar Información  Proveedores" 
+					);
+				}
 				
 				break;
 		}
@@ -68,13 +98,13 @@ switch ($_REQUEST ['funcion']) {
 			$i = $i + $i;
 		}
 		
-		$resultadoFinal [] = array (
-				'status' => "Error",
-				'Proceso' => "Error Proceso",
-				'fecha' => date ( 'Y-m-d' ) 
-		);
 		break;
 }
+
+$resultadoFinal [] = array (
+		"accion" => $arregloProcesos,
+		'fecha' => date ( 'Y-m-d' ) 
+);
 
 $resultado = json_encode ( $resultadoFinal );
 echo $resultado;
