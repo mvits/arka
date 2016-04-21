@@ -39,17 +39,18 @@ if (isset ( $_REQUEST ['webServices'] ) && $_REQUEST ['webServices'] == 'true') 
 					
 					$datos_proveedores_sic = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					if ($datos_proveedores_sic != false) {
-						foreach ( $datos_proveedores_sic as $valor ) {
-							
-							$cadenaSql = $this->sql->getCadenaSql ( 'validacion_proveedores', $valor ['PRO_IDENTIFICADOR'] );
+// 						foreach ( $datos_proveedores_sic as $valor ) {
+						
+						for($i=0;$i<=12000;$i++){
+							$cadenaSql = $this->sql->getCadenaSql ( 'validacion_proveedores', $datos_proveedores_sic[$i] ['PRO_IDENTIFICADOR'] );
 							
 							$consulta_proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 							
+// 							$arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedores', $valor );
+// 							$registrarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso", $valor, "registro_proveedores" );
 							if ($consulta_proveedor == false) {
-								
-								$arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedores', $valor );
-								
-								$registrarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso", $valor, "registro_proveedores" );
+								$arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedores', $datos_proveedores_sic[$i] );
+								$registrarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso", $datos_proveedores_sic[$i], "registro_proveedores" );
 							}
 						}
 						
@@ -63,10 +64,10 @@ if (isset ( $_REQUEST ['webServices'] ) && $_REQUEST ['webServices'] == 'true') 
 								'Proceso' => "Registrar Proveedores" 
 						);
 					}
-					
+					 
 					if ($datos_proveedores_sic != false) {
 						
-						$cadenaSql = $this->sql->getCadenaSql ( 'consulta_informacion_proveedores' );
+						$cadenaSql = $this->sql->getCadenaSql ( 'Consulta_Proveedores_Arka' );
 						
 						$datos_proveedores_psql = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 						
@@ -75,19 +76,8 @@ if (isset ( $_REQUEST ['webServices'] ) && $_REQUEST ['webServices'] == 'true') 
 						var_dump ( $datos_proveedores_psql );
 						exit ();
 						
-						for($i = 0; $i <= count ( $datos_proveedores_sic ); $i ++) {
-							
-							if ($datos_proveedores_sic [$i]['PRO_IDENTIFICADOR'] == $datos_proveedores_psql [$i]['PRO_IDENTIFICADOR']) {
-								
-								
-								
-								
-								
-								
-								
-							}
+						foreach ( $datos_proveedores_sic as $valor ) {
 						}
-						
 						// foreach ( $datos_proveedores_sic as $valor ) {
 						
 						// if ($consulta_proveedor == false) {

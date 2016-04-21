@@ -40,7 +40,7 @@ class Sql extends \Sql {
 			
 			case 'Consulta_Proveedores_Arka' :
 				
-				$cadenaSql = 'SELECT * FROM "PROVEEDORES" ';
+				$cadenaSql = 'SELECT * FROM arka_parametros.arka_proveedor ';
 				
 				break;
 			
@@ -62,12 +62,8 @@ class Sql extends \Sql {
 				$cadenaSql .= ($variable ['PRO_TELEFONO'] != '') ? '\'' . $variable ['PRO_TELEFONO'] . '\');' : ' NULL);';
 				
 				break;
-			
-			case 'consulta_informacion_proveedores' :
 				
-				$cadenaSql = 'SELECT *  FROM arka_parametros.arka_proveedor; ';
 				
-				break;
 		}
 		return $cadenaSql;
 	}
