@@ -34,7 +34,7 @@ class Sql extends \Sql {
 			
 			case 'Consulta_Proveedores_Sicapital' :
 				
-				$cadenaSql = 'SELECT *asd FROM "PROVEEDORES" ';
+				$cadenaSql = 'SELECT * FROM "PROVEEDORES" ';
 				
 				break;
 			
@@ -58,8 +58,8 @@ class Sql extends \Sql {
 				$cadenaSql .= ' VALUES ( \'' . $variable ['PRO_IDENTIFICADOR'] . '\', ';
 				$cadenaSql .= ' \'' . $variable ['PRO_RAZON_SOCIAL'] . '\', ';
 				$cadenaSql .= ' \'' . $variable ['PRO_NIT'] . '\', ';
-				$cadenaSql .= ' \'' . $variable ['PRO_DIRECCION'] . '\', ';
-				$cadenaSql .= ' \'' . $variable ['PRO_TELEFONO'] . '\');';
+				$cadenaSql .= ($variable ['PRO_DIRECCION'] != '') ? ' \'' . $variable ['PRO_DIRECCION'] . '\', ' : ' NULL,';
+				$cadenaSql .= ($variable ['PRO_TELEFONO'] != '') ? '\'' . $variable ['PRO_TELEFONO'] . '\');' : ' NULL);';
 				
 				break;
 		}

@@ -35,36 +35,39 @@ switch ($_REQUEST ['funcion']) {
 				
 				$datos_proveedores_sic = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
-				if ($datos_proveedores_sic != false) {
-					foreach ( $datos_proveedores_sic as $valor ) {
+// 				if ($datos_proveedores_sic != false) {
+// 					foreach ( $datos_proveedores_sic as $valor ) {
 						
-						$cadenaSql = $this->sql->getCadenaSql ( 'validacion_proveedores', $valor ['PRO_IDENTIFICADOR'] );
+// 						$cadenaSql = $this->sql->getCadenaSql ( 'validacion_proveedores', $valor ['PRO_IDENTIFICADOR'] );
 						
-						$consulta_proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+// 						$consulta_proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 						
-						if ($consulta_proveedor == false) {
+// 						if ($consulta_proveedor == false) {
 							
-							$arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedores', $valor );
+// 							$arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedores', $valor );
 							
-							$registrarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso", $valor, "registro_proveedores" );
-						}
-					}
+// 							$registrarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso", $valor, "registro_proveedores" );
+// 						}
+// 					}
 					
-					$arregloProcesos [] = array (
-							'status' => "Exito",
-							'Proceso' => "Registrar Proveedores" 
-					);
-				} else {
-					$arregloProcesos [] = array (
-							'status' => "Error",
-							'Proceso' => "Registrar Proveedores" 
-					);
-				}
+// 					$arregloProcesos [] = array (
+// 							'status' => "Exito",
+// 							'Proceso' => "Registrar Proveedores" 
+// 					);
+// 				} else {
+// 					$arregloProcesos [] = array (
+// 							'status' => "Error",
+// 							'Proceso' => "Registrar Proveedores" 
+// 					);
+// 				}
 				
 				if ($datos_proveedores_sic != false) {
 					foreach ( $datos_proveedores_sic as $valor ) {
 						
-						$cadenaSql = $this->sql->getCadenaSql ( 'validacion_proveedores', $valor ['PRO_IDENTIFICADOR'] );
+						var_dump($valor);exit;
+						
+						
+						$cadenaSql = $this->sql->getCadenaSql ( 'validacion_proveedores', $valor );
 						
 						$consulta_proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 						
