@@ -40,12 +40,12 @@ class Sql extends \Sql {
 			
 			case 'Consulta_Proveedores_Arka' :
 				
-				$cadenaSql = 'SELECT * FROM arka_parametros.arka_proveedor ';
+				$cadenaSql = 'SELECT count(*) FROM arka_parametros.arka_proveedor ';
 				
 				break;
 			
 			case 'validacion_proveedores' :
-				$cadenaSql = 'SELECT "PRO_IDENTIFICADOR", "PRO_RAZON_SOCIAL", "PRO_NIT", "PRO_DIRECCION", "PRO_TELEFONO" ';
+				$cadenaSql = 'SELECT "PRO_IDENTIFICADOR" ';
 				$cadenaSql .= 'FROM arka_parametros.arka_proveedor ';
 				$cadenaSql .= 'WHERE "PRO_IDENTIFICADOR"=\'' . $variable . '\';';
 				
@@ -57,13 +57,11 @@ class Sql extends \Sql {
 				$cadenaSql .= '"PRO_IDENTIFICADOR", "PRO_RAZON_SOCIAL", "PRO_NIT", "PRO_DIRECCION", "PRO_TELEFONO") ';
 				$cadenaSql .= ' VALUES ( \'' . $variable ['PRO_IDENTIFICADOR'] . '\', ';
 				$cadenaSql .= ' \'' . $variable ['PRO_RAZON_SOCIAL'] . '\', ';
-				$cadenaSql .= ' \'' . $variable ['PRO_NIT'] . '\', ';
-				$cadenaSql .= ($variable ['PRO_DIRECCION'] != '') ? ' \'' . $variable ['PRO_DIRECCION'] . '\', ' : ' NULL,';
-				$cadenaSql .= ($variable ['PRO_TELEFONO'] != '') ? '\'' . $variable ['PRO_TELEFONO'] . '\');' : ' NULL);';
+				$cadenaSql .= ' \'' . str_replace ( "'", "''", $variable ['PRO_NIT'] ) . '\', ';
+				$cadenaSql .= ($variable ['PRO_DIRECCION'] != '') ? ' \'' . str_replace ( "'", "''", $variable ['PRO_DIRECCION'] ) . '\', ' : ' NULL,';
+				$cadenaSql .= ($variable ['PRO_TELEFONO'] != '') ? '\'' . str_replace ( "'", "''", $variable ['PRO_TELEFONO'] ) . '\');' : ' NULL);';
 				
 				break;
-				
-				
 		}
 		return $cadenaSql;
 	}
