@@ -84,7 +84,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "SET \"PRO_RAZON_SOCIAL\"='" . str_replace ( "'", "''", $variable ['PRO_RAZON_SOCIAL'] ) . "',";
 				$cadenaSql .= " \"PRO_NIT\"='" . str_replace ( "'", "''", $variable ['PRO_NIT'] ) . "',";
 				$cadenaSql .= '"PRO_DIRECCION"= '.(($variable ['PRO_DIRECCION'] != '')? "'" . str_replace ( "'", "''", $variable ['PRO_DIRECCION'] ) . "'," : "NULL,");
-				$cadenaSql .= ' "PRO_TELEFONO"= '.(($variable ['PRO_TELEFONO'] != '')? "'" . str_replace ( "'", "''", $variable ['PRO_TELEFONO'] ) . "', " : "NULL, ");
+				$cadenaSql .= ' "PRO_TELEFONO"= '.(($variable ['PRO_TELEFONO'] != '')? "'" . str_replace ( "'", "''", $variable ['PRO_TELEFONO'] ) . "' " : "NULL ");
 				$cadenaSql .= " WHERE \"PRO_IDENTIFICADOR\"='" . $variable ['PRO_IDENTIFICADOR'] . "';";
 				
 				break;
