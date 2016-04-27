@@ -65,6 +65,29 @@ class Sql extends \Sql {
 				$cadenaSql .= ($variable ['PRO_TELEFONO'] != '') ? '\'' . str_replace ( "'", "''", $variable ['PRO_TELEFONO'] ) . '\');' : ' NULL);';
 				
 				break;
+			
+			case 'registro_proveedor_historico' :
+				
+				$cadenaSql = 'INSERT INTO arka_parametros.arka_proveedor_historico( ';
+				$cadenaSql .= '"PRO_IDENTIFICADOR", "PRO_RAZON_SOCIAL", "PRO_NIT", "PRO_DIRECCION", "PRO_TELEFONO") ';
+				$cadenaSql .= ' VALUES ( \'' . $variable ['PRO_IDENTIFICADOR'] . '\', ';
+				$cadenaSql .= ' \'' . str_replace ( "'", "''", $variable ['PRO_RAZON_SOCIAL'] ) . '\', ';
+				$cadenaSql .= ' \'' . str_replace ( "'", "''", $variable ['PRO_NIT'] ) . '\', ';
+				$cadenaSql .= ($variable ['PRO_DIRECCION'] != '') ? ' \'' . str_replace ( "'", "''", $variable ['PRO_DIRECCION'] ) . '\', ' : ' NULL,';
+				$cadenaSql .= ($variable ['PRO_TELEFONO'] != '') ? '\'' . str_replace ( "'", "''", $variable ['PRO_TELEFONO'] ) . '\');' : ' NULL);';
+				
+				break;
+			
+			case 'actualizar_proveedor' :
+				
+				$cadenaSql = 'UPDATE arka_parametros.arka_proveedor ';
+				$cadenaSql .= "SET \"PRO_RAZON_SOCIAL\"='" . str_replace ( "'", "''", $variable ['PRO_RAZON_SOCIAL'] ) . "',";
+				$cadenaSql .= " \"PRO_NIT\"='" . str_replace ( "'", "''", $variable ['PRO_NIT'] ) . "',";
+				$cadenaSql .= '"PRO_DIRECCION"= '.(($variable ['PRO_DIRECCION'] != '')? "'" . str_replace ( "'", "''", $variable ['PRO_DIRECCION'] ) . "'," : "NULL,");
+				$cadenaSql .= ' "PRO_TELEFONO"= '.(($variable ['PRO_TELEFONO'] != '')? "'" . str_replace ( "'", "''", $variable ['PRO_TELEFONO'] ) . "', " : "NULL, ");
+				$cadenaSql .= " WHERE \"PRO_IDENTIFICADOR\"='" . $variable ['PRO_IDENTIFICADOR'] . "';";
+				
+				break;
 		}
 		return $cadenaSql;
 	}

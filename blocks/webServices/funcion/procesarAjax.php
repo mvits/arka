@@ -39,30 +39,30 @@ if (isset ( $_REQUEST ['webServices'] ) && $_REQUEST ['webServices'] == 'true') 
 					
 					$datos_proveedores_sic = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
-					if ($datos_proveedores_sic != false) {
-						
-						foreach ( $datos_proveedores_sic as $valor ) {
-							
-							$cadenaSql = $this->sql->getCadenaSql ( 'validacion_proveedores', $valor ['PRO_IDENTIFICADOR'] );
-							
-							$consulta_proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-							
-							if ($consulta_proveedor == false) {
-								$arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedores', $valor );
-								$registrarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso", $valor, "registro_proveedores" );
-							}
-						}
-						
-						$arregloProcesos [] = array (
-								'status' => "Exito",
-								'Proceso' => "Registrar Proveedores" 
-						);
-					} else {
-						$arregloProcesos [] = array (
-								'status' => "Error",
-								'Proceso' => "Registrar Proveedores" 
-						);
-					}
+					// if ($datos_proveedores_sic != false) {
+					
+					// foreach ( $datos_proveedores_sic as $valor ) {
+					
+					// $cadenaSql = $this->sql->getCadenaSql ( 'validacion_proveedores', $valor ['PRO_IDENTIFICADOR'] );
+					
+					// $consulta_proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					
+					// if ($consulta_proveedor == false) {
+					// $arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedores', $valor );
+					// $registrarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso", $valor, "registro_proveedores" );
+					// }
+					// }
+					
+					// $arregloProcesos [] = array (
+					// 'status' => "Exito",
+					// 'Proceso' => "Registrar Proveedores"
+					// );
+					// } else {
+					// $arregloProcesos [] = array (
+					// 'status' => "Error",
+					// 'Proceso' => "Registrar Proveedores"
+					// );
+					// }
 					
 					if ($datos_proveedores_sic != false) {
 						
@@ -76,28 +76,19 @@ if (isset ( $_REQUEST ['webServices'] ) && $_REQUEST ['webServices'] == 'true') 
 								
 								$valor_psql = $datos_proveedores_psql [$key] ['PRO_RAZON_SOCIAL'] . $datos_proveedores_psql [$key] ['PRO_NIT'] . $datos_proveedores_psql [$key] ['PRO_DIRECCION'] . $datos_proveedores_psql [$key] ['PRO_TELEFONO'];
 								$valor_sic = $datos_proveedores_sic [$key] ['PRO_RAZON_SOCIAL'] . $datos_proveedores_sic [$key] ['PRO_NIT'] . $datos_proveedores_sic [$key] ['PRO_DIRECCION'] . $datos_proveedores_sic [$key] ['PRO_TELEFONO'];
-								echo $valor_psql . "<br>";
-								echo $valor_sic . "<br>------------";
-								if ($valor_psql === $valor_sic) {
+								if ($valor_psql != $valor_sic) {
 									
-									echo "No actualizar";
-								} else if ($valor_psql != $valor_sic) {
+									$arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedor_historico', $datos_proveedores_psql [$key] );
+									$registrarProveedorHistorico = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso", $datos_proveedores_psql [$key], "registro_proveedor_historico" );
+									
+									$arreglo_cadenas = $this->sql->getCadenaSql ( 'actualizar_proveedor', $datos_proveedores_sic [$key] );
+									$actualizarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso", $datos_proveedores_sic [$key], "actualizar_proveedor" );
 									
 									echo "Actualizar";
 									exit ();
 								}
 							}
 						}
-						
-						// foreach ( $datos_proveedores_sic as $valor ) {
-						
-						// if ($consulta_proveedor == false) {
-						
-						// $arreglo_cadenas = $this->sql->getCadenaSql ( 'registro_proveedores', $valor );
-						
-						// $registrarProveedor = $esteRecursoDB->ejecutarAcceso ( $arreglo_cadenas, "acceso", $valor, "registro_proveedores" );
-						// }
-						// }
 						
 						$arregloProcesos [] = array (
 								'status' => "Exito",
