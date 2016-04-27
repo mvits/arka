@@ -38,8 +38,7 @@ if (isset ( $_REQUEST ['webServices'] ) && $_REQUEST ['webServices'] == 'true') 
 					$cadenaSql = $this->sql->getCadenaSql ( 'Consulta_Proveedores_Sicapital' );
 					
 					$datos_proveedores_sic = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
-					// var_dump ( $datos_proveedores_sic );
-					// exit ();
+					
 					if ($datos_proveedores_sic != false) {
 						
 						foreach ( $datos_proveedores_sic as $valor ) {
@@ -71,13 +70,25 @@ if (isset ( $_REQUEST ['webServices'] ) && $_REQUEST ['webServices'] == 'true') 
 						
 						$datos_proveedores_psql = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 						
-						echo $datos_proveedores_psql [0] [0] . " - " . count ( $datos_proveedores_sic );
-						
-						var_dump ( $datos_proveedores_psql );
-						exit ();
-						
-						foreach ( $datos_proveedores_sic as $valor ) {
+						foreach ( $datos_proveedores_psql as $key => $valor ) {
+							
+							if ($datos_proveedores_psql [$key] ['PRO_IDENTIFICADOR'] === $datos_proveedores_sic [$key] ['PRO_IDENTIFICADOR']) {
+								
+								$valor_psql = $datos_proveedores_psql [$key] ['PRO_RAZON_SOCIAL'] . $datos_proveedores_psql [$key] ['PRO_NIT'] . $datos_proveedores_psql [$key] ['PRO_DIRECCION'] . $datos_proveedores_psql [$key] ['PRO_TELEFONO'];
+								$valor_sic = $datos_proveedores_sic [$key] ['PRO_RAZON_SOCIAL'] . $datos_proveedores_sic [$key] ['PRO_NIT'] . $datos_proveedores_sic [$key] ['PRO_DIRECCION'] . $datos_proveedores_sic [$key] ['PRO_TELEFONO'];
+								echo $valor_psql . "<br>";
+								echo $valor_sic . "<br>------------";
+								if ($valor_psql === $valor_sic) {
+									
+									echo "No actualizar";
+								} else if ($valor_psql != $valor_sic) {
+									
+									echo "Actualizar";
+									exit ();
+								}
+							}
 						}
+						
 						// foreach ( $datos_proveedores_sic as $valor ) {
 						
 						// if ($consulta_proveedor == false) {
