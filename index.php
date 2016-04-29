@@ -15,6 +15,9 @@
  * @
  *
  */
+if(isset($argv[1])){
+$_REQUEST['data'] = $argv[1];
+}
 require_once ("core/manager/Bootstrap.class.php");
 class Aplicacion {
     
