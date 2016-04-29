@@ -34,25 +34,31 @@ class logger extends loggerBase {
 	 * @access public
 	 */
 	function log_usuario($log) {
-		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] = 'true') {
+		if (isset ( $_REQUEST ['pagina'] ) == true && $_REQUEST ['pagina'] != 'webServices') {
 			
-			$log ['id_usuario'] = 'CONDOR' . $_REQUEST ['funcionario'];
-		} else {
-			$miSesion = Sesion::singleton ();
-			$log ['id_usuario'] = trim ( $miSesion->idUsuario () );
-		}
-		
-		$log ['fecha_log'] = date ( "F j, Y, g:i:s a" );
-		$log ['host'] = $this->obtenerIP ();
-		
-		if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] = 'true') {
+			if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] = 'true') {
+				$log ['id_usuario'] = 'CONDOR' . $_REQUEST ['funcionario'];
+			} else if (isset ( $_REQUEST ['webServices'] ) && $_REQUEST ['webServices'] = 'true') {
+				$log ['id_usuario'] = 'ACTUALIZACIÓN_PARAMETROS';
+			} else {
+				$miSesion = Sesion::singleton ();
+				$log ['id_usuario'] = trim ( $miSesion->idUsuario () );
+			}
+			$log ['fecha_log'] = date ( "F j, Y, g:i:s a" );
+			$log ['host'] = $this->obtenerIP ();
 			
-			$cadenaSql = $this->miSql->getCadenaSql ( "registroLogNoRegistradoUsuario", $log );
-		} else {
-			$cadenaSql = $this->miSql->getCadenaSql ( "registroLogUsuario", $log );
+			if (isset ( $_REQUEST ['accesoCondor'] ) && $_REQUEST ['accesoCondor'] = 'true') {
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( "registroLogNoRegistradoUsuario", $log );
+			} else if (isset ( $_REQUEST ['webServices'] ) && $_REQUEST ['webServices'] = 'true') {
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( "registroLogNoRegistradoUsuario", $log );
+			} else {
+				$cadenaSql = $this->miSql->getCadenaSql ( "registroLogUsuario", $log );
+			}
+			
+			$resultado = $this->miConexion->ejecutarAcceso ( $cadenaSql, self::ACCEDER, '', 'registroLogUsuario' );
 		}
-		
-		$resultado = $this->miConexion->ejecutarAcceso ( $cadenaSql, self::ACCEDER, '', 'registroLogUsuario' );
 	}
 	function obtenerIP() {
 		if (! empty ( $_SERVER ['HTTP_CLIENT_IP'] ))

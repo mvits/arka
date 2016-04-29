@@ -1,5 +1,4 @@
 <?php
-var_dump($_REQUEST);exit;
 $this->ruta = $this->miConfigurador->getVariableConfiguracion ( "rutaBloque" );
 
 $atributosGlobales ['campoSeguro'] = 'true';
