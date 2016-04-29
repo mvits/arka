@@ -1,5 +1,5 @@
 <?php
-// var_dump ( $_REQUEST );
+var_dump($_REQUEST);exit;
 $this->ruta = $this->miConfigurador->getVariableConfiguracion ( "rutaBloque" );
 
 $atributosGlobales ['campoSeguro'] = 'true';
@@ -93,21 +93,27 @@ if (isset ( $_REQUEST ['webServices'] ) && $_REQUEST ['webServices'] == 'true') 
 							
 							$arregloProcesos [] = array (
 									'status' => "Exito",
-									'Proceso' => "Gestion Actualización Proveedores" 
+									'Proceso' => "Gestion Actualizacion Proveedores" 
 							);
 						} else {
 							$arregloProcesos [] = array (
 									'status' => "Error",
-									'Proceso' => "Gestion Actualización Proveedores" 
+									'Proceso' => "Gestion Actualizacion Proveedores" 
 							);
 						}
 					} else {
 						
 						$arregloProcesos [] = array (
 								'status' => "Error",
-								'Proceso' => "Gestión Actualización Proveedores" 
+								'Proceso' => "Gestion Actualizacion Proveedores" 
 						);
 					}
+					
+					$array_status = json_encode ( $arregloProcesos );
+					
+					$cadena = $this->sql->getCadenaSql ( 'registro_web_services', "gestion Proveedores : " . $array_status );
+					$registrarEventoWebServices = $esteRecursoDB->ejecutarAcceso ( $cadena, "acceso", "gestion Proveedores : " . $array_status, "registro_web_services" );
+					
 					break;
 			}
 			

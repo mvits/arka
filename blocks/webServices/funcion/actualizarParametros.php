@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd /usr/local/apache/htdocs/arka/
+/usr/local/php/bin/php index.php napEwgo4QyBPxVcniLb4Ukx8_A6qg8vJbxFnjP2kDPiGlNfMALyEYHZRwbAmfJtsXTOrUGIDtmmGbr0-Wuq65q7qeAaP8Gz8VzZhxX86fCyP7UKOIfxhtOKI-wED9KBLRzN5YOoS9nwH7adr7Ox-BjA2gbWZzDTTt004XyYVIze3ugMpnBSlNbR9iHneCcw95SkO_Evq2b18-BMB6euIkoIclZ85p7idf44cuYJVbmCICt8KDlhLHSZIes4rWU_6
