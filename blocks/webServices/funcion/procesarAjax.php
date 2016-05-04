@@ -37,6 +37,9 @@ if (isset ( $_REQUEST ['webServices'] ) && $_REQUEST ['webServices'] == 'true') 
 					$cadenaSql = $this->sql->getCadenaSql ( 'Consulta_Proveedores_Sicapital' );
 					
 					$datos_proveedores_sic = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					
+					$esteRecursoDBO->desconectar_db();
+					
 					if ($datos_proveedores_sic != false) {
 						
 						foreach ( $datos_proveedores_sic as $valor ) {
